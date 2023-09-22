@@ -8,10 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Application\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Persistance\" />
+    <Folder Include="Application\Configs\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Extensions\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Infrastructure\Configs\" />
+    <Folder Include="Persistance\DataContexts\" />
+    <Folder Include="Persistance\Configs\" />
   </ItemGroup>
 
 </Project>
