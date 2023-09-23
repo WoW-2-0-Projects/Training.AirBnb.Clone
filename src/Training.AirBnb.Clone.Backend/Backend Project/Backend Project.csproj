@@ -13,8 +13,11 @@
     <Folder Include="Domain\Extensions\" />
     <Folder Include="Domain\Exceptions\" />
     <Folder Include="Infrastructure\Configs\" />
-    <Folder Include="Persistance\DataContexts\" />
     <Folder Include="Persistance\Configs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
   </ItemGroup>
 
 </Project>
