@@ -4,5 +4,4 @@ namespace Backend_Project.Domain.Common;
 
 public interface IEntity : IFileSetEntity<Guid>
 {
-
 }
