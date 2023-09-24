@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Backend_Project.Persistance.DataContexts;
+using FileBaseContext.Context.Models.Configurations;
+
+var contextOptions = new FileContextOptions<AppFileContext>(Path.Combine("Data", "DataStorage"));
+var context = new AppFileContext(contextOptions);
+context.FetchAsync().AsTask().Wait();

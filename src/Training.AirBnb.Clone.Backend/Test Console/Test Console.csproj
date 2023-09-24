@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Backend Project\Backend Project.csproj" />
   </ItemGroup>
 
