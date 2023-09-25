@@ -1,5 +1,6 @@
 ﻿
 using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.User;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
@@ -16,30 +17,29 @@ public class UserService : IEntityBaseService<User>
         _validationService = validationService;
     }
 
-    public async ValueTask<User> CreateAsync(User entity, bool saveChanges = true)
+    public async ValueTask<User> CreateAsync(User user, bool saveChanges = true)
     {
-        if (!(await _validationService.IsValidName(entity.FirstName)))
-            throw new FormatException("Invalid first name");
-        if (!(await _validationService.IsValidName(entity.FirstName)))
-            throw new FormatException("Invalid last name");
-        if (!_validationService.IsValidEmailAddress(entity.EmailAddress))
-            throw new FormatException("Invalid email address");
-        if (!(await IsUnique(entity.EmailAddress)))
-            throw new ArgumentException("This email address already exists");
-        await _appDataContext.Users.AddAsync(entity);
+        if (!(await _validationService.IsValidName(user.FirstName)))
+            throw new UserFormatException("Invalid first name");
+        if (!(await _validationService.IsValidName(user.LastName)))
+            throw new UserFormatException("Invalid last name");
+        if (!_validationService.IsValidEmailAddress(user.EmailAddress))
+            throw new UserFormatException("Invalid email address");
+        if (!(await IsUnique(user.EmailAddress)))
+            throw new UserAlreadyExistsException("This email address already exists");
+        await _appDataContext.Users.AddAsync(user);
 
         if (saveChanges)
             await _appDataContext.SaveChangesAsync();
 
-        return entity;
+        return user;
     }
 
     public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true)
     {
         var deletedUser = await GetById(id);
         if (deletedUser is null)
-            throw new InvalidOperationException("User not found");
-        await _appDataContext.Users.RemoveAsync(deletedUser);
+            throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
         deletedUser.IsDeleted = true;
         if (saveChanges)
@@ -48,13 +48,12 @@ public class UserService : IEntityBaseService<User>
 
     }
 
-    public async ValueTask<User> DeleteAsync(User entity, bool saveChanges = true)
+    public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true)
     {
 
-        var deletedUser = await GetById(entity.Id);
+        var deletedUser = await GetById(user.Id);
         if (deletedUser is null)
-            throw new InvalidOperationException("User not found");
-        await _appDataContext.Users.RemoveAsync(deletedUser);
+            throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
         deletedUser.IsDeleted = true;
         if(saveChanges)
@@ -78,20 +77,25 @@ public class UserService : IEntityBaseService<User>
     {
         return new ValueTask<User>(_appDataContext.Users.
             FirstOrDefault(user => user.Id == id && !user.IsDeleted) ?? 
-            throw new ArgumentNullException("User not found"));
+            throw new UserNotFoundException("User not found"));
     }
 
-    public async ValueTask<User> UpdateAsync(User entity, bool saveChanges = true)
+    public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true)
     {
-        var updatedUser = await GetById(entity.Id);
+        var updatedUser = await GetById(user.Id);
 
         if (updatedUser is null)
-            throw new InvalidOperationException("User not found");
+            throw new UserNotFoundException("User not found");
+        if (!(await _validationService.IsValidName(user.FirstName)))
+            throw new UserFormatException("Invalid first name");
+        if (!(await _validationService.IsValidName(user.LastName)))
+            throw new UserFormatException("Invalid last name");
 
-        updatedUser.FirstName = entity.FirstName;
-        updatedUser.LastName = entity.LastName;
-        updatedUser.EmailAddress = entity.EmailAddress;
+        updatedUser.FirstName = user.FirstName;
+        updatedUser.LastName = user.LastName;
         updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
+        updatedUser.PhoneNumberId = user.PhoneNumberId;
+        updatedUser.IsActive = false;
         if(saveChanges)
             await _appDataContext.SaveChangesAsync();
         return updatedUser;

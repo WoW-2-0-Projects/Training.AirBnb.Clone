@@ -14,10 +14,10 @@ public class User:SoftDeletedEntity
     public bool IsActive { get; set; }
     public Guid PhoneNumberId { get; set; }
 
-    public User(Guid id,string firstName, string lastName, string 
+    public User(string firstName, string lastName, string 
         emailAddress, UserRole userRole, bool isActive, Guid phoneNumberId)
     {
-        Id = id
+        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         EmailAddress = emailAddress;
