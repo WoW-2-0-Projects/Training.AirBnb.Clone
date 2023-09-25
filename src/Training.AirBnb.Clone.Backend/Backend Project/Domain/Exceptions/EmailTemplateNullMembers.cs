@@ -6,7 +6,7 @@ public class EmailTemplateNullMembers : Exception
     {
         
     }
-    public EmailTemplateNullMembers(string message) : base(message)
+    public EmailTemplateNullMembers(string message) :base(message)
     {
         
     }
