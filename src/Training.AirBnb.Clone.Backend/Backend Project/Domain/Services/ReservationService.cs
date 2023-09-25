@@ -71,7 +71,7 @@ namespace Backend_Project.Domain.Services
             var foundReseervation = _appDataContext.Reservations.FirstOrDefault(reservation =>
                 reservation.Id.Equals(reservation.Id));
             if (foundReseervation is null)
-                throw new ReservationUpdateExeption("Reservation not found or invalid Id");
+                throw new ReservationNotFound("Reservation not found or invalid Id");
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
@@ -98,7 +98,7 @@ namespace Backend_Project.Domain.Services
             if(reservation.EndDate.Equals(default)
                 || IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
                 return false;
-            if(reservation.TotalPrice > 0)
+            if(reservation.TotalPrice <= 0)
                 return false;
             return true;
                 
@@ -112,8 +112,7 @@ namespace Backend_Project.Domain.Services
         }
         private bool IsValidDateEndDate(DateTime startDate,DateTime endDate)
         {
-            var amountDate = startDate - DateTime.UtcNow;
-            if (endDate <= startDate)
+            if (endDate <= startDate) 
                 return false;
             if(endDate <= DateTime.UtcNow)
                 return false;
