@@ -18,11 +18,11 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
             if (_appDataContext.Reservations.Any(x => x == reservation))
-                throw new ReservationAlreadyExistExeption("This reservation already exixst");
+                throw new ReservationAlreadyExistsException("This reservation already exists");
             if (IsValidEntity(reservation))
                 await _appDataContext.Reservations.AddAsync(reservation);
             else
-                throw new ReservationValidationException("Invalid Reservation not creat");
+                throw new ReservationValidationException("Reservation didn't pass validation");
             if (saveChanges)
                await _appDataContext.Reservations.SaveChangesAsync(); 
             return reservation;
@@ -64,7 +64,7 @@ namespace Backend_Project.Domain.Services
         {
             var reservation =_appDataContext.Reservations.FirstOrDefault(reservation => reservation.Id.Equals(id));
             if (reservation is null)
-                throw new ReservationNotFound("Reservation not found or invalid Id");
+                throw new ReservationNotFound("Reservation not found.");
             return new ValueTask<Reservation>(reservation);
         }
 
@@ -73,9 +73,9 @@ namespace Backend_Project.Domain.Services
             var foundReseervation = _appDataContext.Reservations.FirstOrDefault(reservation =>
                 reservation.Id.Equals(reservation.Id));
             if (foundReseervation is null)
-                throw new ReservationNotFound("Reservation not found or invalid Id");
+                throw new ReservationNotFound("Reservation not found.");
             if (!IsValidEntity(reservation))
-                throw new ReservationValidationException("Reservation not valid. Reservation not update");
+                throw new ReservationValidationException("Reservation is not valid.");
 
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
