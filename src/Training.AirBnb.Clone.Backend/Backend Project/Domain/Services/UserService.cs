@@ -1,4 +1,4 @@
-﻿
+
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.User;
 using Backend_Project.Domain.Interfaces;
@@ -50,7 +50,8 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true)
     {
-        var deletedUser = await GetById(user.Id);
+
+        var deletedUser = await GetById(entity.Id);
         if (deletedUser is null)
             throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
@@ -81,15 +82,14 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true)
     {
-        var updatedUser = await GetById(user.Id);
+        var updatedUser = await GetById(entity.Id);
+
         if (updatedUser is null)
-            throw new UserNotFoundException("User not found");
-        if (!(await _validationService.IsValidNameAsync(user.FirstName)))
-            throw new UserFormatException("Invalid first name");
-        if (!(await _validationService.IsValidNameAsync(user.LastName)))
-            throw new UserFormatException("Invalid last name");
-        updatedUser.FirstName = user.FirstName;
-        updatedUser.LastName = user.LastName;
+            throw new InvalidOperationException("User not found");
+
+        updatedUser.FirstName = entity.FirstName;
+        updatedUser.LastName = entity.LastName;
+        updatedUser.EmailAddress = entity.EmailAddress;
         updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
         updatedUser.IsActive = false;
