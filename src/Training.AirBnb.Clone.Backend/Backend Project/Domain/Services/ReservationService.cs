@@ -17,8 +17,10 @@ namespace Backend_Project.Domain.Services
         
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
-            if(IsValidEntity(reservation))
-                await _appDataContext.Reservations.AddAsync(reservation); 
+            if (IsValidEntity(reservation))
+                await _appDataContext.Reservations.AddAsync(reservation);
+            else
+                throw new ReservationCreateExeption("Invalid Reservation not creat");
             if (saveChanges)
                await _appDataContext.Reservations.SaveChangesAsync(); 
             return reservation;
