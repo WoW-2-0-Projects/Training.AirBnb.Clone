@@ -51,7 +51,7 @@ public class UserService : IEntityBaseService<User>
     public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true)
     {
 
-        var deletedUser = await GetById(entity.Id);
+        var deletedUser = await GetById(user.Id);
         if (deletedUser is null)
             throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
@@ -82,14 +82,13 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true)
     {
-        var updatedUser = await GetById(entity.Id);
+        var updatedUser = await GetById(user.Id);
 
         if (updatedUser is null)
             throw new InvalidOperationException("User not found");
-
-        updatedUser.FirstName = entity.FirstName;
-        updatedUser.LastName = entity.LastName;
-        updatedUser.EmailAddress = entity.EmailAddress;
+        updatedUser.FirstName = user.FirstName;
+        updatedUser.LastName = user.LastName;
+        updatedUser.EmailAddress = user.EmailAddress;
         updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
         updatedUser.IsActive = false;
