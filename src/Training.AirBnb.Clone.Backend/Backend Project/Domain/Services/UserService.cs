@@ -83,18 +83,16 @@ public class UserService : IEntityBaseService<User>
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true)
     {
         var updatedUser = await GetById(user.Id);
-
         if (updatedUser is null)
             throw new UserNotFoundException("User not found");
-        updatedUser.FirstName = user.FirstName;
-        updatedUser.LastName = user.LastName;
         if (!(await _validationService.IsValidNameAsync(user.FirstName)))
             throw new UserFormatException("Invalid first name");
         if (!(await _validationService.IsValidNameAsync(user.LastName)))
             throw new UserFormatException("Invalid last name");
+        updatedUser.FirstName = user.FirstName;
+        updatedUser.LastName = user.LastName;
         updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
-        updatedUser.IsActive = false;
         if (saveChanges)
             await _appDataContext.SaveChangesAsync();
         return updatedUser;
