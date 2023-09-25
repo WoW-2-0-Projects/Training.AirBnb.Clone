@@ -13,6 +13,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     {
         _dataContext = dataContext;
     }
+    
     public async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true)
     {
         await _dataContext.EmailTemplates.AddAsync(emailTemplate);
@@ -26,10 +27,10 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
       return _dataContext.EmailTemplates.Where(predicate.Compile()).AsQueryable();
     }
     
-    public ValueTask<EmailTemplate?> GetByIdAsync(Guid id)
+    public ValueTask<EmailTemplate> GetByIdAsync(Guid id)
     {
         var emailTemplate = _dataContext.EmailTemplates.FirstOrDefault(emailTemplate => emailTemplate.Id == id);
-        return new ValueTask<EmailTemplate?>(emailTemplate);
+        return new ValueTask<EmailTemplate>(emailTemplate);
     }
     
     public ValueTask<ICollection<EmailTemplate>> GetAsync(IEnumerable<Guid> ids)

@@ -6,10 +6,6 @@ public class EmailTemplate : SoftDeletedEntity
     public string Subject { get; set; }
     public string Body { get; set; }
 
-    public EmailTemplate()
-    {
-        
-    }
 
     public EmailTemplate(Guid id, string subject, string body)
     {
@@ -17,5 +13,6 @@ public class EmailTemplate : SoftDeletedEntity
         Subject = subject;
         Body = body;
     }
+
 
 }
