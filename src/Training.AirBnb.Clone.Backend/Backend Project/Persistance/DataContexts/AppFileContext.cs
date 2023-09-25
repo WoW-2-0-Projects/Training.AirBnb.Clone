@@ -1,4 +1,5 @@
-﻿using FileBaseContext.Abstractions.Models.Entity;
+﻿using Backend_Project.Domain.Entities;
+using FileBaseContext.Abstractions.Models.Entity;
 using FileBaseContext.Abstractions.Models.FileContext;
 using FileBaseContext.Abstractions.Models.FileSet;
 using FileBaseContext.Context.Models.Configurations;
@@ -13,6 +14,9 @@ public class AppFileContext : FileContext, IDataContext
         OnSaveChanges += AddPrimaryKeys;
     }
 
+    #region Notifications
+    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplate));
+    #endregion
     public virtual ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
         foreach (var fileSetBase in fileSets)

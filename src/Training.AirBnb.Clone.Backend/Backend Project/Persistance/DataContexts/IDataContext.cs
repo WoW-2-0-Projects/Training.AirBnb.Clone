@@ -1,6 +1,10 @@
-﻿namespace Backend_Project.Persistance.DataContexts;
+﻿using Backend_Project.Domain.Entities;
+using FileBaseContext.Abstractions.Models.FileSet;
 
-public interface IDataContext
+namespace Backend_Project.Persistance.DataContexts;
+
+public interface IDataContext : IAsyncDisposable
 {
+    IFileSet<EmailTemplate, Guid> EmailTemplates { get; }
     ValueTask SaveChangesAsync();
 }
