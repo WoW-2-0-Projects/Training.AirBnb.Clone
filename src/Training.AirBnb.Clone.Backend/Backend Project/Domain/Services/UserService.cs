@@ -89,7 +89,7 @@ public class UserService : IEntityBaseService<User>
             throw new UserFormatException("Invalid first name");
         if (!(await _validationService.IsValidNameAsync(user.LastName)))
             throw new UserFormatException("Invalid last name");
-        if (user.Id == default)
+        if (user.PhoneNumberId == default)
             throw new UserFormatException("Invalid phone number id");
         updatedUser.FirstName = user.FirstName;
         updatedUser.LastName = user.LastName;
