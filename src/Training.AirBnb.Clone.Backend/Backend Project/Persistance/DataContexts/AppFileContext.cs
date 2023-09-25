@@ -1,4 +1,5 @@
-﻿using FileBaseContext.Abstractions.Models.Entity;
+﻿using Backend_Project.Domain.Entities;
+using FileBaseContext.Abstractions.Models.Entity;
 using FileBaseContext.Abstractions.Models.FileContext;
 using FileBaseContext.Abstractions.Models.FileSet;
 using FileBaseContext.Context.Models.Configurations;
@@ -8,6 +9,10 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
+    public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
+
+    public IFileSet<Country, Guid> Countries => Set<Country>(nameof(Countries));
+
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
