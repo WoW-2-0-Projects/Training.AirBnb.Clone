@@ -2,7 +2,7 @@
 
 public interface IValidationService
 {
-    ValueTask<bool> IsValidName(string name);
+    ValueTask<bool> IsValidNameAsync(string name);
 
     bool IsValidEmailAddress(string emailAddress);
 

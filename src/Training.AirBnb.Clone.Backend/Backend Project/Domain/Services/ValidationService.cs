@@ -11,7 +11,7 @@ public class ValidationService : IValidationService
     public bool IsValidEmailAddress(string emailAddress) => 
         !string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress,_emailPattern);
 
-    public ValueTask<bool> IsValidName(string name)
+    public ValueTask<bool> IsValidNameAsync(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Any(char.IsDigit))
             return new ValueTask<bool>(false);
