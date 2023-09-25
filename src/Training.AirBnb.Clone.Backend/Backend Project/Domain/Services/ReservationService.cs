@@ -17,10 +17,12 @@ namespace Backend_Project.Domain.Services
         
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
+            if (_appDataContext.Reservations.Any(x => x == reservation))
+                throw new ReservationAlreadyExistExeption("This reservation already exixst");
             if (IsValidEntity(reservation))
                 await _appDataContext.Reservations.AddAsync(reservation);
             else
-                throw new ReservationCreateExeption("Invalid Reservation not creat");
+                throw new ReservationValidationException("Invalid Reservation not creat");
             if (saveChanges)
                await _appDataContext.Reservations.SaveChangesAsync(); 
             return reservation;
@@ -72,6 +74,9 @@ namespace Backend_Project.Domain.Services
                 reservation.Id.Equals(reservation.Id));
             if (foundReseervation is null)
                 throw new ReservationNotFound("Reservation not found or invalid Id");
+            if (!IsValidEntity(reservation))
+                throw new ReservationValidationException("Reservation not valid. Reservation not update");
+
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
