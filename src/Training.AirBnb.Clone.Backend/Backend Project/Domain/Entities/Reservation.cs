@@ -13,6 +13,8 @@ namespace Backend_Project.Domain.Entities
 
         public Reservation(Guid listingId, Guid bookedBy, Guid occupancyId, DateTime startDate, DateTime endDate, decimal totalPrice)
         {
+            Id = Guid.NewGuid();
+            CreatedDate = DateTimeOffset.UtcNow;
             ListingId = listingId;
             BookedBy = bookedBy;
             OccupancyId = occupancyId;

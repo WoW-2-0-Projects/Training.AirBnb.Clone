@@ -2,6 +2,7 @@
 using Backend_Project.Domain.Interfaces;
 using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Domain.Exceptions.ReservationExeptions;
 
 namespace Backend_Project.Domain.Services
 {
@@ -14,34 +15,32 @@ namespace Backend_Project.Domain.Services
             _appDataContext = appDateContext;
         }
         
-        public async ValueTask<Reservation> CreateAsync(Reservation entity, bool saveChanges = true)
+        public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
-            if(IsValidEntity(entity))
-                await _appDataContext.Reservations.AddAsync(entity); 
+            if(IsValidEntity(reservation))
+                await _appDataContext.Reservations.AddAsync(reservation); 
             if (saveChanges)
                await _appDataContext.Reservations.SaveChangesAsync(); 
-            return entity;
+            return reservation;
         }
 
         public async ValueTask<Reservation> DeleteAsync(Guid id, bool saveChanges = true)
         {
-            var removedReservation = await GetById(id);
-            if (removedReservation is null)
-                throw new ArgumentNullException();
+            var removedReservation = await GetByIdAsync(id);
             removedReservation.IsDeleted = true;
             removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            await _appDataContext.Reservations.SaveChangesAsync();
+            if(saveChanges)
+                await _appDataContext.Reservations.SaveChangesAsync();
             return  removedReservation;
         }
 
-        public async ValueTask<Reservation> DeleteAsync(Reservation entity, bool saveChanges = true)
+        public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true)
         {
-            var removedReservation = await GetById(entity.Id);
-            if (removedReservation is null)
-                throw new ArgumentNullException();
+            var removedReservation = await GetByIdAsync(reservation.Id);
             removedReservation.IsDeleted = true;
             removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            await _appDataContext.Reservations.SaveChangesAsync();
+            if(saveChanges)
+                await _appDataContext.Reservations.SaveChangesAsync();
             return removedReservation;
         }
 
@@ -50,54 +49,73 @@ namespace Backend_Project.Domain.Services
             return _appDataContext.Reservations.Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<Reservation>> Get(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<Reservation>> GetAsync(IEnumerable<Guid> ids)
         {
             var reservation = _appDataContext.Reservations
                 .Where(reservation => ids.Contains(reservation.Id));
             return new ValueTask<ICollection<Reservation>>(reservation.ToList());
         }
 
-        public ValueTask<Reservation> GetById(Guid id)
+        public ValueTask<Reservation> GetByIdAsync(Guid id)
         {
             var reservation =_appDataContext.Reservations.FirstOrDefault(reservation => reservation.Id.Equals(id));
             if (reservation is null)
-                throw new ArgumentNullException("Reservation not found");
-            return new ValueTask<Reservation?>(reservation);
+                throw new ReservationNotFound("Reservation not found or invalid Id");
+            return new ValueTask<Reservation>(reservation);
         }
 
-        public ValueTask<Reservation> UpdateAsync(Reservation entity, bool saveChanges = true)
+        public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true)
         {
             var foundReseervation = _appDataContext.Reservations.FirstOrDefault(reservation =>
-                reservation.Id.Equals(entity.Id));
+                reservation.Id.Equals(reservation.Id));
             if (foundReseervation is null)
-                throw new ArgumentNullException();
-            foundReseervation.ListingId = entity.ListingId;
-            foundReseervation.BookedBy = entity.BookedBy;
-            foundReseervation.OccupancyId = entity.OccupancyId;
-            foundReseervation.StartDate = entity.StartDate;
-            foundReseervation.EndDate = entity.EndDate;
-            foundReseervation.TotalPrice = entity.TotalPrice;
-            
-            _appDataContext.Reservations.SaveChangesAsync();
-            return new ValueTask<Reservation>(foundReseervation);
+                throw new ReservationUpdateExeption("Reservation not found or invalid Id");
+            foundReseervation.ListingId = reservation.ListingId;
+            foundReseervation.BookedBy = reservation.BookedBy;
+            foundReseervation.OccupancyId = reservation.OccupancyId;
+            foundReseervation.StartDate = reservation.StartDate;
+            foundReseervation.EndDate = reservation.EndDate;
+            foundReseervation.TotalPrice = reservation.TotalPrice;
+            foundReseervation.ModifiedDate = DateTimeOffset.UtcNow;
+            if (saveChanges)
+                await _appDataContext.Reservations.SaveChangesAsync();
+            return foundReseervation;
         }
 
-        private bool IsValidEntity(Reservation entity)
+        private bool IsValidEntity(Reservation reservation)
         {
-            if (entity.ListingId.Equals(default))
+            if (reservation.ListingId.Equals(default))
                 return false;
-            if(entity.BookedBy.Equals(default))
+            if(reservation.BookedBy.Equals(default))
                 return false;
-            if (entity.OccupancyId.Equals(default))
+            if (reservation.OccupancyId.Equals(default))
                 return false;
-            if (entity.StartDate.Equals(default))
+            if (reservation.StartDate.Equals(default) 
+                || !IsValidDateStartDate(reservation.StartDate))
                 return false;
-            if(entity.EndDate.Equals(default))
+            if(reservation.EndDate.Equals(default)
+                || IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
                 return false;
-            if(!(entity.TotalPrice is decimal))
+            if(reservation.TotalPrice > 0)
                 return false;
             return true;
                 
+        }
+
+        private bool IsValidDateStartDate(DateTime startdate)
+        {
+            if(startdate <= DateTime.UtcNow)
+                return false;
+            return true;
+        }
+        private bool IsValidDateEndDate(DateTime startDate,DateTime endDate)
+        {
+            var amountDate = startDate - DateTime.UtcNow;
+            if (endDate <= startDate)
+                return false;
+            if(endDate <= DateTime.UtcNow)
+                return false;
+            return true;
         }
     }
 }
