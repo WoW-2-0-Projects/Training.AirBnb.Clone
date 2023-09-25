@@ -9,14 +9,15 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
+    #region Notifications
+    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplate));
+    
+    #endregion
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
     }
 
-    #region Notifications
-    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplate));
-    #endregion
     public virtual ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
         foreach (var fileSetBase in fileSets)

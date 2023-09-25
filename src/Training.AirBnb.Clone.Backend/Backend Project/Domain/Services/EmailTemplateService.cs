@@ -16,7 +16,8 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     
     public async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true)
     {
-        await _dataContext.EmailTemplates.AddAsync(emailTemplate);
+        if(ValidationCreate(emailTemplate))
+            await _dataContext.EmailTemplates.AddAsync(emailTemplate);
         if(saveChanges)
            await _dataContext.SaveChangesAsync();
         return emailTemplate;
@@ -43,32 +44,60 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     {
         var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(searched => searched.Id == emailTemplate.Id);
         if (foundEmailTemplate is null)
-            throw new EmailTemplateException("EmailTemplate not found");
+            throw new EmailTemplateNotFound("EmailTemplate not found");
+        
         foundEmailTemplate.Subject = emailTemplate.Subject;
         foundEmailTemplate.Body = emailTemplate.Body;
+        foundEmailTemplate.ModifiedDate = emailTemplate.ModifiedDate;
         
-        await _dataContext.SaveChangesAsync();
+        if(saveChanges)
+            await _dataContext.EmailTemplates.SaveChangesAsync();
         return foundEmailTemplate;
     }
     
     public async ValueTask<EmailTemplate> DeleteAsync(Guid id, bool saveChanges = true)
     {
-      var foundemailTemplate = await GetByIdAsync(id);
-        if (foundemailTemplate is null)
-            throw new EmailTemplateException("You searched emailTemplate not found");
-        foundemailTemplate.IsDeleted = true; 
-        await _dataContext.SaveChangesAsync();
-        return foundemailTemplate;
+      var foundEmailTemplate = await GetByIdAsync(id);
+        if (foundEmailTemplate is null)
+            throw new EmailTemplateNotFound("You searched emailTemplate not found");
+        
+        foundEmailTemplate.IsDeleted = true; 
+        foundEmailTemplate.DeletedDate = DateTimeOffset.UtcNow;
+        
+        if(saveChanges)
+            await _dataContext.EmailTemplates.SaveChangesAsync();
+        return foundEmailTemplate;
     }
 
     public async ValueTask<EmailTemplate> DeleteAsync(EmailTemplate emailTemplate, bool saveChanges = true)
     {
-        var foundemailTemplate = await GetByIdAsync(emailTemplate.Id);
-        if (foundemailTemplate is null)
-            throw new EmailTemplateException("You searched emailTemplate not found");
+        var foundEmailTemplate = await GetByIdAsync(emailTemplate.Id);
+        if (foundEmailTemplate is null)
+            throw new EmailTemplateNotFound("You searched emailTemplate not found");
 
-        await _dataContext.SaveChangesAsync();
-        return foundemailTemplate;
+        foundEmailTemplate.IsDeleted = true;
+        foundEmailTemplate.DeletedDate = DateTimeOffset.UtcNow;
+        
+        if(saveChanges)
+            await _dataContext.EmailTemplates.SaveChangesAsync();
+        return foundEmailTemplate;
     }
 
+    public bool ValidationCreate(EmailTemplate emailTemplate)
+    {
+        var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.Id == emailTemplate.Id);
+        
+        if (foundEmailTemplate is not null)
+        {
+            return false;
+            throw new EmailTemplateAlreadyExists("This emailTemplate already exists");
+        }
+        if (string.IsNullOrEmpty(emailTemplate.Subject) || string.IsNullOrEmpty(emailTemplate.Body))
+        {
+            return false;
+            throw new EmailTemplateNullMembers("This a member of these emailsTemplate null");
+        }        
+        return true;
+
+    }
 }
