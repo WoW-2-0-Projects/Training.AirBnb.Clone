@@ -56,7 +56,7 @@ public class UserService : IEntityBaseService<User>
             throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
         deletedUser.IsDeleted = true;
-        if(saveChanges)
+        if (saveChanges)
             await _appDataContext.SaveChangesAsync();
         return deletedUser;
     }
@@ -76,7 +76,7 @@ public class UserService : IEntityBaseService<User>
     public ValueTask<User> GetById(Guid id)
     {
         return new ValueTask<User>(_appDataContext.Users.
-            FirstOrDefault(user => user.Id == id && !user.IsDeleted) ?? 
+            FirstOrDefault(user => user.Id == id && !user.IsDeleted) ??
             throw new UserNotFoundException("User not found"));
     }
 
@@ -85,14 +85,17 @@ public class UserService : IEntityBaseService<User>
         var updatedUser = await GetById(user.Id);
 
         if (updatedUser is null)
-            throw new InvalidOperationException("User not found");
+            throw new UserNotFoundException("User not found");
         updatedUser.FirstName = user.FirstName;
         updatedUser.LastName = user.LastName;
-        updatedUser.EmailAddress = user.EmailAddress;
+        if (!(await _validationService.IsValidNameAsync(user.FirstName)))
+            throw new UserFormatException("Invalid first name");
+        if (!(await _validationService.IsValidNameAsync(user.LastName)))
+            throw new UserFormatException("Invalid last name");
         updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
         updatedUser.IsActive = false;
-        if(saveChanges)
+        if (saveChanges)
             await _appDataContext.SaveChangesAsync();
         return updatedUser;
     }
