@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Configs\" />
-    <Folder Include="Domain\Entities\" />
     <Folder Include="Domain\Extensions\" />
     <Folder Include="Domain\Exceptions\" />
     <Folder Include="Infrastructure\Configs\" />
