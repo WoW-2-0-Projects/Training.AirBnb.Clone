@@ -1,4 +1,4 @@
-﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Entities;
 using FileBaseContext.Abstractions.Models.Entity;
 using FileBaseContext.Abstractions.Models.FileContext;
 using FileBaseContext.Abstractions.Models.FileSet;
@@ -13,6 +13,7 @@ public class AppFileContext : FileContext, IDataContext
 
     public IFileSet<Country, Guid> Countries => Set<Country>(nameof(Countries));
 
+    public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
