@@ -16,6 +16,7 @@ public class EmailTemplate : SoftDeletedEntity
         Id = Guid.NewGuid();
         Subject = subject;
         Body = body;
+        CreatedDate = DateTimeOffset.UtcNow;
     }
 
 
