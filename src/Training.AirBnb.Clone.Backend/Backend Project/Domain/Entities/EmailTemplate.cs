@@ -6,7 +6,16 @@ public class EmailTemplate : SoftDeletedEntity
     public string Subject { get; set; }
     public string Body { get; set; }
 
-
+    public EmailTemplate()
+    {
+        
+    }
+    public EmailTemplate(Guid id, string subject, string body)
+    {
+        Id = id;
+        Subject = subject;
+        Body = body;
+    }
     public EmailTemplate(string subject, string body)
     {
         Id = Guid.NewGuid();
@@ -15,4 +24,16 @@ public class EmailTemplate : SoftDeletedEntity
     }
 
 
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Subject, Body);
+    }
+    public override bool Equals(object? obj)
+    {
+        return this.GetHashCode().Equals(obj.GetHashCode());
+    }
+    public override string ToString()
+    {
+        return $"ID:{Id}, Subject:{Subject} Body:{Body}";
+    }
 }

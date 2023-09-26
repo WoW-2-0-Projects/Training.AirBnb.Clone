@@ -7,6 +7,6 @@ public class EmailTemplateNotFound : Exception
         
     }
 
-    public EmailTemplateNotFound(string massage) :base(massage) { }
+    public EmailTemplateNotFound(string massage) : base(massage) { }
     
 }

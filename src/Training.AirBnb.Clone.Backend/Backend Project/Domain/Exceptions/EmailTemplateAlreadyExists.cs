@@ -6,7 +6,7 @@ public class EmailTemplateAlreadyExists : Exception
     {
         
     }
-    public EmailTemplateAlreadyExists(string message) :base(message)
+    public EmailTemplateAlreadyExists(string message) : base(message)
     {
         
     }
