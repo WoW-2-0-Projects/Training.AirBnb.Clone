@@ -17,7 +17,7 @@ namespace Backend_Project.Domain.Services
         
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
-            if (_appDataContext.Reservations.Any(x => x == reservation))
+            if (GetUndelatedReservations().Any(x => x.Equals(reservation)))
                 throw new ReservationAlreadyExistsException("This reservation already exists");
             if (IsValidEntity(reservation))
                 await _appDataContext.Reservations.AddAsync(reservation);
@@ -50,19 +50,19 @@ namespace Backend_Project.Domain.Services
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
         {
-            return _appDataContext.Reservations.Where(predicate.Compile()).AsQueryable();
+            return GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
         }
 
         public ValueTask<ICollection<Reservation>> GetAsync(IEnumerable<Guid> ids)
         {
-            var reservation = _appDataContext.Reservations
+            var reservation = GetUndelatedReservations()
                 .Where(reservation => ids.Contains(reservation.Id));
             return new ValueTask<ICollection<Reservation>>(reservation.ToList());
         }
 
         public ValueTask<Reservation> GetByIdAsync(Guid id)
         {
-            var reservation =_appDataContext.Reservations.FirstOrDefault(reservation => reservation.Id.Equals(id));
+            var reservation = GetUndelatedReservations().FirstOrDefault(reservation => reservation.Id.Equals(id));
             if (reservation is null)
                 throw new ReservationNotFound("Reservation not found.");
             return new ValueTask<Reservation>(reservation);
@@ -70,7 +70,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true)
         {
-            var foundReseervation = _appDataContext.Reservations.FirstOrDefault(reservation =>
+            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
                 reservation.Id.Equals(reservation.Id));
             if (foundReseervation is null)
                 throw new ReservationNotFound("Reservation not found.");
@@ -123,5 +123,7 @@ namespace Backend_Project.Domain.Services
                 return false;
             return true;
         }
+        private IQueryable<Reservation> GetUndelatedReservations () => _appDataContext.Reservations
+            .Where(res => !res.IsDeleted).AsQueryable();
     }
 }
