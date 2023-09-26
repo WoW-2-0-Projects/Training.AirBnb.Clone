@@ -17,10 +17,11 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     
     public async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true)
     {
+       
         if(!ValidationToNull(emailTemplate))
             throw new EmailTemplateValidationToNull("This a member of these emailTemplate null");
         
-        if(!ValidationToExists(emailTemplate))
+        if(GetUndeletedEmailTemplate().Any(template => template.Equals(emailTemplate)))
             throw new EmailTemplateAlreadyExists("This emailTemplate already exists");
         
         await _dataContext.EmailTemplates.AddAsync(emailTemplate);
@@ -32,12 +33,12 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 
     public IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>> predicate)
     {
-      return _dataContext.EmailTemplates.Where(predicate.Compile()).AsQueryable();
+      return GetUndeletedEmailTemplate().Where(predicate.Compile()).AsQueryable();
     }
     
     public ValueTask<EmailTemplate> GetByIdAsync(Guid id)
     {
-        var emailTemplate = _dataContext.EmailTemplates.FirstOrDefault(emailTemplate => emailTemplate.Id == id);
+        var emailTemplate = GetUndeletedEmailTemplate().FirstOrDefault(emailTemplate => emailTemplate.Id == id);
         if (emailTemplate is null)
             throw new EmailTemplateNotFound("EmailTemplate not found");
         return new ValueTask<EmailTemplate>(emailTemplate);
@@ -45,7 +46,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     
     public ValueTask<ICollection<EmailTemplate>> GetAsync(IEnumerable<Guid> ids)
     {
-        var emailTemplates = _dataContext.EmailTemplates.Where(emailTemplate => ids.Contains(emailTemplate.Id));
+        var emailTemplates = GetUndeletedEmailTemplate().Where(emailTemplate => ids.Contains(emailTemplate.Id));
         return new ValueTask<ICollection<EmailTemplate>>(emailTemplates.ToList());
     }
     
@@ -93,15 +94,6 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         return foundEmailTemplate;
     }
 
-    private bool ValidationToExists(EmailTemplate emailTemplate)
-    {
-        var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.Subject.Equals(emailTemplate.Subject));
-        
-        if (foundEmailTemplate is not null)
-            return false;
-        return true;
-    }
-
     private bool ValidationToNull(EmailTemplate emailTemplate)
     {
         var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.Subject.Equals(emailTemplate.Subject));
@@ -110,4 +102,8 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
             return false;
         return true;
     }
+
+    private IQueryable<EmailTemplate> GetUndeletedEmailTemplate() =>
+        _dataContext.EmailTemplates.Where(emailTemplate => !emailTemplate.IsDeleted).AsQueryable();
 }
+
