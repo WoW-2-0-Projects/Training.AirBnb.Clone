@@ -98,6 +98,7 @@ public class UserService : IEntityBaseService<User>
         if (saveChanges)
             await _appDataContext.SaveChangesAsync();
         return updatedUser;
+
     }
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!_appDataContext.Users
