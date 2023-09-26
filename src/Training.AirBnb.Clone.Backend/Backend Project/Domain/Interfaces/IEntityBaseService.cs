@@ -6,9 +6,9 @@ public interface IEntityBaseService<T> where T : class
 {
     IQueryable<T> Get(Expression<Func<T, bool>> predicate);
 
-    ValueTask<ICollection<T>> Get(IEnumerable<Guid> ids);
+    ValueTask<ICollection<T>> GetAsync(IEnumerable<Guid> ids);
 
-    ValueTask<T> GetById(Guid id);
+    ValueTask<T> GetByIdAsync(Guid id);
 
     ValueTask<T> CreateAsync(T entity, bool saveChanges = true);
 
