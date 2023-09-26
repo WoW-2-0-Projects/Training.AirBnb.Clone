@@ -18,7 +18,7 @@ namespace Backend_Project.Domain.Services
         {
             if (GetUndeletedCountries().Any(c => c.Equals(country)))
                 throw new CountryAlreadyExistsException("This Country already Exists");
-            if (IsValidCityName(country))
+            if (!IsValidCityName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
             await _appDataContext.Countries.AddAsync(country);
             if (saveChanges)

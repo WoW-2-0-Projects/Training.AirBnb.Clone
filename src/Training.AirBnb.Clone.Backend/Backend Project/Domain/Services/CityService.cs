@@ -16,9 +16,9 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<City> CreateAsync(City city, bool saveChanges = true)
         {
-            if (GetUndeletedCities().Any(c => c.Equals(city)))
+            if (GetUndeletedCities().Any(c => c.Name.Equals(city.Name)))
                 throw new CityAlreadyExistsException("This City already Exists");
-            if(IsValidCityName(city))
+            if(!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
             await _appDataContext.Cities.AddAsync(city);
             if(saveChanges )

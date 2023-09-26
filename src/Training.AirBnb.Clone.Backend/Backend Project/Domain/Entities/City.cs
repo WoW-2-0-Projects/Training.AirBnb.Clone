@@ -12,5 +12,9 @@ namespace Backend_Project.Domain.Entities
             CreatedDate = DateTimeOffset.UtcNow;
 
         }
+        public override string ToString()
+        {
+            return $"{Name}{Id} {CreatedDate}{ModifiedDate}{DeletedDate}{IsDeleted}";
+        }
     }
 }
