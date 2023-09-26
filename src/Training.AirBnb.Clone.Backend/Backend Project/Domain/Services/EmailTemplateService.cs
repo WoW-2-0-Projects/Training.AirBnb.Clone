@@ -8,7 +8,7 @@ namespace Backend_Project.Domain.Services;
 public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 {
     private readonly IDataContext _dataContext;
-    private readonly object _lock;
+   
 
     public EmailTemplateService(IDataContext dataContext)
     {
