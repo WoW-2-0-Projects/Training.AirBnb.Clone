@@ -10,12 +10,7 @@ public class EmailTemplate : SoftDeletedEntity
     {
         
     }
-    public EmailTemplate(Guid id, string subject, string body)
-    {
-        Id = id;
-        Subject = subject;
-        Body = body;
-    }
+ 
     public EmailTemplate(string subject, string body)
     {
         Id = Guid.NewGuid();

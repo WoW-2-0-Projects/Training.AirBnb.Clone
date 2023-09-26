@@ -96,7 +96,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 
     private bool ValidationToNull(EmailTemplate emailTemplate)
     {
-        var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.Subject.Equals(emailTemplate.Subject));
+        var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.GetHashCode().Equals(emailTemplate.GetHashCode()));
         
         if (string.IsNullOrEmpty(emailTemplate.Subject) || string.IsNullOrEmpty(emailTemplate.Body))
             return false;
