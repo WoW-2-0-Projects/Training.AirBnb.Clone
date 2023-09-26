@@ -16,7 +16,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Country> CreateAsync(Country country, bool saveChanges = true)
         {
-            if (GetUndeletedCountries().Any(c => c.Equals(country)))
+            if (GetUndeletedCountries().Any(c => c.Name.Equals(country.Name)))
                 throw new CountryAlreadyExistsException("This Country already Exists");
             if (!IsValidCityName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
