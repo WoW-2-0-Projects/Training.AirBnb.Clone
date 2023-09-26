@@ -9,15 +9,18 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
+    public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
     public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
 
     public IFileSet<Country, Guid> Countries => Set<Country>(nameof(Countries));
 
     public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
+
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
     }
+
 
     public virtual ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
