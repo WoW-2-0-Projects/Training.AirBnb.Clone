@@ -9,7 +9,6 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 {
     private readonly IDataContext _dataContext;
    
-
     public EmailTemplateService(IDataContext dataContext)
     {
         _dataContext = dataContext;
@@ -21,8 +20,8 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         if(!ValidationToNull(emailTemplate))
             throw new EmailTemplateValidationToNull("This a member of these emailTemplate null");
         
-        if(GetUndeletedEmailTemplate().Any(template => template.Equals(emailTemplate)))
-            throw new EmailTemplateAlreadyExists("This emailTemplate already exists");
+        if(ValidationExits(emailTemplate))
+            throw new  EmailTemplateAlreadyExists("This emailTemplate already exists");
         
         await _dataContext.EmailTemplates.AddAsync(emailTemplate);
         
@@ -81,8 +80,6 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 
     public async ValueTask<EmailTemplate> DeleteAsync(EmailTemplate emailTemplate, bool saveChanges = true)
     {
-        if (!ValidationToNull(emailTemplate))
-            throw new EmailTemplateValidationToNull("This a member of these emailsTemplate null");
         
         var foundEmailTemplate = await GetByIdAsync(emailTemplate.Id);
 
@@ -93,16 +90,20 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
             await _dataContext.EmailTemplates.SaveChangesAsync();
         return foundEmailTemplate;
     }
-
+    
     private bool ValidationToNull(EmailTemplate emailTemplate)
-    {
-        var foundEmailTemplate = _dataContext.EmailTemplates.FirstOrDefault(search => search.GetHashCode().Equals(emailTemplate.GetHashCode()));
-        
+    {      
         if (string.IsNullOrEmpty(emailTemplate.Subject) || string.IsNullOrEmpty(emailTemplate.Body))
             return false;
         return true;
     }
-
+    private bool ValidationExits(EmailTemplate emailTemplate)
+    {
+        var foundEmailTemplate = GetUndeletedEmailTemplate().FirstOrDefault(search => search.Equals(emailTemplate));
+        if (foundEmailTemplate is null) 
+            return false;
+        return true;
+    }
     private IQueryable<EmailTemplate> GetUndeletedEmailTemplate() =>
         _dataContext.EmailTemplates.Where(emailTemplate => !emailTemplate.IsDeleted).AsQueryable();
 }
