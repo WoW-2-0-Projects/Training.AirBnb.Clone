@@ -8,7 +8,7 @@ public interface IEntityBaseService<T> where T : class
 
     ValueTask<ICollection<T>> Get(IEnumerable<Guid> ids);
 
-    ValueTask<T> GetById(Guid id);
+    ValueTask<T> GetByIdAsync(Guid id);
 
     ValueTask<T> CreateAsync(T entity, bool saveChanges = true);
 
