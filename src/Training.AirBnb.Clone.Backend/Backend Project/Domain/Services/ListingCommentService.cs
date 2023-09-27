@@ -6,101 +6,102 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Domain.Services
 {
-    public class ListingReviewService : IEntityBaseService<ListingComment>
+    public class ListingCommentService : IEntityBaseService<ListingComment>
     {
         private readonly IDataContext _appDataContext;
 
-        public ListingReviewService(IDataContext appDataContext)
+        public ListingCommentService(IDataContext appDataContext)
         {
             _appDataContext = appDataContext;
         }
 
-        public async ValueTask<ListingComment> CreateAsync(ListingComment listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> CreateAsync(ListingComment listingComment, bool saveChanges = true)
         {
-            if (string.IsNullOrWhiteSpace(listingReview.Comment) || listingReview.Comment.Length < 1000)
-                throw new ListingReviewFormatException("Invalid comment!");
-            if (listingReview.Rating < 0 || listingReview.Rating > 5)
-                throw new ListingReviewFormatException("Invalid rating!");
+            if (!(await IsValidComment(listingComment.Comment)))
+                throw new ListingCommentFormatException("Invalid comment!");
             
-            await _appDataContext.ListingReviews.AddAsync(listingReview);
+            await _appDataContext.ListingComments.AddAsync(listingComment);
             
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
-            return listingReview;
+                await _appDataContext.ListingComments.SaveChangesAsync();
+            return listingComment;
         }
 
         public async ValueTask<ListingComment> DeleteAsync(Guid id, bool saveChanges = true)
         {
-            var deletedListingReview = await GetById(id);
+            var deletedListingReview = await GetByIdAsync(id);
 
             if (deletedListingReview is null)
-                throw new ListingReviewNotFoundException("ListingReview not found!");
+                throw new ListingCommentNotFoundException("ListingComment not found!");
 
             deletedListingReview.IsDeleted = true;
-            deletedListingReview.DeletedDate = DateTime.UtcNow;
+            deletedListingReview.DeletedDate = DateTimeOffset.UtcNow;
             
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.ListingComments.SaveChangesAsync();
             return deletedListingReview;
         }
 
-        public async ValueTask<ListingComment> DeleteAsync(ListingComment listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> DeleteAsync(ListingComment listingComment, bool saveChanges = true)
         {
-            var deletedListingReview = await GetById(listingReview.Id);
+            var deletedListingComment = await GetByIdAsync(listingComment.Id);
 
-            if (deletedListingReview is null)
-                throw new ListingReviewNotFoundException("ListingReview not found!");
+            if (deletedListingComment is null)
+                throw new ListingCommentNotFoundException("ListingComment not found!");
 
-            deletedListingReview.IsDeleted = true;
-            deletedListingReview.DeletedDate= DateTime.UtcNow;
+            deletedListingComment.IsDeleted = true;
+            deletedListingComment.DeletedDate= DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
-            return deletedListingReview;
+                await _appDataContext.ListingComments.SaveChangesAsync();
+            return deletedListingComment;
         }
 
         public IQueryable<ListingComment> Get(Expression<Func<ListingComment, bool>> predicate)
         {
-            return _appDataContext.ListingReviews.Where(predicate.Compile()).AsQueryable();
+            return GetUndeletedListingComment().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<ListingComment>> Get(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<ListingComment>> GetAsync(IEnumerable<Guid> ids)
         {
-            var listigReviews = _appDataContext.ListingReviews.
-                Where(listingReview => ids.Contains(listingReview.Id));
-            return new ValueTask<ICollection<ListingComment>>(listigReviews.ToList());
+            var listigComments = GetUndeletedListingComment().
+                Where(listingComment => ids.Contains(listingComment.Id));
+            return new ValueTask<ICollection<ListingComment>>(listigComments.ToList());
         }
 
-        public ValueTask<ListingComment> GetById(Guid id)
+        public ValueTask<ListingComment> GetByIdAsync(Guid id)
         {
-            return new ValueTask<ListingComment>(_appDataContext.ListingReviews.
-                FirstOrDefault(listingReview => listingReview.Id == id) ??
-                throw new ListingReviewNotFoundException("ListingReview not found!"));
+            return new ValueTask<ListingComment>(GetUndeletedListingComment().
+                FirstOrDefault(listingComment => listingComment.Id == id) ??
+                throw new ListingCommentNotFoundException("ListingComment not found!"));
         }
 
-        public async ValueTask<ListingComment> UpdateAsync(ListingComment listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> UpdateAsync(ListingComment listingComment, bool saveChanges = true)
         {
-            var updatedListingReview = await GetById(listingReview.Id);
+            var updatedListingComment = GetUndeletedListingComment().
+                FirstOrDefault(updateListingComment => listingComment.Id.Equals(updateListingComment.Id));
 
-            if (updatedListingReview is null)
-                throw new ListingReviewNotFoundException("ListingReview not found!");
-            if (string.IsNullOrWhiteSpace(listingReview.Comment) || listingReview.Comment.Length < 1000)
-                throw new ListingReviewFormatException("Invalid comment!");
-            if (listingReview.Rating < 0 || listingReview.Rating > 5)
-                throw new ListingReviewFormatException("Invalid rating!");
+            if (updatedListingComment is null)
+                throw new ListingCommentNotFoundException("ListingComment not found!");
+            if (!(await IsValidComment(listingComment.Comment)))
+                throw new ListingCommentFormatException("Invalid comment!");
 
-            updatedListingReview.Comment = listingReview.Comment;
-            updatedListingReview.WrittenBy = listingReview.WrittenBy;
-            updatedListingReview.Rating = listingReview.Rating;
-            updatedListingReview.ModifiedDate = DateTime.UtcNow;
-            updatedListingReview.ListingId = listingReview.ListingId;
+            updatedListingComment.Comment = listingComment.Comment;
+            updatedListingComment.ModifiedDate = DateTimeOffset.UtcNow;
             
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
-            return updatedListingReview;
+                await _appDataContext.ListingComments.SaveChangesAsync();
+            return updatedListingComment;
         }
 
-        private IQueryable<ListingComment> GetUndeletedListingReview() =>_appDataContext.ListingReviews.
-            Where(listingReview => !listingReview.IsDeleted).AsQueryable();
+        private ValueTask<bool> IsValidComment(string comment)
+        {
+            if (!string.IsNullOrWhiteSpace(comment) && comment.Length < 1000)
+                return new ValueTask<bool>(true);
+            else return new ValueTask<bool>(false);
+        }
+
+        private IQueryable<ListingComment> GetUndeletedListingComment() =>_appDataContext.ListingComments.
+            Where(listingComment => !listingComment.IsDeleted).AsQueryable();
     }
 }
