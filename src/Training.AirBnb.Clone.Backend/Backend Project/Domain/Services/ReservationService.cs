@@ -18,11 +18,13 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true)
         {
             if (GetUndelatedReservations().Any(x => x.Equals(reservation)))
-                throw new ReservationAlreadyExistsException("This reservation already exists");
-            if (IsValidEntity(reservation))
-                await _appDataContext.Reservations.AddAsync(reservation);
+                throw new ReservationAlreadyExistsException("This reservation already exists!");
+            if (!IsValidEntity(reservation))
+                throw new ReservationValidationException("Reservation didn't pass validation!");
+            if (!GetIsNotBooked(reservation))
+                throw new ListingAlreadyOccupiedException("This Listing already Occupated!");
             else
-                throw new ReservationValidationException("Reservation didn't pass validation");
+                await _appDataContext.Reservations.AddAsync(reservation);
             if (saveChanges)
                await _appDataContext.Reservations.SaveChangesAsync(); 
             return reservation;
@@ -76,7 +78,8 @@ namespace Backend_Project.Domain.Services
                 throw new ReservationNotFound("Reservation not found.");
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation is not valid.");
-
+            if (!GetIsNotBooked(reservation))
+                throw new ListingAlreadyOccupiedException("This Listing already Occupated");
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
@@ -111,19 +114,26 @@ namespace Backend_Project.Domain.Services
 
         private bool IsValidDateStartDate(DateTime startdate)
         {
-            if(startdate <= DateTime.UtcNow)
+            if(startdate < DateTime.UtcNow)
                 return false;
             return true;
         }
         private bool IsValidDateEndDate(DateTime startDate,DateTime endDate)
         {
-            if (endDate <= startDate) 
+            if (endDate < startDate) 
                 return false;
-            if(endDate <= DateTime.UtcNow)
+            if(endDate < DateTime.UtcNow)
                 return false;
             return true;
         }
         private IQueryable<Reservation> GetUndelatedReservations () => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
+
+        private IQueryable<Reservation> GetByListingId(Reservation reservation)
+            => GetUndelatedReservations().Where(lId => lId.Id.Equals(lId));
+
+        private bool GetIsNotBooked(Reservation reservation) => GetByListingId(reservation)
+            .Any(res => (reservation.EndDate < res.StartDate)
+            || (reservation.StartDate > res.EndDate));
     }
 }
