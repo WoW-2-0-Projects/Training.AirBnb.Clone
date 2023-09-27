@@ -17,10 +17,12 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true)
         {
-            if (!(await IsValidAddresses(address.Province)))
+            if (!IsValidProvince(address.Province))
                 throw new AddressFormatException("Invalid province!");
-            if (!(await IsValidAddresses(address.AddressLine1)))
-                throw new AddressFormatException("Invalid addressLine1!");
+            if (!IsValidAddressLines(address))
+                throw new AddressFormatException("Invalid addressLines!");
+            if (!IsValidZipCode(address.ZipCode))
+                throw new AddressFormatException("Invalid zipCode!");
 
             await _appDataContext.Addresses.AddAsync(address);
 
@@ -86,10 +88,12 @@ namespace Backend_Project.Domain.Services
             if (updatedAddress is null)
                 throw new AddressNotFoundException("Address not found!");
 
-            if (!(await IsValidAddresses(address.Province)))
+            if (!IsValidProvince(address.Province))
                 throw new AddressFormatException("Invalid province!");
-            if (!(await IsValidAddresses(address.AddressLine1)))
-                throw new AddressFormatException("Invalid addressLine1!");
+            if (!IsValidAddressLines(address))
+                throw new AddressFormatException("Invalid addressLines!");
+            if (!IsValidZipCode(address.ZipCode))
+                throw new AddressFormatException("Invalid zipCode!");
 
             updatedAddress.Province = address.Province;
             updatedAddress.AddressLine1 = address.AddressLine1;
@@ -105,27 +109,38 @@ namespace Backend_Project.Domain.Services
 
         }
 
-
-        private ValueTask<bool> IsValidAddresses(string addresses)
+        private bool IsValidProvince(string addresses)
         {
             if (!string.IsNullOrWhiteSpace(addresses))
-                return new ValueTask<bool>(true);
-            else return new ValueTask<bool>(false);
+                return true;
+            else
+                return false;
         }
-        private ValueTask<bool> IsValidZipCode(string zipCode)
+
+        private bool IsValidAddressLines(Address address)
         {
-            if (!string.IsNullOrWhiteSpace(zipCode))
-            {
-                var countCharacter = 0;
-                for (int index = 0; index < zipCode.Length; index++)
-                {
-                    if (!char.IsNumber(zipCode[index]))
-                        countCharacter++;
-                }
-                if (countCharacter == 0) return new ValueTask<bool>(true);
-                else return new ValueTask<bool>(false);
-            }
-            return new ValueTask<bool>(false);
+            var isValid = false;
+            if (address.AddressLine1 is  null)
+                isValid = true;
+            if (address.AddressLine2 is null)
+                isValid = true;
+            if (address.AddressLine3 is null)
+                isValid = true;
+            if (address.AddressLine4 is null)
+                isValid = true;
+            return isValid;
+
+           
+        }
+
+        private bool IsValidZipCode(string? zipCode)
+        {
+            if(zipCode is null)
+                return true;
+            for (int index = 0; index < zipCode?.Length; index++)
+                if (!char.IsNumber(zipCode[index]))
+                    return false;
+            return true;
         }
 
         private IQueryable<Address> GetUndelatedAddresses() => _appDataContext.Addresses

@@ -6,12 +6,12 @@ namespace Backend_Project.Domain.Entities
         public Guid CountryId { get; set; }
         public Guid CityId { get; set; }
         public string Province { get; set; }
-        public string AddressLine1 { get; set; }
+        public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
         public string? AddressLine3 { get; set; }
         public string? AddressLine4 { get; set; }
         public string? ZipCode { get; set; }
-        public Address(Guid countryId, Guid cityId, string province, string addressLine1,
+        public Address(Guid countryId, Guid cityId, string province, string? addressLine1 = null,
             string ? addressLine2 = null, string? addressLine3 = null, string? addressLine4 = null, string? zipCode = null)
         {
             Id = Guid.NewGuid();
