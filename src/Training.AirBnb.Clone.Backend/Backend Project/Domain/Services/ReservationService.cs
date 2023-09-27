@@ -130,7 +130,7 @@ namespace Backend_Project.Domain.Services
             .Where(res => !res.IsDeleted).AsQueryable();
 
         private IQueryable<Reservation> GetByListingId(Reservation reservation)
-            => GetUndelatedReservations().Where(lId => lId.Id.Equals(lId));
+            => GetUndelatedReservations().Where(lId => lId.ListingId.Equals(reservation.ListingId));
 
         private bool GetIsNotBooked(Reservation reservation) => GetByListingId(reservation)
             .Any(res => (reservation.EndDate < res.StartDate)
