@@ -56,7 +56,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
 
         foundEmailMessage.Subject = emailMessage.Subject;
         foundEmailMessage.Body = emailMessage.Body;
-        foundEmailMessage.SerdorAddress = emailMessage.SerdorAddress;
+        foundEmailMessage.SendorAddress = emailMessage.SendorAddress;
         foundEmailMessage.ReceiverAddress = emailMessage.ReceiverAddress;
         foundEmailMessage.ModifiedDate = DateTimeOffset.UtcNow;
 
@@ -93,7 +93,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
     {
         if (string.IsNullOrEmpty(emailMessage.Subject) 
             || string.IsNullOrEmpty(emailMessage.Body)
-            || string.IsNullOrEmpty(emailMessage.SerdorAddress)
+            || string.IsNullOrEmpty(emailMessage.SendorAddress)
             || string.IsNullOrEmpty(emailMessage.ReceiverAddress))
             return false;
         return true;
