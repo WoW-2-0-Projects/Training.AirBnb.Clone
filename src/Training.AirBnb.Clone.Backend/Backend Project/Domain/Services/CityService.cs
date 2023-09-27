@@ -55,7 +55,7 @@ namespace Backend_Project.Domain.Services
             return GetUndeletedCities().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<City>> Get(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<City>> GetAsync(IEnumerable<Guid> ids)
         {
             var cities = GetUndeletedCities()
             .Where(city => ids.Contains(city.Id));
@@ -90,7 +90,8 @@ namespace Backend_Project.Domain.Services
         {
             if (string.IsNullOrWhiteSpace(city.Name)
                 || (city.Name.Length <= 4
-                || city.Name.Length > 185))
+                || city.Name.Length > 185)
+                || city.CountryId.Equals(default))
                 return false;
             return true;
         }
