@@ -1,60 +1,124 @@
-﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
+﻿using Backend_Project.Domain.Interfaces;
+using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
+using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Domain.Exceptions.EmailMessageExceptions;
 
 namespace Backend_Project.Domain.Services;
 
-public class EmailMessageSevice : IEmailMessageService<EmailMessage>, IEntityBaseService<EmailMessage>
+public class EmailMessageSevice : IEntityBaseService<EmailMessage>
 {
-    ValueTask<EmailMessage> IEntityBaseService<EmailMessage>.CreateAsync(EmailMessage entity, bool saveChanges)
+    private readonly IDataContext _dataContext;
+
+    public EmailMessageSevice(IDataContext dataContext)
     {
-        throw new NotImplementedException();
+        _dataContext = dataContext;
+    }
+    public async ValueTask<EmailMessage> CreateAsync(EmailMessage emailMessage, bool saveChanges)
+    {
+        if (ValidationToNull(emailMessage))
+            throw new EmailMessageValidationToNull("This a member of these emailMessage null");
+        
+        if (ValidationExists(emailMessage))
+            throw new EmailMessageAlreadyExists("This emailTemplate already exists");
+        
+        await _dataContext.EmailMessages.AddAsync(emailMessage);
+
+        if (saveChanges)
+            await _dataContext.SaveChangesAsync();
+        return emailMessage;
     }
 
-    IQueryable<EmailMessage> IEntityBaseService<EmailMessage>.Get(Expression<Func<EmailMessage, bool>> predicate)
+    public IQueryable<EmailMessage> Get(Expression<Func<EmailMessage, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return UndeletedEmailMessage().Where(predicate.Compile()).AsQueryable();
     }
 
-    ValueTask<EmailMessage> IEntityBaseService<EmailMessage>.GetByIdAsync(Guid id)
+    public ValueTask<EmailMessage> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var emailMessage = UndeletedEmailMessage().FirstOrDefault(emailMessage => emailMessage.Id == id);
+        if (emailMessage is null)
+            throw new EmailMessageNotFound("EmailTemplate not found");
+        return new ValueTask<EmailMessage>(emailMessage);
     }
 
-    ValueTask<ICollection<EmailMessage>> IEntityBaseService<EmailMessage>.GetAsync(IEnumerable<Guid> ids)
+    public ValueTask<ICollection<EmailMessage>> GetAsync(IEnumerable<Guid> ids)
     {
-        throw new NotImplementedException();
+       var emailMessages = UndeletedEmailMessage().Where(emailMessage => ids.Contains(emailMessage.Id));
+        return new ValueTask<ICollection<EmailMessage>>(emailMessages.ToList());
     }
 
-    ValueTask<EmailMessage> IEntityBaseService<EmailMessage>.DeleteAsync(Guid id, bool saveChanges)
+    public async ValueTask<EmailMessage> UpdateAsync(EmailMessage emailMessage, bool saveChanges)
     {
-        throw new NotImplementedException();
+        if (ValidationExists(emailMessage))
+            throw new EmailMessageValidationToNull("This a member of these emailTemplate null");
+        var foundEmailMessage = await GetByIdAsync(emailMessage.Id);
+
+        foundEmailMessage.Subject = emailMessage.Subject;
+        foundEmailMessage.Body = emailMessage.Body;
+        foundEmailMessage.SerdorAddress = emailMessage.SerdorAddress;
+        foundEmailMessage.ReceiverAddress = emailMessage.ReceiverAddress;
+        foundEmailMessage.ModifiedDate = DateTimeOffset.UtcNow;
+
+
+        if(saveChanges)
+            await _dataContext.SaveChangesAsync();
+        return foundEmailMessage;
+    }
+    
+    public async ValueTask<EmailMessage> DeleteAsync(Guid id, bool saveChanges)
+    {
+        var foundEmailMessage = await GetByIdAsync(id);
+
+        foundEmailMessage.IsDeleted = true;
+        foundEmailMessage.DeletedDate = DateTimeOffset.UtcNow;
+
+        if(saveChanges)
+            await _dataContext.SaveChangesAsync();
+        return foundEmailMessage;
     }
 
-    ValueTask<EmailMessage> IEntityBaseService<EmailMessage>.DeleteAsync(EmailMessage entity, bool saveChanges)
+    public async ValueTask<EmailMessage> DeleteAsync(EmailMessage emailMessage, bool saveChanges)
     {
-        throw new NotImplementedException();
-    }
+        var foundEmailMessage = await GetByIdAsync(emailMessage.Id);
+        foundEmailMessage.IsDeleted = true;
+        foundEmailMessage.DeletedDate= DateTimeOffset.UtcNow;
 
-    ValueTask<EmailMessage> IEntityBaseService<EmailMessage>.UpdateAsync(EmailMessage entity, bool saveChanges)
-    {
-        throw new NotImplementedException();
+        if(saveChanges)
+            await _dataContext.SaveChangesAsync();
+        return foundEmailMessage;
     }
 
     private bool ValidationToNull(EmailMessage emailMessage)
     {
-        if (emailMessage is null)
+        if (string.IsNullOrEmpty(emailMessage.Subject) 
+            || string.IsNullOrEmpty(emailMessage.Body)
+            || string.IsNullOrEmpty(emailMessage.ReceiverAddress)
+            || string.IsNullOrEmpty(emailMessage.SerdorAddress)) 
             return false;
         return true;
     }
 
-    private void ValidationExists(EmailMessage emailMessage)
+    private bool ValidationExists(EmailMessage emailMessage)
     {
+       var foundEmailMessage = UndeletedEmailMessage().FirstOrDefault(search => search.Equals(emailMessage));
+        if (foundEmailMessage is null)
+            return false;
+        return true;
 
     }
 
-    public ValueTask<EmailMessage> ConvertToMessage(EmailMessage message, Dictionary<string, string> values, string sender, string receiver)
+    private IQueryable<EmailMessage> UndeletedEmailMessage()=> 
+        _dataContext.EmailMessages.Where(emailMEssage => !emailMEssage.IsDeleted).AsQueryable();
+    
+    public ValueTask<EmailMessage> ConvertToMessage(EmailTemplate emailTemplate, Dictionary<string, string> values, string sender, string receiver)
     {
-        throw new NotImplementedException();
+        var body = emailTemplate.Body;
+        foreach(var value in values)
+        {
+            body = body.Replace(value.Key, value.Value);
+        }
+        var emailMessage = new EmailMessage(emailTemplate.Subject, emailTemplate.Body, sender, receiver);
+        return ValueTask.FromResult(emailMessage);
     }
 }

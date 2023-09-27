@@ -2,7 +2,7 @@
 using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
-using Backend_Project.Domain.Exceptions;
+using Backend_Project.Domain.Exceptions.EmailTemplateExeption;
 
 namespace Backend_Project.Domain.Services;
 public class EmailTemplateService : IEntityBaseService<EmailTemplate>
