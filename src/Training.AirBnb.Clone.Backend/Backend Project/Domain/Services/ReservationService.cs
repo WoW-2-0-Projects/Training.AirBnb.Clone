@@ -48,7 +48,7 @@ namespace Backend_Project.Domain.Services
             return removedReservation;
         }
 
-        public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
+        public IQueryable<Reservation> GetAsync(Expression<Func<Reservation, bool>> predicate)
         {
             return GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
         }

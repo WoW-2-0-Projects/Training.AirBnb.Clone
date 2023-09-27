@@ -7,5 +7,6 @@ public interface IDataContext
 {
     IFileSet<Reservation, Guid> Reservations { get; }
     IFileSet<User, Guid> Users { get; }
+    IFileSet<Address, Guid> Addresses { get; }   
     ValueTask SaveChangesAsync();
 }

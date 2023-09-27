@@ -4,7 +4,7 @@ namespace Backend_Project.Domain.Interfaces;
 
 public interface IEntityBaseService<T> where T : class
 {
-    IQueryable<T> Get(Expression<Func<T, bool>> predicate);
+    IQueryable<T> GetAsync(Expression<Func<T, bool>> predicate);
 
     ValueTask<ICollection<T>> GetAsync(IEnumerable<Guid> ids);
 
