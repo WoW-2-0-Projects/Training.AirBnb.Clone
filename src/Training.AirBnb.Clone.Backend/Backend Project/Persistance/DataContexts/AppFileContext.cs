@@ -10,7 +10,7 @@ namespace Backend_Project.Persistance.DataContexts;
 public class AppFileContext : FileContext, IDataContext
 {
     public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
-    public IFileSet<ListingReview, Guid> ListingReviews => Set<ListingReview>(nameof(ListingReviews));
+    public IFileSet<ListingComment, Guid> ListingReviews => Set<ListingComment>(nameof(ListingReviews));
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;

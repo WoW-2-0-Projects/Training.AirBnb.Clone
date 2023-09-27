@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Domain.Services
 {
-    public class ListingReviewService : IEntityBaseService<ListingReview>
+    public class ListingReviewService : IEntityBaseService<ListingComment>
     {
         private readonly IDataContext _appDataContext;
 
@@ -15,7 +15,7 @@ namespace Backend_Project.Domain.Services
             _appDataContext = appDataContext;
         }
 
-        public async ValueTask<ListingReview> CreateAsync(ListingReview listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> CreateAsync(ListingComment listingReview, bool saveChanges = true)
         {
             if (string.IsNullOrWhiteSpace(listingReview.Comment) || listingReview.Comment.Length < 1000)
                 throw new ListingReviewFormatException("Invalid comment!");
@@ -29,7 +29,7 @@ namespace Backend_Project.Domain.Services
             return listingReview;
         }
 
-        public async ValueTask<ListingReview> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<ListingComment> DeleteAsync(Guid id, bool saveChanges = true)
         {
             var deletedListingReview = await GetById(id);
 
@@ -44,7 +44,7 @@ namespace Backend_Project.Domain.Services
             return deletedListingReview;
         }
 
-        public async ValueTask<ListingReview> DeleteAsync(ListingReview listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> DeleteAsync(ListingComment listingReview, bool saveChanges = true)
         {
             var deletedListingReview = await GetById(listingReview.Id);
 
@@ -59,26 +59,26 @@ namespace Backend_Project.Domain.Services
             return deletedListingReview;
         }
 
-        public IQueryable<ListingReview> Get(Expression<Func<ListingReview, bool>> predicate)
+        public IQueryable<ListingComment> Get(Expression<Func<ListingComment, bool>> predicate)
         {
             return _appDataContext.ListingReviews.Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<ListingReview>> Get(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<ListingComment>> Get(IEnumerable<Guid> ids)
         {
             var listigReviews = _appDataContext.ListingReviews.
                 Where(listingReview => ids.Contains(listingReview.Id));
-            return new ValueTask<ICollection<ListingReview>>(listigReviews.ToList());
+            return new ValueTask<ICollection<ListingComment>>(listigReviews.ToList());
         }
 
-        public ValueTask<ListingReview> GetById(Guid id)
+        public ValueTask<ListingComment> GetById(Guid id)
         {
-            return new ValueTask<ListingReview>(_appDataContext.ListingReviews.
+            return new ValueTask<ListingComment>(_appDataContext.ListingReviews.
                 FirstOrDefault(listingReview => listingReview.Id == id) ??
                 throw new ListingReviewNotFoundException("ListingReview not found!"));
         }
 
-        public async ValueTask<ListingReview> UpdateAsync(ListingReview listingReview, bool saveChanges = true)
+        public async ValueTask<ListingComment> UpdateAsync(ListingComment listingReview, bool saveChanges = true)
         {
             var updatedListingReview = await GetById(listingReview.Id);
 
@@ -100,7 +100,7 @@ namespace Backend_Project.Domain.Services
             return updatedListingReview;
         }
 
-        private IQueryable<ListingReview> GetUndeletedListingReview() =>_appDataContext.ListingReviews.
+        private IQueryable<ListingComment> GetUndeletedListingReview() =>_appDataContext.ListingReviews.
             Where(listingReview => !listingReview.IsDeleted).AsQueryable();
     }
 }
