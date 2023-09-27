@@ -55,7 +55,7 @@ namespace Backend_Project.Domain.Services
             return GetUndeletedCountries().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<Country>> Get(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<Country>> GetAsync(IEnumerable<Guid> ids)
         {
             var countries = GetUndeletedCountries()
             .Where(country => ids.Contains(country.Id));
