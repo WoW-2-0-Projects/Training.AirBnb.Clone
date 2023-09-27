@@ -22,7 +22,7 @@ namespace Backend_Project.Domain.Services
                 throw new CityFormatException("The city is in the wrong format");
             await _appDataContext.Cities.AddAsync(city);
             if(saveChanges )
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Cities.SaveChangesAsync();
             return city;
         }
 
@@ -34,7 +34,7 @@ namespace Backend_Project.Domain.Services
             deletedCity.DeletedDate = DateTimeOffset.UtcNow;
             deletedCity.IsDeleted = true;
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Cities.SaveChangesAsync();
             return deletedCity;
         }
 
@@ -46,7 +46,7 @@ namespace Backend_Project.Domain.Services
             deletedCity.DeletedDate = DateTimeOffset.UtcNow;
             deletedCity.IsDeleted = true;
             if(saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Cities.SaveChangesAsync();
             return deletedCity;
         }
 
@@ -80,7 +80,7 @@ namespace Backend_Project.Domain.Services
             foundCity.ModifiedDate = DateTimeOffset.UtcNow;
             foundCity.Name = city.Name;
             if(saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Cities.SaveChangesAsync();
             return foundCity;
         }
 

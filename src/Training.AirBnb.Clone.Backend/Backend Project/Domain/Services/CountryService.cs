@@ -34,7 +34,7 @@ namespace Backend_Project.Domain.Services
             deletedCountry.DeletedDate = DateTimeOffset.UtcNow;
             deletedCountry.IsDeleted = true;
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Countries.SaveChangesAsync();
             return deletedCountry;
         }
 
@@ -46,7 +46,7 @@ namespace Backend_Project.Domain.Services
             deletedCountry.DeletedDate = DateTimeOffset.UtcNow;
             deletedCountry.IsDeleted = true;
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Countries.SaveChangesAsync();
             return deletedCountry;
         }
 
@@ -80,7 +80,7 @@ namespace Backend_Project.Domain.Services
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
             if (saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Countries.SaveChangesAsync();
             return foundCountry;
         }
 
