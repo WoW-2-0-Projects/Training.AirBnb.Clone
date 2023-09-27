@@ -16,7 +16,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
     }
     public async ValueTask<EmailMessage> CreateAsync(EmailMessage emailMessage, bool saveChanges)
     {
-        if (ValidationToNull(emailMessage))
+        if (!ValidationToNull(emailMessage))
             throw new EmailMessageValidationToNull("This a member of these emailMessage null");
         
         if (ValidationExists(emailMessage))
@@ -25,7 +25,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
         await _dataContext.EmailMessages.AddAsync(emailMessage);
 
         if (saveChanges)
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.EmailMessages.SaveChangesAsync();
         return emailMessage;
     }
 
@@ -62,7 +62,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
 
 
         if(saveChanges)
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.EmailMessages.SaveChangesAsync();
         return foundEmailMessage;
     }
     
@@ -74,7 +74,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
         foundEmailMessage.DeletedDate = DateTimeOffset.UtcNow;
 
         if(saveChanges)
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.EmailMessages.SaveChangesAsync();
         return foundEmailMessage;
     }
 
@@ -85,7 +85,7 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
         foundEmailMessage.DeletedDate= DateTimeOffset.UtcNow;
 
         if(saveChanges)
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.EmailTemplates.SaveChangesAsync();
         return foundEmailMessage;
     }
 
@@ -93,8 +93,8 @@ public class EmailMessageSevice : IEntityBaseService<EmailMessage>
     {
         if (string.IsNullOrEmpty(emailMessage.Subject) 
             || string.IsNullOrEmpty(emailMessage.Body)
-            || string.IsNullOrEmpty(emailMessage.ReceiverAddress)
-            || string.IsNullOrEmpty(emailMessage.SerdorAddress)) 
+            || string.IsNullOrEmpty(emailMessage.SerdorAddress)
+            || string.IsNullOrEmpty(emailMessage.ReceiverAddress))
             return false;
         return true;
     }

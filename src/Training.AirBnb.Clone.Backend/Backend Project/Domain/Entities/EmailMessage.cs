@@ -1,6 +1,8 @@
-﻿namespace Backend_Project.Domain.Entities;
+﻿using Backend_Project.Domain.Common;
 
-public class EmailMessage
+namespace Backend_Project.Domain.Entities;
+
+public class EmailMessage : SoftDeletedEntity
 {
     public string Subject { get; set; }
     public string Body { get; set; }
@@ -9,13 +11,13 @@ public class EmailMessage
     public bool IsSent { get; set; }
     public DateTime SentDate { get; set; }
 
-    public EmailMessage(string subject, string body, string serdorAddress, string receiverAddress, bool isSent, DateTime sentDate)
+    public EmailMessage(string subject, string body, string serdorAddress,string receiverAddress)
     {
         Subject = subject;
         Body = body;
         SerdorAddress = serdorAddress;
         ReceiverAddress = receiverAddress;
-        IsSent = isSent;
-        SentDate = sentDate;
+        IsSent = false;
+        CreatedDate = DateTime.UtcNow;
     }
 }
