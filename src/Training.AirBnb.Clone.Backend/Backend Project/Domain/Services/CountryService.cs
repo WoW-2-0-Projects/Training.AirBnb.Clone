@@ -84,6 +84,8 @@ namespace Backend_Project.Domain.Services
                 throw new CountryFormatException("This Country is in the wrong format");
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
+            foundCountry.RegionPhoneNumberLength = country.RegionPhoneNumberLength;
+            foundCountry.CountryDialingCode = country.CountryDialingCode;
             if (saveChanges)
                 await _appDataContext.Countries.SaveChangesAsync();
             return foundCountry;
