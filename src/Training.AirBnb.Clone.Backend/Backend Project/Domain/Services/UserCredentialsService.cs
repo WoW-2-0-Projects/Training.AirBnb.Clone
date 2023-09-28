@@ -23,7 +23,7 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         if (userCredentials.UserId == default)
             throw new UserFormatException("User id is not valid");
         if (!IsUnique(userCredentials.UserId))
-            throw new UserCredentailsAlreadyExistsException("This user already has credential");
+            throw new UserCredentialsAlreadyExistsException("This user already has credential");
         userCredentials.Password = PasswordHasherService.Hash(userCredentials.Password);
         await _appDataContext.UserCredentials.AddAsync(userCredentials);
         if (saveChanges)
