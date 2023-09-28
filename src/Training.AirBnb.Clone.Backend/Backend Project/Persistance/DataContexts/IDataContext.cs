@@ -7,6 +7,6 @@ public interface IDataContext
     IFileSet<EmailTemplate,Guid> EmailTemplates { get; }
     IFileSet<Reservation, Guid> Reservations { get; }
     IFileSet<User, Guid> Users { get; }
-    IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
+    IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
     ValueTask SaveChangesAsync();
 }

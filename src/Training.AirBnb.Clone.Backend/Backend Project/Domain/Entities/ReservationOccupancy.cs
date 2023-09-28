@@ -2,13 +2,13 @@
 
 namespace Backend_Project.Domain.Entities
 {
-    public class ListingOccupancy : SoftDeletedEntity
+    public class ReservationOccupancy : SoftDeletedEntity
     {
         public int Adults { get; set; }
         public int Children { get; set; }
         public int Infants {  get; set; }
         public int Pets { get; set; }
-        public ListingOccupancy(int adults, int children,int infats, int pets)
+        public ReservationOccupancy(int adults, int children,int infats, int pets)
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTimeOffset.UtcNow;

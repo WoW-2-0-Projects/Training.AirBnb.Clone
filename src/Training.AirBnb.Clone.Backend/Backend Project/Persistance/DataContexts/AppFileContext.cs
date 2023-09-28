@@ -12,7 +12,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplates));
     public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
     public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
-    public IFileSet<ListingOccupancy,Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
+    public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy>(nameof(ListingOccupancies));
 
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
