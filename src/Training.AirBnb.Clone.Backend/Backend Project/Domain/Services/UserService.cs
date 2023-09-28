@@ -60,7 +60,7 @@ public class UserService : IEntityBaseService<User>
         return deletedUser;
     }
 
-    public IQueryable<User> GetAsync(Expression<Func<User, bool>> predicate)
+    public IQueryable<User> Get(Expression<Func<User, bool>> predicate)
     {
         return GetUndeletedUsers().Where(predicate.Compile()).AsQueryable();
     }

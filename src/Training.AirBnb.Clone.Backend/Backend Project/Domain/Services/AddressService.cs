@@ -15,14 +15,14 @@ namespace Backend_Project.Domain.Services
             _appDataContext = appDataContext;
         }
 
-        public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true)
+        public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
 
-            await _appDataContext.Addresses.AddAsync(address);
+            await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
             if(saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace Backend_Project.Domain.Services
             return address;
         }
 
-        public async ValueTask<Address> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<Address> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedAddress = await GetByIdAsync(id);
 
@@ -46,7 +46,7 @@ namespace Backend_Project.Domain.Services
             return deletedAddress;
         }
 
-        public async ValueTask<Address> DeleteAsync(Address address, bool saveChanges = true)
+        public async ValueTask<Address> DeleteAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedAddress = await GetByIdAsync(address.Id);
 
@@ -62,26 +62,26 @@ namespace Backend_Project.Domain.Services
             return deletedAddress;
         }
 
-        public IQueryable<Address> GetAsync(Expression<Func<Address, bool>> predicate)
+        public IQueryable<Address> Get(Expression<Func<Address, bool>> predicate)
         {
             return GetUndeletedAddresses().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<Address>> GetAsync(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<Address>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var addresses = GetUndeletedAddresses().
                 Where(address => ids.Contains(address.Id));
             return new ValueTask<ICollection<Address>>(addresses.ToList());
         }
 
-        public ValueTask<Address> GetByIdAsync(Guid id)
+        public ValueTask<Address> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return new ValueTask<Address>(GetUndeletedAddresses().
                 FirstOrDefault(address => address.Id == id) ??
                 throw new AddressNotFoundException("Address not found"));
         }
 
-        public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true)
+        public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var updatedAddress = GetUndeletedAddresses().
                 FirstOrDefault(updateAddress => updateAddress.Id.Equals(address.Id));
