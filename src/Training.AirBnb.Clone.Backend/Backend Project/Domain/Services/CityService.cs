@@ -14,19 +14,19 @@ namespace Backend_Project.Domain.Services
             _appDataContext = dataContext;
         }
 
-        public async ValueTask<City> CreateAsync(City city, bool saveChanges = true)
+        public async ValueTask<City> CreateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (GetUndeletedCities().Any(c => c.Name.Equals(city.Name)))
                 throw new CityAlreadyExistsException("This City already Exists");
             if(!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
-            await _appDataContext.Cities.AddAsync(city);
+            await _appDataContext.Cities.AddAsync(city,cancellationToken);
             if(saveChanges )
                 await _appDataContext.Cities.SaveChangesAsync();
             return city;
         }
 
-        public async ValueTask<City> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<City> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCity = await GetByIdAsync(id);
             if (deletedCity is null)
@@ -38,7 +38,7 @@ namespace Backend_Project.Domain.Services
             return deletedCity;
         }
 
-        public async ValueTask<City> DeleteAsync(City city, bool saveChanges = true)
+        public async ValueTask<City> DeleteAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCity = await GetByIdAsync(city.Id);
             if(deletedCity is null)
@@ -55,14 +55,14 @@ namespace Backend_Project.Domain.Services
             return GetUndeletedCities().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<City>> GetAsync(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<City>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var cities = GetUndeletedCities()
             .Where(city => ids.Contains(city.Id));
             return new ValueTask<ICollection<City>>(cities.ToList());
         }
 
-        public ValueTask<City> GetByIdAsync(Guid id)
+        public ValueTask<City> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var foundCity = GetUndeletedCities().FirstOrDefault(city => city.Id.Equals(id));
             if (foundCity is null)
@@ -70,7 +70,7 @@ namespace Backend_Project.Domain.Services
             return new ValueTask<City>(foundCity);
         }
 
-        public async ValueTask<City> UpdateAsync(City city, bool saveChanges = true)
+        public async ValueTask<City> UpdateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundCity = await GetByIdAsync(city.Id);
             if (foundCity is null)
@@ -86,6 +86,7 @@ namespace Backend_Project.Domain.Services
 
         private IQueryable<City> GetUndeletedCities() => _appDataContext.Cities
             .Where(city => !city.IsDeleted).AsQueryable();
+        
         private bool IsValidCityName(City city)
         {
             if (string.IsNullOrWhiteSpace(city.Name)

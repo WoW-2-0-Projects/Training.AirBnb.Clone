@@ -14,7 +14,7 @@ namespace Backend_Project.Domain.Services
             _appDataContext = dataContext;
         }
 
-        public async ValueTask<Country> CreateAsync(Country country, bool saveChanges = true)
+        public async ValueTask<Country> CreateAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (GetUndeletedCountries().Any(c => c.Name.Equals(country.Name)))
                 throw new CountryAlreadyExistsException("This Country already Exists");
@@ -23,13 +23,13 @@ namespace Backend_Project.Domain.Services
             if (!(IsValidCountryDailingCode(country)) || !(IsValidRegionPhoneNumberLength(country)))
                 throw new CountryFormatException("This Country is in the wrong format");
 
-            await _appDataContext.Countries.AddAsync(country);
+            await _appDataContext.Countries.AddAsync(country,cancellationToken);
             if (saveChanges)
                 await _appDataContext.SaveChangesAsync();
             return country;
         }
 
-        public async ValueTask<Country> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<Country> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCountry = await GetByIdAsync(id);
             if (deletedCountry is null)
@@ -41,7 +41,7 @@ namespace Backend_Project.Domain.Services
             return deletedCountry;
         }
 
-        public async ValueTask<Country> DeleteAsync(Country country, bool saveChanges = true)
+        public async ValueTask<Country> DeleteAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCountry = await GetByIdAsync(country.Id);
             if (deletedCountry is null)
@@ -58,14 +58,14 @@ namespace Backend_Project.Domain.Services
             return GetUndeletedCountries().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<Country>> GetAsync(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<Country>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var countries = GetUndeletedCountries()
             .Where(country => ids.Contains(country.Id));
             return new ValueTask<ICollection<Country>>(countries.ToList());
         }
 
-        public ValueTask<Country> GetByIdAsync(Guid id)
+        public ValueTask<Country> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var foundCountry = GetUndeletedCountries().FirstOrDefault(country => country.Id.Equals(id));
             if (foundCountry is null)
@@ -73,7 +73,7 @@ namespace Backend_Project.Domain.Services
             return new ValueTask<Country>(foundCountry);
         }
 
-        public async ValueTask<Country> UpdateAsync(Country country, bool saveChanges = true)
+        public async ValueTask<Country> UpdateAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundCountry = await GetByIdAsync(country.Id);
             if (foundCountry is null)
