@@ -1,49 +1,94 @@
 ﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.ListingOccupancyExceptions;
 using Backend_Project.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Backend_Project.Domain.Services
 {
     public class ListingOccupancyService : IEntityBaseService<ListingOccupancy>
     {
-        public ValueTask<ListingOccupancy> CreateAsync(ListingOccupancy entity, bool saveChanges = true)
+        private IDataContext _appDataContext;
+        public ListingOccupancyService(IDataContext appDataContext)
         {
-            throw new NotImplementedException();
+            _appDataContext = appDataContext;
+        }
+        public async ValueTask<ListingOccupancy> CreateAsync(ListingOccupancy listingOccupancy, bool saveChanges = true)
+        {
+            if (!IsValidOccupancy(listingOccupancy))
+                throw new ListingOccupancyValidationException("This Occupancy is not valid");
+            else
+                await _appDataContext.ListingOccupancies.AddAsync(listingOccupancy);
+            if (saveChanges)
+                await _appDataContext.ListingOccupancies.SaveChangesAsync();
+            return listingOccupancy;
         }
 
-        public ValueTask<ListingOccupancy> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<ListingOccupancy> DeleteAsync(Guid id, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            var removedListingOccupancy = await GetByIdAsync(id);
+            removedListingOccupancy.IsDeleted = true;
+            removedListingOccupancy.DeletedDate = DateTimeOffset.UtcNow;
+            if (saveChanges)
+                await _appDataContext.ListingOccupancies.SaveChangesAsync();
+            return removedListingOccupancy;
         }
 
-        public ValueTask<ListingOccupancy> DeleteAsync(ListingOccupancy entity, bool saveChanges = true)
+        public async ValueTask<ListingOccupancy> DeleteAsync(ListingOccupancy listingOccupancy, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            
+            return await DeleteAsync(listingOccupancy.Id, saveChanges);
         }
 
         public IQueryable<ListingOccupancy> Get(Expression<Func<ListingOccupancy, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return GetUndelatedListingOccupancies().Where(predicate.Compile()).AsQueryable();
         }
 
         public ValueTask<ICollection<ListingOccupancy>> GetAsync(IEnumerable<Guid> ids)
         {
-            throw new NotImplementedException();
+            var listingOccupancy = GetUndelatedListingOccupancies()
+                .Where(listingOccupanc => ids.Contains(listingOccupanc.Id));
+            return new ValueTask<ICollection<ListingOccupancy>>(listingOccupancy.ToList());
         }
 
         public ValueTask<ListingOccupancy> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var listingOccupancy = GetUndelatedListingOccupancies()
+                .FirstOrDefault(lsO => lsO.Id.Equals(id));
+            if(listingOccupancy is null)
+                throw new ListingOccupancyNotFoundException("Listing Occupation not found");
+            return new ValueTask<ListingOccupancy>(listingOccupancy);
         }
 
-        public ValueTask<ListingOccupancy> UpdateAsync(ListingOccupancy entity, bool saveChanges = true)
+        public async ValueTask<ListingOccupancy> UpdateAsync(ListingOccupancy listingOccupancy, bool saveChanges = true)
         {
-            throw new NotImplementedException();
+            var foundListingOccupancy = await GetByIdAsync(listingOccupancy.Id);
+            if (!IsValidOccupancy(foundListingOccupancy))
+                throw new ListingOccupancyValidationException("This listingOccupation not valid");
+            foundListingOccupancy.Adults = listingOccupancy.Adults;
+            foundListingOccupancy.Children = listingOccupancy.Children;
+            foundListingOccupancy.Infants = listingOccupancy.Infants;
+            foundListingOccupancy.Pets = listingOccupancy.Pets;
+            foundListingOccupancy.ModifiedDate = DateTime.UtcNow;
+            if (saveChanges)
+                await _appDataContext.ListingOccupancies.SaveChangesAsync();
+            return foundListingOccupancy;
+
         }
+        private bool IsValidOccupancy(ListingOccupancy listingOccupancy)
+        {
+            if(listingOccupancy.Adults < 0 && listingOccupancy.Adults > 50)
+                return false;
+            if(listingOccupancy.Children < 0 && listingOccupancy.Children > 50)
+                return false;
+            if(listingOccupancy.Infants < 0 && listingOccupancy.Infants > 50)
+                return false;
+            if(listingOccupancy.Pets < 0 && listingOccupancy.Pets > 50)
+                return false;
+            return true;
+        }
+        private IQueryable<ListingOccupancy> GetUndelatedListingOccupancies() => _appDataContext.ListingOccupancies
+            .Where(lsO => !lsO.IsDeleted).AsQueryable();
     }
 }

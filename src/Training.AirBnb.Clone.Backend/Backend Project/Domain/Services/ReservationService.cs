@@ -40,12 +40,8 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true)
         {
-            var removedReservation = await GetByIdAsync(reservation.Id);
-            removedReservation.IsDeleted = true;
-            removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            if(saveChanges)
-                await _appDataContext.Reservations.SaveChangesAsync();
-            return removedReservation;
+            
+            return await DeleteAsync(reservation.Id, saveChanges);
         }
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
@@ -70,10 +66,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true)
         {
-            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
-                reservation.Id.Equals(reservation.Id));
-            if (foundReseervation is null)
-                throw new ReservationNotFound("Reservation not found.");
+            var foundReseervation = await GetByIdAsync(reservation.Id);
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation is not valid.");
 
