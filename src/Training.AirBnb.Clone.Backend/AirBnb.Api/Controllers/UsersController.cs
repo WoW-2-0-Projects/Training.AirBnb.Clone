@@ -34,4 +34,7 @@ public class UsersController : ControllerBase
     }
     [HttpDelete("user/id")]
     public async Task<IActionResult> DeleteAsync(Guid id) => Ok(await _userService.DeleteAsync(id));
+
+    [HttpDelete("user/user")]
+    public async Task<IActionResult> DeleteAsync(User user) => Ok(await _userService.DeleteAsync(user));
 }
