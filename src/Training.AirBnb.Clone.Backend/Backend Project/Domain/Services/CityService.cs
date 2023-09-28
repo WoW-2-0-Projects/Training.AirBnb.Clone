@@ -16,7 +16,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<City> CreateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (GetUndeletedCities().Any(c => c.Name.Equals(city.Name)))
+            if (IsUnique(city))
                 throw new CityAlreadyExistsException("This City already Exists");
             if(!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
@@ -29,8 +29,6 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<City> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCity = await GetByIdAsync(id);
-            if (deletedCity is null)
-                throw new CityNotFoundException("City not found");
             deletedCity.DeletedDate = DateTimeOffset.UtcNow;
             deletedCity.IsDeleted = true;
             if (saveChanges)
@@ -41,8 +39,6 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<City> DeleteAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCity = await GetByIdAsync(city.Id);
-            if(deletedCity is null)
-                throw new CityNotFoundException("this City not found");
             deletedCity.DeletedDate = DateTimeOffset.UtcNow;
             deletedCity.IsDeleted = true;
             if(saveChanges)
@@ -73,8 +69,6 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<City> UpdateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundCity = await GetByIdAsync(city.Id);
-            if (foundCity is null)
-                throw new CityNotFoundException("City not found");
             if(!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
             foundCity.ModifiedDate = DateTimeOffset.UtcNow;
@@ -96,5 +90,7 @@ namespace Backend_Project.Domain.Services
                 return false;
             return true;
         }
+
+        private bool IsUnique(City city) => !GetUndeletedCities().Any(c => c.Name.Equals(city.Name));
     }
 }
