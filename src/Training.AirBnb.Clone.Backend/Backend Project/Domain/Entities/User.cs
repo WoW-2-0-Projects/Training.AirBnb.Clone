@@ -5,7 +5,7 @@ using Backend_Project.Domain.Enums;
 
 namespace Backend_Project.Domain.Entities;
 
-public class User:SoftDeletedEntity
+public class User : SoftDeletedEntity
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
