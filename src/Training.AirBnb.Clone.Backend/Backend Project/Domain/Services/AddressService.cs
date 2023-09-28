@@ -17,10 +17,8 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true)
         {
-            if (!IsValidProvince(address.Province))
+            if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
-            if (!IsValidAddressLines(address))
-                throw new AddressFormatException("Invalid addressLines!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
 
@@ -28,6 +26,7 @@ namespace Backend_Project.Domain.Services
 
             if(saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync();
+            
             return address;
         }
 
@@ -43,6 +42,7 @@ namespace Backend_Project.Domain.Services
 
             if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync();
+            
             return deletedAddress;
         }
 
@@ -58,6 +58,7 @@ namespace Backend_Project.Domain.Services
 
             if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync();
+            
             return deletedAddress;
         }
 
@@ -88,51 +89,34 @@ namespace Backend_Project.Domain.Services
             if (updatedAddress is null)
                 throw new AddressNotFoundException("Address not found!");
 
-            if (!IsValidProvince(address.Province))
+            if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
-            if (!IsValidAddressLines(address))
-                throw new AddressFormatException("Invalid addressLines!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
 
             updatedAddress.CityId = address.CityId;
             updatedAddress.CountryId = address.CountryId;
-            updatedAddress.Province = address.Province;
             updatedAddress.AddressLine1 = address.AddressLine1;
             updatedAddress.AddressLine2 = address.AddressLine2;
             updatedAddress.AddressLine3 = address.AddressLine3;
             updatedAddress.AddressLine4 = address.AddressLine4;
+            updatedAddress.Province = address.Province;
             updatedAddress.ZipCode = address.ZipCode;
             updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
 
             if(saveChanges)
                 await _appDataContext.SaveChangesAsync();
+            
             return updatedAddress;
 
         }
 
-        private bool IsValidProvince(string addresses)
+        private bool IsValidAddressLines(string addressLine)
         {
-            if (!string.IsNullOrWhiteSpace(addresses))
+            if (!string.IsNullOrWhiteSpace(addressLine))
                 return true;
             else
                 return false;
-        }
-
-        private bool IsValidAddressLines(Address address)
-        {
-            var isValid = false;
-            if (address.AddressLine1 is  null)
-                isValid = true;
-            if (address.AddressLine2 is null)
-                isValid = true;
-            if (address.AddressLine3 is null)
-                isValid = true;
-            if (address.AddressLine4 is null)
-                isValid = true;
-            return isValid;
-
-           
         }
 
         private bool IsValidZipCode(string? zipCode)
