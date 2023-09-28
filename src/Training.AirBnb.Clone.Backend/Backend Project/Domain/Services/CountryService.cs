@@ -20,7 +20,7 @@ namespace Backend_Project.Domain.Services
                 throw new CountryAlreadyExistsException("This Country already Exists");
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
-            if (!(IsValidCountryDailingCode(country)) && !(IsValidRegionPhoneNumberLength(country)))
+            if (!(IsValidCountryDailingCode(country)) || !(IsValidRegionPhoneNumberLength(country)))
                 throw new CountryFormatException("This Country is in the wrong format");
 
             await _appDataContext.Countries.AddAsync(country);
@@ -95,11 +95,16 @@ namespace Backend_Project.Domain.Services
         {
             if (country.CountryDialingCode is null)
                 return false;
-            if (country.CountryDialingCode[0].Equals("+") 
+            
+            if (!(country.CountryDialingCode[0].Equals("+") 
                 && country.CountryDialingCode.Length > 1
-                && country.CountryDialingCode.Length < 5)
-                return true;
-            return false;
+                && country.CountryDialingCode.Length < 5))
+                return false;
+            
+            for(int letter = 1; letter < country.CountryDialingCode.Length;letter++)
+                if (!(char.IsNumber(country.CountryDialingCode[letter])))
+                    return false;
+            return true;
         }
 
         private bool IsValidRegionPhoneNumberLength(Country country) 
