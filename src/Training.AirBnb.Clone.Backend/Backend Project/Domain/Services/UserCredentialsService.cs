@@ -3,10 +3,10 @@ using Backend_Project.Domain.Exceptions.User;
 using Backend_Project.Domain.Exceptions.UserCredentialsExceptions;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq.Expressions;
+
 namespace Backend_Project.Domain.Services;
+
 public class UserCredentialsService:IEntityBaseService<UserCredentials>
 {
     private readonly IDataContext _appDataContext;
@@ -15,7 +15,7 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         _appDataContext = appDataContext;
     }
 
-    public async ValueTask<UserCredentials> CreateAsync(UserCredentials userCredentials, bool saveChanges = true)
+    public async ValueTask<UserCredentials> CreateAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var passwordInfo = IsStrongPassword(userCredentials.Password);
         if (!passwordInfo.IsStrong)
@@ -25,13 +25,13 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         if (!IsUnique(userCredentials.UserId))
             throw new UserCredentialsAlreadyExistsException("This user already has credential");
         userCredentials.Password = PasswordHasherService.Hash(userCredentials.Password);
-        await _appDataContext.UserCredentials.AddAsync(userCredentials);
+        await _appDataContext.UserCredentials.AddAsync(userCredentials, cancellationToken);
         if (saveChanges)
             await _appDataContext.UserCredentials.SaveChangesAsync();
         return userCredentials;
     }
 
-    public async  ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true)
+    public async  ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var deletedUserCredentials = await GetByIdAsync(id);
         deletedUserCredentials.IsDeleted = true;
@@ -41,7 +41,7 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         return deletedUserCredentials;
     }
 
-    public async ValueTask<UserCredentials> DeleteAsync(UserCredentials userCredentials, bool saveChanges = true)
+    public async ValueTask<UserCredentials> DeleteAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var deletedUserCredentials = await GetByIdAsync(userCredentials.Id);
         deletedUserCredentials.IsDeleted = true;
@@ -54,19 +54,19 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
     public IQueryable<UserCredentials> Get(Expression<Func<UserCredentials, bool>> predicate)=>
        GetUndeletedUserCredentials().Where(predicate.Compile()).AsQueryable();
 
-    public ValueTask<ICollection<UserCredentials>> GetAsync(IEnumerable<Guid> ids)
+    public ValueTask<ICollection<UserCredentials>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     {
         var userCredentials = GetUndeletedUserCredentials()
             .Where(credential => ids.Contains(credential.Id));
         return new ValueTask<ICollection<UserCredentials>>(userCredentials.ToList());
     }
 
-    public ValueTask<UserCredentials> GetByIdAsync(Guid id) =>
+    public ValueTask<UserCredentials> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
         new ValueTask<UserCredentials>(GetUndeletedUserCredentials()
             .FirstOrDefault(credential => credential.Id == id) ??
         throw new UserCredentialsNotFoundException("Credential not found"));
     
-    public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true)
+    public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var userCredentals = await GetByIdAsync(newUserCredentials.Id);
         var passwordInfo = IsStrongPassword(newUserCredentials.Password);
