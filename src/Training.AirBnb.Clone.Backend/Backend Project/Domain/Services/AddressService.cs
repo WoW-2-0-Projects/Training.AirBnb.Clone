@@ -63,26 +63,26 @@ namespace Backend_Project.Domain.Services
 
         public IQueryable<Address> GetAsync(Expression<Func<Address, bool>> predicate)
         {
-            return GetUndelatedAddresses().Where(predicate.Compile()).AsQueryable();
+            return GetUndeletedAddresses().Where(predicate.Compile()).AsQueryable();
         }
 
         public ValueTask<ICollection<Address>> GetAsync(IEnumerable<Guid> ids)
         {
-            var addresses = GetUndelatedAddresses().
+            var addresses = GetUndeletedAddresses().
                 Where(address => ids.Contains(address.Id));
             return new ValueTask<ICollection<Address>>(addresses.ToList());
         }
 
         public ValueTask<Address> GetByIdAsync(Guid id)
         {
-            return new ValueTask<Address>(GetUndelatedAddresses().
+            return new ValueTask<Address>(GetUndeletedAddresses().
                 FirstOrDefault(address => address.Id == id) ??
                 throw new AddressNotFoundException("Address not found"));
         }
 
         public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true)
         {
-            var updatedAddress = GetUndelatedAddresses().
+            var updatedAddress = GetUndeletedAddresses().
                 FirstOrDefault(updateAddress => updateAddress.Id.Equals(address.Id));
 
             if (updatedAddress is null)
@@ -95,6 +95,8 @@ namespace Backend_Project.Domain.Services
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
 
+            updatedAddress.CityId = address.CityId;
+            updatedAddress.CountryId = address.CountryId;
             updatedAddress.Province = address.Province;
             updatedAddress.AddressLine1 = address.AddressLine1;
             updatedAddress.AddressLine2 = address.AddressLine2;
@@ -143,7 +145,7 @@ namespace Backend_Project.Domain.Services
             return true;
         }
 
-        private IQueryable<Address> GetUndelatedAddresses() => _appDataContext.Addresses
+        private IQueryable<Address> GetUndeletedAddresses() => _appDataContext.Addresses
             .Where(address => !address.IsDeleted).AsQueryable();
     }
 }
