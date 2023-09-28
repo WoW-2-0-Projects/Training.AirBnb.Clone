@@ -5,11 +5,6 @@ public class EmailTemplate : SoftDeletedEntity
 {
     public string Subject { get; set; }
     public string Body { get; set; }
-
-    public EmailTemplate()
-    {
-        
-    }
  
     public EmailTemplate(string subject, string body)
     {
@@ -19,15 +14,19 @@ public class EmailTemplate : SoftDeletedEntity
         CreatedDate = DateTimeOffset.UtcNow;
     }
 
-
     public override int GetHashCode()
     {
         return HashCode.Combine(Subject, Body);
     }
+
     public override bool Equals(object? obj)
     {
-        return this.GetHashCode().Equals(obj.GetHashCode());
+        if (obj != null && obj is EmailTemplate) 
+            return GetHashCode().Equals(obj.GetHashCode());
+
+        return false;
     }
+
     public override string ToString()
     {
         return $"ID:{Id}, Subject:{Subject} Body:{Body}";
