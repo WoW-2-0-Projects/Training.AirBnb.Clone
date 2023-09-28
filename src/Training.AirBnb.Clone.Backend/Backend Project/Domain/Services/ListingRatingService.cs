@@ -16,6 +16,8 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<ListingRating> CreateAsync(ListingRating listingRating, bool saveChanges = true)
         {
+            if (IsUniqueListingRating(listingRating.ListingId))
+                throw new ListingRatingAlreadyExistsException("This listingRating already exists!");
             if (!IsValidRating(listingRating.Rating))
                 throw new ListingRatingFormatException("Invalid rating!");
 
@@ -103,6 +105,12 @@ namespace Backend_Project.Domain.Services
                 return true;
             else
                 return false;
+        }
+
+        private bool IsUniqueListingRating(Guid id)
+        {
+            return _appDataContext.ListingRatings.
+                Any(Listingating => Listingating.ListingId == id);
         }
         private IQueryable<ListingRating> GetUndeletedListingRatings() => _appDataContext.ListingRatings.
             Where(listingRating => !listingRating.IsDeleted).AsQueryable();
