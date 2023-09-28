@@ -26,9 +26,4 @@ public class ValidationService : IValidationService
         }
         return new ValueTask<bool>(true);
     }
-
-    public bool IsValidPhoneNumber(string phoneNumber)
-    {
-        throw new NotImplementedException();
-    }
 }
