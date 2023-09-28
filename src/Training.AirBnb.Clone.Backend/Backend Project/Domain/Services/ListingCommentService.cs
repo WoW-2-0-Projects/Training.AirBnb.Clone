@@ -17,7 +17,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<ListingComment> CreateAsync(ListingComment listingComment, bool saveChanges = true)
         {
-            if (!(await IsValidComment(listingComment.Comment)))
+            if (!IsValidComment(listingComment.Comment))
                 throw new ListingCommentFormatException("Invalid comment!");
             
             await _appDataContext.ListingComments.AddAsync(listingComment);
@@ -83,7 +83,7 @@ namespace Backend_Project.Domain.Services
 
             if (updatedListingComment is null)
                 throw new ListingCommentNotFoundException("ListingComment not found!");
-            if (!(await IsValidComment(listingComment.Comment)))
+            if (!IsValidComment(listingComment.Comment))
                 throw new ListingCommentFormatException("Invalid comment!");
 
             updatedListingComment.Comment = listingComment.Comment;
@@ -94,11 +94,11 @@ namespace Backend_Project.Domain.Services
             return updatedListingComment;
         }
 
-        private ValueTask<bool> IsValidComment(string comment)
+        private bool IsValidComment(string comment)
         {
             if (!string.IsNullOrWhiteSpace(comment) && comment.Length < 1000)
-                return new ValueTask<bool>(true);
-            else return new ValueTask<bool>(false);
+                return true;
+            else return false;
         }
 
         private IQueryable<ListingComment> GetUndeletedListingComment() =>_appDataContext.ListingComments.
