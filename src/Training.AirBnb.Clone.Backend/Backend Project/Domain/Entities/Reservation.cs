@@ -27,5 +27,4 @@ namespace Backend_Project.Domain.Entities
         {
         }
     }
-
 }

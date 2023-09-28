@@ -2,5 +2,6 @@
 
 public class UserFormatException:Exception
 {
+    public UserFormatException() { }
     public UserFormatException(string message) : base(message) { }
 }
