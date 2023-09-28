@@ -2,7 +2,6 @@ using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Domain.Services;
 using Backend_Project.Persistance.DataContexts;
-using FileBaseContext.Abstractions.Models.FileContext;
 using FileBaseContext.Context.Models.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
