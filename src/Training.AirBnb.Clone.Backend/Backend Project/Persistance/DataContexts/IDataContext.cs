@@ -8,5 +8,7 @@ public interface IDataContext
     IFileSet<Reservation, Guid> Reservations { get; }
     IFileSet<User, Guid> Users { get; }
     IFileSet<ListingComment, Guid> ListingComments { get; }
+    IFileSet<UserCredentials,Guid> UserCredentials { get; }
+
     ValueTask SaveChangesAsync();
 }
