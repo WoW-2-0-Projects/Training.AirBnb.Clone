@@ -80,6 +80,8 @@ namespace Backend_Project.Domain.Services
                 throw new CountryNotFoundException("Country not found");
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
+            if (!(IsValidCountryDailingCode(country)) && !(IsValidRegionPhoneNumberLength(country)))
+                throw new CountryFormatException("This Country is in the wrong format");
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
             if (saveChanges)
