@@ -11,12 +11,10 @@
     <Folder Include="Application\Configs\" />
     <Folder Include="Domain\Extensions\" />
     <Folder Include="Infrastructure\Configs\" />
-    <Folder Include="Persistance\DataContexts\" />
     <Folder Include="Persistance\Configs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
   </ItemGroup>
 
