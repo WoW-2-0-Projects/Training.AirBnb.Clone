@@ -37,7 +37,7 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true)
     {
-        var deletedUser = await GetById(id);
+        var deletedUser = await GetByIdAsync(id);
         if (deletedUser is null)
             throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
@@ -51,7 +51,7 @@ public class UserService : IEntityBaseService<User>
     public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true)
     {
 
-        var deletedUser = await GetById(user.Id);
+        var deletedUser = await GetByIdAsync(user.Id);
         if (deletedUser is null)
             throw new UserNotFoundException("User not found");
         deletedUser.DeletedDate = DateTimeOffset.UtcNow;
@@ -66,14 +66,14 @@ public class UserService : IEntityBaseService<User>
         return GetUndeletedUsers().Where(predicate.Compile()).AsQueryable();
     }
 
-    public ValueTask<ICollection<User>> Get(IEnumerable<Guid> ids)
+    public ValueTask<ICollection<User>> GetAsync(IEnumerable<Guid> ids)
     {
         var users = GetUndeletedUsers()
             .Where(user => ids.Contains(user.Id));
         return new ValueTask<ICollection<User>>(users.ToList());
     }
 
-    public ValueTask<User> GetById(Guid id)
+    public ValueTask<User> GetByIdAsync(Guid id)
     {
         return new ValueTask<User>(GetUndeletedUsers()
             .FirstOrDefault(user => user.Id == id) ??
@@ -82,7 +82,7 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true)
     {
-        var updatedUser = await GetById(user.Id);
+        var updatedUser = await GetByIdAsync(user.Id);
         if (updatedUser is null)
             throw new UserNotFoundException("User not found");
         if (!(await _validationService.IsValidNameAsync(user.FirstName)))

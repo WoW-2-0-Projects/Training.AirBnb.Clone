@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Configs\" />
+    <Folder Include="Domain\Extensions\" />
     <Folder Include="Infrastructure\Configs\" />
     <Folder Include="Persistance\DataContexts\" />
     <Folder Include="Persistance\Configs\" />

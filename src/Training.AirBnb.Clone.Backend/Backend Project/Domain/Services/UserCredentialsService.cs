@@ -1,15 +1,13 @@
-﻿
-using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Extensions;
+﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.User;
+using Backend_Project.Domain.Exceptions.UserCredentialsExceptions;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
-
 namespace Backend_Project.Domain.Services;
-
-public class UserCredentialsService:IUserCredentialsService
+public class UserCredentialsService:IEntityBaseService<UserCredentials>
 {
     private readonly IDataContext _appDataContext;
     public UserCredentialsService(IDataContext appDataContext)
@@ -21,11 +19,15 @@ public class UserCredentialsService:IUserCredentialsService
     {
         var passwordInfo = IsStrongPassword(userCredentials.Password);
         if (!passwordInfo.IsStrong)
-            throw new ArgumentException(passwordInfo.WarningMessage);
-        userCredentials.Password = userCredentials.HashPassword();
+            throw new NotValidUserCredentialsException(passwordInfo.WarningMessage);
+        if (userCredentials.UserId == default)
+            throw new UserFormatException("User id is not valid");
+        if (!IsUnique(userCredentials.UserId))
+            throw new UserCredentailsAlreadyExistsException("This user already has credential");
+        userCredentials.Password = PasswordHasherService.Hash(userCredentials.Password);
         await _appDataContext.UserCredentials.AddAsync(userCredentials);
         if (saveChanges)
-            await _appDataContext.SaveChangesAsync();
+            await _appDataContext.UserCredentials.SaveChangesAsync();
         return userCredentials;
     }
 
@@ -33,7 +35,9 @@ public class UserCredentialsService:IUserCredentialsService
     {
         var deletedUserCredentials = await GetByIdAsync(id);
         deletedUserCredentials.IsDeleted = true;
-        deletedUserCredentials.DeletedDate = DateTime.UtcNow;
+        deletedUserCredentials.DeletedDate = DateTimeOffset.UtcNow;
+        if (saveChanges)
+            await _appDataContext.UserCredentials.SaveChangesAsync();
         return deletedUserCredentials;
     }
 
@@ -42,13 +46,13 @@ public class UserCredentialsService:IUserCredentialsService
         var deletedUserCredentials = await GetByIdAsync(userCredentials.Id);
         deletedUserCredentials.IsDeleted = true;
         deletedUserCredentials.DeletedDate = DateTime.UtcNow;
+        if (saveChanges)
+            await _appDataContext.UserCredentials.SaveChangesAsync();
         return deletedUserCredentials;
     }
 
     public IQueryable<UserCredentials> Get(Expression<Func<UserCredentials, bool>> predicate)=>
        GetUndeletedUserCredentials().Where(predicate.Compile()).AsQueryable();
-
-
 
     public ValueTask<ICollection<UserCredentials>> GetAsync(IEnumerable<Guid> ids)
     {
@@ -57,25 +61,24 @@ public class UserCredentialsService:IUserCredentialsService
         return new ValueTask<ICollection<UserCredentials>>(userCredentials.ToList());
     }
 
-
-    public async ValueTask<UserCredentials> GetByIdAsync(Guid id) =>
-        GetUndeletedUserCredentials().FirstOrDefault(credential => credential.Id == id) ??
-        throw new ArgumentException();
+    public ValueTask<UserCredentials> GetByIdAsync(Guid id) =>
+        new ValueTask<UserCredentials>(GetUndeletedUserCredentials()
+            .FirstOrDefault(credential => credential.Id == id) ??
+        throw new UserCredentialsNotFoundException("Credential not found"));
     
-
-    public async ValueTask<UserCredentials> UpdateAsync(string oldPassword,UserCredentials newUserCredentials, bool saveChanges = true)
+    public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true)
     {
-        var oldUserCredentials = await GetByIdAsync(newUserCredentials.Id);
+        var userCredentals = await GetByIdAsync(newUserCredentials.Id);
         var passwordInfo = IsStrongPassword(newUserCredentials.Password);
-        if (oldUserCredentials.VerifyPassword(oldPassword))
-            throw new ArgumentException();
-        if (passwordInfo.IsStrong)
-            throw new ArgumentException(passwordInfo.WarningMessage);
-        if (oldUserCredentials.VerifyPassword(newUserCredentials.Password))
-            throw new ArgumentException("New password can not be same as old password");
-        newUserCredentials.Password = newUserCredentials.HashPassword();
-        oldUserCredentials.Password = newUserCredentials.Password;
-        return oldUserCredentials;
+        if (!passwordInfo.IsStrong)
+            throw new NotValidUserCredentialsException(passwordInfo.WarningMessage);
+        if (!PasswordHasherService.Verify(newUserCredentials.Password,userCredentals.Password))
+            throw new NotValidUserCredentialsException("New password can not be same as old password");
+        userCredentals.Password = PasswordHasherService.Hash(newUserCredentials.Password);
+        userCredentals.ModifiedDate = DateTimeOffset.UtcNow;
+        if (saveChanges)
+            await _appDataContext.UserCredentials.SaveChangesAsync();
+        return userCredentals;
 
     }
     private IQueryable<UserCredentials> GetUndeletedUserCredentials() =>
@@ -90,9 +93,11 @@ public class UserCredentialsService:IUserCredentialsService
         if (!password.Any(char.IsUpper)) 
             return ( false,"Password should contain at least one upper case letter!");
         if (!password.Any(char.IsLower)) 
-            return ( false,"Password should contain at least one lower case! letter");
+            return ( false,"Password should contain at least one lower case letter!");
         if (!password.Any(char.IsPunctuation)) 
             return ( false,$"Password should contain at least one symbol like {"!@#$%^&?"}!");
         return (true, "");
     }
+    private bool IsUnique(Guid userId) =>
+        !GetUndeletedUserCredentials().Any(cred => cred.UserId == userId);
 }
