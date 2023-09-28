@@ -18,8 +18,11 @@ namespace Backend_Project.Domain.Services
         {
             if (GetUndeletedCountries().Any(c => c.Name.Equals(country.Name)))
                 throw new CountryAlreadyExistsException("This Country already Exists");
-            if (!IsValidCityName(country))
+            if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
+            if (!(IsValidCountryDailingCode(country)) && !(IsValidRegionPhoneNumberLength(country)))
+                throw new CountryFormatException("This Country is in the wrong format");
+
             await _appDataContext.Countries.AddAsync(country);
             if (saveChanges)
                 await _appDataContext.SaveChangesAsync();
@@ -75,7 +78,7 @@ namespace Backend_Project.Domain.Services
             var foundCountry = await GetByIdAsync(country.Id);
             if (foundCountry is null)
                 throw new CountryNotFoundException("Country not found");
-            if (!IsValidCityName(country))
+            if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
@@ -84,9 +87,23 @@ namespace Backend_Project.Domain.Services
             return foundCountry;
         }
 
+        private bool IsValidCountryDailingCode(Country country)
+        {
+            if (country.CountryDialingCode is null)
+                return false;
+            if (country.CountryDialingCode[0].Equals("+") 
+                && country.CountryDialingCode.Length > 1
+                && country.CountryDialingCode.Length < 5)
+                return true;
+            return false;
+        }
+
+        private bool IsValidRegionPhoneNumberLength(Country country) 
+            => country.RegionPhoneNumberLength < 7 && country.RegionPhoneNumberLength > 15
+                ? false : true;
         private IQueryable<Country> GetUndeletedCountries() => _appDataContext.Countries
             .Where(country => !country.IsDeleted).AsQueryable();
-        private bool IsValidCityName(Country country)
+        private bool IsValdCountryName(Country country)
         {
             if (string.IsNullOrWhiteSpace(country.Name)
                 || (country.Name.Length <= 4
