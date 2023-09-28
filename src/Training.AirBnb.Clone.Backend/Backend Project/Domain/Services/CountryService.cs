@@ -16,7 +16,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Country> CreateAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (GetUndeletedCountries().Any(c => c.Name.Equals(country.Name)))
+            if (IsUnique(country))
                 throw new CountryAlreadyExistsException("This Country already Exists");
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
@@ -32,8 +32,6 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<Country> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCountry = await GetByIdAsync(id);
-            if (deletedCountry is null)
-                throw new CountryNotFoundException("Country not found");
             deletedCountry.DeletedDate = DateTimeOffset.UtcNow;
             deletedCountry.IsDeleted = true;
             if (saveChanges)
@@ -44,8 +42,6 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<Country> DeleteAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedCountry = await GetByIdAsync(country.Id);
-            if (deletedCountry is null)
-                throw new CountryNotFoundException("this Country not found");
             deletedCountry.DeletedDate = DateTimeOffset.UtcNow;
             deletedCountry.IsDeleted = true;
             if (saveChanges)
@@ -76,11 +72,9 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<Country> UpdateAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundCountry = await GetByIdAsync(country.Id);
-            if (foundCountry is null)
-                throw new CountryNotFoundException("Country not found");
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
-            if (!(IsValidCountryDailingCode(country)) && !(IsValidRegionPhoneNumberLength(country)))
+            if (!(IsValidCountryDailingCode(country)) || !(IsValidRegionPhoneNumberLength(country)))
                 throw new CountryFormatException("This Country is in the wrong format");
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
@@ -120,5 +114,6 @@ namespace Backend_Project.Domain.Services
                 return false;
             return true;
         }
+        private bool IsUnique(Country country) => !GetUndeletedCountries().Any(c => c.Name.Equals(country.Name));
     }
 }
