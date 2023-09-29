@@ -13,18 +13,18 @@ namespace Backend_Project.Domain.Services
         {
             _appDataContext = appDataContext;
         }
-        public async ValueTask<ReservationOccupancy> CreateAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true)
+        public async ValueTask<ReservationOccupancy> CreateAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsValidOccupancy(reservationOccupancy))
                 throw new ReservationOccupancyValidationException("This Occupancy is not valid");
             else
-                await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy);
+                await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy,cancellationToken);
             if (saveChanges)
                 await _appDataContext.ReservationOccupancies.SaveChangesAsync();
             return reservationOccupancy;
         }
 
-        public async ValueTask<ReservationOccupancy> DeleteAsync(Guid id, bool saveChanges = true)
+        public async ValueTask<ReservationOccupancy> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var removedReservationOccupancy = await GetByIdAsync(id);
             removedReservationOccupancy.IsDeleted = true;
@@ -34,7 +34,7 @@ namespace Backend_Project.Domain.Services
             return removedReservationOccupancy;
         }
 
-        public async ValueTask<ReservationOccupancy> DeleteAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true)
+        public async ValueTask<ReservationOccupancy> DeleteAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             
             return await DeleteAsync(reservationOccupancy.Id, saveChanges);
@@ -45,14 +45,14 @@ namespace Backend_Project.Domain.Services
             return GetUndelatedReservatinOccupancies().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<ReservationOccupancy>> GetAsync(IEnumerable<Guid> ids)
+        public ValueTask<ICollection<ReservationOccupancy>> GetAsync(IEnumerable<Guid> ids,CancellationToken  cancellationToken = default)
         {
             var reservationOccupancy = GetUndelatedReservatinOccupancies()
                 .Where(reservationOccupanc => ids.Contains(reservationOccupanc.Id));
             return new ValueTask<ICollection<ReservationOccupancy>>(reservationOccupancy.ToList());
         }
 
-        public ValueTask<ReservationOccupancy> GetByIdAsync(Guid id)
+        public ValueTask<ReservationOccupancy> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var reservationOccupancy = GetUndelatedReservatinOccupancies()
                 .FirstOrDefault(rsO => rsO.Id.Equals(id));
@@ -61,7 +61,7 @@ namespace Backend_Project.Domain.Services
             return new ValueTask<ReservationOccupancy>(reservationOccupancy);
         }
 
-        public async ValueTask<ReservationOccupancy> UpdateAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true)
+        public async ValueTask<ReservationOccupancy> UpdateAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundReservationOccupancy = await GetByIdAsync(reservationOccupancy.Id);
             if (!IsValidOccupancy(foundReservationOccupancy))
