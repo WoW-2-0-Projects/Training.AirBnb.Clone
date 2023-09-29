@@ -8,7 +8,7 @@ public class Email : SoftDeletedEntity
     public Guid ReceiverUserId { get; set; }
     public string Subject { get; set; }
     public string Body { get; set;}
-    public string ReceiverEmailAddres { get; set; }
+    public string ReceiverEmailAddress { get; set; }
     public string SenderEmailAddress { get; set; }
   
     public bool IsSent { get; set; }
@@ -20,7 +20,7 @@ public class Email : SoftDeletedEntity
         ReceiverUserId = receiverUserId;
         Subject = subject;
         Body = body;
-        ReceiverEmailAddres = receiverEmailAddress;
+        ReceiverEmailAddress = receiverEmailAddress;
         SenderEmailAddress = senderEmailAddress;
         CreatedDate = DateTimeOffset.UtcNow;
         IsSent = false;
