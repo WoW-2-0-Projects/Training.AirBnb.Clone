@@ -14,6 +14,7 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
     IFileSet<ListingComment, Guid> ListingComments { get; }
     IFileSet<UserCredentials,Guid> UserCredentials { get; }
+    IFileSet<ListingCategory, Guid> ListingCategories { get; }
     IFileSet<AmenityCategory, Guid> AmenityCategories { get; }
     IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }

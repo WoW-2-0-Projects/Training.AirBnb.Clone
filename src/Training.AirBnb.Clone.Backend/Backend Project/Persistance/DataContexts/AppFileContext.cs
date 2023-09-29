@@ -20,8 +20,8 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
     public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory>(nameof(AmenityCategories));
     public IFileSet<UserCredentials,Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
+    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
-
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
 
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
