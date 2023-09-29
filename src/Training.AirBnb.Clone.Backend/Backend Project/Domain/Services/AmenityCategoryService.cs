@@ -100,7 +100,7 @@ namespace Backend_Project.Domain.Services
 
         private bool IsValidCategoryName(string categoryName)
         {
-            if (!string.IsNullOrEmpty(categoryName))
+            if (!string.IsNullOrEmpty(categoryName) && categoryName.Length > 2)
                 return true;
             else 
                 return false;
