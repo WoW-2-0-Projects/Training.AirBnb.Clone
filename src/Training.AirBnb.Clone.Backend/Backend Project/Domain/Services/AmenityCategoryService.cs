@@ -19,7 +19,7 @@ namespace Backend_Project.Domain.Services
         {
             if (!IsValidCategoryName(amenityCategory.CategoryName))
                 throw new AmenityCategoryFormatException("Invalid categoryName!");
-            if (!IsUniqueCategory(amenityCategory.CategoryName))
+            if (IsUniqueCategory(amenityCategory.CategoryName))
                 throw new AmenityCategoryAlreadyExistsException("Category already exists!");
 
             await _appDataContext.AmenityCategories.AddAsync(amenityCategory, cancellationToken);
