@@ -17,7 +17,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     public async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
 
-        if (!ValidationToNull(emailTemplate))
+        if (!ValidationIsNull(emailTemplate))
             throw new EmailTemplateValidationToNull("This a member of these emailTemplate null");
 
         if (ValidationExits(emailTemplate))
@@ -26,7 +26,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         await _dataContext.EmailTemplates.AddAsync(emailTemplate, cancellationToken);
 
         if (saveChanges)
-            await _dataContext.SaveChangesAsync();
+            await _dataContext.EmailTemplates.SaveChangesAsync();
         return emailTemplate;
     }
 
@@ -51,7 +51,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 
     public async ValueTask<EmailTemplate> UpdateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!ValidationToNull(emailTemplate))
+        if (!ValidationIsNull(emailTemplate))
             throw new EmailTemplateValidationToNull("This a member of these emailTemplate null");
 
         var foundEmailTemplate = await GetByIdAsync(emailTemplate.Id);
@@ -91,7 +91,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         return foundEmailTemplate;
     }
 
-    private bool ValidationToNull(EmailTemplate emailTemplate)
+    private bool ValidationIsNull(EmailTemplate emailTemplate)
     {
         if (string.IsNullOrEmpty(emailTemplate.Subject) || string.IsNullOrEmpty(emailTemplate.Body))
             return false;
