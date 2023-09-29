@@ -1,4 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Enums;
 using Backend_Project.Domain.Exceptions.NotificationExceptions.EmailExceptions;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
@@ -9,18 +10,21 @@ namespace Backend_Project.Domain.Services.NotificationsServices;
 public class EmailService : IEntityBaseService<Email>
 {
     private readonly IDataContext _appDataContext;
+    private readonly IValidationService _validationService;
+    
 
-    public EmailService(IDataContext dataContext)
+    public EmailService(IDataContext dataContext, IValidationService validationService, IEntityBaseService<User> userService)
     {
         _appDataContext = dataContext;
+        _validationService = validationService;
     }
     public async ValueTask<Email> CreateAsync(Email email, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidationIsNull(email))
             throw new EmailValidationIsNull("This a member of these emailTemplate null");
-        
-        
+
         await _appDataContext.Emails.AddAsync(email,cancellationToken);
+        
         if(saveChanges)
             await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
         return email;
@@ -64,14 +68,13 @@ public class EmailService : IEntityBaseService<Email>
     
     private bool ValidationIsNull(Email email)
     {
-        if(string.IsNullOrEmpty(email.Subject) 
+        if (string.IsNullOrEmpty(email.Subject)
             || string.IsNullOrEmpty(email.Body)
-            || string.IsNullOrEmpty(email.ReceiverEmailAddres)
-            || string.IsNullOrEmpty(email.SendorEmailAddress)) 
+            || _validationService.IsValidEmailAddress(email.ReceiverEmailAddres)
+            || _validationService.IsValidEmailAddress(email.SenderEmailAddress))
             return false;
         return true;
     }
-
 
 
     
