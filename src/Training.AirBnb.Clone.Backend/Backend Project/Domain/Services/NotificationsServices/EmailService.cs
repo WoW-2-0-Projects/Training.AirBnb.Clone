@@ -25,8 +25,8 @@ public class EmailService : IEntityBaseService<Email>
 
         await _appDataContext.Emails.AddAsync(email,cancellationToken);
         
-        if(saveChanges)
-            await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
+        if(saveChanges) await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
+        
         return email;
     }
 
@@ -51,16 +51,19 @@ public class EmailService : IEntityBaseService<Email>
         return new ValueTask<Email>(email);
     }
 
+    //This method is deprecated in Email Preparation
     public ValueTask<Email> UpdateAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
-   
+
+    //This method is deprecated in Email Preparation
     public ValueTask<Email> DeleteAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
+    //This method is deprecated in Email Preparation
     public ValueTask<Email> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
@@ -74,8 +77,5 @@ public class EmailService : IEntityBaseService<Email>
             || !_validationService.IsValidEmailAddress(email.SenderEmailAddress))
             return false;
         return true;
-    }
-
-
-    
+    }    
 }
