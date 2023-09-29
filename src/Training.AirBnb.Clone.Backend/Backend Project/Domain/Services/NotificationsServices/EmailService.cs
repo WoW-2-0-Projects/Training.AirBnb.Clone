@@ -70,8 +70,8 @@ public class EmailService : IEntityBaseService<Email>
     {
         if (string.IsNullOrEmpty(email.Subject)
             || string.IsNullOrEmpty(email.Body)
-            || _validationService.IsValidEmailAddress(email.ReceiverEmailAddres)
-            || _validationService.IsValidEmailAddress(email.SenderEmailAddress))
+            || !_validationService.IsValidEmailAddress(email.ReceiverEmailAddres)
+            || !_validationService.IsValidEmailAddress(email.SenderEmailAddress))
             return false;
         return true;
     }
