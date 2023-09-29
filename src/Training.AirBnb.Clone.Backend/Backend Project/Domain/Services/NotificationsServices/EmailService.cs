@@ -20,7 +20,7 @@ public class EmailService : IEntityBaseService<Email>
     }
     public async ValueTask<Email> CreateAsync(Email email, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!ValidationIsNull(email))
+        if (!ValidationToNull(email))
             throw new EmailValidationIsNull("This a member of these emailTemplate null");
 
         await _appDataContext.Emails.AddAsync(email,cancellationToken);
@@ -69,10 +69,10 @@ public class EmailService : IEntityBaseService<Email>
         throw new NotImplementedException();
     }
     
-    private bool ValidationIsNull(Email email)
+    private bool ValidationToNull(Email email)
     {
-        if (string.IsNullOrEmpty(email.Subject)
-            || string.IsNullOrEmpty(email.Body)
+        if (string.IsNullOrWhiteSpace(email.Subject)
+            || string.IsNullOrWhiteSpace(email.Body)
             || !_validationService.IsValidEmailAddress(email.ReceiverEmailAddress)
             || !_validationService.IsValidEmailAddress(email.SenderEmailAddress))
             return false;
