@@ -13,11 +13,11 @@ public class Email : SoftDeletedEntity
     public DateTimeOffset SendTime { get; set; }
     public bool IsSent { get; set; }
 
-    public Email(string subject, string body,string receiverEmailAddress,string senderEmailAddress)
+    public Email(Guid sendUserId,Guid receiverUserId,string subject, string body,string receiverEmailAddress,string senderEmailAddress)
     {
         Id = Guid.NewGuid();
-        SendUserId = Guid.NewGuid();
-        ReceiverUserId = Guid.NewGuid();
+        SendUserId = sendUserId;
+        ReceiverUserId = receiverUserId;
         Subject = subject;
         Body = body;
         ReceiverEmailAddres = receiverEmailAddress;
@@ -27,20 +27,4 @@ public class Email : SoftDeletedEntity
 
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Subject,Body, ReceiverEmailAddres, SenderEmailAddress);
-    }
-    public override bool Equals(object? obj)
-    {
-        if(obj != null && obj is null)
-        {
-            return GetHashCode().Equals(obj.GetHashCode());
-        }
-        return false;
-    }
-    public override string ToString()
-    {
-        return $"Subject:{Subject}\nBody:{Body}\nReceiverEmailAddres:{ReceiverEmailAddres}\nSendorEmailAddress:{SenderEmailAddress}";
-    }
 }

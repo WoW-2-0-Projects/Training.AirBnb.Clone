@@ -13,7 +13,7 @@ public class EmailService : IEntityBaseService<Email>
     private readonly IValidationService _validationService;
     
 
-    public EmailService(IDataContext dataContext, IValidationService validationService, IEntityBaseService<User> userService)
+    public EmailService(IDataContext dataContext, IValidationService validationService)
     {
         _appDataContext = dataContext;
         _validationService = validationService;
