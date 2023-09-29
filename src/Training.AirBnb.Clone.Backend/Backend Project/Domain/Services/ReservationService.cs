@@ -17,7 +17,7 @@ namespace Backend_Project.Domain.Services
         
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (GetUndelatedReservations().Any(x => x.Equals(reservation)))
+            if (IsUniqueReservation(reservation))
                 throw new ReservationAlreadyExistsException("This reservation already exists!");
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation didn't pass validation!");
@@ -42,12 +42,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var removedReservation = await GetByIdAsync(reservation.Id);
-            removedReservation.IsDeleted = true;
-            removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            if(saveChanges)
-                await _appDataContext.Reservations.SaveChangesAsync();
-            return removedReservation;
+            return await DeleteAsync(reservation.Id,saveChanges,cancellationToken);
         }
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
@@ -72,14 +67,11 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
-                reservation.Id.Equals(reservation.Id));
-            if (foundReseervation is null)
-                throw new ReservationNotFound("Reservation not found.");
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation is not valid.");
             if (!GetIsNotBooked(reservation))
                 throw new ListingAlreadyOccupiedException("This Listing already Occupated");
+            var foundReseervation = await GetByIdAsync(reservation.Id, cancellationToken);
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
@@ -133,7 +125,11 @@ namespace Backend_Project.Domain.Services
             => GetUndelatedReservations().Where(lId => lId.ListingId.Equals(reservation.ListingId));
 
         private bool GetIsNotBooked(Reservation reservation) => GetByListingId(reservation)
-            .Any(res => (reservation.EndDate < res.StartDate)
-            || (reservation.StartDate > res.EndDate));
+            .All(res =>
+            (res.StartDate > reservation.StartDate && res.StartDate > reservation.EndDate)
+            || (res.EndDate < reservation.StartDate && res.EndDate < reservation.EndDate));
+
+        private bool IsUniqueReservation(Reservation reservation) => GetUndelatedReservations()
+            .Any(rs => rs.ListingId.Equals(reservation.ListingId));
     }
 }
