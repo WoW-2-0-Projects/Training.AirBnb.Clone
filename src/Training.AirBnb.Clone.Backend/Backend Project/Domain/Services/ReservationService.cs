@@ -22,7 +22,7 @@ namespace Backend_Project.Domain.Services
             if (!GetIsNotBooked(reservation))
                 throw new ListingAlreadyOccupiedException("This Listing already Occupated!");
             else
-                await _appDataContext.Reservations.AddAsync(reservation);
+                await _appDataContext.Reservations.AddAsync(reservation,cancellationToken);
             if (saveChanges)
                 await _appDataContext.Reservations.SaveChangesAsync();
             return reservation;
