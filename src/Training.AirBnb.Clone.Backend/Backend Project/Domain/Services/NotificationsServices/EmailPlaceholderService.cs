@@ -11,7 +11,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
     private const string _lastName = "{{LastName}";
-    private const string EmailAddress = "{{EmailAddress}}";
+    private const string _emailAddress = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
     public EmailPlaceholderService(IEntityBaseService<User> user)
@@ -57,7 +57,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
             else if (body[index] == '}')
             {
                 index++;
-                plaseholder.Append('}}');
+                plaseholder.Append("}}");
                 isStartedToGether = false;
                 yield return plaseholder.ToString();
             }
