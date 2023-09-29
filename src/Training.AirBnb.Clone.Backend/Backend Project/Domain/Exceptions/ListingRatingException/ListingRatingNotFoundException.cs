@@ -2,6 +2,7 @@
 {
     public class ListingRatingNotFoundException : Exception
     {
+        public ListingRatingNotFoundException() { }
         public ListingRatingNotFoundException(string message) : base (message) { }
     }
 }
