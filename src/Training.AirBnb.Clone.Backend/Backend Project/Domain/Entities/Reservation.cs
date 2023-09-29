@@ -11,13 +11,13 @@ namespace Backend_Project.Domain.Entities
         public DateTime EndDate { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public Reservation(Guid listingId,Guid bookedId,Guid occupansyId,
+        public Reservation(Guid listingId,Guid bookedBy,Guid occupansyId,
             DateTime startDate,DateTime endDate,decimal totalPrice)
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTimeOffset.UtcNow;
             ListingId = listingId;
-            BookedBy = bookedId;
+            BookedBy = bookedBy;
             OccupancyId = occupansyId;
             StartDate = startDate;
             EndDate = endDate;
