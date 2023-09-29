@@ -11,10 +11,10 @@ public class ValidationService : IValidationService
     public bool IsValidEmailAddress(string emailAddress) => 
         !string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress,_emailPattern);
 
-    public ValueTask<bool> IsValidNameAsync(string name)
+    public bool IsValidNameAsync(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Any(char.IsDigit))
-            return new ValueTask<bool>(false);
+            return false;
         for (int index = 0; index < name.Length; index++)
         {
             if (char.IsLetter(name[index]) || (index > 0
@@ -22,9 +22,9 @@ public class ValidationService : IValidationService
                 || name[index - 1].ToString().Equals("g", StringComparison.OrdinalIgnoreCase))
                 && (name[index].ToString().Equals("'") || name[index] == '`')))
                 continue;
-            else return new ValueTask<bool>(false);
+            else return false;
         }
-        return new ValueTask<bool>(true);
+        return true;
     }
 
     public bool IsValidPhoneNumber(string phoneNumber)
