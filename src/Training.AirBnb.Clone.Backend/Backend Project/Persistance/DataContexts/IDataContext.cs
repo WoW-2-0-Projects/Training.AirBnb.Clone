@@ -14,7 +14,8 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
     IFileSet<ListingComment, Guid> ListingComments { get; }
     IFileSet<UserCredentials,Guid> UserCredentials { get; }
+    IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }
-    
+
     ValueTask SaveChangesAsync();
 }
