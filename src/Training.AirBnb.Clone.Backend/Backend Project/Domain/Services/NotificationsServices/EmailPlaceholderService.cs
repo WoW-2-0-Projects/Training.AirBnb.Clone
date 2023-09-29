@@ -30,6 +30,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
                 _fullName => string.Join(_firstName, " ", _lastName),
                 _firstName => user.FirstName,
                 _lastName => user.LastName,
+                _emailAddress => user.EmailAddress,
                 _date => DateTime.UtcNow.ToString("dd.MM.yyyy"),
                 _companyName => "AirBnB",
                 _ => throw new EvaluateException("Invalid Exeption")
