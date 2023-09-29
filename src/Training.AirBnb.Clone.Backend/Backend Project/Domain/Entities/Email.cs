@@ -2,7 +2,7 @@
 
 namespace Backend_Project.Domain.Entities;
 
-public class Email : SoftDeletedEntity
+public class Email : AuditableEntity
 {
     public Guid SendUserId { get; set; }
     public Guid ReceiverUserId { get; set; }
