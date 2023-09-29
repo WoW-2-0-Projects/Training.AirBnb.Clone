@@ -24,7 +24,7 @@ namespace Backend_Project.Domain.Services
             await _appDataContext.ListingRatings.AddAsync(listingRating, cancellationToken);
 
             if(saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync();
+                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
             
             return listingRating;
                
@@ -33,15 +33,12 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<ListingRating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedListingRating = await GetByIdAsync(id);
-            
-            if (deletedListingRating is null)
-                throw new ListingRatingNotFoundException("ListingRating not found!");
 
             deletedListingRating.IsDeleted = true;
             deletedListingRating.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync();
+                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
             
             return deletedListingRating;
         }
@@ -50,14 +47,11 @@ namespace Backend_Project.Domain.Services
         {
             var deletedListingRating = await GetByIdAsync(ListingRating.Id);
 
-            if (deletedListingRating is null)
-                throw new ListingRatingNotFoundException("ListingRating not found!");
-
             deletedListingRating.IsDeleted = true;
             deletedListingRating.DeletedDate= DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync();
+                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
 
             return deletedListingRating;
         }
@@ -85,8 +79,6 @@ namespace Backend_Project.Domain.Services
         {
             var updatedListingRating = await GetByIdAsync(listingRating.Id);
 
-            if(updatedListingRating is null)
-                throw new ListingRatingNotFoundException("ListingRating not found!");
             if (!IsValidRating(listingRating.Rating))
                 throw new ListingRatingFormatException("Invalid listingRating!");
 
@@ -94,7 +86,7 @@ namespace Backend_Project.Domain.Services
             updatedListingRating.ModifiedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync();
+                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
 
             return updatedListingRating;
         }
