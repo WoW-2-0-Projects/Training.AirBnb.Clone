@@ -10,6 +10,7 @@ namespace Backend_Project.Persistance.DataContexts;
 public class AppFileContext : FileContext, IDataContext
 {
     public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplates));
+    public IFileSet<Email,Guid> Emails => Set<Email>(nameof(Emails));
     public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
     public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
 
