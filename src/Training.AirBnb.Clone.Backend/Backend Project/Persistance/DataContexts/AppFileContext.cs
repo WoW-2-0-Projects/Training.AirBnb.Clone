@@ -17,6 +17,8 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<Address, Guid> Addresses => Set<Address>(nameof(Addresses));
     public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy>(nameof(ListingOccupancies));
     public IFileSet<ListingComment, Guid> ListingComments => Set<ListingComment>(nameof(ListingComments));
+    public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
+    public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory>(nameof(AmenityCategories));
     public IFileSet<UserCredentials,Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
     public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
