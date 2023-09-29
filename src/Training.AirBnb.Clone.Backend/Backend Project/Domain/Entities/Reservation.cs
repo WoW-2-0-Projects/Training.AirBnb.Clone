@@ -6,39 +6,22 @@ namespace Backend_Project.Domain.Entities
     {
         public Guid ListingId { get; set; }
         public Guid BookedBy { get; set; }
-<<<<<<< Updated upstream
         public Guid OccupancyId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public Reservation(Guid listingId, Guid bookedBy, Guid occupancyId, DateTime startDate, DateTime endDate, decimal totalPrice)
+        public Reservation(Guid listingId,Guid bookedId,Guid occupansyId,
+            DateTime startDate,DateTime endDate,decimal totalPrice)
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTimeOffset.UtcNow;
             ListingId = listingId;
-            BookedBy = bookedBy;
-            OccupancyId = occupancyId;
-=======
-        public Guid OccupansyId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public decimal TotalPrice { get; set; }
-        public Reservation(Guid listingId,Guid bookedId,Guid occupansyId,
-            DateTime startDate,DateTime endDate,decimal totalPrice)
-        {
-            ListingId = listingId;
             BookedBy = bookedId;
-            OccupansyId = occupansyId;
->>>>>>> Stashed changes
+            OccupancyId = occupansyId;
             StartDate = startDate;
             EndDate = endDate;
             TotalPrice = totalPrice;
-        }
-<<<<<<< Updated upstream
-
-        public Reservation()
-        {
         }
     }
 }
