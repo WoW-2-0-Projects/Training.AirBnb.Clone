@@ -19,8 +19,6 @@ public class EmailService : IEntityBaseService<Email>
         if (!ValidationIsNull(email))
             throw new EmailValidationIsNull("This a member of these emailTemplate null");
         
-        if (ValidationExists(email))
-            throw new EmailAlreadyExists("This emailTemplate already exists");
         
         await _appDataContext.Emails.AddAsync(email,cancellationToken);
         if(saveChanges)
@@ -74,13 +72,7 @@ public class EmailService : IEntityBaseService<Email>
         return true;
     }
 
-    private bool ValidationExists(Email email)
-    {
-        var foundEmail = _appDataContext.Emails.FirstOrDefault(search => search.Equals(email));
-        if(foundEmail is null)
-            return false;
-        return true;
-    }
+
 
     
 }
