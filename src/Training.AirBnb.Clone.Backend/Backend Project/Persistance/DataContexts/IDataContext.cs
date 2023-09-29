@@ -4,6 +4,8 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public interface IDataContext : IAsyncDisposable
 {
+    IFileSet<City, Guid> Cities { get; }
+    IFileSet<Country, Guid> Countries { get; }
     IFileSet<EmailTemplate,Guid> EmailTemplates { get; }
     IFileSet<Reservation, Guid> Reservations { get; }
     IFileSet<User, Guid> Users { get; }
