@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Domain.Exceptions.EmailExceptions;
+﻿namespace Backend_Project.Domain.Exceptions.NotificationExceptions.EmailTemplateExceptions;
 
 public class EmailTemplateValidationToNull : Exception
 {
