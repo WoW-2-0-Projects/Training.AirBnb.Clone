@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.AmentyCategoryException;
+using Backend_Project.Domain.Exceptions.AmenityCategoryException;
 using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
@@ -19,11 +19,13 @@ namespace Backend_Project.Domain.Services
         {
             if (!IsValidCategoryName(amenityCategory.CategoryName))
                 throw new AmenityCategoryFormatException("Invalid categoryName!");
+            if (!IsUniqueCategory(amenityCategory.CategoryName))
+                throw new AmenityCategoryAlreadyExistsException("Category already exists!");
 
             await _appDataContext.AmenityCategories.AddAsync(amenityCategory, cancellationToken);
 
             if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync();
+                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
 
             return amenityCategory;
         }
@@ -32,14 +34,11 @@ namespace Backend_Project.Domain.Services
         {
             var deletedAmenityCategory = await GetByIdAsync(id);
 
-            if (deletedAmenityCategory is null)
-                throw new AmenityCategoryNotFoundException("AmentyCategory not found!");
-
             deletedAmenityCategory.IsDeleted = true;
             deletedAmenityCategory.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync();
+                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
 
             return deletedAmenityCategory;
         }
@@ -48,14 +47,11 @@ namespace Backend_Project.Domain.Services
         {
             var deletedAmenityCategory = await GetByIdAsync(amenityCategory.Id);
 
-            if (deletedAmenityCategory is null)
-                throw new AmenityCategoryNotFoundException("AmentyCategory not found!");
-
             deletedAmenityCategory.IsDeleted = true;
             deletedAmenityCategory.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync();
+                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
 
             return deletedAmenityCategory;
         }
@@ -84,16 +80,16 @@ namespace Backend_Project.Domain.Services
         {
             var updatedAmenityCategory = await GetByIdAsync(amenityCategory.Id);
 
-            if (updatedAmenityCategory is null)
-                throw new AmenityCategoryNotFoundException("AmentyCategory not found!");
             if (!IsValidCategoryName(amenityCategory.CategoryName))
                 throw new AmenityCategoryFormatException("Invalid categoryName!");
+            if (!IsUniqueCategory(amenityCategory.CategoryName))
+                throw new AmenityCategoryAlreadyExistsException("Category already exists!");
 
             updatedAmenityCategory.CategoryName = amenityCategory.CategoryName;
             updatedAmenityCategory.ModifiedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync();
+                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
 
             return updatedAmenityCategory;
         }
@@ -104,6 +100,11 @@ namespace Backend_Project.Domain.Services
                 return true;
             else 
                 return false;
+        }
+
+        private bool IsUniqueCategory(string categoryName)
+        {
+            return _appDataContext.AmenityCategories.Any(category => category.CategoryName == categoryName);
         }
 
         private IQueryable<AmenityCategory> GetUndeletedAmentyCategories() => _appDataContext.AmenityCategories.

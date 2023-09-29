@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Domain.Exceptions.AmentyCategoryException
+﻿namespace Backend_Project.Domain.Exceptions.AmenityCategoryException
 {
     public class AmenityCategoryNotFoundException : Exception
     {
