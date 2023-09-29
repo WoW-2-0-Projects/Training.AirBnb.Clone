@@ -1,4 +1,4 @@
-﻿using Backend_Project.Domain.Common;
+using Backend_Project.Domain.Common;
 
 namespace Backend_Project.Domain.Entities
 {
@@ -6,6 +6,7 @@ namespace Backend_Project.Domain.Entities
     {
         public Guid ListingId { get; set; }
         public Guid BookedBy { get; set; }
+<<<<<<< Updated upstream
         public Guid OccupancyId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -18,10 +19,23 @@ namespace Backend_Project.Domain.Entities
             ListingId = listingId;
             BookedBy = bookedBy;
             OccupancyId = occupancyId;
+=======
+        public Guid OccupansyId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal TotalPrice { get; set; }
+        public Reservation(Guid listingId,Guid bookedId,Guid occupansyId,
+            DateTime startDate,DateTime endDate,decimal totalPrice)
+        {
+            ListingId = listingId;
+            BookedBy = bookedId;
+            OccupansyId = occupansyId;
+>>>>>>> Stashed changes
             StartDate = startDate;
             EndDate = endDate;
             TotalPrice = totalPrice;
         }
+<<<<<<< Updated upstream
 
         public Reservation()
         {

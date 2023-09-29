@@ -1,13 +1,17 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Interfaces;
 using System.Linq.Expressions;
+<<<<<<< Updated upstream
 using Backend_Project.Persistance.DataContexts;
 using Backend_Project.Domain.Exceptions.ReservationExeptions;
+=======
+>>>>>>> Stashed changes
 
 namespace Backend_Project.Domain.Services
 {
     public class ReservationService : IEntityBaseService<Reservation>
     {
+<<<<<<< Updated upstream
         private readonly IDataContext _appDataContext;
 
         public ReservationService(IDataContext appDateContext)
@@ -42,10 +46,26 @@ namespace Backend_Project.Domain.Services
         {
             
             return await DeleteAsync(reservation.Id, saveChanges);
+=======
+        public ValueTask<Reservation> CreateAsync(Reservation entity, bool saveChanges = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ValueTask<Reservation> DeleteAsync(Guid id, bool saveChanges = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ValueTask<Reservation> DeleteAsync(Reservation entity, bool saveChanges = true)
+        {
+            throw new NotImplementedException();
+>>>>>>> Stashed changes
         }
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
         {
+<<<<<<< Updated upstream
             return GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
         }
 
@@ -118,5 +138,24 @@ namespace Backend_Project.Domain.Services
         }
         private IQueryable<Reservation> GetUndelatedReservations () => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
+=======
+            throw new NotImplementedException();
+        }
+
+        public ValueTask<ICollection<Reservation>> Get(IEnumerable<Guid> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ValueTask<Reservation> GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ValueTask<Reservation> UpdateAsync(Reservation entity, bool saveChanges = true)
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> Stashed changes
     }
 }
