@@ -41,6 +41,6 @@ public class Email : SoftDeletedEntity
     }
     public override string ToString()
     {
-        return $"Subject:{Subject}\nBody:{Body}\nReceiverEmailAddres:{ReceiverEmailAddres}\nSendorEmailAddress:{SendorEmailAddress}";
+        return $"Subject:{Subject}\nBody:{Body}\nReceiverEmailAddres:{ReceiverEmailAddres}\nSendorEmailAddress:{SenderEmailAddress}";
     }
 }
