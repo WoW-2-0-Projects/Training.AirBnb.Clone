@@ -36,7 +36,6 @@ namespace Backend_Project.Domain.Services
         {
             if (!IsValidListingCategory(listingCategory)) throw new NotImplementedException();
 
-            if (!IsUniqueListingCategoryName(listingCategory)) throw new NotImplementedException();
 
             var foundListingCategory = await GetByIdAsync(listingCategory.Id);
 
