@@ -2,6 +2,7 @@
 {
     public class AddressFormatException : Exception
     {
+        public AddressFormatException() { }
         public AddressFormatException(string message)  : base(message) { }
     }
 }
