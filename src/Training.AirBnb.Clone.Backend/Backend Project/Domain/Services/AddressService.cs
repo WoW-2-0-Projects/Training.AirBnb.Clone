@@ -9,10 +9,10 @@ namespace Backend_Project.Domain.Services
     public class AddressService : IEntityBaseService<Address>
     {
         private IDataContext _appDataContext;
-        private CityService _cityService;
-        private CountryService _countryService;
+        private IEntityBaseService<City> _cityService;
+        private IEntityBaseService<Country> _countryService;
 
-        public AddressService(IDataContext appDataContext, CityService cityService, CountryService countryService)
+        public AddressService(IDataContext appDataContext, IEntityBaseService<City> cityService, IEntityBaseService<Country> countryService)
         {
             _appDataContext = appDataContext;
             _cityService = cityService;
@@ -25,13 +25,13 @@ namespace Backend_Project.Domain.Services
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
-            if(!(await IsUniqueCountry(address)))
-                throw new AddressFormatException();
+            if (!(await IsCityWithInCountry(address)))
+                throw new CityDoesNotMatchCountryException("City does not match country!");
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
             if(saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync();
+                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
             
             return address;
         }
@@ -40,14 +40,11 @@ namespace Backend_Project.Domain.Services
         {
             var deletedAddress = await GetByIdAsync(id);
 
-            if (deletedAddress is null)
-                throw new AddressNotFoundException("Address not found!");
-
             deletedAddress.IsDeleted = true;
             deletedAddress.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync();
+                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
             
             return deletedAddress;
         }
@@ -56,14 +53,11 @@ namespace Backend_Project.Domain.Services
         {
             var deletedAddress = await GetByIdAsync(address.Id);
 
-            if (deletedAddress is null)
-                throw new AddressNotFoundException("Address not found!");
-
             deletedAddress.IsDeleted = true;
             deletedAddress.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync();
+                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
 
             return deletedAddress;
         }
@@ -89,18 +83,14 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var updatedAddress = GetUndeletedAddresses().
-                FirstOrDefault(updateAddress => updateAddress.Id.Equals(address.Id));
-
-            if (updatedAddress is null)
-                throw new AddressNotFoundException("Address not found!");
+            var updatedAddress = await GetByIdAsync(address.Id);
 
             if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
-            if (!(await IsUniqueCountry(address)))
-                throw new AddressFormatException();
+            if (!(await IsCityWithInCountry(address)))
+                throw new CityDoesNotMatchCountryException("City does not match country!");
 
             updatedAddress.CityId = address.CityId;
             updatedAddress.CountryId = address.CountryId;
@@ -113,7 +103,7 @@ namespace Backend_Project.Domain.Services
             updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
 
             if(saveChanges)
-                await _appDataContext.SaveChangesAsync();
+                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
             
             return updatedAddress;
 
@@ -137,10 +127,10 @@ namespace Backend_Project.Domain.Services
             return true;
         }
 
-        private async ValueTask<bool> IsUniqueCountry(Address adress)
+        private async ValueTask<bool> IsCityWithInCountry(Address address)
         {
-            var country = await _countryService.GetByIdAsync(adress.CountryId);
-            var city = await _cityService.GetByIdAsync(adress.CityId);
+            var country = await _countryService.GetByIdAsync(address.CountryId);
+            var city = await _cityService.GetByIdAsync(address.CityId);
             if (country.Id == city.CountryId)
                 return true;
             else
