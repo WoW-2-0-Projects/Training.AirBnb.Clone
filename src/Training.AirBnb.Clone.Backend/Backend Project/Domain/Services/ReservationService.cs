@@ -4,27 +4,29 @@ using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
 using Backend_Project.Domain.Exceptions.ReservationExeptions;
 
+
 namespace Backend_Project.Domain.Services
 {
     public class ReservationService : IEntityBaseService<Reservation>
     {
+
         private readonly IDataContext _appDataContext;
 
         public ReservationService(IDataContext appDateContext)
         {
             _appDataContext = appDateContext;
         }
-        
+
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (GetUndelatedReservations().Any(x => x.Equals(reservation)))
-                throw new ReservationAlreadyExistsException("This reservation already exists");
-            if (IsValidEntity(reservation))
-                await _appDataContext.Reservations.AddAsync(reservation, cancellationToken);
+            if (!IsValidEntity(reservation))
+                throw new ReservationValidationException("Reservation didn't pass validation!");
+            if (!GetIsNotBooked(reservation))
+                throw new ListingAlreadyOccupiedException("This Listing already Occupated!");
             else
-                throw new ReservationValidationException("Reservation didn't pass validation");
+                await _appDataContext.Reservations.AddAsync(reservation,cancellationToken);
             if (saveChanges)
-               await _appDataContext.Reservations.SaveChangesAsync(); 
+                await _appDataContext.Reservations.SaveChangesAsync();
             return reservation;
         }
 
@@ -33,19 +35,14 @@ namespace Backend_Project.Domain.Services
             var removedReservation = await GetByIdAsync(id);
             removedReservation.IsDeleted = true;
             removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.Reservations.SaveChangesAsync();
-            return  removedReservation;
+            return removedReservation;
         }
 
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var removedReservation = await GetByIdAsync(reservation.Id);
-            removedReservation.IsDeleted = true;
-            removedReservation.DeletedDate = DateTimeOffset.UtcNow;
-            if(saveChanges)
-                await _appDataContext.Reservations.SaveChangesAsync();
-            return removedReservation;
+            return await DeleteAsync(reservation.Id, saveChanges, cancellationToken);
         }
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
@@ -70,13 +67,11 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
-                reservation.Id.Equals(reservation.Id));
-            if (foundReseervation is null)
-                throw new ReservationNotFound("Reservation not found.");
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation is not valid.");
-
+            if (!GetIsNotBooked(reservation))
+                throw new ListingAlreadyOccupiedException("This Listing already Occupated");
+            var foundReseervation = await GetByIdAsync(reservation.Id, cancellationToken);
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
@@ -93,37 +88,47 @@ namespace Backend_Project.Domain.Services
         {
             if (reservation.ListingId.Equals(default))
                 return false;
-            if(reservation.BookedBy.Equals(default))
+            if (reservation.BookedBy.Equals(default))
                 return false;
             if (reservation.OccupancyId.Equals(default))
                 return false;
-            if (reservation.StartDate.Equals(default) 
+            if (reservation.StartDate.Equals(default)
                 || !IsValidDateStartDate(reservation.StartDate))
                 return false;
-            if(reservation.EndDate.Equals(default)
-                || IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
+            if (reservation.EndDate.Equals(default)
+                || !IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
                 return false;
-            if(reservation.TotalPrice <= 0)
+            if (reservation.TotalPrice <= 0)
                 return false;
             return true;
-                
+
         }
 
         private bool IsValidDateStartDate(DateTime startdate)
         {
-            if(startdate <= DateTime.UtcNow)
+            if (startdate <= DateTime.UtcNow)
                 return false;
             return true;
         }
-        private bool IsValidDateEndDate(DateTime startDate,DateTime endDate)
+
+        private bool IsValidDateEndDate(DateTime startDate, DateTime endDate)
         {
-            if (endDate <= startDate) 
+            if (endDate <= startDate)
                 return false;
-            if(endDate <= DateTime.UtcNow)
+            if (endDate <= DateTime.UtcNow)
                 return false;
             return true;
         }
-        private IQueryable<Reservation> GetUndelatedReservations () => _appDataContext.Reservations
+          
+        private IQueryable<Reservation> GetUndelatedReservations() => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
+
+        private IQueryable<Reservation> GetByListingId(Reservation reservation)
+            => GetUndelatedReservations().Where(lId => lId.ListingId.Equals(reservation.ListingId));
+
+        private bool GetIsNotBooked(Reservation reservation) => GetByListingId(reservation)
+            .All(res =>
+            (res.StartDate > reservation.StartDate && res.StartDate > reservation.EndDate)
+            || (res.EndDate < reservation.StartDate && res.EndDate < reservation.EndDate));
     }
 }
