@@ -18,7 +18,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
     public IFileSet<ListingComment, Guid> ListingComments => Set<ListingComment>(nameof(ListingComments));
     public IFileSet<UserCredentials,Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
-
+    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
 
 
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
