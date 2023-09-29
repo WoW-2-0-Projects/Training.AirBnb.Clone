@@ -9,18 +9,24 @@ namespace Backend_Project.Domain.Services
     public class AddressService : IEntityBaseService<Address>
     {
         private IDataContext _appDataContext;
+        private CityService _cityService;
+        private CountryService _countryService;
 
-        public AddressService(IDataContext appDataContext)
+        public AddressService(IDataContext appDataContext, CityService cityService, CountryService countryService)
         {
             _appDataContext = appDataContext;
+            _cityService = cityService;
+            _countryService = countryService;
         }
-
+        
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
+            if(!(await IsUniqueCountry(address)))
+                throw new AddressFormatException();
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
@@ -58,7 +64,7 @@ namespace Backend_Project.Domain.Services
 
             if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync();
-            
+
             return deletedAddress;
         }
 
@@ -93,6 +99,8 @@ namespace Backend_Project.Domain.Services
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
+            if (!(await IsUniqueCountry(address)))
+                throw new AddressFormatException();
 
             updatedAddress.CityId = address.CityId;
             updatedAddress.CountryId = address.CountryId;
@@ -127,6 +135,16 @@ namespace Backend_Project.Domain.Services
                 if (!char.IsNumber(zipCode[index]))
                     return false;
             return true;
+        }
+
+        private async ValueTask<bool> IsUniqueCountry(Address adress)
+        {
+            var country = await _countryService.GetByIdAsync(adress.CountryId);
+            var city = await _cityService.GetByIdAsync(adress.CityId);
+            if (country.Id == city.CountryId)
+                return true;
+            else
+                return false;
         }
 
         private IQueryable<Address> GetUndeletedAddresses() => _appDataContext.Addresses
