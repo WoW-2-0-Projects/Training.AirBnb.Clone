@@ -20,7 +20,7 @@ public class AmenityService : IEntityBaseService<Amenity>
         if (!IsValidAmenity(amenity))
             throw new EntityValidationException<Amenity>("Invalid amenity!");
 
-        if (!IsUnique(amenity.AmenityName))
+        if (!IsUnique(amenity))
             throw new DuplicateEntityException<Amenity>();
 
         await _appDataContext.Amenities.AddAsync(amenity, cancellationToken);
@@ -32,8 +32,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public ValueTask<ICollection<Amenity>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     => new ValueTask<ICollection<Amenity>>(GetUndeletedAmenities()
-        .Where(amenity => ids
-            .Contains(amenity.Id))
+        .Where(amenity => ids.Contains(amenity.Id))
         .ToList());
 
     public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -50,6 +49,9 @@ public class AmenityService : IEntityBaseService<Amenity>
 
         if (!IsValidAmenity(amenity))
             throw new EntityValidationException<Amenity>("Invalid Amenity!");
+
+        if (!IsUnique(amenity))
+            throw new DuplicateEntityException<Amenity>();
 
         foundAmenity.AmenityName = amenity.AmenityName;
         foundAmenity.CategoryId = amenity.CategoryId;
@@ -80,8 +82,10 @@ public class AmenityService : IEntityBaseService<Amenity>
             && amenity.AmenityName.Length > 2
             && amenity.CategoryId != default;
 
-    private bool IsUnique(string amenity)
-        => !GetUndeletedAmenities().Any(self => self.AmenityName.Equals(amenity));
+    private bool IsUnique(Amenity amenity)
+        => !GetUndeletedAmenities()
+        .Any(self => self.AmenityName.Equals(amenity.AmenityName) 
+            && self.CategoryId == amenity.CategoryId);
 
     private IQueryable<Amenity> GetUndeletedAmenities()
         => _appDataContext.Amenities.Where(amenity => !amenity.IsDeleted).AsQueryable();
