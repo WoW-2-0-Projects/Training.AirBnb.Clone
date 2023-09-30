@@ -1,6 +1,8 @@
-﻿namespace Backend_Project.Domain.Interfaces;
+﻿using Backend_Project.Domain.Entities;
 
-public interface IEmailMessageService<T> where T : class
+namespace Backend_Project.Domain.Interfaces;
+
+public interface IEmailMessageService
 {
-    ValueTask<T> ConvertToMessage(T entity, Dictionary<string, string> values, string sender, string receiver);
+    ValueTask<EmailMessage> ConvertToMessage(EmailTemplate entity, Dictionary<string, string> values, string sender, string receiver);
 }
