@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.ListingReviewException;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ReviewServices
 {
     public class ListingCommentService : IEntityBaseService<ListingComment>
     {
@@ -19,9 +19,9 @@ namespace Backend_Project.Domain.Services
         {
             if (!IsValidComment(listingComment.Comment))
                 throw new ListingCommentFormatException("Invalid comment!");
-            
+
             await _appDataContext.ListingComments.AddAsync(listingComment, cancellationToken);
-            
+
             if (saveChanges)
                 await _appDataContext.ListingComments.SaveChangesAsync();
             return listingComment;
@@ -36,7 +36,7 @@ namespace Backend_Project.Domain.Services
 
             deletedListingReview.IsDeleted = true;
             deletedListingReview.DeletedDate = DateTimeOffset.UtcNow;
-            
+
             if (saveChanges)
                 await _appDataContext.ListingComments.SaveChangesAsync();
             return deletedListingReview;
@@ -50,7 +50,7 @@ namespace Backend_Project.Domain.Services
                 throw new ListingCommentNotFoundException("ListingComment not found!");
 
             deletedListingComment.IsDeleted = true;
-            deletedListingComment.DeletedDate= DateTimeOffset.UtcNow;
+            deletedListingComment.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
                 await _appDataContext.ListingComments.SaveChangesAsync();
@@ -88,7 +88,7 @@ namespace Backend_Project.Domain.Services
 
             updatedListingComment.Comment = listingComment.Comment;
             updatedListingComment.ModifiedDate = DateTimeOffset.UtcNow;
-            
+
             if (saveChanges)
                 await _appDataContext.ListingComments.SaveChangesAsync();
             return updatedListingComment;
@@ -101,7 +101,7 @@ namespace Backend_Project.Domain.Services
             else return false;
         }
 
-        private IQueryable<ListingComment> GetUndeletedListingComment() =>_appDataContext.ListingComments.
+        private IQueryable<ListingComment> GetUndeletedListingComment() => _appDataContext.ListingComments.
             Where(listingComment => !listingComment.IsDeleted).AsQueryable();
     }
 }

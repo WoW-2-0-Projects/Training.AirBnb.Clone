@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Interfaces;
-using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Exceptions.NotificationExceptions.EmailTemplateExceptions;
 
-namespace Backend_Project.Domain.Services.NotificationsServices;
+namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 {
     private readonly IDataContext _dataContext;

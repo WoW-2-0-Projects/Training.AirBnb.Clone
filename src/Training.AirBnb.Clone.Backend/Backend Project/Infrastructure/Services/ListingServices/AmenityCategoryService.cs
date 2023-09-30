@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.AmenityCategoryException;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ListingServices
 {
     public class AmenityCategoryService : IEntityBaseService<AmenityCategory>
     {
@@ -64,7 +64,7 @@ namespace Backend_Project.Domain.Services
         public ValueTask<ICollection<AmenityCategory>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var amenityCategories = GetUndeletedAmentyCategories().
-                Where(amenityCategory =>  ids.Contains(amenityCategory.Id));
+                Where(amenityCategory => ids.Contains(amenityCategory.Id));
 
             return new ValueTask<ICollection<AmenityCategory>>(amenityCategories.ToList());
         }
@@ -98,7 +98,7 @@ namespace Backend_Project.Domain.Services
         {
             if (!string.IsNullOrEmpty(categoryName) && categoryName.Length > 2)
                 return true;
-            else 
+            else
                 return false;
         }
 

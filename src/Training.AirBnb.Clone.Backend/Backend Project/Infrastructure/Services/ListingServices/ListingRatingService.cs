@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.ListingRatingException;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ListingServices
 {
     public class ListingRatingService : IEntityBaseService<ListingRating>
     {
@@ -23,11 +23,11 @@ namespace Backend_Project.Domain.Services
 
             await _appDataContext.ListingRatings.AddAsync(listingRating, cancellationToken);
 
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
-            
+
             return listingRating;
-               
+
         }
 
         public async ValueTask<ListingRating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -39,7 +39,7 @@ namespace Backend_Project.Domain.Services
 
             if (saveChanges)
                 await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
-            
+
             return deletedListingRating;
         }
 
@@ -48,7 +48,7 @@ namespace Backend_Project.Domain.Services
             var deletedListingRating = await GetByIdAsync(ListingRating.Id);
 
             deletedListingRating.IsDeleted = true;
-            deletedListingRating.DeletedDate= DateTimeOffset.UtcNow;
+            deletedListingRating.DeletedDate = DateTimeOffset.UtcNow;
 
             if (saveChanges)
                 await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);

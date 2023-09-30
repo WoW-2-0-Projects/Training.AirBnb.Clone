@@ -1,9 +1,9 @@
-﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ListingServices
 {
     public class ListingCategoryService : IEntityBaseService<ListingCategory>
     {
@@ -17,16 +17,16 @@ namespace Backend_Project.Domain.Services
         public ValueTask<ListingCategory> CreateAsync(ListingCategory listingCategory, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
-            if(!IsValidListingCategory(listingCategory))
+            if (!IsValidListingCategory(listingCategory))
                 throw new NotImplementedException();
 
-            if(!IsUniqueListingCategoryName(listingCategory))
+            if (!IsUniqueListingCategoryName(listingCategory))
                 throw new NotImplementedException();
 
-             _appDataContext.ListingCategories.AddAsync(listingCategory,cancellationToken);
+            _appDataContext.ListingCategories.AddAsync(listingCategory, cancellationToken);
 
             if (saveChanges)
-                 _appDataContext.ListingCategories.SaveChangesAsync(cancellationToken);
+                _appDataContext.ListingCategories.SaveChangesAsync(cancellationToken);
 
             return new ValueTask<ListingCategory>(listingCategory);
         }
@@ -43,13 +43,13 @@ namespace Backend_Project.Domain.Services
             foundListingCategory.ModifiedDate = DateTime.UtcNow;
 
             if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
-        
+
             return foundListingCategory;
         }
 
-        public IQueryable<ListingCategory> Get(Expression<Func<ListingCategory, bool>> predicate) 
+        public IQueryable<ListingCategory> Get(Expression<Func<ListingCategory, bool>> predicate)
             => GetUndelatedListingCategories().Where(predicate.Compile()).AsQueryable();
-       
+
         public ValueTask<ICollection<ListingCategory>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var listingCategories = GetUndelatedListingCategories()
@@ -76,22 +76,22 @@ namespace Backend_Project.Domain.Services
             removedListingCategory.DeletedDate = DateTime.UtcNow;
 
             if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
-            
+
             return removedListingCategory;
         }
 
         public async ValueTask<ListingCategory> DeleteAsync(ListingCategory entity, bool saveChanges = true,
             CancellationToken cancellationToken = default) => await DeleteAsync(entity.Id, saveChanges, cancellationToken);
-       
-        private bool IsValidListingCategory(ListingCategory listingCategory) 
-            => string.IsNullOrWhiteSpace(listingCategory.Name) 
+
+        private bool IsValidListingCategory(ListingCategory listingCategory)
+            => string.IsNullOrWhiteSpace(listingCategory.Name)
             || listingCategory.Name.Length < 2 ? false : true;
-    
+
         private IQueryable<ListingCategory> GetUndelatedListingCategories() => _appDataContext.ListingCategories
             .Where(res => !res.IsDeleted).AsQueryable();
 
         private bool IsUniqueListingCategoryName(ListingCategory listingCategory)
-            => GetUndelatedListingCategories().Any( lc => 
-            lc.Name.Equals(listingCategory.Name,StringComparison.OrdinalIgnoreCase)) ? false: true;
+            => GetUndelatedListingCategories().Any(lc =>
+            lc.Name.Equals(listingCategory.Name, StringComparison.OrdinalIgnoreCase)) ? false : true;
     }
 }

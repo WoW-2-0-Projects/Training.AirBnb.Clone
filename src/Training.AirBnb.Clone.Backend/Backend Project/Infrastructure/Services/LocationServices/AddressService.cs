@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.AddressExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class AddressService : IEntityBaseService<Address>
     {
@@ -18,21 +18,21 @@ namespace Backend_Project.Domain.Services
             _cityService = cityService;
             _countryService = countryService;
         }
-        
+
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsValidAddressLines(address.AddressLine1))
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
-            if (!(await IsCityWithInCountry(address)))
+            if (!await IsCityWithInCountry(address))
                 throw new CityDoesNotMatchCountryException("City does not match country!");
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
-            
+
             return address;
         }
 
@@ -45,7 +45,7 @@ namespace Backend_Project.Domain.Services
 
             if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
-            
+
             return deletedAddress;
         }
 
@@ -89,7 +89,7 @@ namespace Backend_Project.Domain.Services
                 throw new AddressFormatException("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new AddressFormatException("Invalid zipCode!");
-            if (!(await IsCityWithInCountry(address)))
+            if (!await IsCityWithInCountry(address))
                 throw new CityDoesNotMatchCountryException("City does not match country!");
 
             updatedAddress.CityId = address.CityId;
@@ -102,9 +102,9 @@ namespace Backend_Project.Domain.Services
             updatedAddress.ZipCode = address.ZipCode;
             updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
 
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
-            
+
             return updatedAddress;
 
         }
@@ -119,7 +119,7 @@ namespace Backend_Project.Domain.Services
 
         private bool IsValidZipCode(string? zipCode)
         {
-            if(zipCode is null)
+            if (zipCode is null)
                 return true;
             for (int index = 0; index < zipCode?.Length; index++)
                 if (!char.IsNumber(zipCode[index]))

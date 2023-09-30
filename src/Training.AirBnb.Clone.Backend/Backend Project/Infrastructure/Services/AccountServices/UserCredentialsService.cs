@@ -1,13 +1,13 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.User;
 using Backend_Project.Domain.Exceptions.UserCredentialsExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services;
+namespace Backend_Project.Infrastructure.Services.AccountServices;
 
-public class UserCredentialsService:IEntityBaseService<UserCredentials>
+public class UserCredentialsService : IEntityBaseService<UserCredentials>
 {
     private readonly IDataContext _appDataContext;
     public UserCredentialsService(IDataContext appDataContext)
@@ -31,7 +31,7 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         return userCredentials;
     }
 
-    public async  ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var deletedUserCredentials = await GetByIdAsync(id);
         deletedUserCredentials.IsDeleted = true;
@@ -51,7 +51,7 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         return deletedUserCredentials;
     }
 
-    public IQueryable<UserCredentials> Get(Expression<Func<UserCredentials, bool>> predicate)=>
+    public IQueryable<UserCredentials> Get(Expression<Func<UserCredentials, bool>> predicate) =>
        GetUndeletedUserCredentials().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<UserCredentials>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
@@ -65,14 +65,14 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
         new ValueTask<UserCredentials>(GetUndeletedUserCredentials()
             .FirstOrDefault(credential => credential.Id == id) ??
         throw new UserCredentialsNotFoundException("Credential not found"));
-    
+
     public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var userCredentals = await GetByIdAsync(newUserCredentials.Id);
         var passwordInfo = IsStrongPassword(newUserCredentials.Password);
         if (!passwordInfo.IsStrong)
             throw new NotValidUserCredentialsException(passwordInfo.WarningMessage);
-        if (!PasswordHasherService.Verify(newUserCredentials.Password,userCredentals.Password))
+        if (!PasswordHasherService.Verify(newUserCredentials.Password, userCredentals.Password))
             throw new NotValidUserCredentialsException("New password can not be same as old password");
         userCredentals.Password = PasswordHasherService.Hash(newUserCredentials.Password);
         userCredentals.ModifiedDate = DateTimeOffset.UtcNow;
@@ -84,18 +84,18 @@ public class UserCredentialsService:IEntityBaseService<UserCredentials>
     private IQueryable<UserCredentials> GetUndeletedUserCredentials() =>
         _appDataContext.UserCredentials
             .Where(userCredentials => !userCredentials.IsDeleted).AsQueryable();
-    private (bool IsStrong,string WarningMessage) IsStrongPassword(string password)
+    private (bool IsStrong, string WarningMessage) IsStrongPassword(string password)
     {
         if (password.Length < 8)
             return (false, "Password can not be less than 8 character");
-        if (!password.Any(char.IsDigit)) 
+        if (!password.Any(char.IsDigit))
             return (false, "Password should contain at least one digit!");
-        if (!password.Any(char.IsUpper)) 
-            return ( false,"Password should contain at least one upper case letter!");
-        if (!password.Any(char.IsLower)) 
-            return ( false,"Password should contain at least one lower case letter!");
-        if (!password.Any(char.IsPunctuation)) 
-            return ( false,$"Password should contain at least one symbol like {"!@#$%^&?"}!");
+        if (!password.Any(char.IsUpper))
+            return (false, "Password should contain at least one upper case letter!");
+        if (!password.Any(char.IsLower))
+            return (false, "Password should contain at least one lower case letter!");
+        if (!password.Any(char.IsPunctuation))
+            return (false, $"Password should contain at least one symbol like {"!@#$%^&?"}!");
         return (true, "");
     }
     private bool IsUnique(Guid userId) =>

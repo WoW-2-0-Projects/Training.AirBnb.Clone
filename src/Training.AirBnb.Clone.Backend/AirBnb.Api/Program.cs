@@ -1,6 +1,7 @@
+using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
-using Backend_Project.Domain.Services;
+using Backend_Project.Infrastructure.Services;
+using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Persistance.DataContexts;
 using FileBaseContext.Context.Models.Configurations;
 

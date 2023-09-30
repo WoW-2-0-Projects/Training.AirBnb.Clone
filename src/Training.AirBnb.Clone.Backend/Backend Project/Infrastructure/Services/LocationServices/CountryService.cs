@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.CountryExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class CountryService : IEntityBaseService<Country>
     {
@@ -20,10 +20,10 @@ namespace Backend_Project.Domain.Services
                 throw new CountryAlreadyExistsException("This Country already Exists");
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
-            if (!(IsValidCountryDailingCode(country)) || !(IsValidRegionPhoneNumberLength(country)))
+            if (!IsValidCountryDailingCode(country) || !IsValidRegionPhoneNumberLength(country))
                 throw new CountryFormatException("This Country is in the wrong format");
 
-            await _appDataContext.Countries.AddAsync(country,cancellationToken);
+            await _appDataContext.Countries.AddAsync(country, cancellationToken);
             if (saveChanges)
                 await _appDataContext.SaveChangesAsync();
             return country;
@@ -74,7 +74,7 @@ namespace Backend_Project.Domain.Services
             var foundCountry = await GetByIdAsync(country.Id);
             if (!IsValdCountryName(country))
                 throw new CountryFormatException("The Country is in the wrong format");
-            if (!(IsValidCountryDailingCode(country)) || !(IsValidRegionPhoneNumberLength(country)))
+            if (!IsValidCountryDailingCode(country) || !IsValidRegionPhoneNumberLength(country))
                 throw new CountryFormatException("This Country is in the wrong format");
             foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
@@ -89,19 +89,19 @@ namespace Backend_Project.Domain.Services
         {
             if (country.CountryDialingCode is null)
                 return false;
-            
-            if (!(country.CountryDialingCode[0].Equals("+") 
+
+            if (!(country.CountryDialingCode[0].Equals("+")
                 && country.CountryDialingCode.Length > 1
                 && country.CountryDialingCode.Length < 5))
                 return false;
-            
-            for(int letter = 1; letter < country.CountryDialingCode.Length;letter++)
-                if (!(char.IsNumber(country.CountryDialingCode[letter])))
+
+            for (int letter = 1; letter < country.CountryDialingCode.Length; letter++)
+                if (!char.IsNumber(country.CountryDialingCode[letter]))
                     return false;
             return true;
         }
 
-        private bool IsValidRegionPhoneNumberLength(Country country) 
+        private bool IsValidRegionPhoneNumberLength(Country country)
             => country.RegionPhoneNumberLength < 7 && country.RegionPhoneNumberLength > 15
                 ? false : true;
         private IQueryable<Country> GetUndeletedCountries() => _appDataContext.Countries
@@ -109,8 +109,8 @@ namespace Backend_Project.Domain.Services
         private bool IsValdCountryName(Country country)
         {
             if (string.IsNullOrWhiteSpace(country.Name)
-                || (country.Name.Length <= 4
-                || country.Name.Length > 185))
+                || country.Name.Length <= 4
+                || country.Name.Length > 185)
                 return false;
             return true;
         }
