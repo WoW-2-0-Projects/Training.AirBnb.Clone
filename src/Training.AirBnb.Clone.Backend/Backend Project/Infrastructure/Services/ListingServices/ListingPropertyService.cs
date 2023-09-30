@@ -17,11 +17,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
     public async ValueTask<ListingProperty> CreateAsync(ListingProperty property, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (IsValidProperty(property))
-            throw new EntityValidationException<ListingProperty>();
-
-        if (!IsUniqueProperty(property))
-            throw new DuplicateEntityException<ListingProperty>();
+        ValidateProperty(property);
 
         await _appDataContext.ListingProperties.AddAsync(property, cancellationToken);
 
@@ -31,12 +27,12 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     }
 
     public ValueTask<ICollection<ListingProperty>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-     => new ValueTask<ICollection<ListingProperty>>(GetUndeletedProperties()
+        => new ValueTask<ICollection<ListingProperty>>(GetUndeletedProperties()
         .Where(property => ids.Contains(property.Id))
         .ToList());
 
     public ValueTask<ListingProperty> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-      => new ValueTask<ListingProperty>(GetUndeletedProperties()
+        => new ValueTask<ListingProperty>(GetUndeletedProperties()
         .FirstOrDefault(property => property.Id == id)
         ?? throw new EntityNotFoundException<ListingProperty>());
 
@@ -45,11 +41,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
     public async ValueTask<ListingProperty> UpdateAsync(ListingProperty property, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!IsValidProperty(property))
-            throw new EntityValidationException<ListingProperty>();
-
-        if (!IsUniqueProperty(property))
-            throw new DuplicateEntityException<ListingProperty>();
+        ValidateProperty(property);
 
         var foundProperty = await GetByIdAsync(property.Id, cancellationToken);
 
@@ -76,6 +68,15 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
     public async ValueTask<ListingProperty> DeleteAsync(ListingProperty property, bool saveChanges = true, CancellationToken cancellationToken = default)
         => await DeleteAsync(property, saveChanges, cancellationToken);
+
+    private void ValidateProperty(ListingProperty property)
+    {
+        if (IsValidProperty(property))
+            throw new EntityValidationException<ListingProperty>();
+
+        if (!IsUniqueProperty(property))
+            throw new DuplicateEntityException<ListingProperty>();
+    }
 
     private bool IsValidProperty(ListingProperty property)
     {
