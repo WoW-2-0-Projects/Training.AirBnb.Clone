@@ -2,6 +2,10 @@
 
 public class EntityValidationException<T> : EntityException<T>
 {
+    public EntityValidationException()
+    {
+    }
+
     public EntityValidationException(string message) : base(message)
     {
     }

@@ -2,6 +2,10 @@
 
 public class EntityException<T> : Exception
 {
+    public EntityException()
+    {
+    }
+
     public EntityException(string message) : base(message)
     {
     }
