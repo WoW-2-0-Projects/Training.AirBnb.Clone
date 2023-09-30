@@ -17,11 +17,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public async ValueTask<Amenity> CreateAsync(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!IsValidAmenity(amenity))
-            throw new EntityValidationException<Amenity>("Invalid amenity!");
-
-        if (!IsUnique(amenity))
-            throw new DuplicateEntityException<Amenity>();
+        ValidateAmenity(amenity);
 
         await _appDataContext.Amenities.AddAsync(amenity, cancellationToken);
 
@@ -31,27 +27,23 @@ public class AmenityService : IEntityBaseService<Amenity>
     }
 
     public ValueTask<ICollection<Amenity>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-    => new ValueTask<ICollection<Amenity>>(GetUndeletedAmenities()
-        .Where(amenity => ids.Contains(amenity.Id))
-        .ToList());
+        => new ValueTask<ICollection<Amenity>>(GetUndeletedAmenities()
+            .Where(amenity => ids.Contains(amenity.Id))
+            .ToList());
 
     public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    => new ValueTask<Amenity>(GetUndeletedAmenities()
-        .FirstOrDefault(amenity => amenity.Id == id)
-        ?? throw new EntityNotFoundException<Amenity>());
+        => new ValueTask<Amenity>(GetUndeletedAmenities()
+            .FirstOrDefault(amenity => amenity.Id == id)
+            ?? throw new EntityNotFoundException<Amenity>());
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)
-    => GetUndeletedAmenities().Where(predicate.Compile()).AsQueryable();
+        => GetUndeletedAmenities().Where(predicate.Compile()).AsQueryable();
 
     public async ValueTask<Amenity> UpdateAsync(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var foundAmenity = await GetByIdAsync(amenity.Id);
 
-        if (!IsValidAmenity(amenity))
-            throw new EntityValidationException<Amenity>("Invalid Amenity!");
-
-        if (!IsUnique(amenity))
-            throw new DuplicateEntityException<Amenity>();
+        ValidateAmenity(amenity);
 
         foundAmenity.AmenityName = amenity.AmenityName;
         foundAmenity.CategoryId = amenity.CategoryId;
@@ -76,6 +68,15 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public async ValueTask<Amenity> DeleteAsync(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
         => await DeleteAsync(amenity.Id, saveChanges, cancellationToken);
+
+    private void ValidateAmenity(Amenity amenity)
+    {
+        if (!IsValidAmenity(amenity))
+            throw new EntityValidationException<Amenity>("Invalid amenity!");
+
+        if (!IsUnique(amenity))
+            throw new DuplicateEntityException<Amenity>();
+    }
 
     private bool IsValidAmenity(Amenity amenity)
         => !string.IsNullOrEmpty(amenity.AmenityName)
