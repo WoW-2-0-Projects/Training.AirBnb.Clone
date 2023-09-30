@@ -2,15 +2,14 @@
 using Backend_Project.Domain.Entities;
 using System.Data;
 using System.Text;
-namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
+namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
-
     private readonly IEntityBaseService<User> _userService;
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
-    private const string _lastName = "{{LastName}";
+    private const string _lastName = "{{LastName}}";
     private const string _emailAddress = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
@@ -18,9 +17,10 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     {
         _userService = user;
     }
-    public async ValueTask<Dictionary<string, string>> GEtTemplateValues(Guid userId, EmailTemplate emailTemplate)
+    public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
         var placeholders = GetPlaceholeders(emailTemplate.Body);
+        
         var user = await _userService.GetByIdAsync(userId) ?? throw new ArgumentException();
 
         var result = placeholders.Select(placeholder =>
@@ -37,6 +37,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
             };
             return new KeyValuePair<string, string>(placeholder, value);
         });
+
         var values = new Dictionary<string, string>(result);
         return values;
     }
