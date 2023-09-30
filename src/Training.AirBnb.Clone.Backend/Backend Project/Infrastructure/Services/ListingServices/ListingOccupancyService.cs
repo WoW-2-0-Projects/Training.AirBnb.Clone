@@ -28,14 +28,14 @@ public class ListingOccupancyService : IEntityBaseService<ListingOccupancy>
     }
 
     public ValueTask<ICollection<ListingOccupancy>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-    => new ValueTask<ICollection<ListingOccupancy>>(GetUndeletedListingOccupancies()
-        .Where(occupancy => ids.Contains(occupancy.Id))
-        .ToList());
+        => new ValueTask<ICollection<ListingOccupancy>>(GetUndeletedListingOccupancies()
+            .Where(occupancy => ids.Contains(occupancy.Id))
+            .ToList());
 
     public ValueTask<ListingOccupancy> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    => new ValueTask<ListingOccupancy>(GetUndeletedListingOccupancies()
-        .FirstOrDefault(occupancy => occupancy.Id == id)
-        ?? throw new EntityNotFoundException<ListingOccupancy>());
+        => new ValueTask<ListingOccupancy>(GetUndeletedListingOccupancies()
+            .FirstOrDefault(occupancy => occupancy.Id == id)
+            ?? throw new EntityNotFoundException<ListingOccupancy>());
 
     public IQueryable<ListingOccupancy> Get(Expression<Func<ListingOccupancy, bool>> predicate)
         => GetUndeletedListingOccupancies().Where(predicate.Compile()).AsQueryable();
