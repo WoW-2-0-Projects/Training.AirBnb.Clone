@@ -1,10 +1,8 @@
-﻿namespace Backend_Project.Domain.Interfaces;
+﻿namespace Backend_Project.Application.Interfaces;
 
 public interface IValidationService
 {
     bool IsValidNameAsync(string name);
 
     bool IsValidEmailAddress(string emailAddress);
-
-    bool IsValidPhoneNumber(string phoneNumber);
 }
