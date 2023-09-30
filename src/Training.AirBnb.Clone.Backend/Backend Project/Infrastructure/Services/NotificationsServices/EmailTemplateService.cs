@@ -25,7 +25,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 
         await _dataContext.EmailTemplates.AddAsync(emailTemplate, cancellationToken);
 
-        if (saveChanges) await _dataContext.EmailTemplates.SaveChangesAsync();
+        if (saveChanges) await _dataContext.EmailTemplates.SaveChangesAsync(cancellationToken);
         
         return emailTemplate;
     }
@@ -64,7 +64,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         foundEmailTemplate.ModifiedDate = DateTimeOffset.UtcNow;
 
         if (saveChanges)
-            await _dataContext.EmailTemplates.SaveChangesAsync();
+            await _dataContext.EmailTemplates.SaveChangesAsync(cancellationToken);
         
         return foundEmailTemplate;
     }
@@ -77,7 +77,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         foundEmailTemplate.DeletedDate = DateTimeOffset.UtcNow;
 
         if (saveChanges)
-            await _dataContext.EmailTemplates.SaveChangesAsync();
+            await _dataContext.EmailTemplates.SaveChangesAsync(cancellationToken);
         
         return foundEmailTemplate;
     }
