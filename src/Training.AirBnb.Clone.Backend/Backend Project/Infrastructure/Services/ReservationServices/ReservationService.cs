@@ -1,15 +1,13 @@
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
 using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
 using Backend_Project.Domain.Exceptions.ReservationExeptions;
+using Backend_Project.Application.Interfaces;
 
-
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
     public class ReservationService : IEntityBaseService<Reservation>
     {
-
         private readonly IDataContext _appDataContext;
 
         public ReservationService(IDataContext appDateContext)
@@ -19,12 +17,12 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (!IsValidEntity(reservation))
-                throw new ReservationValidationException("Reservation didn't pass validation!");
-            if (!GetIsNotBooked(reservation))
-                throw new ListingAlreadyOccupiedException("This Listing already Occupated!");
+            if (GetUndelatedReservations().Any(x => x.Equals(reservation)))
+                throw new ReservationAlreadyExistsException("This reservation already exists");
+            if (IsValidEntity(reservation))
+                await _appDataContext.Reservations.AddAsync(reservation, cancellationToken);
             else
-                await _appDataContext.Reservations.AddAsync(reservation,cancellationToken);
+                throw new ReservationValidationException("Reservation didn't pass validation");
             if (saveChanges)
                 await _appDataContext.Reservations.SaveChangesAsync();
             return reservation;
@@ -42,7 +40,12 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(reservation.Id, saveChanges, cancellationToken);
+            var removedReservation = await GetByIdAsync(reservation.Id);
+            removedReservation.IsDeleted = true;
+            removedReservation.DeletedDate = DateTimeOffset.UtcNow;
+            if (saveChanges)
+                await _appDataContext.Reservations.SaveChangesAsync();
+            return removedReservation;
         }
 
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
@@ -67,11 +70,13 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
+            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
+                reservation.Id.Equals(reservation.Id));
+            if (foundReseervation is null)
+                throw new ReservationNotFound("Reservation not found.");
             if (!IsValidEntity(reservation))
                 throw new ReservationValidationException("Reservation is not valid.");
-            if (!GetIsNotBooked(reservation))
-                throw new ListingAlreadyOccupiedException("This Listing already Occupated");
-            var foundReseervation = await GetByIdAsync(reservation.Id, cancellationToken);
+
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
             foundReseervation.OccupancyId = reservation.OccupancyId;
@@ -96,7 +101,7 @@ namespace Backend_Project.Domain.Services
                 || !IsValidDateStartDate(reservation.StartDate))
                 return false;
             if (reservation.EndDate.Equals(default)
-                || !IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
+                || IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
                 return false;
             if (reservation.TotalPrice <= 0)
                 return false;
@@ -110,7 +115,6 @@ namespace Backend_Project.Domain.Services
                 return false;
             return true;
         }
-
         private bool IsValidDateEndDate(DateTime startDate, DateTime endDate)
         {
             if (endDate <= startDate)
@@ -119,16 +123,7 @@ namespace Backend_Project.Domain.Services
                 return false;
             return true;
         }
-          
         private IQueryable<Reservation> GetUndelatedReservations() => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
-
-        private IQueryable<Reservation> GetByListingId(Reservation reservation)
-            => GetUndelatedReservations().Where(lId => lId.ListingId.Equals(reservation.ListingId));
-
-        private bool GetIsNotBooked(Reservation reservation) => GetByListingId(reservation)
-            .All(res =>
-            (res.StartDate > reservation.StartDate && res.StartDate > reservation.EndDate)
-            || (res.EndDate < reservation.StartDate && res.EndDate < reservation.EndDate));
     }
 }

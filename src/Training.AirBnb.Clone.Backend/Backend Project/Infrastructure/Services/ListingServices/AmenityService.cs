@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.ListingExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services.ListingServices;
+namespace Backend_Project.Infrastructure.Services.ListingServices;
 
 public class AmenityService : IEntityBaseService<Amenity>
 {
@@ -49,7 +49,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<Amenity>(GetUndeletedAmenities()
-            .FirstOrDefault(amenity => amenity.Id == id) 
+            .FirstOrDefault(amenity => amenity.Id == id)
             ?? throw new AmenityNotFoundException());
 
     public ValueTask<ICollection<Amenity>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
@@ -78,8 +78,8 @@ public class AmenityService : IEntityBaseService<Amenity>
         => await DeleteAsync(amenity.Id, saveChanges, cancellationToken);
 
     private bool IsValidAmenity(Amenity amenity)
-        => !string.IsNullOrEmpty(amenity.AmenityName) 
-            && amenity.AmenityName.Length > 2 
+        => !string.IsNullOrEmpty(amenity.AmenityName)
+            && amenity.AmenityName.Length > 2
             && amenity.CategoryId != default;
 
     private bool IsUnique(string amenity)

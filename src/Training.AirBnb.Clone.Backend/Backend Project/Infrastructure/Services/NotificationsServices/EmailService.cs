@@ -1,17 +1,17 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Enums;
 using Backend_Project.Domain.Exceptions.NotificationExceptions.EmailExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services.NotificationsServices;
+namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailService : IEntityBaseService<Email>
 {
     private readonly IDataContext _appDataContext;
     private readonly IValidationService _validationService;
-    
+
 
     public EmailService(IDataContext dataContext, IValidationService validationService)
     {
@@ -23,10 +23,10 @@ public class EmailService : IEntityBaseService<Email>
         if (!ValidationToNull(email))
             throw new EmailValidationIsNull("This a member of these emailTemplate null");
 
-        await _appDataContext.Emails.AddAsync(email,cancellationToken);
-        
-        if(saveChanges) await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
-        
+        await _appDataContext.Emails.AddAsync(email, cancellationToken);
+
+        if (saveChanges) await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
+
         return email;
     }
 
@@ -44,10 +44,10 @@ public class EmailService : IEntityBaseService<Email>
     public ValueTask<Email> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var email = _appDataContext.Emails.FirstOrDefault(email => email.Id == id);
-        
+
         if (email is null)
             throw new EmailNotFound("Email not found");
-        
+
         return new ValueTask<Email>(email);
     }
 
@@ -68,7 +68,7 @@ public class EmailService : IEntityBaseService<Email>
     {
         throw new NotImplementedException();
     }
-    
+
     private bool ValidationToNull(Email email)
     {
         if (string.IsNullOrWhiteSpace(email.Subject)
@@ -77,5 +77,5 @@ public class EmailService : IEntityBaseService<Email>
             || !_validationService.IsValidEmailAddress(email.SenderEmailAddress))
             return false;
         return true;
-    }    
+    }
 }

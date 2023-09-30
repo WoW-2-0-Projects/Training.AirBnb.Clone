@@ -1,5 +1,5 @@
-﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers;

@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.CityExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class CityService : IEntityBaseService<City>
     {
@@ -18,10 +18,10 @@ namespace Backend_Project.Domain.Services
         {
             if (IsUnique(city))
                 throw new CityAlreadyExistsException("This City already Exists");
-            if(!IsValidCityName(city))
+            if (!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
-            await _appDataContext.Cities.AddAsync(city,cancellationToken);
-            if(saveChanges )
+            await _appDataContext.Cities.AddAsync(city, cancellationToken);
+            if (saveChanges)
                 await _appDataContext.Cities.SaveChangesAsync();
             return city;
         }
@@ -41,7 +41,7 @@ namespace Backend_Project.Domain.Services
             var deletedCity = await GetByIdAsync(city.Id);
             deletedCity.DeletedDate = DateTimeOffset.UtcNow;
             deletedCity.IsDeleted = true;
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.Cities.SaveChangesAsync();
             return deletedCity;
         }
@@ -69,23 +69,23 @@ namespace Backend_Project.Domain.Services
         public async ValueTask<City> UpdateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var foundCity = await GetByIdAsync(city.Id);
-            if(!IsValidCityName(city))
+            if (!IsValidCityName(city))
                 throw new CityFormatException("The city is in the wrong format");
             foundCity.ModifiedDate = DateTimeOffset.UtcNow;
             foundCity.Name = city.Name;
-            if(saveChanges)
+            if (saveChanges)
                 await _appDataContext.Cities.SaveChangesAsync();
             return foundCity;
         }
 
         private IQueryable<City> GetUndeletedCities() => _appDataContext.Cities
             .Where(city => !city.IsDeleted).AsQueryable();
-        
+
         private bool IsValidCityName(City city)
         {
             if (string.IsNullOrWhiteSpace(city.Name)
-                || (city.Name.Length <= 4
-                || city.Name.Length > 185)
+                || city.Name.Length <= 4
+                || city.Name.Length > 185
                 || city.CountryId.Equals(default))
                 return false;
             return true;

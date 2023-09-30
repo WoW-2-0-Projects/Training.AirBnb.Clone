@@ -1,10 +1,10 @@
+using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.User;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services;
+namespace Backend_Project.Infrastructure.Services.AccountServices;
 
 public class UserService : IEntityBaseService<User>
 {
@@ -24,7 +24,7 @@ public class UserService : IEntityBaseService<User>
             throw new UserFormatException("Invalid last name");
         if (!_validationService.IsValidEmailAddress(user.EmailAddress))
             throw new UserFormatException("Invalid email address");
-        if (!(await IsUnique(user.EmailAddress)))
+        if (!await IsUnique(user.EmailAddress))
             throw new UserAlreadyExistsException("This email address already exists");
         await _appDataContext.Users.AddAsync(user, cancellationToken);
 
@@ -102,6 +102,6 @@ public class UserService : IEntityBaseService<User>
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));
-    private IQueryable<User> GetUndeletedUsers() => 
+    private IQueryable<User> GetUndeletedUsers() =>
         _appDataContext.Users.Where(user => !user.IsDeleted).AsQueryable();
 }

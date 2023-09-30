@@ -1,10 +1,10 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.ListingOccupancyExceptions;
-using Backend_Project.Domain.Interfaces;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
-namespace Backend_Project.Domain.Services
+namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
     public class ReservationOccupancyService : IEntityBaseService<ReservationOccupancy>
     {
@@ -18,7 +18,7 @@ namespace Backend_Project.Domain.Services
             if (!IsValidOccupancy(reservationOccupancy))
                 throw new ReservationOccupancyValidationException("This Occupancy is not valid");
             else
-                await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy,cancellationToken);
+                await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy, cancellationToken);
             if (saveChanges)
                 await _appDataContext.ReservationOccupancies.SaveChangesAsync();
             return reservationOccupancy;
@@ -36,7 +36,7 @@ namespace Backend_Project.Domain.Services
 
         public async ValueTask<ReservationOccupancy> DeleteAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            
+
             return await DeleteAsync(reservationOccupancy.Id, saveChanges);
         }
 
@@ -45,7 +45,7 @@ namespace Backend_Project.Domain.Services
             return GetUndelatedReservatinOccupancies().Where(predicate.Compile()).AsQueryable();
         }
 
-        public ValueTask<ICollection<ReservationOccupancy>> GetAsync(IEnumerable<Guid> ids,CancellationToken  cancellationToken = default)
+        public ValueTask<ICollection<ReservationOccupancy>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
             var reservationOccupancy = GetUndelatedReservatinOccupancies()
                 .Where(reservationOccupanc => ids.Contains(reservationOccupanc.Id));
@@ -56,7 +56,7 @@ namespace Backend_Project.Domain.Services
         {
             var reservationOccupancy = GetUndelatedReservatinOccupancies()
                 .FirstOrDefault(rsO => rsO.Id.Equals(id));
-            if(reservationOccupancy is null)
+            if (reservationOccupancy is null)
                 throw new ReservationOccupancyNotFoundException("Listing Occupation not found");
             return new ValueTask<ReservationOccupancy>(reservationOccupancy);
         }
@@ -78,13 +78,13 @@ namespace Backend_Project.Domain.Services
         }
         private bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
         {
-            if(reservationOccupancy.Adults < 0 && reservationOccupancy.Adults > 50)
+            if (reservationOccupancy.Adults < 0 && reservationOccupancy.Adults > 50)
                 return false;
-            if(reservationOccupancy.Children < 0 && reservationOccupancy.Children > 50)
+            if (reservationOccupancy.Children < 0 && reservationOccupancy.Children > 50)
                 return false;
-            if(reservationOccupancy.Infants < 0 && reservationOccupancy.Infants > 50)
+            if (reservationOccupancy.Infants < 0 && reservationOccupancy.Infants > 50)
                 return false;
-            if(reservationOccupancy.Pets < 0 && reservationOccupancy.Pets > 50)
+            if (reservationOccupancy.Pets < 0 && reservationOccupancy.Pets > 50)
                 return false;
             return true;
         }

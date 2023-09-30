@@ -1,8 +1,8 @@
-﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
+﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Domain.Entities;
 using System.Data;
 using System.Text;
-namespace Backend_Project.Domain.Services.NotificationService;
+namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
