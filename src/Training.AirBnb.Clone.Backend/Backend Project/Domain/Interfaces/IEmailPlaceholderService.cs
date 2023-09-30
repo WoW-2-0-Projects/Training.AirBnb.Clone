@@ -1,4 +1,4 @@
-﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Entities;
 
 namespace Backend_Project.Domain.Interfaces;
 
