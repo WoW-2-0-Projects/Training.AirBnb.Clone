@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -18,10 +19,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             CancellationToken cancellationToken = default)
         {
             if (!IsValidListingCategory(listingCategory))
-                throw new NotImplementedException();
+                throw new EntityValidationException<ListingCategory> ("Listing Category is not valid");
 
             if (!IsUniqueListingCategoryName(listingCategory))
-                throw new NotImplementedException();
+                throw new DuplicateEntityException<ListingCategory> ("This listing category already exists");
 
             _appDataContext.ListingCategories.AddAsync(listingCategory, cancellationToken);
 
@@ -34,7 +35,8 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         public async ValueTask<ListingCategory> UpdateAsync(ListingCategory listingCategory, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
-            if (!IsValidListingCategory(listingCategory)) throw new NotImplementedException();
+            if (!IsValidListingCategory(listingCategory)) 
+                throw new EntityValidationException<ListingCategory> ("Listing Category is not valid");
 
 
             var foundListingCategory = await GetByIdAsync(listingCategory.Id);
@@ -42,7 +44,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             foundListingCategory.Name = listingCategory.Name;
             foundListingCategory.ModifiedDate = DateTime.UtcNow;
 
-            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
+            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync(cancellationToken);
 
             return foundListingCategory;
         }
@@ -51,22 +53,14 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             => GetUndelatedListingCategories().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<ListingCategory>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        {
-            var listingCategories = GetUndelatedListingCategories()
-                .Where(lc => ids.Contains(lc.Id));
-
-            return new ValueTask<ICollection<ListingCategory>>(listingCategories.ToList());
-        }
+            => new ValueTask<ICollection<ListingCategory>> (GetUndelatedListingCategories()
+                .Where(listingCategory => ids
+                .Contains(listingCategory.Id)).ToList());
 
         public ValueTask<ListingCategory> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            var listingCategories = GetUndelatedListingCategories().FirstOrDefault(lc => lc.Id == id);
-
-            if (listingCategories is null)
-                throw new ArgumentException();
-
-            return new ValueTask<ListingCategory>(listingCategories);
-        }
+            => new ValueTask<ListingCategory> (GetUndelatedListingCategories()
+                .FirstOrDefault(listingCategory => listingCategory.Id.Equals(id))
+                ?? throw new EntityNotFoundException<ListingCategory> ("ListingCategory not found."));
 
         public async ValueTask<ListingCategory> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
@@ -75,7 +69,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             removedListingCategory.IsDeleted = true;
             removedListingCategory.DeletedDate = DateTime.UtcNow;
 
-            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
+            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync(cancellationToken);
 
             return removedListingCategory;
         }
