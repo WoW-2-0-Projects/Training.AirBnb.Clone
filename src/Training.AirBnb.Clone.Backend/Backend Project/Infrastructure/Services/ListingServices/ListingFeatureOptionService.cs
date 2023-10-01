@@ -66,7 +66,7 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
     }
 
     public async ValueTask<ListingFeatureOption> DeleteAsync(ListingFeatureOption option, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => await DeleteAsync(option, saveChanges, cancellationToken);
+        => await DeleteAsync(option.Id, saveChanges, cancellationToken);
 
     private void ValidateOption(ListingFeatureOption option)
     {
