@@ -22,7 +22,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
         await _appDataContext.ListingProperties.AddAsync(property, cancellationToken);
 
         if (saveChanges) await _appDataContext.ListingProperties.SaveChangesAsync(cancellationToken);
-        
+
         return property;
     }
 
@@ -67,7 +67,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     }
 
     public async ValueTask<ListingProperty> DeleteAsync(ListingProperty property, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => await DeleteAsync(property, saveChanges, cancellationToken);
+        => await DeleteAsync(property.Id, saveChanges, cancellationToken);
 
     private void ValidateProperty(ListingProperty property)
     {
@@ -82,14 +82,14 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     {
         if (string.IsNullOrWhiteSpace(property.PropertyName)) return false;
         if (property.PropertyCount < 1) return false;
-        if (property.ListingId == default) return false;
+        if (property.ListingId == Guid.Empty) return false;
 
         return true;
     }
 
     private bool IsUniqueProperty(ListingProperty property)
-        => !GetUndeletedProperties().Any(self => self.PropertyName == property.PropertyName 
-        && self.PropertyCount == property.PropertyCount 
+        => !GetUndeletedProperties().Any(self => self.PropertyName == property.PropertyName
+        && self.PropertyCount == property.PropertyCount
         && self.ListingId == property.ListingId);
 
     private IQueryable<ListingProperty> GetUndeletedProperties()
