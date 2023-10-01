@@ -23,7 +23,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
-
+    public IFileSet<Rating,Guid> Ratings => Set<Rating>(nameof(Ratings));
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
