@@ -10,7 +10,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private readonly IEntityBaseService<User> _userService;
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
-    private const string _lastName = "{{LastName}";
+    private const string _lastName = "{{LastName}}";
     private const string _emailAddress = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
