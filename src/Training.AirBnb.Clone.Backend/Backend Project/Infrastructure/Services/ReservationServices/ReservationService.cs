@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
 using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Exceptions.ListingExceptions;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
