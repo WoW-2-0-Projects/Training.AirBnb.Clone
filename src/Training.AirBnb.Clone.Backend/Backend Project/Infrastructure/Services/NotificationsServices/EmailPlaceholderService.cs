@@ -4,6 +4,7 @@ using System.Data;
 using System.Text;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
+
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
     private readonly IEntityBaseService<User> _userService;
@@ -13,6 +14,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _emailAddress = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
+   
     public EmailPlaceholderService(IEntityBaseService<User> user)
     {
         _userService = user;

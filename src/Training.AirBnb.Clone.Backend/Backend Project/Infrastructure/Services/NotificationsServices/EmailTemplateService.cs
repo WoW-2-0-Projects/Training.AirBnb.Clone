@@ -5,6 +5,7 @@ using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
+
 public class EmailTemplateService : IEntityBaseService<EmailTemplate>
 {
     private readonly IDataContext _dataContext;
