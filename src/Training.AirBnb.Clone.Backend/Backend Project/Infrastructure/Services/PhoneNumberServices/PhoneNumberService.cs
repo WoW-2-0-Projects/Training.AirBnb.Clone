@@ -37,6 +37,42 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
         return phoneNumber;
     }
 
+    public ValueTask<ICollection<PhoneNumber>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    {
+        var phoneNumbers = GetUndeletedNumbers()
+            .Where(number => ids.Contains(number.Id));
+
+        return new ValueTask<ICollection<PhoneNumber>>(phoneNumbers.ToList());
+    }
+
+    public ValueTask<PhoneNumber> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return new ValueTask<PhoneNumber>(GetUndeletedNumbers().
+            FirstOrDefault(number => number.Id == id) ??
+                throw new EntityNotFoundException<PhoneNumber>("Phone number not found"));
+    }
+
+    public IQueryable<PhoneNumber> Get(Expression<Func<PhoneNumber, bool>> predicate) =>
+       GetUndeletedNumbers().Where(predicate.Compile()).AsQueryable();
+
+    public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
+
+        if (!await IsValidPhoneNumber(phoneNumber))
+            throw new EntityException<PhoneNumber>("Invalid phone number");
+
+        updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
+        updatedNumber.Code = phoneNumber.Code;
+        updatedNumber.ModifiedDate = DateTimeOffset.UtcNow;
+        updatedNumber.CountryId = phoneNumber.CountryId;
+
+        if (saveChanges)
+            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+
+        return updatedNumber;
+    }
+
     public async ValueTask<PhoneNumber> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var deletedNumber = await GetByIdAsync(id);
@@ -69,68 +105,33 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
         return deletedNumber;
     }
 
-    public IQueryable<PhoneNumber> Get(Expression<Func<PhoneNumber, bool>> predicate) =>
-        _appDataContext.PhoneNumbers.Where(predicate.Compile()).AsQueryable();
-
-    public ValueTask<ICollection<PhoneNumber>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-    {
-        var phoneNumbers = _appDataContext.PhoneNumbers
-            .Where(number => ids.Contains(number.Id));
-
-        return new ValueTask<ICollection<PhoneNumber>>(phoneNumbers.ToList());
-    }
-
-    public ValueTask<PhoneNumber> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return new ValueTask<PhoneNumber>(_appDataContext.PhoneNumbers.
-            FirstOrDefault(number => number.Id == id && !number.IsDeleted) ??
-                throw new EntityNotFoundException<PhoneNumber>("Phone number not found"));
-    }
-
-    public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
-
-        if (updatedNumber is null)
-            throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
-        if (!await IsValidPhoneNumber(phoneNumber))
-            throw new EntityException<PhoneNumber>("Invalid phone number");
-
-        updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
-        updatedNumber.Code = phoneNumber.Code;
-        updatedNumber.ModifiedDate = DateTimeOffset.UtcNow;
-        updatedNumber.CountryId = phoneNumber.CountryId;
-
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
-
-        return updatedNumber;
-    }
-
-    private bool IsUnique(string phoneNumber) => _appDataContext.PhoneNumbers
+    private bool IsUnique(string phoneNumber) => GetUndeletedNumbers()
              .Any(number => number.UserPhoneNumber == phoneNumber);
 
     private bool IsNullable(PhoneNumber phoneNumber)
     {
-        if (string.IsNullOrEmpty(phoneNumber.UserPhoneNumber) || string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
+        if (string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
             return false;
         return true;
     }
 
     private async ValueTask<bool> IsValidPhoneNumber(PhoneNumber phoneNumber)
     {
-        if (phoneNumber.UserPhoneNumber[1..].All(char.IsDigit))
+        if (!phoneNumber.UserPhoneNumber[1..].All(char.IsDigit))
             return false;
-        if (phoneNumber.UserPhoneNumber[0] == '+')
+        if (phoneNumber.UserPhoneNumber[0] != '+')
             return false;
 
         var country = await _country.GetByIdAsync(phoneNumber.CountryId);
 
-        if (phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode))
+        if (!phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode))
             return false;
         if (phoneNumber.UserPhoneNumber.Length != country.RegionPhoneNumberLength)
             return false;
 
         return true;
     }
+
+    private IQueryable<PhoneNumber> GetUndeletedNumbers()
+        => _appDataContext.PhoneNumbers.Where(number => !number.IsDeleted).AsQueryable();
 }
