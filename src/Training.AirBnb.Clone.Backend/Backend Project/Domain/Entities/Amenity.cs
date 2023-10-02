@@ -7,11 +7,11 @@ public class Amenity : SoftDeletedEntity
     public string AmenityName { get; set; }
     public Guid CategoryId { get; set; }
 
-    public Amenity(string amenityName, Guid categoryid)
+    public Amenity(string amenityName, Guid categoryId)
     {
         Id = Guid.NewGuid();
         AmenityName = amenityName;
-        CategoryId = categoryid;
+        CategoryId = categoryId;
         CreatedDate = DateTime.UtcNow;
     }
 }

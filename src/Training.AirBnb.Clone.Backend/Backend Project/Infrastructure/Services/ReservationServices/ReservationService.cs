@@ -18,7 +18,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsNotBookedReservation(reservation))
-                throw new EntityValidationException<Reservation>("This reservations time already exists");
+                throw new EntityValidationException<Reservation> ("This reservations time already exists");
 
             if (IsValidEntity(reservation))
                 await _appDataContext.Reservations.AddAsync(reservation, cancellationToken);
@@ -31,29 +31,6 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             return reservation;
         }
 
-        public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
-                reservation.Id.Equals(reservation.Id));
-
-            if (foundReseervation is null)
-                throw new EntityNotFoundException<Reservation>("Reservation not found.");
-
-            if (!IsValidEntity(reservation))
-                throw new EntityValidationException<Reservation>("Reservation is not valid.");
-
-            foundReseervation.ListingId = reservation.ListingId;
-            foundReseervation.BookedBy = reservation.BookedBy;
-            foundReseervation.OccupancyId = reservation.OccupancyId;
-            foundReseervation.StartDate = reservation.StartDate;
-            foundReseervation.EndDate = reservation.EndDate;
-            foundReseervation.TotalPrice = reservation.TotalPrice;
-            foundReseervation.ModifiedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges) await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
-
-            return foundReseervation;
-        }
         public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
             => GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
 
@@ -64,9 +41,39 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
                 .ToList());
 
         public ValueTask<Reservation> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => new ValueTask<Reservation>(GetUndelatedReservations()
-            .FirstOrDefault(reservation => reservation.Id == id)
-            ?? throw new EntityNotFoundException<Reservation>("Reservation not found."));
+        {
+            var reservation = GetUndelatedReservations().FirstOrDefault(reservation => reservation.Id.Equals(id));
+            
+            if (reservation is null) throw new EntityNotFoundException<Reservation> ("Reservation not found.");
+            
+            return new ValueTask<Reservation>(reservation);
+        }
+
+        public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
+                reservation.Id.Equals(reservation.Id));
+            
+            if (foundReseervation is null)
+                throw new EntityNotFoundException<Reservation> ("Reservation not found.");
+            
+            if (!IsValidEntity(reservation))
+                throw new EntityValidationException<Reservation> ("Reservation is not valid.");
+
+            foundReseervation.ListingId = reservation.ListingId;
+            foundReseervation.BookedBy = reservation.BookedBy;
+            foundReseervation.OccupancyId = reservation.OccupancyId;
+            foundReseervation.StartDate = reservation.StartDate;
+            foundReseervation.EndDate = reservation.EndDate;
+            foundReseervation.TotalPrice = reservation.TotalPrice;
+            foundReseervation.ModifiedDate = DateTimeOffset.UtcNow;
+            
+            if (saveChanges)  await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
+           
+            return foundReseervation;
+        }
+        public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
+            => GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
 
         public async ValueTask<Reservation> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
@@ -77,11 +84,11 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
             if (saveChanges)
                 await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
-
+            
             return removedReservation;
         }
 
-        public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default) 
             => await DeleteAsync(reservation.Id, saveChanges, cancellationToken);
 
         private bool IsValidEntity(Reservation reservation)
