@@ -1,4 +1,4 @@
-﻿using Backend_Project.Domain.Common;
+using Backend_Project.Domain.Common;
 
 namespace Backend_Project.Domain.Entities
 {
@@ -11,21 +11,17 @@ namespace Backend_Project.Domain.Entities
         public DateTime EndDate { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public Reservation(Guid listingId, Guid bookedBy, Guid occupancyId, DateTime startDate, DateTime endDate, decimal totalPrice)
+        public Reservation(Guid listingId,Guid bookedBy,Guid occupansyId,
+            DateTime startDate,DateTime endDate,decimal totalPrice)
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTimeOffset.UtcNow;
             ListingId = listingId;
             BookedBy = bookedBy;
-            OccupancyId = occupancyId;
+            OccupancyId = occupansyId;
             StartDate = startDate;
             EndDate = endDate;
             TotalPrice = totalPrice;
         }
-
-        public Reservation()
-        {
-        }
     }
-
 }

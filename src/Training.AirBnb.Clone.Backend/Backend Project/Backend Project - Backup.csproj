@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>Backend_Project</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Configs\" />
+    <Folder Include="Domain\Extensions\" />
+    <Folder Include="Infrastructure\Configs\" />
+    <Folder Include="Persistance\Configs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
+  </ItemGroup>
+
+</Project>
