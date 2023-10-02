@@ -78,7 +78,7 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
     }
 
     private bool IsValidOption(ListingFeatureOption option)
-        => !string.IsNullOrEmpty(option.Name) && option.Name.Length > 2;
+        => !string.IsNullOrWhiteSpace(option.Name) && option.Name.Length > 2;
 
     private bool IsUniqueOption(ListingFeatureOption option)
         => !GetUndeletedOptions().Any(self => self.Name == option.Name);
