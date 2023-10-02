@@ -99,6 +99,7 @@ public class UserService : IEntityBaseService<User>
             await _appDataContext.SaveChangesAsync();
         return updatedUser;
     }
+    
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));
