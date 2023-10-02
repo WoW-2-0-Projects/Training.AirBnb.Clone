@@ -1,4 +1,4 @@
-﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Persistance.DataContexts;
 using Backend_Project.Application.Interfaces;
@@ -14,7 +14,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     {
         _dataContext = dataContext;
     }
-
+    
     public async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
 
@@ -52,7 +52,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     {
         return GetUndeletedEmailTemplate().Where(predicate.Compile()).AsQueryable();
     }
-
+    
     public async ValueTask<EmailTemplate> UpdateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidationToNull(emailTemplate))
@@ -69,7 +69,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         
         return foundEmailTemplate;
     }
-
+    
     public async ValueTask<EmailTemplate> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var foundEmailTemplate = await GetByIdAsync(id);
@@ -88,6 +88,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         => await DeleteAsync(emailTemplate.Id, saveChanges, cancellationToken);
     
     //validation methods
+
     private bool ValidationToNull(EmailTemplate emailTemplate)
     {
         if (string.IsNullOrWhiteSpace(emailTemplate.Subject) || string.IsNullOrWhiteSpace(emailTemplate.Body))
@@ -106,3 +107,4 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     private IQueryable<EmailTemplate> GetUndeletedEmailTemplate() =>
         _dataContext.EmailTemplates.Where(emailTemplate => !emailTemplate.IsDeleted).AsQueryable();
 }
+
