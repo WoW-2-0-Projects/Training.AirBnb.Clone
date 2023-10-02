@@ -34,7 +34,7 @@ public class AmenityService : IEntityBaseService<Amenity>
     public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<Amenity>(GetUndeletedAmenities()
             .FirstOrDefault(amenity => amenity.Id == id)
-            ?? throw new EntityNotFoundException<Amenity>());
+            ?? throw new EntityNotFoundException<Amenity>("Amenity not found."));
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)
         => GetUndeletedAmenities().Where(predicate.Compile()).AsQueryable();
@@ -79,9 +79,9 @@ public class AmenityService : IEntityBaseService<Amenity>
     }
 
     private bool IsValidAmenity(Amenity amenity)
-        => !string.IsNullOrEmpty(amenity.AmenityName)
+        => !string.IsNullOrWhiteSpace(amenity.AmenityName)
             && amenity.AmenityName.Length > 2
-            && amenity.CategoryId != default;
+            && amenity.CategoryId != Guid.Empty;
 
     private bool IsUnique(Amenity amenity)
         => !GetUndeletedAmenities()
