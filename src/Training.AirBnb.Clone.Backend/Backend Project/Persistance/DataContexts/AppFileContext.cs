@@ -1,4 +1,5 @@
-﻿using FileBaseContext.Abstractions.Models.Entity;
+using Backend_Project.Domain.Entities;
+using FileBaseContext.Abstractions.Models.Entity;
 using FileBaseContext.Abstractions.Models.FileContext;
 using FileBaseContext.Abstractions.Models.FileSet;
 using FileBaseContext.Context.Models.Configurations;
@@ -8,6 +9,26 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
+    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplates));
+    public IFileSet<EmailMessage, Guid> EmailMessages => Set<EmailMessage>(nameof(EmailMessages));
+    public IFileSet<Email,Guid> Emails => Set<Email>(nameof(Emails));
+    public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
+    public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
+    public IFileSet<Country, Guid> Countries => Set<Country>(nameof(Countries));
+    public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
+    public IFileSet<Address, Guid> Addresses => Set<Address>(nameof(Addresses));
+    public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy>(nameof(ReservationOccupancies));
+    public IFileSet<ListingComment, Guid> ListingComments => Set<ListingComment>(nameof(ListingComments));
+    public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
+    public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory>(nameof(AmenityCategories));
+    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
+    public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
+    public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
+    public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature>(nameof(ListingFeatures));
+    public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty>(nameof(ListingProperties));
+    public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities>(nameof(ListingAmenities));
+    public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
+
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
