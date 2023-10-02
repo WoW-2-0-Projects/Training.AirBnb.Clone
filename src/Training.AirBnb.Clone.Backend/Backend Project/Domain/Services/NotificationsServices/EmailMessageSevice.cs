@@ -1,6 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Interfaces;
-using System.Linq.Expressions;
 
 namespace Backend_Project.Domain.Services.NotificationsServices;
 
