@@ -10,10 +10,9 @@ public class Email : AuditableEntity
     public string Body { get; set;}
     public string ReceiverEmailAddress { get; set; }
     public string SenderEmailAddress { get; set; }
-  
     public bool IsSent { get; set; }
 
-    public Email(Guid sendUserId,Guid receiverUserId,string subject, string body,string receiverEmailAddress,string senderEmailAddress)
+    public Email(Guid sendUserId, Guid receiverUserId, string subject, string body, string receiverEmailAddress, string senderEmailAddress)
     {
         Id = Guid.NewGuid();
         SendUserId = sendUserId;
@@ -26,5 +25,4 @@ public class Email : AuditableEntity
         IsSent = false;
 
     }
-
 }

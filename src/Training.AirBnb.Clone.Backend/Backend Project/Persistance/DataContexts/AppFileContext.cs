@@ -18,18 +18,22 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
     public IFileSet<Address, Guid> Addresses => Set<Address>(nameof(Addresses));
     public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy>(nameof(ReservationOccupancies));
-    public IFileSet<ListingComment, Guid> ListingComments => Set<ListingComment>(nameof(ListingComments));
+    public IFileSet<Comment, Guid> Comments => Set<Comment>(nameof(Comments));
     public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
     public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory>(nameof(AmenityCategories));
     public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
     public IFileSet<Rating,Guid> Ratings => Set<Rating>(nameof(Ratings));
+    public IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions => Set<ListingFeatureOption>(nameof(ListingFeatureOptions));
     public IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions => Set<ListingCategoryFeatureOption>(nameof(ListingCategoryFeatureOptions));
     public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature>(nameof(ListingFeatures));
     public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty>(nameof(ListingProperties));
     public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities>(nameof(ListingAmenities));
     public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
+    public IFileSet<Listing, Guid> Listings => Set<Listing>(nameof(Listing));
+
+    public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber>(nameof(PhoneNumbers));
 
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
