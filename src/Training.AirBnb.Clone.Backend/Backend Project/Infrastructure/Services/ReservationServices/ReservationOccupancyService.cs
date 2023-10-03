@@ -22,7 +22,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
                 await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy, cancellationToken);
 
             if (saveChanges)
-                await _appDataContext.ReservationOccupancies.SaveChangesAsync();
+                await _appDataContext.ReservationOccupancies.SaveChangesAsync(cancellationToken);
 
             return reservationOccupancy;
         }
