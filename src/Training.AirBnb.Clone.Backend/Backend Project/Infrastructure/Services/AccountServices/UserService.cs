@@ -96,6 +96,7 @@ public class UserService : IEntityBaseService<User>
 
         return updatedUser;
     }
+    
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));

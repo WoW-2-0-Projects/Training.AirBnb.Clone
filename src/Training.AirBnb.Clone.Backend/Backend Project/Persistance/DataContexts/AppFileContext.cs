@@ -10,6 +10,7 @@ namespace Backend_Project.Persistance.DataContexts;
 public class AppFileContext : FileContext, IDataContext
 {
     public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplates));
+    public IFileSet<EmailMessage, Guid> EmailMessages => Set<EmailMessage>(nameof(EmailMessages));
     public IFileSet<Email,Guid> Emails => Set<Email>(nameof(Emails));
     public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
     public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
@@ -24,11 +25,15 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
     public IFileSet<Rating,Guid> Ratings => Set<Rating>(nameof(Ratings));
+    public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature>(nameof(ListingFeatures));
+    public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty>(nameof(ListingProperties));
+    public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities>(nameof(ListingAmenities));
+    public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
+
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
     }
-
 
     public virtual ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
