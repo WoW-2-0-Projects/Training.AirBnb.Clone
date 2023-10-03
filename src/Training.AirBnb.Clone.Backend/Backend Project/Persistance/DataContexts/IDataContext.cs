@@ -22,6 +22,7 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<AmenityCategory, Guid> AmenityCategories { get; }
     IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }
+    IFileSet<Rating,Guid> Ratings { get; }
     IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions { get; }
     IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions { get; }
     IFileSet<ListingFeature, Guid> ListingFeatures { get; }

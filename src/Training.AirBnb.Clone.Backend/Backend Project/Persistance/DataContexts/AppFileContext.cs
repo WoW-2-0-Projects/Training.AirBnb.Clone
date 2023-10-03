@@ -24,6 +24,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
+    public IFileSet<Rating,Guid> Ratings => Set<Rating>(nameof(Ratings));
     public IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions => Set<ListingFeatureOption>(nameof(ListingFeatureOptions));
     public IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions => Set<ListingCategoryFeatureOption>(nameof(ListingCategoryFeatureOptions));
     public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature>(nameof(ListingFeatures));
