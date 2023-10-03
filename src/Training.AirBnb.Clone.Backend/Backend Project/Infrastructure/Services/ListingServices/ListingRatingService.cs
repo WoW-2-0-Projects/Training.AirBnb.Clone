@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.ListingRatingException;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -17,9 +17,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         public async ValueTask<ListingRating> CreateAsync(ListingRating listingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (IsUniqueListingRating(listingRating.ListingId))
-                throw new ListingRatingAlreadyExistsException("This listingRating already exists!");
+                throw new DuplicateEntityException<ListingRating>("This listingRating already exists!");
+            
             if (!IsValidRating(listingRating.Rating))
-                throw new ListingRatingFormatException("Invalid rating!");
+                throw new EntityValidationException<ListingRating>("Invalid rating!");
 
             await _appDataContext.ListingRatings.AddAsync(listingRating, cancellationToken);
 
@@ -28,6 +29,41 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
             return listingRating;
 
+        }
+
+        public ValueTask<ICollection<ListingRating>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+        {
+            var listingRatings = GetUndeletedListingRatings().
+                Where(listingRating => ids.Contains(listingRating.Id));
+            return new ValueTask<ICollection<ListingRating>>(listingRatings.ToList());
+        }
+
+        public ValueTask<ListingRating> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return new ValueTask<ListingRating>(GetUndeletedListingRatings().
+                FirstOrDefault(listingRating => listingRating.Id == id) ??
+                throw new EntityNotFoundException<ListingRating>("ListingRating not found!"));
+        }
+
+        public IQueryable<ListingRating> Get(Expression<Func<ListingRating, bool>> predicate)
+        {
+            return GetUndeletedListingRatings().Where(predicate.Compile()).AsQueryable();
+        }
+
+        public async ValueTask<ListingRating> UpdateAsync(ListingRating listingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var updatedListingRating = await GetByIdAsync(listingRating.Id);
+
+            if (!IsValidRating(listingRating.Rating))
+                throw new EntityValidationException<ListingRating>("Invalid listingRating!");
+
+            updatedListingRating.Rating = listingRating.Rating;
+            updatedListingRating.ModifiedDate = DateTimeOffset.UtcNow;
+
+            if (saveChanges)
+                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
+
+            return updatedListingRating;
         }
 
         public async ValueTask<ListingRating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -54,41 +90,6 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
                 await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
 
             return deletedListingRating;
-        }
-
-        public IQueryable<ListingRating> Get(Expression<Func<ListingRating, bool>> predicate)
-        {
-            return GetUndeletedListingRatings().Where(predicate.Compile()).AsQueryable();
-        }
-
-        public ValueTask<ICollection<ListingRating>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        {
-            var listingRatings = GetUndeletedListingRatings().
-                Where(listingRating => ids.Contains(listingRating.Id));
-            return new ValueTask<ICollection<ListingRating>>(listingRatings.ToList());
-        }
-
-        public ValueTask<ListingRating> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            return new ValueTask<ListingRating>(GetUndeletedListingRatings().
-                FirstOrDefault(listingRating => listingRating.Id == id) ??
-                throw new ListingRatingNotFoundException("ListingRating not found!"));
-        }
-
-        public async ValueTask<ListingRating> UpdateAsync(ListingRating listingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var updatedListingRating = await GetByIdAsync(listingRating.Id);
-
-            if (!IsValidRating(listingRating.Rating))
-                throw new ListingRatingFormatException("Invalid listingRating!");
-
-            updatedListingRating.Rating = listingRating.Rating;
-            updatedListingRating.ModifiedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
-
-            return updatedListingRating;
         }
 
         private bool IsValidRating(double rating)

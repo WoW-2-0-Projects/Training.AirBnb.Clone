@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.AddressExceptions;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -22,11 +22,11 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             if (!IsValidAddressLines(address.AddressLine1))
-                throw new AddressFormatException("Invalid province!");
+                throw new EntityValidationException<Address>("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
-                throw new AddressFormatException("Invalid zipCode!");
+                throw new EntityValidationException<Address>("Invalid zipCode!");
             if (!await IsCityWithInCountry(address))
-                throw new CityDoesNotMatchCountryException("City does not match country!");
+                throw new EntityValidationException<Address>("City does not match country!");
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
@@ -34,6 +34,52 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
                 await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
 
             return address;
+        }
+
+        public ValueTask<ICollection<Address>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+        {
+            var addresses = GetUndeletedAddresses().
+                Where(address => ids.Contains(address.Id));
+            return new ValueTask<ICollection<Address>>(addresses.ToList());
+        }
+
+        public ValueTask<Address> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return new ValueTask<Address>(GetUndeletedAddresses().
+                FirstOrDefault(address => address.Id == id) ??
+                throw new EntityNotFoundException<Address>("Address not found"));
+        }
+
+        public IQueryable<Address> Get(Expression<Func<Address, bool>> predicate)
+        {
+            return GetUndeletedAddresses().Where(predicate.Compile()).AsQueryable();
+        }
+
+        public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var updatedAddress = await GetByIdAsync(address.Id);
+
+            if (!IsValidAddressLines(address.AddressLine1))
+                throw new EntityValidationException<Address>("Invalid province!");
+            if (!IsValidZipCode(address.ZipCode))
+                throw new EntityValidationException<Address>("Invalid zipCode!");
+            if (!await IsCityWithInCountry(address))
+                throw new EntityValidationException<Address>("City does not match country!");
+
+            updatedAddress.CityId = address.CityId;
+            updatedAddress.CountryId = address.CountryId;
+            updatedAddress.AddressLine1 = address.AddressLine1;
+            updatedAddress.AddressLine2 = address.AddressLine2;
+            updatedAddress.AddressLine3 = address.AddressLine3;
+            updatedAddress.AddressLine4 = address.AddressLine4;
+            updatedAddress.Province = address.Province;
+            updatedAddress.ZipCode = address.ZipCode;
+            updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
+
+            if (saveChanges)
+                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
+
+            return updatedAddress;
         }
 
         public async ValueTask<Address> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -62,53 +108,6 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             return deletedAddress;
         }
 
-        public IQueryable<Address> Get(Expression<Func<Address, bool>> predicate)
-        {
-            return GetUndeletedAddresses().Where(predicate.Compile()).AsQueryable();
-        }
-
-        public ValueTask<ICollection<Address>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        {
-            var addresses = GetUndeletedAddresses().
-                Where(address => ids.Contains(address.Id));
-            return new ValueTask<ICollection<Address>>(addresses.ToList());
-        }
-
-        public ValueTask<Address> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            return new ValueTask<Address>(GetUndeletedAddresses().
-                FirstOrDefault(address => address.Id == id) ??
-                throw new AddressNotFoundException("Address not found"));
-        }
-
-        public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var updatedAddress = await GetByIdAsync(address.Id);
-
-            if (!IsValidAddressLines(address.AddressLine1))
-                throw new AddressFormatException("Invalid province!");
-            if (!IsValidZipCode(address.ZipCode))
-                throw new AddressFormatException("Invalid zipCode!");
-            if (!await IsCityWithInCountry(address))
-                throw new CityDoesNotMatchCountryException("City does not match country!");
-
-            updatedAddress.CityId = address.CityId;
-            updatedAddress.CountryId = address.CountryId;
-            updatedAddress.AddressLine1 = address.AddressLine1;
-            updatedAddress.AddressLine2 = address.AddressLine2;
-            updatedAddress.AddressLine3 = address.AddressLine3;
-            updatedAddress.AddressLine4 = address.AddressLine4;
-            updatedAddress.Province = address.Province;
-            updatedAddress.ZipCode = address.ZipCode;
-            updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
-
-            return updatedAddress;
-
-        }
-
         private bool IsValidAddressLines(string addressLine)
         {
             if (!string.IsNullOrWhiteSpace(addressLine))
@@ -121,6 +120,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             if (zipCode is null)
                 return true;
+            
             for (int index = 0; index < zipCode?.Length; index++)
                 if (!char.IsNumber(zipCode[index]))
                     return false;
@@ -131,6 +131,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             var country = await _countryService.GetByIdAsync(address.CountryId);
             var city = await _cityService.GetByIdAsync(address.CityId);
+            
             if (country.Id == city.CountryId)
                 return true;
             else
