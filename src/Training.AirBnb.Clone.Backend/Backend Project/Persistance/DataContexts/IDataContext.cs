@@ -1,4 +1,5 @@
 using Backend_Project.Domain.Entities;
+using Backend_Project.Infrastructure.Services.ListingServices;
 using FileBaseContext.Abstractions.Models.FileSet;
 
 namespace Backend_Project.Persistance.DataContexts;
@@ -21,6 +22,7 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }
     IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions { get; }
+    IFileSet<ListingFeature, Guid> ListingFeatures { get; }
     IFileSet<ListingProperty , Guid> ListingProperties { get; }
     IFileSet<ListingAmenities, Guid> ListingAmenities { get; }
     IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
