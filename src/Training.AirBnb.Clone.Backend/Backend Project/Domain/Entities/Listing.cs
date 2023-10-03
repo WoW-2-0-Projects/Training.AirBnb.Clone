@@ -14,12 +14,12 @@ public class Listing : SoftDeletedEntity
     public Guid HostId { get; set; }
     public decimal Price { get; set; }
 
-    public Listing(string title, string description, ListingStatus status, Guid categoryId, Guid addressId, Guid occupancyId, Guid hostId, decimal price)
+    public Listing(string title, string description, Guid categoryId, Guid addressId, Guid occupancyId, Guid hostId, decimal price)
     {
         Id = Guid.NewGuid();
         Title = title;
         Description = description;
-        Status = status;
+        Status = ListingStatus.Unlisted;
         CategoryId = categoryId;
         AddressId = addressId;
         OccupancyId = occupancyId;
