@@ -7,6 +7,7 @@ namespace Backend_Project.Domain.Entities
         public string Name { get; set; }
         public string CountryDialingCode { get; set; }
         public int RegionPhoneNumberLength { get; set; }
+
         public Country(string name, string countryDialingCode, int regionPhoneNumberLength)
         {
             Name = name;
