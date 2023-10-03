@@ -12,6 +12,7 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<Email,Guid> Emails { get; }
     IFileSet<EmailMessage,Guid> EmailMessages { get; }
     IFileSet<Reservation, Guid> Reservations { get; }
+
     IFileSet<User, Guid> Users { get; }
     IFileSet<Address, Guid> Addresses { get; }   
     IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
@@ -28,6 +29,9 @@ public interface IDataContext : IAsyncDisposable
     IFileSet<ListingAmenities, Guid> ListingAmenities { get; }
     IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
     IFileSet<Listing, Guid> Listings { get; }
+
+
+    IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
 
     ValueTask SaveChangesAsync();
 }

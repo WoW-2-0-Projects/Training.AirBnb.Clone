@@ -32,6 +32,8 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
     public IFileSet<Listing, Guid> Listings => Set<Listing>(nameof(Listing));
 
+    public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber>(nameof(PhoneNumbers));
+
     public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
