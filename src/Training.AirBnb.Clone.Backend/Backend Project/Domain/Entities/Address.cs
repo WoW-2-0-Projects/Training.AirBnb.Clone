@@ -11,6 +11,7 @@ namespace Backend_Project.Domain.Entities
         public string? AddressLine4 { get; set; }
         public string? Province { get; set; }
         public string? ZipCode { get; set; }
+        
         public Address(Guid countryId, Guid cityId, string addressLine1, string ? addressLine2 = null,
             string? addressLine3 = null, string? addressLine4 = null, string? province = null, string? zipCode = null)
         {
