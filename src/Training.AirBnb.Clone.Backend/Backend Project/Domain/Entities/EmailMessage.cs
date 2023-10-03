@@ -8,6 +8,8 @@ public class EmailMessage : AuditableEntity
     public string Body { get; set; }
     public string SenderAddress { get; set; }
     public string ReceiverAddress { get; set; }
+    public bool IsSent { get; set; }
+    public DateTimeOffset SendDate { get; set; }
 
     public EmailMessage(string subject, string body, string senderAddress,string receiverAddress)
     {
@@ -16,7 +18,9 @@ public class EmailMessage : AuditableEntity
         Body = body;
         SenderAddress = senderAddress;
         ReceiverAddress = receiverAddress;
+        IsSent = false;
         CreatedDate = DateTimeOffset.UtcNow;
+
     }
     public override string ToString()
     {
