@@ -1,7 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Exceptions.ListingExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -9,7 +8,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class CityService : IEntityBaseService<City>
     {
-        private IDataContext _appDataContext;
+        private readonly IDataContext _appDataContext;
         public CityService(IDataContext dataContext)
         {
             _appDataContext = dataContext;
@@ -58,7 +57,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         public ValueTask<City> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
             => new ValueTask<City>(GetUndeletedCities()
             .FirstOrDefault(amenity => amenity.Id == id)
-            ?? throw new AmenityNotFoundException());
+            ?? throw new EntityNotFoundException<Amenity>());
 
         public async ValueTask<City> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
@@ -84,7 +83,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             if (string.IsNullOrWhiteSpace(city.Name)
                 || city.Name.Length <= 4
                 || city.Name.Length > 185
-                || city.CountryId.Equals(default))
+                || city.CountryId.Equals(Guid.Empty))
                 return false;
             
             return true;
