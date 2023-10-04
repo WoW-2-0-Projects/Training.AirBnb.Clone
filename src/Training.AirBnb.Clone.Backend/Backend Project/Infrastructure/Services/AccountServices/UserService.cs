@@ -2,6 +2,7 @@ using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistance.SeedData;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
@@ -25,36 +26,9 @@ public class UserService : IEntityBaseService<User>
 
         await _appDataContext.Users.AddAsync(user, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.Users.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return user;
-    }
-
-    public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedUser = await GetByIdAsync(id);
-
-        deletedUser.DeletedDate = DateTimeOffset.UtcNow;
-        deletedUser.IsDeleted = true;
-
-        if (saveChanges)
-            await _appDataContext.Users.SaveChangesAsync(cancellationToken);
-
-        return deletedUser;
-
-    }
-
-    public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-
-        var deletedUser = await DeleteAsync(user.Id);
-
-
-        if (saveChanges)
-            await _appDataContext.Users.SaveChangesAsync(cancellationToken);
-
-        return deletedUser;
     }
 
     public IQueryable<User> Get(Expression<Func<User, bool>> predicate)
@@ -81,22 +55,34 @@ public class UserService : IEntityBaseService<User>
     {
         var updatedUser = await GetByIdAsync(user.Id);
 
-        if (updatedUser is null) throw new EntityNotFoundException<User>("User not found");
         if (!_validationService.IsValidNameAsync(user.FirstName)) throw new EntityValidationException<User>("Invalid first name");
         if (!_validationService.IsValidNameAsync(user.LastName)) throw new EntityValidationException<User>("Invalid last name");
         if (user.PhoneNumberId == default) throw new EntityValidationException<User>("Invalid phone number id");
 
         updatedUser.FirstName = user.FirstName;
         updatedUser.LastName = user.LastName;
-        updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
 
-        if (saveChanges)
-            await _appDataContext.Users.SaveChangesAsync(cancellationToken);
-
+        await _appDataContext.Users.UpdateAsync(updatedUser, cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+   
         return updatedUser;
     }
     
+    public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var deletedUser = await GetByIdAsync(id);
+
+        await _appDataContext.Users.RemoveAsync(deletedUser, cancellationToken);
+       
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+
+        return deletedUser;
+    }
+
+    public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+        => await DeleteAsync(user.Id, saveChanges, cancellationToken);
+
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));

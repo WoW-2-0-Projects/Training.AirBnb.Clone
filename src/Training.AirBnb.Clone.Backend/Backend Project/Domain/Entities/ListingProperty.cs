@@ -1,4 +1,4 @@
-﻿#pragma warning disable CS8618
+#pragma warning disable CS8618
 
 using Backend_Project.Domain.Common;
 
@@ -8,5 +8,5 @@ public class ListingProperty : SoftDeletedEntity
 {
     public string PropertyName { get; set; }
     public int PropertyCount { get; set; }
-    public Guid ListingId { get; set; }
+    public Guid ListingId { get; set; }  
 }

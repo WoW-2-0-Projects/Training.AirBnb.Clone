@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Configs\" />
-    <Folder Include="Domain\Extensions\" />
     <Folder Include="Infrastructure\Configs\" />
     <Folder Include="Persistance\DataContexts\" />
     <Folder Include="Persistance\Configs\" />
@@ -17,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />

@@ -22,7 +22,7 @@ public class EmailService : IEntityBaseService<Email>
 
         await _appDataContext.Emails.AddAsync(email, cancellationToken);
 
-        if (saveChanges) await _appDataContext.Emails.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return email;
     }
