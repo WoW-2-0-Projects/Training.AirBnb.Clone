@@ -1,6 +1,7 @@
+using Backend_Project.Domain.Common;
 using Backend_Project.Domain.Entities;
 using FileBaseContext.Abstractions.Models.Entity;
-using FileBaseContext.Abstractions.Models.FileContext;
+using FileBaseContext.Abstractions.Models.FileEntry;
 using FileBaseContext.Abstractions.Models.FileSet;
 using FileBaseContext.Context.Models.Configurations;
 using FileBaseContext.Context.Models.FileContext;
@@ -9,52 +10,87 @@ namespace Backend_Project.Persistance.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
-    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate>(nameof(EmailTemplates));
-    public IFileSet<EmailMessage, Guid> EmailMessages => Set<EmailMessage>(nameof(EmailMessages));
-    public IFileSet<Email,Guid> Emails => Set<Email>(nameof(Emails));
-    public IFileSet<Reservation, Guid> Reservations => Set<Reservation>(nameof(Reservations));
-    public IFileSet<City, Guid> Cities => Set<City>(nameof(Cities));
-    public IFileSet<Country, Guid> Countries => Set<Country>(nameof(Countries));
-    public IFileSet<User, Guid> Users => Set<User>(nameof(Users));
-    public IFileSet<Address, Guid> Addresses => Set<Address>(nameof(Addresses));
-    public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy>(nameof(ReservationOccupancies));
-    public IFileSet<Comment, Guid> Comments => Set<Comment>(nameof(Comments));
-    public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials>(nameof(UserCredentials));
-    public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory>(nameof(AmenityCategories));
-    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory>(nameof(ListingCategories));
-    public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating>(nameof(ListingRatings));
-    public IFileSet<Amenity, Guid> Amenities => Set<Amenity>(nameof(Amenities));
-    public IFileSet<Rating,Guid> Ratings => Set<Rating>(nameof(Ratings));
-    public IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions => Set<ListingFeatureOption>(nameof(ListingFeatureOptions));
-    public IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions => Set<ListingCategoryFeatureOption>(nameof(ListingCategoryFeatureOptions));
-    public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature>(nameof(ListingFeatures));
-    public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty>(nameof(ListingProperties));
-    public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities>(nameof(ListingAmenities));
-    public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy>(nameof(ListingOccupancies));
-    public IFileSet<Listing, Guid> Listings => Set<Listing>(nameof(Listing));
+    public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate, Guid>(nameof(EmailTemplates));
+    public IFileSet<EmailMessage, Guid> EmailMessages => Set<EmailMessage, Guid>(nameof(EmailMessages));
+    public IFileSet<Email,Guid> Emails => Set<Email, Guid>(nameof(Emails));
+    public IFileSet<Reservation, Guid> Reservations => Set<Reservation, Guid>(nameof(Reservations));
+    public IFileSet<City, Guid> Cities => Set<City, Guid>(nameof(Cities));
+    public IFileSet<Country, Guid> Countries => Set<Country, Guid>(nameof(Countries));
+    public IFileSet<User, Guid> Users => Set<User, Guid>(nameof(Users));
+    public IFileSet<Address, Guid> Addresses => Set<Address, Guid>(nameof(Addresses));
+    public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy, Guid>(nameof(ReservationOccupancies));
+    public IFileSet<Comment, Guid> Comments => Set<Comment, Guid>(nameof(Comments));
+    public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials, Guid>(nameof(UserCredentials));
+    public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory, Guid>(nameof(AmenityCategories));
+    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory, Guid>(nameof(ListingCategories));
+    public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating, Guid>(nameof(ListingRatings));
+    public IFileSet<Amenity, Guid> Amenities => Set<Amenity, Guid>(nameof(Amenities));
+    public IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions => Set<ListingFeatureOption, Guid>(nameof(ListingFeatureOptions));
+    public IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions => Set<ListingCategoryFeatureOption, Guid>(nameof(ListingCategoryFeatureOptions));
+    public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature, Guid>(nameof(ListingFeatures));
+    public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty, Guid>(nameof(ListingProperties));
+    public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities, Guid>(nameof(ListingAmenities));
+    public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy, Guid>(nameof(ListingOccupancies));
+    public IFileSet<Listing, Guid> Listings => Set<Listing, Guid>(nameof(Listings));
+    public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber, Guid>(nameof(PhoneNumbers));
+    public IFileSet<Rating, Guid> Ratings => Set<Rating, Guid>(nameof(Ratings));
 
-    public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber>(nameof(PhoneNumbers));
-
-    public AppFileContext(IFileContextOptions<IFileContext> fileContextOptions) : base(fileContextOptions)
+    public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
+        OnSaveChanges += AddAuditableDetails;
+        OnSaveChanges += AddSoftDeletionDetails;
     }
 
-    public virtual ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
+    public ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
-        foreach (var fileSetBase in fileSets)
-        {
-            if (fileSetBase is not IFileSet<IFileSetEntity<Guid>, Guid> fileSet) continue;
+        foreach (var fileSet in fileSets)
+            foreach (var entry in fileSet.GetEntries())
+            {
+                if (entry is not IFileEntityEntry<IEntity> entityEntry) continue;
 
-            foreach (var entry in fileSet.Where(entry => entry.Id == default))
-                entry.Id = Guid.NewGuid();
-        }
+                if (entityEntry.State == FileEntityState.Added)
+                    entityEntry.Entity.Id = Guid.NewGuid();
+
+                if (entry is not IFileEntityEntry<IFileSetEntity<Guid>>) continue;
+            }
 
         return new ValueTask(Task.CompletedTask);
     }
 
-    public ValueTask DisposeAsync()
+    public ValueTask AddAuditableDetails(IEnumerable<IFileSetBase> fileSets)
     {
+        foreach (var fileSet in fileSets)
+            foreach (var entry in fileSet.GetEntries())
+            {
+                if (entry is not IFileEntityEntry<IAuditableEntity> entityEntry) continue;
+
+                if (entityEntry.State == FileEntityState.Added)
+                    entityEntry.Entity.CreatedDate = DateTimeOffset.Now;
+
+                if (entityEntry.State == FileEntityState.Modified)
+                    entityEntry.Entity.ModifiedDate = DateTimeOffset.Now;
+
+                if (entry is not IFileEntityEntry<IFileSetEntity<Guid>>) continue;
+            }
+
+        return new ValueTask(Task.CompletedTask);
+    }
+
+    public ValueTask AddSoftDeletionDetails(IEnumerable<IFileSetBase> fileSets)
+    {
+        foreach (var fileSet in fileSets)
+            foreach (var entry in fileSet.GetEntries())
+            {
+                // Skip entities that are not soft deletable
+                if (entry is not IFileEntityEntry<ISoftDeletedEntity> { State: FileEntityState.Deleted } entityEntry) continue;
+
+                // Soft delete all entities except PostView
+                entityEntry.Entity.IsDeleted = true;
+                entityEntry.Entity.DeletedDate = DateTimeOffset.Now;
+                entityEntry.State = FileEntityState.MarkedDeleted;
+            }
+
         return new ValueTask(Task.CompletedTask);
     }
 }

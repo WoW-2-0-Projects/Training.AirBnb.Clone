@@ -24,8 +24,10 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     {
         if (IsNullable(phoneNumber))
             throw new EntityException<PhoneNumber>("The phone number cannot be empty");
+
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityValidationException<PhoneNumber>("Phone number not valid");
+
         if (IsUnique(phoneNumber.UserPhoneNumber))
             throw new DuplicateEntityException<PhoneNumber>("This phone number already exists");
 
@@ -99,8 +101,7 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
         deletedNumber.DeletedDate = DateTimeOffset.UtcNow;
         deletedNumber.IsDeleted = true;
 
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
 
         return deletedNumber;
     }
@@ -112,22 +113,19 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     {
         if (string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
             return false;
+
         return true;
     }
 
     private async ValueTask<bool> IsValidPhoneNumber(PhoneNumber phoneNumber)
     {
-        if (!phoneNumber.UserPhoneNumber[1..].All(char.IsDigit))
-            return false;
-        if (phoneNumber.UserPhoneNumber[0] != '+')
-            return false;
+        if (!phoneNumber.UserPhoneNumber[1..].All(char.IsDigit)) return false;
+        if (phoneNumber.UserPhoneNumber[0] != '+') return false;
 
         var country = await _country.GetByIdAsync(phoneNumber.CountryId);
 
-        if (!phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode))
-            return false;
-        if (phoneNumber.UserPhoneNumber.Length != country.RegionPhoneNumberLength)
-            return false;
+        if (!phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode)) return false;
+        if (phoneNumber.UserPhoneNumber.Length != country.RegionPhoneNumberLength) return false;
 
         return true;
     }
