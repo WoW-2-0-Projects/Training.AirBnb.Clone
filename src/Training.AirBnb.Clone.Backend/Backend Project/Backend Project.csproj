@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
+    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
   </ItemGroup>
 
 </Project>

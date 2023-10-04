@@ -1,10 +1,9 @@
 using Backend_Project.Domain.Entities;
-using Backend_Project.Infrastructure.Services.ListingServices;
 using FileBaseContext.Abstractions.Models.FileSet;
 
 namespace Backend_Project.Persistance.DataContexts;
 
-public interface IDataContext : IAsyncDisposable
+public interface IDataContext
 {
     IFileSet<City, Guid> Cities { get; }
     IFileSet<Country, Guid> Countries { get; }
