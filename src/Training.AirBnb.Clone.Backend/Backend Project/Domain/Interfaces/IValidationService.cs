@@ -1,4 +1,5 @@
-﻿namespace Backend_Project.Domain.Interfaces;
+    bool IsValidEmailAddress(string emailAddress);
+namespace Backend_Project.Domain.Interfaces;
 
 public interface IValidationService
 {

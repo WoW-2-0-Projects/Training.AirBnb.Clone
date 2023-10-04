@@ -12,7 +12,7 @@ public class EmailMessageSevice : IEmailMessageService
         {
             body = body.Replace(item.Key, item.Value);
         }
-        var EmailMessage = new EmailMessage(emailTemplate.Subject, body, sender,receiver);
+        var EmailMessage = new EmailMessage(emailTemplate.Subject, body, sender, receiver);
         return ValueTask.FromResult(EmailMessage);
     }
 }

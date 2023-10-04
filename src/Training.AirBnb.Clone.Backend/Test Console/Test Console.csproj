@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
+    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,12 +1,13 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using System.Data;
 using System.Text;
+
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
-
     private readonly IEntityBaseService<User> _userService;
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
@@ -14,6 +15,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _emailAddress = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
+   
     public EmailPlaceholderService(IEntityBaseService<User> user)
     {
         _userService = user;
@@ -21,7 +23,12 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
         var placeholders = GetPlaceholeders(emailTemplate.Body);
+<<<<<<< HEAD
         var user = await _userService.GetByIdAsync(userId) ?? throw new ();
+=======
+        
+        var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>();
+>>>>>>> cde8ec4cb59f09a9850b53d7b41e2d2e0fa5506c
 
         var result = placeholders.Select(placeholder =>
         {
@@ -37,6 +44,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
             };
             return new KeyValuePair<string, string>(placeholder, value);
         });
+
         var values = new Dictionary<string, string>(result);
         return values;
     }

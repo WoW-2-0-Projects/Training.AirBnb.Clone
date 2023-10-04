@@ -1,4 +1,4 @@
-
+#pragma warning disable CS8618
 
 using Backend_Project.Domain.Common;
 using Backend_Project.Domain.Enums;
@@ -13,17 +13,4 @@ public class User : SoftDeletedEntity
     public UserRole UserRole { get; set; }
     public bool IsActive { get; set; }
     public Guid PhoneNumberId { get; set; }
-
-    public User(string firstName, string lastName, string 
-        emailAddress, UserRole userRole, bool isActive, Guid phoneNumberId)
-    {
-        Id = Guid.NewGuid();
-        FirstName = firstName;
-        LastName = lastName;
-        EmailAddress = emailAddress;
-        UserRole = userRole;
-        IsActive = isActive;
-        PhoneNumberId = phoneNumberId;
-        CreatedDate = DateTimeOffset.UtcNow;
-    }
 }

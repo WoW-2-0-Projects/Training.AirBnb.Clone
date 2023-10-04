@@ -2,8 +2,9 @@
 
 namespace Backend_Project.Domain.Entities;
 
-public class ListingRating : SoftDeletedEntity
+public class Rating : SoftDeletedEntity
 {
-    public double Rating { get; set; }
+    public Guid GivenBy { get; set; }
     public Guid ListingId { get; set; }
+    public double Mark { get; set; }
 }
