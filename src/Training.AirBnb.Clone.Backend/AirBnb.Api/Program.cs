@@ -1,7 +1,9 @@
 using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;
+using Backend_Project.Infrastructure.Services.ListingServices;
 using Backend_Project.Persistance.DataContexts;
 using FileBaseContext.Context.Models.Configurations;
 
@@ -16,7 +18,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDataContext, AppFileContext>(_ =>
 {
-    var contextOptions = new FileContextOptions<AppFileContext>(Path.Combine(builder.Environment.ContentRootPath, "Data", "DataStorage"));
+    var contextOptions = new FileContextOptions<AppFileContext>
+    {
+        StorageRootPath = Path.Combine(builder.Environment.ContentRootPath, "Data", "DataStorage")
+    };
+
     var context = new AppFileContext(contextOptions);
     context.FetchAsync().AsTask().Wait();
 
@@ -25,6 +31,13 @@ builder.Services.AddScoped<IDataContext, AppFileContext>(_ =>
 
 builder.Services.AddScoped<IEntityBaseService<User>, UserService>();
 builder.Services.AddScoped<IValidationService, ValidationService>();
+
+builder.Services.AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>();
+builder.Services.AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
+builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>();
+builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
+builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
+builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
