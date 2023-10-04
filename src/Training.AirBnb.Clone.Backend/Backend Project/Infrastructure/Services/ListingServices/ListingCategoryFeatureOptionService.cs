@@ -67,7 +67,7 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
         await _appDataContext.ListingCategoryFeatureOptions.RemoveAsync(foundOption, cancellationToken);
 
         if (saveChanges) await _appDataContext.SaveChangesAsync();
-
+          
         return foundOption;
     }
 

@@ -25,7 +25,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             if (saveChanges)
                 await _appDataContext.SaveChangesAsync();
 
-            return listingCategory;
+            return listingCategory; 
         }
 
         public async ValueTask<ListingCategory> UpdateAsync(ListingCategory listingCategory, bool saveChanges = true,
