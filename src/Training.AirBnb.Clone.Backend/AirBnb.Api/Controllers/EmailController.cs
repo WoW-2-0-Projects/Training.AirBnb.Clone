@@ -29,6 +29,5 @@ namespace AirBnb.Api.Controllers
         [HttpPost("emails")]
         public async ValueTask<IActionResult> AddEmails([FromBody] Email email)
             => Ok(await _emailService.CreateAsync(email));
-
     }
 }
