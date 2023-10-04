@@ -21,12 +21,13 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         _listingService = listingService;
     }
 
-    public ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature)
+    public async ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _listingCategoryFeatureOptionService.GetByIdAsync(feature.FeatureOptionsId, cancellationToken);
+        return await _listingFeatureService.CreateAsync(feature, saveChanges, cancellationToken);
     }
 
-    public async ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId)
+    public async ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingService.Get(listing => listing.CategoryId == categoryId).Any())
             throw new EntityNotDeletableException<ListingCategory>("There are active listings which are in this category.");
@@ -36,12 +37,12 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         return deletedCategory;
     }
 
-    public ValueTask<ListingFeatureOption> DeleteFeatureOptionAsync(Guid featureOptionId)
+    public ValueTask<ListingFeatureOption> DeleteFeatureOptionAsync(Guid featureOptionId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature)
+    public ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
