@@ -23,22 +23,22 @@ namespace AirBnb.Api.Controllers
         }
 
         [HttpGet("emailTemlates/emailTemplateId:guid")]
-        public async Task<IActionResult> GetByTemplateIdAsync(Guid id)
+        public async Task<IActionResult> GetByTemplateId(Guid id)
             => Ok(await _emailTemplateService.GetByIdAsync(id));
         
         [HttpPost("emailTemplates")]
-        public async Task<IActionResult> AddTemplateAsync([FromBody] EmailTemplate emailTemplate)
+        public async Task<IActionResult> AddTemplate([FromBody] EmailTemplate emailTemplate)
            =>  Ok(await _emailTemplateService.CreateAsync(emailTemplate));
 
         [HttpPut("emailTemplates")]
-        public async Task<IActionResult> UpdateAsync([FromBody] EmailTemplate emailTemplate)
+        public async Task<IActionResult> UpdateTemplate([FromBody] EmailTemplate emailTemplate)
         {
             Ok(await _emailTemplateService.UpdateAsync(emailTemplate));
             return NoContent();
         }
 
         [HttpDelete("emailTemplate/{emailTemplateId:guid}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid emailTemplateId)
+        public async Task<IActionResult> DeleteTemplate([FromRoute] Guid emailTemplateId)
         {
             Ok(await _emailTemplateService.DeleteAsync(emailTemplateId));
             return NoContent();
