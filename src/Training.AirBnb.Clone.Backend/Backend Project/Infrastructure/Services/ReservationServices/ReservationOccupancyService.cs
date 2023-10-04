@@ -20,7 +20,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
                 throw new EntityValidationException<ReservationOccupancy> ("This ReservationOccupancy is not valid");
             else
                 await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy, cancellationToken);
-
+                   
             if (saveChanges)
                 await _appDataContext.ReservationOccupancies.SaveChangesAsync(cancellationToken);
 
