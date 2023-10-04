@@ -26,7 +26,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             await _appDataContext.AmenityCategories.AddAsync(amenityCategory, cancellationToken);
 
             if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
+                await _appDataContext.SaveChangesAsync();
 
             return amenityCategory;
         }
