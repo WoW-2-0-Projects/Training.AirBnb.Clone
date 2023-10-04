@@ -7,14 +7,14 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 {
     public class ListingCategoryService : IEntityBaseService<ListingCategory>
     {
-        IDataContext _appDataContext;
+        private readonly IDataContext _appDataContext;
 
         public ListingCategoryService(IDataContext appDataContext)
         {
             _appDataContext = appDataContext;
         }
 
-        public ValueTask<ListingCategory> CreateAsync(ListingCategory listingCategory, bool saveChanges = true,
+        public async ValueTask<ListingCategory> CreateAsync(ListingCategory listingCategory, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
             if (!IsValidListingCategory(listingCategory))
@@ -23,12 +23,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             if (!IsUniqueListingCategoryName(listingCategory))
                 throw new NotImplementedException();
 
-            _appDataContext.ListingCategories.AddAsync(listingCategory, cancellationToken);
+            await _appDataContext.ListingCategories.AddAsync(listingCategory, cancellationToken);
 
             if (saveChanges)
-                _appDataContext.ListingCategories.SaveChangesAsync(cancellationToken);
+                await _appDataContext.SaveChangesAsync();
 
-            return new ValueTask<ListingCategory>(listingCategory);
+            return listingCategory;
         }
 
         public async ValueTask<ListingCategory> UpdateAsync(ListingCategory listingCategory, bool saveChanges = true,
@@ -40,9 +40,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             var foundListingCategory = await GetByIdAsync(listingCategory.Id);
 
             foundListingCategory.Name = listingCategory.Name;
-            foundListingCategory.ModifiedDate = DateTime.UtcNow;
+            await _appDataContext.ListingCategories.UpdateAsync(foundListingCategory, cancellationToken);
+           // foundListingCategory.ModifiedDate = DateTime.UtcNow;
 
-            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return foundListingCategory;
         }
@@ -72,10 +73,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         {
             var removedListingCategory = await GetByIdAsync(id, cancellationToken);
 
-            removedListingCategory.IsDeleted = true;
-            removedListingCategory.DeletedDate = DateTime.UtcNow;
+            await _appDataContext.ListingCategories.RemoveAsync(removedListingCategory);
+          //  removedListingCategory.DeletedDate = DateTime.UtcNow;
 
-            if (saveChanges) await _appDataContext.ListingCategories.SaveChangesAsync();
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return removedListingCategory;
         }
