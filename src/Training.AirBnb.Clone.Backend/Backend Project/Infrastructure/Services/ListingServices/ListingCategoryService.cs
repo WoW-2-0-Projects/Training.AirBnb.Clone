@@ -18,11 +18,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         public async ValueTask<ListingCategory> CreateAsync(ListingCategory listingCategory, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
-            if (!IsValidListingCategory(listingCategory))
-                throw new EntityValidationException<ListingCategory> ("Listing Category is not valid");
-
-            if (!IsUniqueListingCategoryName(listingCategory))
-                throw new DuplicateEntityException<ListingCategory> ("This listing category already exists");
+            ValidateCategory(listingCategory);
 
             await _appDataContext.ListingCategories.AddAsync(listingCategory, cancellationToken);
 
@@ -35,8 +31,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         public async ValueTask<ListingCategory> UpdateAsync(ListingCategory listingCategory, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
-            if (!IsValidListingCategory(listingCategory)) 
-                throw new EntityValidationException<ListingCategory> ("Listing Category is not valid");
+            ValidateCategory(listingCategory);
 
             var foundListingCategory = await GetByIdAsync(listingCategory.Id);
 
@@ -75,6 +70,15 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public async ValueTask<ListingCategory> DeleteAsync(ListingCategory entity, bool saveChanges = true,
             CancellationToken cancellationToken = default) => await DeleteAsync(entity.Id, saveChanges, cancellationToken);
+
+        private void ValidateCategory(ListingCategory listingCategory)
+        {
+            if (!IsValidListingCategory(listingCategory))
+                throw new EntityValidationException<ListingCategory>("Listing Category is not valid");
+
+            if (!IsUniqueListingCategoryName(listingCategory))
+                throw new DuplicateEntityException<ListingCategory>("This listing category already exists");
+        }
 
         private bool IsValidListingCategory(ListingCategory listingCategory)
             => !string.IsNullOrWhiteSpace(listingCategory.Name)

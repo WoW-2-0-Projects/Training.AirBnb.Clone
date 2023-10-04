@@ -32,9 +32,15 @@ public class CategoryDetailsController : ControllerBase
 
     [HttpPut("categories")]
     public async ValueTask<IActionResult> UpdateCategory([FromBody] ListingCategory category)
-        => Ok(await _listingCategoryService.UpdateAsync(category));
+    {
+        await _listingCategoryService.UpdateAsync(category);
+        return NoContent();
+    }
 
     [HttpDelete("categories/{categoryId:guid}")]
     public async ValueTask<IActionResult> DeleteCategory([FromRoute] Guid categoryId, [FromServices] IListingCategoryDetailsService listingCategoryDetailsService)
-        => Ok(await listingCategoryDetailsService.DeleteCategoryAsync(categoryId));
+    {
+        await listingCategoryDetailsService.DeleteCategoryAsync(categoryId);
+        return NoContent();
+    }
 }
