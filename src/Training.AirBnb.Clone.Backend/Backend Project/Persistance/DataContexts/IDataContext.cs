@@ -11,6 +11,7 @@ public interface IDataContext
     IFileSet<Email,Guid> Emails { get; }
     IFileSet<EmailMessage,Guid> EmailMessages { get; }
     IFileSet<Reservation, Guid> Reservations { get; }
+
     IFileSet<User, Guid> Users { get; }
     IFileSet<Address, Guid> Addresses { get; }   
     IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
@@ -20,6 +21,7 @@ public interface IDataContext
     IFileSet<AmenityCategory, Guid> AmenityCategories { get; }
     IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }
+    IFileSet<Rating,Guid> Ratings { get; }
     IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions { get; }
     IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions { get; }
     IFileSet<ListingFeature, Guid> ListingFeatures { get; }
@@ -27,6 +29,9 @@ public interface IDataContext
     IFileSet<ListingAmenities, Guid> ListingAmenities { get; }
     IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
     IFileSet<Listing, Guid> Listings { get; }
+
+
+    IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
 
     ValueTask SaveChangesAsync();
 }
