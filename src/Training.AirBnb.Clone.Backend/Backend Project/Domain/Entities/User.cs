@@ -1,3 +1,5 @@
+#pragma warning disable CS8618
+
 using Backend_Project.Domain.Common;
 using Backend_Project.Domain.Enums;
 
