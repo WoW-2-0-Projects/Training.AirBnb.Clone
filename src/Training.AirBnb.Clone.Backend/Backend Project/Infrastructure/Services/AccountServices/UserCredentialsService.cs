@@ -1,8 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Exceptions.User;
-using Backend_Project.Domain.Exceptions.UserCredentialsExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
