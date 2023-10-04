@@ -18,30 +18,29 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         {
             if (!IsValidOccupancy(reservationOccupancy))
                 throw new EntityValidationException<ReservationOccupancy> ("This ReservationOccupancy is not valid");
-            else
-                await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy, cancellationToken);
+            
+            await _appDataContext.ReservationOccupancies.AddAsync(reservationOccupancy, cancellationToken);
                    
-            if (saveChanges)
-                await _appDataContext.ReservationOccupancies.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return reservationOccupancy;
         }
 
         public async ValueTask<ReservationOccupancy> UpdateAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundReservationOccupancy = await GetByIdAsync(reservationOccupancy.Id);
-            
-            if (!IsValidOccupancy(foundReservationOccupancy))
+            if (!IsValidOccupancy(reservationOccupancy))
                 throw new EntityValidationException<ReservationOccupancy> ("This ReservationOccupation not valid");
+            
+            var foundReservationOccupancy = await GetByIdAsync(reservationOccupancy.Id);
             
             foundReservationOccupancy.Adults = reservationOccupancy.Adults;
             foundReservationOccupancy.Children = reservationOccupancy.Children;
             foundReservationOccupancy.Infants = reservationOccupancy.Infants;
             foundReservationOccupancy.Pets = reservationOccupancy.Pets;
-            foundReservationOccupancy.ModifiedDate = DateTime.UtcNow;
             
-            if (saveChanges)
-                await _appDataContext.ReservationOccupancies.SaveChangesAsync(cancellationToken);
+            await _appDataContext.ReservationOccupancies.UpdateAsync(foundReservationOccupancy, cancellationToken);
+
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return foundReservationOccupancy;
         }
@@ -63,11 +62,9 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         {
             var removedReservationOccupancy = await GetByIdAsync(id);
 
-            removedReservationOccupancy.IsDeleted = true;
-            removedReservationOccupancy.DeletedDate = DateTimeOffset.UtcNow;
+            await _appDataContext.ReservationOccupancies.RemoveAsync(removedReservationOccupancy, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.ReservationOccupancies.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return removedReservationOccupancy;
         }
