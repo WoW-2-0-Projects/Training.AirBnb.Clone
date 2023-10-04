@@ -23,32 +23,9 @@ public class RatingService : IEntityBaseService<Rating>
 
         await _appDataContext.Ratings.AddAsync(rating, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.Ratings.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return rating;
-
-    }
-
-    public async ValueTask<Rating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletingRating = await GetByIdAsync(id);
-
-        deletingRating.IsDeleted = true;
-        deletingRating.DeletedDate = DateTimeOffset.UtcNow;
-
-        if (saveChanges)
-            await _appDataContext.Ratings.SaveChangesAsync(cancellationToken);
-
-        return deletingRating;
-
-    }
-
-    public async ValueTask<Rating> DeleteAsync(Rating rating, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletingRating = await DeleteAsync(rating.Id);
-
-        return deletingRating;
     }
 
     public IQueryable<Rating> Get(Expression<Func<Rating, bool>> predicate) =>
@@ -72,14 +49,27 @@ public class RatingService : IEntityBaseService<Rating>
             throw new EntityValidationException<Rating>("Rating is not valid");
 
         updatingRating.Mark = rating.Mark;
-        updatingRating.ModifiedDate = DateTimeOffset.UtcNow;
-
-        if (saveChanges)
-            await _appDataContext.Ratings.SaveChangesAsync(cancellationToken);
+        await _appDataContext.Ratings.UpdateAsync(rating, cancellationToken);
+       
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return updatingRating;
-
     }
+
+    public async ValueTask<Rating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var deletingRating = await GetByIdAsync(id);
+
+        await _appDataContext.Ratings.RemoveAsync(deletingRating, cancellationToken);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+
+        return deletingRating;
+    }
+
+    public async ValueTask<Rating> DeleteAsync(Rating rating, bool saveChanges = true, CancellationToken cancellationToken = default)
+        => await DeleteAsync(rating.Id, saveChanges, cancellationToken);
+    
     private bool IsValidRating(Rating rating) =>
         rating.Mark > 0 && rating.GivenBy != default && rating.ListingId != default;
 
