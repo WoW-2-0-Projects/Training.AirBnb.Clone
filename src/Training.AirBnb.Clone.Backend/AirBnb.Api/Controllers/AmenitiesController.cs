@@ -21,11 +21,11 @@ namespace AirBnb.Api.Controllers
             return Ok( await _amenityService.CreateAsync(amenity) );
         }
 
-        [HttpGet("amenities/id")]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
-        {
-            return await 
-        }
+        //[HttpGet("amenities/id")]
+        //public async Task<IActionResult> GetByIdAsync(Guid id)
+        //{
+        //    return await 
+        //}
 
     }
 }
