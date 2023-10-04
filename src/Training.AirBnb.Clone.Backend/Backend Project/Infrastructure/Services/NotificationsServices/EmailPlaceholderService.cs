@@ -42,6 +42,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
         });
 
         var values = new Dictionary<string, string>(result);
+
         return values;
     }
 
