@@ -4,7 +4,7 @@ namespace Backend_Project.Application.Interfaces
 {
     public interface IAmenitiesManagementService
     {
-        public Amenity AddAmenity(Amenity amenity);
+        public ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default);
         public Amenity DeleteAmenity(Amenity amenity);
 
         public ListingAmenities AddListingAmenities(ListingAmenities listingAmenities);

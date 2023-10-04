@@ -21,9 +21,11 @@ namespace Backend_Project.Infrastructure.CompositionServices
             _listingAmenitiesService = listingAmenitiesService;
             _listingService = listingService;
         }
-        public Amenity AddAmenity(Amenity amenity)
+        public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, CancellationToken cancellation = default)
         {
-            throw new NotImplementedException();
+            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId);
+
+            return await _amenityService.CreateAsync(amenity);
         }
         public Amenity DeleteAmenity(Amenity amenity)
         {

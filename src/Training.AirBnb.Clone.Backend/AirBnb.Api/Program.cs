@@ -38,6 +38,11 @@ builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureSer
 builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
+builder.Services.AddScoped<IEntityBaseService<Amenity>, AmenityService>();
+builder.Services.AddScoped<IEntityBaseService<AmenityCategory>, AmenityCategoryService>();
+builder.Services.AddScoped<IEntityBaseService<ListingAmenities>, ListingAmenitiesService>();
+builder.Services.AddScoped<IAmenitiesManagementService, AmenitiesManagementService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

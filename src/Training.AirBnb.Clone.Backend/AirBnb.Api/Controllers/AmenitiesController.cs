@@ -9,18 +9,30 @@ namespace AirBnb.Api.Controllers
     public class AmenitiesController : ControllerBase
     {
         private readonly IEntityBaseService<Amenity> _amenityService;
-        
-        public AmenitiesController(IEntityBaseService<Amenity> amenityService)
+        private readonly IAmenitiesManagementService _amenitiesManagementService;
+        private readonly IEntityBaseService<AmenityCategory> _amenityCategoryService;
+        public AmenitiesController(IEntityBaseService<Amenity> amenityService,
+            IAmenitiesManagementService amenitiesManagementService,
+            IEntityBaseService<AmenityCategory> amenityCategoryService)
         {
+            _amenitiesManagementService = amenitiesManagementService;
             _amenityService = amenityService;
+            _amenityCategoryService = amenityCategoryService;
         }
 
         [HttpPost("amenities")]
-        public async Task<IActionResult> PostAsyc(Amenity amenity)
+        public async Task<IActionResult> PostAsync(Amenity amenity)
         {
-            return Ok( await _amenityService.CreateAsync(amenity) );
+            return Ok(await _amenitiesManagementService.AddAmenity(amenity));
         }
 
+        [HttpPost("amenitiescategory")]
+        public async Task<IActionResult> PostAsyncAmenityCategory(AmenityCategory amenityCategory)
+        {
+            return Ok(await _amenityCategoryService.CreateAsync(amenityCategory));
+        }
+
+        //[HttpPost]
         //[HttpGet("amenities/id")]
         //public async Task<IActionResult> GetByIdAsync(Guid id)
         //{
