@@ -2,6 +2,7 @@ using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistance.SeedData;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
@@ -64,7 +65,7 @@ public class UserService : IEntityBaseService<User>
 
         await _appDataContext.Users.UpdateAsync(updatedUser, cancellationToken);
         if (saveChanges) await _appDataContext.SaveChangesAsync();
-
+   
         return updatedUser;
     }
     
