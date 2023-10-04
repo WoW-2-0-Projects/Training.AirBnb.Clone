@@ -53,7 +53,14 @@ namespace Backend_Project.Infrastructure.CompositionServices
 
         private Email ToEmail(EmailMessage message)
         {
-            return new Email();
+            return new Email()
+            {
+                ReceiverEmailAddress = message.ReceiverAddress,
+                SenderEmailAddress = message.SenderAddress,
+                Subject = message.Subject,
+                Body = message.Body,
+            };
+
         }
     }
 }
