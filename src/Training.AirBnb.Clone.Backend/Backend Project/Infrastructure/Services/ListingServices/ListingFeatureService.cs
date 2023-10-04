@@ -21,7 +21,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
         await _appDataContext.ListingFeatures.AddAsync(feature, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return feature;
     }
@@ -48,7 +48,9 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
         foundFeature.Name = feature.Name;
         foundFeature.FeatureOptionsId = feature.FeatureOptionsId;
 
-        if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        await _appDataContext.ListingFeatures.UpdateAsync(foundFeature, cancellationToken);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundFeature;
     }
@@ -57,8 +59,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     {
         var foundFeature = await GetByIdAsync(id, cancellationToken);
 
-        foundFeature.IsDeleted = true;
-        foundFeature.ModifiedDate = DateTime.UtcNow;
+        await _appDataContext.ListingFeatures.RemoveAsync(foundFeature, cancellationToken);
 
         if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
 

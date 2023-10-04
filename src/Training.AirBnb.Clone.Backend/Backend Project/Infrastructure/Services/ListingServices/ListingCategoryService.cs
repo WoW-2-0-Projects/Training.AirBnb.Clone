@@ -38,12 +38,11 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             if (!IsValidListingCategory(listingCategory)) 
                 throw new EntityValidationException<ListingCategory> ("Listing Category is not valid");
 
-
             var foundListingCategory = await GetByIdAsync(listingCategory.Id);
 
             foundListingCategory.Name = listingCategory.Name;
+
             await _appDataContext.ListingCategories.UpdateAsync(foundListingCategory, cancellationToken);
-           // foundListingCategory.ModifiedDate = DateTime.UtcNow;
 
             if (saveChanges) await _appDataContext.SaveChangesAsync();
 
@@ -67,9 +66,8 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         {
             var removedListingCategory = await GetByIdAsync(id, cancellationToken);
 
-            await _appDataContext.ListingCategories.RemoveAsync(removedListingCategory);
-          //  removedListingCategory.DeletedDate = DateTime.UtcNow;
-
+            await _appDataContext.ListingCategories.RemoveAsync(removedListingCategory, cancellationToken);
+         
             if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return removedListingCategory;
