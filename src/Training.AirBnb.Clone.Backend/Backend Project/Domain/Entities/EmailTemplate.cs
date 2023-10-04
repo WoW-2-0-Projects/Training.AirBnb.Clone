@@ -6,13 +6,13 @@ public class EmailTemplate : SoftDeletedEntity
     public string Subject { get; set; }
     public string Body { get; set; }
  
-    public EmailTemplate(string subject, string body)
+   /* public EmailTemplate(string subject, string body)
     {
         Id = Guid.NewGuid();
         Subject = subject;
         Body = body;
         CreatedDate = DateTimeOffset.UtcNow;
-    }
+    }*/
 
     public override int GetHashCode()
     {

@@ -18,10 +18,10 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     {
         _userService = user;
     }
-    public async ValueTask<Dictionary<string, string>> GEtTemplateValues(Guid userId, EmailTemplate emailTemplate)
+    public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
         var placeholders = GetPlaceholeders(emailTemplate.Body);
-        var user = await _userService.GetByIdAsync(userId) ?? throw new ArgumentException();
+        var user = await _userService.GetByIdAsync(userId) ?? throw new ();
 
         var result = placeholders.Select(placeholder =>
         {
