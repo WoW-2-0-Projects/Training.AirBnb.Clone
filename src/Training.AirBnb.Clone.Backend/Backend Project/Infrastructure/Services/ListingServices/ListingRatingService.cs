@@ -24,11 +24,9 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
             await _appDataContext.ListingRatings.AddAsync(listingRating, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return listingRating;
-
         }
 
         public ValueTask<ICollection<ListingRating>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
@@ -58,10 +56,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
                 throw new EntityValidationException<ListingRating>("Invalid listingRating!");
 
             updatedListingRating.Rating = listingRating.Rating;
-            updatedListingRating.ModifiedDate = DateTimeOffset.UtcNow;
+            
+            await _appDataContext.ListingRatings.UpdateAsync(updatedListingRating, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return updatedListingRating;
         }
@@ -70,27 +68,15 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         {
             var deletedListingRating = await GetByIdAsync(id);
 
-            deletedListingRating.IsDeleted = true;
-            deletedListingRating.DeletedDate = DateTimeOffset.UtcNow;
+            await _appDataContext.ListingRatings.RemoveAsync(deletedListingRating, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return deletedListingRating;
         }
 
         public async ValueTask<ListingRating> DeleteAsync(ListingRating ListingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var deletedListingRating = await GetByIdAsync(ListingRating.Id);
-
-            deletedListingRating.IsDeleted = true;
-            deletedListingRating.DeletedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.ListingRatings.SaveChangesAsync(cancellationToken);
-
-            return deletedListingRating;
-        }
+            => await DeleteAsync(ListingRating.Id, saveChanges, cancellationToken);
 
         private bool IsValidRating(double rating)
         {

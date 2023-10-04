@@ -18,7 +18,7 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> CreateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing>("Listing did not pass validation.");
+            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
 
         await _appDataContext.Listings.AddAsync(listing, cancellationToken);
 
@@ -35,7 +35,7 @@ public class ListingService : IEntityBaseService<Listing>
     public ValueTask<Listing> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<Listing>(GetUndeletedListings()
                 .FirstOrDefault(listing => listing.Id == id)
-                ?? throw new EntityNotFoundException<Listing>("Listing not found."));
+                ?? throw new EntityNotFoundException<Listing> ("Listing not found."));
 
     public IQueryable<Listing> Get(Expression<Func<Listing, bool>> predicate)
         => GetUndeletedListings().Where(predicate.Compile()).AsQueryable();
@@ -43,7 +43,7 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> UpdateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing>("Listing did not pass validation.");
+            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
 
         var foundListing = await GetByIdAsync(listing.Id, cancellationToken);
 
