@@ -72,8 +72,6 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
            
             return foundReseervation;
         }
-        public IQueryable<Reservation> Get(Expression<Func<Reservation, bool>> predicate)
-            => GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
 
         public async ValueTask<Reservation> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
@@ -93,11 +91,11 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
         private bool IsValidEntity(Reservation reservation)
         {
-            if (reservation.ListingId.Equals(default)) return false;
+            if (reservation.ListingId.Equals(Guid.Empty)) return false;
 
-            if (reservation.BookedBy.Equals(default)) return false;
+            if (reservation.BookedBy.Equals(Guid.Empty)) return false;
 
-            if (reservation.OccupancyId.Equals(default)) return false;
+            if (reservation.OccupancyId.Equals(Guid.Empty)) return false;
 
             if (reservation.StartDate.Equals(default)
                 || !IsValidDateStartDate(reservation.StartDate))

@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using System.Data;
 using System.Text;
 
@@ -23,7 +24,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     {
         var placeholders = GetPlaceholeders(emailTemplate.Body);
         
-        var user = await _userService.GetByIdAsync(userId) ?? throw new ArgumentException();
+        var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>();
 
         var result = placeholders.Select(placeholder =>
         {

@@ -77,14 +77,14 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             CancellationToken cancellationToken = default) => await DeleteAsync(entity.Id, saveChanges, cancellationToken);
 
         private bool IsValidListingCategory(ListingCategory listingCategory)
-            => string.IsNullOrWhiteSpace(listingCategory.Name)
-            || listingCategory.Name.Length < 2 ? false : true;
+            => !string.IsNullOrWhiteSpace(listingCategory.Name)
+            && listingCategory.Name.Length > 2;
 
         private IQueryable<ListingCategory> GetUndelatedListingCategories() => _appDataContext.ListingCategories
             .Where(res => !res.IsDeleted).AsQueryable();
 
         private bool IsUniqueListingCategoryName(ListingCategory listingCategory)
-            => GetUndelatedListingCategories().Any(lc =>
-            lc.Name.Equals(listingCategory.Name, StringComparison.OrdinalIgnoreCase)) ? false : true;
+            => !GetUndelatedListingCategories().Any(lc =>
+            lc.Name.Equals(listingCategory.Name, StringComparison.OrdinalIgnoreCase));
     }
 }
