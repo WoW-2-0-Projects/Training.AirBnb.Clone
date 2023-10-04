@@ -4,6 +4,7 @@ using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Infrastructure.Services.ListingServices;
+using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Backend_Project.Persistance.DataContexts;
 using FileBaseContext.Context.Models.Configurations;
 
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureSer
 builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
+builder.Services.AddScoped<IEntityBaseService<Email>, EmailService>();
+builder.Services.AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
