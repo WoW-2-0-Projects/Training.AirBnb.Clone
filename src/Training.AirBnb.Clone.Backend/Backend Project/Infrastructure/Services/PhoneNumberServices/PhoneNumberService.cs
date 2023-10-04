@@ -33,8 +33,7 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
         await _appDataContext.PhoneNumbers.AddAsync(phoneNumber, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return phoneNumber;
     }
@@ -59,18 +58,17 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
     public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
-
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityException<PhoneNumber>("Invalid phone number");
 
+        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
+
         updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
         updatedNumber.Code = phoneNumber.Code;
-        updatedNumber.ModifiedDate = DateTimeOffset.UtcNow;
         updatedNumber.CountryId = phoneNumber.CountryId;
 
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        await _appDataContext.PhoneNumbers.UpdateAsync(updatedNumber, cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return updatedNumber;
     }
@@ -81,31 +79,16 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
         if (deletedNumber is null)
             throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        await _appDataContext.PhoneNumbers.RemoveAsync(deletedNumber, cancellationToken);
 
-        deletedNumber.DeletedDate = DateTimeOffset.UtcNow;
-        deletedNumber.IsDeleted = true;
-
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return deletedNumber;
     }
 
     public async ValueTask<PhoneNumber> DeleteAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedNumber = await GetByIdAsync(phoneNumber.Id);
-
-        if (deletedNumber is null)
-            throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
-
-        deletedNumber.DeletedDate = DateTimeOffset.UtcNow;
-        deletedNumber.IsDeleted = true;
-
-        if (saveChanges) await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
-
-        return deletedNumber;
-    }
-
+        => await DeleteAsync(phoneNumber.Id, saveChanges, cancellationToken);
+   
     private bool IsUnique(string phoneNumber) => GetUndeletedNumbers()
              .Any(number => number.UserPhoneNumber == phoneNumber);
 

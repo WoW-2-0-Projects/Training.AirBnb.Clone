@@ -22,7 +22,7 @@ public class ListingOccupancyService : IEntityBaseService<ListingOccupancy>
 
         await _appDateContext.ListingOccupancies.AddAsync(occupancy, cancellationToken);
 
-        if (saveChanges) await _appDateContext.ListingOccupancies.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDateContext.SaveChangesAsync();
 
         return occupancy;
     }
@@ -49,9 +49,10 @@ public class ListingOccupancyService : IEntityBaseService<ListingOccupancy>
 
         foundOccupancy.Guests = occupancy.Guests;
         foundOccupancy.AllowPets = occupancy.AllowPets;
-        foundOccupancy.ModifiedDate = DateTime.UtcNow;
+        
+        await _appDateContext.ListingOccupancies.UpdateAsync(foundOccupancy, cancellationToken);
 
-        if (saveChanges) await _appDateContext.ListingOccupancies.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDateContext.SaveChangesAsync();
 
         return foundOccupancy;
     }
@@ -60,10 +61,9 @@ public class ListingOccupancyService : IEntityBaseService<ListingOccupancy>
     {
         var foundOccupancy = await GetByIdAsync(id, cancellationToken);
 
-        foundOccupancy.IsDeleted = true;
-        foundOccupancy.DeletedDate = DateTime.UtcNow;
+        await _appDateContext.ListingOccupancies.RemoveAsync(foundOccupancy, cancellationToken);
 
-        if (saveChanges) await _appDateContext.ListingOccupancies.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDateContext.SaveChangesAsync();
 
         return foundOccupancy;
     }

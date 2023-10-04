@@ -12,11 +12,9 @@ public class PhoneNumber : SoftDeletedEntity
 
     public PhoneNumber(string userPhoneNumber, string code, Guid countryId)
     {
-        Id = Guid.NewGuid();
         UserPhoneNumber = userPhoneNumber;
         Code = code;
         CountryId = countryId;
-        CreatedDate = DateTimeOffset.UtcNow;
     }
 
 }

@@ -21,7 +21,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
         await _appDataContext.Amenities.AddAsync(amenity, cancellationToken);
 
-        if (saveChanges) await _appDataContext.Amenities.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return amenity;
     }
@@ -47,8 +47,8 @@ public class AmenityService : IEntityBaseService<Amenity>
 
         foundAmenity.AmenityName = amenity.AmenityName;
         foundAmenity.CategoryId = amenity.CategoryId;
-        foundAmenity.ModifiedDate = DateTime.UtcNow;
 
+        await _appDataContext.Amenities.UpdateAsync(foundAmenity, cancellationToken);
         if (saveChanges) await _appDataContext.Amenities.SaveChangesAsync(cancellationToken);
 
         return foundAmenity;
@@ -58,8 +58,7 @@ public class AmenityService : IEntityBaseService<Amenity>
     {
         var foundAmenity = await GetByIdAsync(id, cancellationToken);
 
-        foundAmenity.IsDeleted = true;
-        foundAmenity.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.Amenities.RemoveAsync(foundAmenity, cancellationToken);
 
         if (saveChanges) await _appDataContext.Amenities.SaveChangesAsync(cancellationToken);
 

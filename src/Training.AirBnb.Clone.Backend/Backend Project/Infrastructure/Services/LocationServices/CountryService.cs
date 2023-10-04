@@ -27,8 +27,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
             await _appDataContext.Countries.AddAsync(country, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.Countries.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
             
             return country;
         }
@@ -43,13 +42,13 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             if (!IsValidCountryDailingCode(country) || !IsValidRegionPhoneNumberLength(country))
                 throw new EntityValidationException<Country> ("This Country is in the wrong format");
 
-            foundCountry.ModifiedDate = DateTimeOffset.UtcNow;
             foundCountry.Name = country.Name;
             foundCountry.RegionPhoneNumberLength = country.RegionPhoneNumberLength;
             foundCountry.CountryDialingCode = country.CountryDialingCode;
 
-            if (saveChanges)
-                await _appDataContext.Countries.SaveChangesAsync(cancellationToken);
+            await _appDataContext.Countries.UpdateAsync(country, cancellationToken);
+
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return foundCountry;
         }
@@ -71,11 +70,10 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             var deletedCountry = await GetByIdAsync(id);
 
-            deletedCountry.DeletedDate = DateTimeOffset.UtcNow;
-            deletedCountry.IsDeleted = true;
+            await _appDataContext.Countries.RemoveAsync(deletedCountry, cancellationToken);
 
             if (saveChanges)
-                await _appDataContext.Countries.SaveChangesAsync(cancellationToken);
+                await _appDataContext.SaveChangesAsync();
 
             return deletedCountry;
         }

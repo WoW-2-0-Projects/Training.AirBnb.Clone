@@ -30,8 +30,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return address;
         }
@@ -74,10 +73,10 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             updatedAddress.AddressLine4 = address.AddressLine4;
             updatedAddress.Province = address.Province;
             updatedAddress.ZipCode = address.ZipCode;
-            updatedAddress.ModifiedDate = DateTimeOffset.UtcNow;
 
-            if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
+            await _appDataContext.Addresses.UpdateAsync(updatedAddress, cancellationToken);
+            
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return updatedAddress;
         }
@@ -86,28 +85,17 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             var deletedAddress = await GetByIdAsync(id);
 
-            deletedAddress.IsDeleted = true;
-            deletedAddress.DeletedDate = DateTimeOffset.UtcNow;
+            await _appDataContext.Addresses.RemoveAsync(deletedAddress, cancellationToken);
 
             if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
+                await _appDataContext.SaveChangesAsync();
 
             return deletedAddress;
         }
 
         public async ValueTask<Address> DeleteAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var deletedAddress = await GetByIdAsync(address.Id);
-
-            deletedAddress.IsDeleted = true;
-            deletedAddress.DeletedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.Addresses.SaveChangesAsync(cancellationToken);
-
-            return deletedAddress;
-        }
-
+            => await DeleteAsync(address.Id, saveChanges, cancellationToken);
+       
         private bool IsValidAddressLines(string addressLine)
         {
             if (!string.IsNullOrWhiteSpace(addressLine))
