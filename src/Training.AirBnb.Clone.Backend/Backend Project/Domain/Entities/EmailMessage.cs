@@ -12,4 +12,12 @@ public class EmailMessage : AuditableEntity
     public string ReceiverAddress { get; set; }
     public bool IsSent { get; set; }
     public DateTimeOffset SendDate { get; set; }
+
+    public EmailMessage(string subject, string body, string senderAddress, string receiverAddress)
+    {
+        Subject = subject;
+        Body = body;
+        SenderAddress = senderAddress;
+        ReceiverAddress = receiverAddress;
+    }
 }
