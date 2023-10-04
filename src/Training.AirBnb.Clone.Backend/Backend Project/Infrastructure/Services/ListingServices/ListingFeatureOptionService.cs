@@ -21,10 +21,10 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
 
         await _appDataContext.ListingFeatureOptions.AddAsync(option, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatureOptions.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return option;
-    }
+    }  
 
     public ValueTask<ICollection<ListingFeatureOption>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         => new ValueTask<ICollection<ListingFeatureOption>>(GetUndeletedOptions()
@@ -46,9 +46,10 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
         var foundOption = await GetByIdAsync(option.Id, cancellationToken);
 
         foundOption.Name = option.Name;
-        foundOption.ModifiedDate = DateTime.UtcNow;
+        
+        await _appDataContext.ListingFeatureOptions.UpdateAsync(foundOption, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatureOptions.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundOption;
     }
@@ -57,10 +58,9 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
     {
         var foundOption = await GetByIdAsync(id, cancellationToken);
 
-        foundOption.IsDeleted = true;
-        foundOption.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.ListingFeatureOptions.RemoveAsync(foundOption, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatureOptions.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundOption;
     }

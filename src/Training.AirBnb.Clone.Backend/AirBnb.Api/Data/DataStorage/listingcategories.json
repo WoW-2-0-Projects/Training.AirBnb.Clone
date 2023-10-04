@@ -1,0 +1,250 @@
+[
+    {
+        "Name": "House",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:27:50.4116085+05:00",
+        "ModifiedDate": null,
+        "Id": "8d1d118b-fc71-4e27-a24e-92009d89c046"
+    },
+    {
+        "Name": "Flat/apartment",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:28:21.7700065+05:00",
+        "ModifiedDate": null,
+        "Id": "96177d1a-7e6f-4972-bdf7-a7dc5a0ff247"
+    },
+    {
+        "Name": "Barn",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:28:38.6597955+05:00",
+        "ModifiedDate": null,
+        "Id": "1a51d60a-20ab-4b66-83a3-a3357f7e6838"
+    },
+    {
+        "Name": "Bed & breakfast",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:29:32.5958464+05:00",
+        "ModifiedDate": null,
+        "Id": "385d9fae-b3f2-40a8-a36f-bba476c5438a"
+    },
+    {
+        "Name": "Boat",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:29:44.4143066+05:00",
+        "ModifiedDate": null,
+        "Id": "038a2f23-5d7d-41b2-bc13-1ab4fb9acfec"
+    },
+    {
+        "Name": "Cabin",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:29:56.2899763+05:00",
+        "ModifiedDate": null,
+        "Id": "9d74e414-4455-47af-a5f1-790db1082309"
+    },
+    {
+        "Name": "Campervan/motorhome",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:30:25.2851641+05:00",
+        "ModifiedDate": null,
+        "Id": "39c315c1-23d5-4866-b290-d4e0a52eafc4"
+    },
+    {
+        "Name": "Casa particular",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:31:09.0460977+05:00",
+        "ModifiedDate": null,
+        "Id": "63669e16-3306-4bdd-b6cf-44d3a27c5577"
+    },
+    {
+        "Name": "Castle",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:31:28.370418+05:00",
+        "ModifiedDate": null,
+        "Id": "f38c7a62-b003-46ef-9918-d977f08737d8"
+    },
+    {
+        "Name": "Cave",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:31:37.7795636+05:00",
+        "ModifiedDate": null,
+        "Id": "a379bdea-6326-4e18-bd82-53ee4e25ef8d"
+    },
+    {
+        "Name": "Container",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:31:46.9378888+05:00",
+        "ModifiedDate": null,
+        "Id": "98cc167c-7a31-4c19-828e-85895e000e50"
+    },
+    {
+        "Name": "Cycladic home",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:00.6866489+05:00",
+        "ModifiedDate": null,
+        "Id": "35afa348-7af5-4065-aafb-02eb5afe6c51"
+    },
+    {
+        "Name": "Dammuso",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:16.0803238+05:00",
+        "ModifiedDate": null,
+        "Id": "f665a223-0772-411c-995e-11f636ae2c6c"
+    },
+    {
+        "Name": "Dome",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:22.9788251+05:00",
+        "ModifiedDate": null,
+        "Id": "1035a923-64bd-4305-a7bf-b2c16469cfef"
+    },
+    {
+        "Name": "Earth home",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:32.711638+05:00",
+        "ModifiedDate": null,
+        "Id": "95710980-c91e-4d5f-8ac6-76ee987fd9bf"
+    },
+    {
+        "Name": "Farm",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:39.931737+05:00",
+        "ModifiedDate": null,
+        "Id": "08d7ea52-5ea3-4033-a517-fd9fec5d0339"
+    },
+    {
+        "Name": "Guest house",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:48.3689725+05:00",
+        "ModifiedDate": null,
+        "Id": "da2ba755-873b-406f-a374-20398a1218b2"
+    },
+    {
+        "Name": "Hotel",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:32:55.6988373+05:00",
+        "ModifiedDate": null,
+        "Id": "e32e6b55-4ce1-4749-a805-582d46df3752"
+    },
+    {
+        "Name": "Houseboat",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:33:05.8598071+05:00",
+        "ModifiedDate": null,
+        "Id": "411880b2-f217-498f-a779-608bf2fcc929"
+    },
+    {
+        "Name": "Kezhan",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:33:22.4093509+05:00",
+        "ModifiedDate": null,
+        "Id": "76b73850-4806-4812-a8b9-da7e93c1004d"
+    },
+    {
+        "Name": "Minsu",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:33:29.1640461+05:00",
+        "ModifiedDate": null,
+        "Id": "5b99c468-591e-4eff-ba42-0de2acb7563b"
+    },
+    {
+        "Name": "Riad",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:33:37.0253203+05:00",
+        "ModifiedDate": null,
+        "Id": "6c5e00cc-18d6-4ed7-817d-ecf215e6f6a4"
+    },
+    {
+        "Name": "Ryokan",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:33:45.8484183+05:00",
+        "ModifiedDate": null,
+        "Id": "5b6d1cc2-2959-4e36-8d5d-e2119d077343"
+    },
+    {
+        "Name": "Shepherd's hut",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:03.5023313+05:00",
+        "ModifiedDate": null,
+        "Id": "739d9fca-9ca3-4839-b5b9-9ef8faf1962c"
+    },
+    {
+        "Name": "Tent",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:18.3868785+05:00",
+        "ModifiedDate": null,
+        "Id": "58baab92-39ba-4140-9c55-890eb3175310"
+    },
+    {
+        "Name": "Tiny home",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:26.8126802+05:00",
+        "ModifiedDate": null,
+        "Id": "631b2ce0-1fba-4a37-ae4e-c342ef82815b"
+    },
+    {
+        "Name": "Tower",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:33.903047+05:00",
+        "ModifiedDate": null,
+        "Id": "a66a01ee-abb7-47a5-a6c7-2fb6e43063f6"
+    },
+    {
+        "Name": "Tree house",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:42.6893658+05:00",
+        "ModifiedDate": null,
+        "Id": "4ad8b820-c3ca-401c-8fb4-bea9b266aa13"
+    },
+    {
+        "Name": "Trullo",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:34:55.2916097+05:00",
+        "ModifiedDate": null,
+        "Id": "e10e8bbf-20d9-44f1-8eef-761d088a3ac9"
+    },
+    {
+        "Name": "Windmill",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:35:09.4794021+05:00",
+        "ModifiedDate": null,
+        "Id": "19bdcbe8-790f-4576-88b2-e227e48f548a"
+    },
+    {
+        "Name": "Yurt",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T08:35:17.2687511+05:00",
+        "ModifiedDate": "2023-10-04T08:42:50.4131067+05:00",
+        "Id": "9c68eeb0-b460-4ffe-9927-b8614d379489"
+    }
+]

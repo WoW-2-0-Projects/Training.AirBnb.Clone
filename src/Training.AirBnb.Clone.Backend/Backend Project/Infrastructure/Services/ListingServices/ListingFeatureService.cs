@@ -21,7 +21,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
         await _appDataContext.ListingFeatures.AddAsync(feature, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return feature;
     }
@@ -34,7 +34,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     public ValueTask<ListingFeature> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<ListingFeature>(GetUndeletedFeatures()
             .FirstOrDefault(feature => feature.Id == id)
-            ?? throw new EntityNotFoundException<ListingFeature>("Listing Feature not found!"));
+            ?? throw new EntityNotFoundException<ListingFeature> ("Listing Feature not found!"));
 
     public IQueryable<ListingFeature> Get(Expression<Func<ListingFeature, bool>> predicate)
         => GetUndeletedFeatures().Where(predicate.Compile()).AsQueryable();
@@ -48,7 +48,9 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
         foundFeature.Name = feature.Name;
         foundFeature.FeatureOptionsId = feature.FeatureOptionsId;
 
-        if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        await _appDataContext.ListingFeatures.UpdateAsync(foundFeature, cancellationToken);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundFeature;
     }
@@ -57,8 +59,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     {
         var foundFeature = await GetByIdAsync(id, cancellationToken);
 
-        foundFeature.IsDeleted = true;
-        foundFeature.ModifiedDate = DateTime.UtcNow;
+        await _appDataContext.ListingFeatures.RemoveAsync(foundFeature, cancellationToken);
 
         if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
 
@@ -79,8 +80,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     private bool IsValidFeature(ListingFeature feature)
         => !string.IsNullOrWhiteSpace(feature.Name)
-            && feature.Name.Length > 2
-            && feature.FeatureOptionsId != Guid.Empty;
+            && feature.Name.Length > 2;
 
     private bool FeatureExists(ListingFeature feature)
         => GetUndeletedFeatures()

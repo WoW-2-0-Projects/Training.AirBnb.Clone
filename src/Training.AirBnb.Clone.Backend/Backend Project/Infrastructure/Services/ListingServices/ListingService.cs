@@ -18,11 +18,11 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> CreateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing>("Listing did not pass validation.");
+            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
 
         await _appDataContext.Listings.AddAsync(listing, cancellationToken);
 
-        if (saveChanges) await _appDataContext.Listings.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return listing;
     }
@@ -35,7 +35,7 @@ public class ListingService : IEntityBaseService<Listing>
     public ValueTask<Listing> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<Listing>(GetUndeletedListings()
                 .FirstOrDefault(listing => listing.Id == id)
-                ?? throw new EntityNotFoundException<Listing>("Listing not found."));
+                ?? throw new EntityNotFoundException<Listing> ("Listing not found."));
 
     public IQueryable<Listing> Get(Expression<Func<Listing, bool>> predicate)
         => GetUndeletedListings().Where(predicate.Compile()).AsQueryable();
@@ -43,7 +43,7 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> UpdateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing>("Listing did not pass validation.");
+            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
 
         var foundListing = await GetByIdAsync(listing.Id, cancellationToken);
 
@@ -52,9 +52,10 @@ public class ListingService : IEntityBaseService<Listing>
         foundListing.Status = listing.Status;
         foundListing.OccupancyId = listing.OccupancyId;
         foundListing.Price = listing.Price;
-        foundListing.ModifiedDate = DateTime.UtcNow;
         
-        if (saveChanges) await _appDataContext.Listings.SaveChangesAsync(cancellationToken);
+        await _appDataContext.Listings.UpdateAsync(foundListing, cancellationToken);
+        
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return listing;
     }
@@ -63,10 +64,9 @@ public class ListingService : IEntityBaseService<Listing>
     {
         var foundListing = await GetByIdAsync(id, cancellationToken);
 
-        foundListing.IsDeleted = true;
-        foundListing.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.Listings.RemoveAsync(foundListing, cancellationToken);
 
-        if (saveChanges) await _appDataContext.Listings.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundListing;
     }

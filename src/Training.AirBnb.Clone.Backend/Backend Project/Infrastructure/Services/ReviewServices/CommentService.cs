@@ -22,8 +22,7 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
 
             await _appDataContext.Comments.AddAsync(comment, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.Comments.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return comment;
         }
@@ -55,10 +54,8 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
                 throw new EntityValidationException<Comment>("Invalid comment!");
 
             updatedComment.CommentMessage = comment.CommentMessage;
-            updatedComment.ModifiedDate = DateTimeOffset.UtcNow;
 
-            if (saveChanges)
-                await _appDataContext.Comments.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return updatedComment;
         }
@@ -66,29 +63,17 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
         public async ValueTask<Comment> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var deletedComment = await GetByIdAsync(id);
+            
+            await _appDataContext.Comments.RemoveAsync(deletedComment, cancellationToken);
 
-            deletedComment.IsDeleted = true;
-            deletedComment.DeletedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.Comments.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return deletedComment;
         }
 
         public async ValueTask<Comment> DeleteAsync(Comment comment, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var deletedComment = await GetByIdAsync(comment.Id);
-
-            deletedComment.IsDeleted = true;
-            deletedComment.DeletedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.Comments.SaveChangesAsync(cancellationToken);
-
-            return deletedComment;
-        }
-
+            => await DeleteAsync(comment.Id, saveChanges, cancellationToken);
+       
         private bool IsValidCommentMessage(string commentMessage)
         {
             if (!string.IsNullOrWhiteSpace(commentMessage) && commentMessage.Length < 1000)

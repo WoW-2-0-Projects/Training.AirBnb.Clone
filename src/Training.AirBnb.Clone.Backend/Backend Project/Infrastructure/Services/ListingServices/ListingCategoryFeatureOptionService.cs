@@ -25,7 +25,7 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
 
         await _appDataContext.ListingCategoryFeatureOptions.AddAsync(option, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingCategoryFeatureOptions.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return option;
     }
@@ -53,7 +53,9 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
         foundOption.FeatureMinValue = option.FeatureMinValue;
         foundOption.FeatureMaxValue = option.FeatureMaxValue;
 
-        if (saveChanges) await _appDataContext.ListingCategoryFeatureOptions.SaveChangesAsync(cancellationToken);
+        await _appDataContext.ListingCategoryFeatureOptions.UpdateAsync(foundOption, cancellationToken);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundOption;
     }
@@ -62,11 +64,10 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
     {
         var foundOption = await GetByIdAsync(id, cancellationToken);
 
-        foundOption.IsDeleted = true;
-        foundOption.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.ListingCategoryFeatureOptions.RemoveAsync(foundOption, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingCategoryFeatureOptions.SaveChangesAsync(cancellationToken);
-
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+          
         return foundOption;
     }
 

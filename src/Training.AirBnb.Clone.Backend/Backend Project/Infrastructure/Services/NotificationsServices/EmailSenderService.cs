@@ -10,7 +10,8 @@ public class EmailSenderService : IEmailSenderService
 {
     public async ValueTask<bool> SendEmailAsync(EmailMessage emailMessage)
     {
-        var result = false;
+        var result = false; 
+
         try
         {
             using (var smtp = new SmtpClient("smtp.gmail.com", 587))

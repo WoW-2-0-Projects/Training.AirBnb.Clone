@@ -1,6 +1,6 @@
 using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.User;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -18,46 +18,16 @@ public class UserService : IEntityBaseService<User>
 
     public async ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!_validationService.IsValidNameAsync(user.FirstName))
-            throw new UserFormatException("Invalid first name");
-        if (!_validationService.IsValidNameAsync(user.LastName))
-            throw new UserFormatException("Invalid last name");
-        if (!_validationService.IsValidEmailAddress(user.EmailAddress))
-            throw new UserFormatException("Invalid email address");
-        if (!await IsUnique(user.EmailAddress))
-            throw new UserAlreadyExistsException("This email address already exists");
+        if (!_validationService.IsValidNameAsync(user.FirstName)) throw new EntityValidationException<User>("Invalid first name");
+        if (!_validationService.IsValidNameAsync(user.LastName)) throw new EntityValidationException<User>("Invalid last name");
+        if (!_validationService.IsValidEmailAddress(user.EmailAddress)) throw new EntityValidationException<User>("Invalid email address");
+        if (!await IsUnique(user.EmailAddress)) throw new DuplicateEntityException<User>("This email address already exists");
+
         await _appDataContext.Users.AddAsync(user, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.SaveChangesAsync();
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return user;
-    }
-
-    public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedUser = await GetByIdAsync(id);
-        if (deletedUser is null)
-            throw new UserNotFoundException("User not found");
-        deletedUser.DeletedDate = DateTimeOffset.UtcNow;
-        deletedUser.IsDeleted = true;
-        if (saveChanges)
-            await _appDataContext.SaveChangesAsync();
-        return deletedUser;
-
-    }
-
-    public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-
-        var deletedUser = await GetByIdAsync(user.Id);
-        if (deletedUser is null)
-            throw new UserNotFoundException("User not found");
-        deletedUser.DeletedDate = DateTimeOffset.UtcNow;
-        deletedUser.IsDeleted = true;
-        if (saveChanges)
-            await _appDataContext.SaveChangesAsync();
-        return deletedUser;
     }
 
     public IQueryable<User> Get(Expression<Func<User, bool>> predicate)
@@ -69,6 +39,7 @@ public class UserService : IEntityBaseService<User>
     {
         var users = GetUndeletedUsers()
             .Where(user => ids.Contains(user.Id));
+
         return new ValueTask<ICollection<User>>(users.ToList());
     }
 
@@ -76,30 +47,41 @@ public class UserService : IEntityBaseService<User>
     {
         return new ValueTask<User>(GetUndeletedUsers()
             .FirstOrDefault(user => user.Id == id) ??
-            throw new UserNotFoundException("User not found"));
+            throw new EntityNotFoundException<User>("User not found"));
     }
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var updatedUser = await GetByIdAsync(user.Id);
-        if (updatedUser is null)
-            throw new UserNotFoundException("User not found");
-        if (!_validationService.IsValidNameAsync(user.FirstName))
-            throw new UserFormatException("Invalid first name");
-        if (!_validationService.IsValidNameAsync(user.LastName))
-            throw new UserFormatException("Invalid last name");
-        if (user.PhoneNumberId == default)
-            throw new UserFormatException("Invalid phone number id");
+
+        if (!_validationService.IsValidNameAsync(user.FirstName)) throw new EntityValidationException<User>("Invalid first name");
+        if (!_validationService.IsValidNameAsync(user.LastName)) throw new EntityValidationException<User>("Invalid last name");
+        if (user.PhoneNumberId == default) throw new EntityValidationException<User>("Invalid phone number id");
 
         updatedUser.FirstName = user.FirstName;
         updatedUser.LastName = user.LastName;
-        updatedUser.ModifiedDate = DateTimeOffset.UtcNow;
         updatedUser.PhoneNumberId = user.PhoneNumberId;
-        if (saveChanges)
-            await _appDataContext.SaveChangesAsync();
+
+        await _appDataContext.Users.UpdateAsync(updatedUser, cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+
         return updatedUser;
     }
     
+    public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var deletedUser = await GetByIdAsync(id);
+
+        await _appDataContext.Users.RemoveAsync(deletedUser, cancellationToken);
+       
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+
+        return deletedUser;
+    }
+
+    public async ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+        => await DeleteAsync(user.Id, saveChanges, cancellationToken);
+
     private ValueTask<bool> IsUnique(string email) =>
          new ValueTask<bool>(!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));

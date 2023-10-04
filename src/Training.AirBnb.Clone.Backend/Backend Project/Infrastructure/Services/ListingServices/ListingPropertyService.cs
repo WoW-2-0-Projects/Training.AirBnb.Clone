@@ -21,7 +21,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
         await _appDataContext.ListingProperties.AddAsync(property, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingProperties.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return property;
     }
@@ -47,9 +47,10 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
         foundProperty.PropertyName = property.PropertyName;
         foundProperty.PropertyCount = property.PropertyCount;
-        foundProperty.ModifiedDate = DateTime.UtcNow;
+        
+        await _appDataContext.ListingProperties.UpdateAsync(foundProperty, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingProperties.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundProperty;
     }
@@ -58,10 +59,9 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     {
         var foundProperty = await GetByIdAsync(id, cancellationToken);
 
-        foundProperty.IsDeleted = true;
-        foundProperty.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.ListingProperties.RemoveAsync(foundProperty, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingProperties.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundProperty;
     }
