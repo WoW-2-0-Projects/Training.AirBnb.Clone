@@ -17,7 +17,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     public async ValueTask<ListingFeature> CreateAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        Validate(feature);
+        ValidateOnCreate(feature);
 
         await _appDataContext.ListingFeatures.AddAsync(feature, cancellationToken);
 
@@ -41,11 +41,14 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     public async ValueTask<ListingFeature> UpdateAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        Validate(feature);
-
         var foundFeature = await GetByIdAsync(feature.Id, cancellationToken);
 
+        if (!ValidateOnUpdate(feature, foundFeature))
+            throw new EntityValidationException<ListingFeature>("Not valid listing feature.");
+
         foundFeature.Name = feature.Name;
+        foundFeature.MinValue = feature.MinValue;
+        foundFeature.MaxValue = feature.MaxValue;   
         foundFeature.FeatureOptionsId = feature.FeatureOptionsId;
 
         await _appDataContext.ListingFeatures.UpdateAsync(foundFeature, cancellationToken);
@@ -69,18 +72,30 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     public async ValueTask<ListingFeature> DeleteAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
         => await DeleteAsync(feature.Id, saveChanges, cancellationToken);
 
-    private void Validate(ListingFeature feature)
+    private void ValidateOnCreate(ListingFeature feature)
     {
-        if (IsValidFeature(feature))
+        if (!IsValidFeature(feature))
             throw new EntityValidationException<ListingFeature>("Not valid feature!");
 
         if (FeatureExists(feature))
             throw new DuplicateEntityException<ListingFeature>("Feature already exists!");
     }
 
+    private bool ValidateOnUpdate(ListingFeature feature, ListingFeature existingFeature)
+    {
+        if (existingFeature.Name == feature.Name && existingFeature.FeatureOptionsId == feature.FeatureOptionsId)
+            return IsValidFeature(feature);
+
+        if (FeatureExists(feature))
+            throw new DuplicateEntityException<ListingFeature>("Listing feature already exists.");
+
+        return true;
+    }
+
     private bool IsValidFeature(ListingFeature feature)
         => !string.IsNullOrWhiteSpace(feature.Name)
-            && feature.Name.Length > 2;
+            && feature.Name.Length > 2
+            && feature.MinValue >= 0;
 
     private bool FeatureExists(ListingFeature feature)
         => GetUndeletedFeatures()

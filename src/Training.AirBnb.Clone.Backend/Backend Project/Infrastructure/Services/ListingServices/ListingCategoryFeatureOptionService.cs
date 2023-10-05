@@ -17,9 +17,6 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
 
     public async ValueTask<ListingCategoryFeatureOption> CreateAsync(ListingCategoryFeatureOption option, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!IsValid(option))
-            throw new EntityValidationException<ListingCategoryFeatureOption>();
-
         if (!IsUnique(option))
             throw new DuplicateEntityException<ListingCategoryFeatureOption>();
 
@@ -43,21 +40,10 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
     public IQueryable<ListingCategoryFeatureOption> Get(Expression<Func<ListingCategoryFeatureOption, bool>> predicate)
         => GetUndeletedOptions().Where(predicate.Compile()).AsQueryable();
 
-    public async ValueTask<ListingCategoryFeatureOption> UpdateAsync(ListingCategoryFeatureOption option, bool saveChanges = true, CancellationToken cancellationToken = default)
+    // Non Updatable entity
+    public ValueTask<ListingCategoryFeatureOption> UpdateAsync(ListingCategoryFeatureOption option, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (!IsValid(option))
-            throw new EntityValidationException<ListingCategoryFeatureOption>();
-
-        var foundOption = await GetByIdAsync(option.Id, cancellationToken);
-
-        foundOption.FeatureMinValue = option.FeatureMinValue;
-        foundOption.FeatureMaxValue = option.FeatureMaxValue;
-
-        await _appDataContext.ListingCategoryFeatureOptions.UpdateAsync(foundOption, cancellationToken);
-
-        if (saveChanges) await _appDataContext.SaveChangesAsync();
-
-        return foundOption;
+        throw new InvalidOperationException("Non updatable entity");
     }
 
     public async ValueTask<ListingCategoryFeatureOption> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -74,14 +60,10 @@ public class ListingCategoryFeatureOptionService : IEntityBaseService<ListingCat
     public async ValueTask<ListingCategoryFeatureOption> DeleteAsync(ListingCategoryFeatureOption option, bool saveChanges = true, CancellationToken cancellationToken = default)
         => await DeleteAsync(option.Id, saveChanges, cancellationToken);
 
-    private bool IsValid(ListingCategoryFeatureOption option)
-        => option.FeatureMinValue >= 0 && option.FeatureMaxValue <= 50;
-
     private bool IsUnique(ListingCategoryFeatureOption option)
         => !GetUndeletedOptions()
             .Any(self => self.ListingCategoryId == option.ListingCategoryId
-                && self.ListingFeatureOptionId == option.ListingFeatureOptionId
-                && self.ListingFeatureId == option.ListingFeatureId);
+                && self.ListingFeatureOptionId == option.ListingFeatureOptionId);
 
     private IQueryable<ListingCategoryFeatureOption> GetUndeletedOptions()
         => _appDataContext.ListingCategoryFeatureOptions.Where(option => !option.IsDeleted).AsQueryable();
