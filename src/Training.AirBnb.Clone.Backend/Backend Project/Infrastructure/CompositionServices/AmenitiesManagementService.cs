@@ -63,9 +63,9 @@ namespace Backend_Project.Infrastructure.CompositionServices
         {
             var amenitiesCategory = await _amenityCategoryService.GetByIdAsync(id, cancellationToken);
 
-            var amenities = _amenityService.Get(a => a.CategoryId.Equals(id)).ToList();
+            var amenities = _amenityService.Get(a => a.CategoryId.Equals(amenitiesCategory.Id));
 
-            if (amenities is not null)
+            if (amenities.Any())
                 throw new EntityNotDeletableException<AmenityCategory>("This Category not Deletable");
 
             return await _amenityCategoryService.DeleteAsync(amenitiesCategory, saveChanges, cancellationToken);

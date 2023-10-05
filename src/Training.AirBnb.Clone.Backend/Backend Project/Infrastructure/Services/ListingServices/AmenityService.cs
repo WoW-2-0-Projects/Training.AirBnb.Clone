@@ -33,7 +33,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<Amenity>(GetUndeletedAmenities()
-            .FirstOrDefault(amenity => amenity.Id == id)
+            .FirstOrDefault(amenity => amenity.Id.Equals(id))
             ?? throw new EntityNotFoundException<Amenity>("Amenity not found."));
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)

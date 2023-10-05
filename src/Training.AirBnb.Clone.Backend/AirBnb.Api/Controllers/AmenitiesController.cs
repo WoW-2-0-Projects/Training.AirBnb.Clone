@@ -103,14 +103,14 @@ namespace AirBnb.Api.Controllers
 
 #region UpdateAmenitiesCategory
         [HttpPut("amenitiesCategory")]
-        public async Task<IActionResult> UpdateAmenitiesCategoryAsync(AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAmenitiesCategoryAsync([FromBody] AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             return Ok(await _amenityCategoryService.UpdateAsync(amenityCategory, saveChanges, cancellationToken));
         }
         #endregion
 
 #region DeleteAmenitiesCategory
-        [HttpDelete("amenitiesCategory")]
+        [HttpDelete("amenitiesCategory/delete")]
         public async Task<IActionResult> DeleteAmenitiesCategory([FromRoute] Guid Id)
         {
             await _amenitiesManagementService.DeleteAmenitiesCategory(Id);

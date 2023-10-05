@@ -1,1 +1,20 @@
-[{"AmenityName":"Wi-fi","CategoryId":"4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d","IsDeleted":false,"DeletedDate":null,"CreatedDate":"2023-10-04T18:44:43.9259887+05:00","ModifiedDate":null,"Id":"7ce50ead-e154-4975-aaba-6e2165b7cf2b"}]
+[
+    {
+        "AmenityName": "Wi-fi",
+        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-04T18:44:43.9259887+05:00",
+        "ModifiedDate": null,
+        "Id": "7ce50ead-e154-4975-aaba-6e2165b7cf2b"
+    },
+    {
+        "AmenityName": "TV-Internet",
+        "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
+        "IsDeleted": false,
+        "DeletedDate": null,
+        "CreatedDate": "2023-10-05T17:19:31.2191601+05:00",
+        "ModifiedDate": null,
+        "Id": "ea44e719-afdc-431b-9b64-d26cffc44bec"
+    }
+]
