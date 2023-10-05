@@ -37,7 +37,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
 
             var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template);
 
-            var user = await _userService.GetByIdAsync(userId) ?? throw new EntityException<User>("User Not found");
+            var founduser = await _userService.GetByIdAsync(userId) ?? throw new EntityException<User>("User Not found");
 
             var message = await _emailMessageService.ConvertToMessage(template, placeholders, "sultonbek.rakhimov.recovery@gmail.com", "asadbekrashidov000gmail.com");
 
