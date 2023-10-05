@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers
 {
-#region AmentiesController
+#region AmentiesControllersConstructor
     [ApiController]
     [Route("api/[controller]")]
     public class AmenitiesController : ControllerBase

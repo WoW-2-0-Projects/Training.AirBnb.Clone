@@ -19,6 +19,5 @@ namespace Backend_Project.Application.Interfaces
         //public ListingAmenities UpdateListingAmenities(ListingAmenities listingAmenities);
 
         //public ListingAmenities UpdateListingAmenities(Guid listingId, List<Guid> amenitiesIds);
-
     }
 }
