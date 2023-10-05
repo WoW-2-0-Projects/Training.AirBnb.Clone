@@ -46,6 +46,7 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
         var foundOption = await GetByIdAsync(option.Id, cancellationToken);
 
         foundOption.Name = option.Name;
+        foundOption.Description = option.Description;
         
         await _appDataContext.ListingFeatureOptions.UpdateAsync(foundOption, cancellationToken);
 
