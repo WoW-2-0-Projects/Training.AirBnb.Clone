@@ -7,4 +7,5 @@ namespace Backend_Project.Domain.Entities;
 public class ListingFeatureOption : SoftDeletedEntity
 {
     public string Name { get; set; }
+    public string Description { get; set; }
 }
