@@ -1,7 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Interfaces;
 
 namespace Backend_Project.Infrastructure.CompositionServices
 {

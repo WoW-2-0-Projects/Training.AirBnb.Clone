@@ -1,7 +1,7 @@
 ﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Interfaces;
+using Backend_Project.Application.Interfaces;
 
-namespace Backend_Project.Domain.Services.NotificationsServices;
+namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailMessageSevice : IEmailMessageService
 {
