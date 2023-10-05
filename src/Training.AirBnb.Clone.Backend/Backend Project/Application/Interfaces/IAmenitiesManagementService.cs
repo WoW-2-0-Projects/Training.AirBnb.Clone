@@ -15,9 +15,5 @@ namespace Backend_Project.Application.Interfaces
         
         // ListingAmenitesMethods
         public ValueTask<ListingAmenities> AddListingAmenitiesAsync(ListingAmenities listingAmenities, bool saveChanges = true, CancellationToken cancellationToken = default);
-        //public ListingAmenities AddListingAmenities(Guid listingId, List<Guid> amenitiesIds);
-        //public ListingAmenities UpdateListingAmenities(ListingAmenities listingAmenities);
-
-        //public ListingAmenities UpdateListingAmenities(Guid listingId, List<Guid> amenitiesIds);
     }
 }

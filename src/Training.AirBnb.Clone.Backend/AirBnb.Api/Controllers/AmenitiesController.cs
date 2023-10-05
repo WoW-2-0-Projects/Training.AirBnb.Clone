@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers
 {
-#region AmentiesControllersConstructor
     [ApiController]
     [Route("api/[controller]")]
     public class AmenitiesController : ControllerBase
@@ -20,7 +19,6 @@ namespace AirBnb.Api.Controllers
             _amenityService = amenityService;
             _amenityCategoryService = amenityCategoryService;
         }
-#endregion
 
 #region GetAmenties
         [HttpGet("amenties")]
@@ -50,7 +48,7 @@ namespace AirBnb.Api.Controllers
 
 #region AddAmenites
         [HttpPost("amenities")]
-        public async Task<IActionResult> AddAmenityAsync(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> AddAmenityAsync([FromBody] Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             return Ok(await _amenitiesManagementService.AddAmenity(amenity, saveChanges, cancellationToken));
         }
@@ -67,7 +65,7 @@ namespace AirBnb.Api.Controllers
 
 #region DeleteAmenties
         [HttpDelete("amenties")]
-        public async Task<IActionResult> DeleteAmenityAsync([FromRoute] Guid Id )
+        public async Task<IActionResult> DeleteAmenityAsync(Guid Id )
         {
             await _amenitiesManagementService.DeleteAmenityAsync(Id);
 

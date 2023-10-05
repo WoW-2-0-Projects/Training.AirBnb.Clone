@@ -44,9 +44,9 @@ namespace Backend_Project.Infrastructure.CompositionServices
             var amenity = await _amenityService.GetByIdAsync(id, cancellationToken);
 
             var listingAmenities =  _listingAmenitiesService
-                .Get(la => la.AmenityId.Equals(id)).ToList();
+                .Get(la => la.AmenityId.Equals(id));
 
-            if (listingAmenities is not null)
+            if (listingAmenities.Any())
                 throw new EntityNotDeletableException<Amenity>("this amenity not Deletable");
 
             return await _amenityService.DeleteAsync(amenity);
@@ -81,25 +81,5 @@ namespace Backend_Project.Infrastructure.CompositionServices
 
             return await _listingAmenitiesService.CreateAsync(listingAmenities, saveChanges, cancellationToken);
         }
-
-            // bu method to'liq ishlashi uchun ListingModel tayyor bo'lishi kerak
-
-        // Listing tayyor bo'lganidan so'ng ishlatiladi
-        //public ListingAmenities AddListingAmenities(Guid listingId, List<Guid> amenitiesIds)
-        //{
-
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public ListingAmenities UpdateListingAmenities(ListingAmenities listingAmenities)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public ListingAmenities UpdateListingAmenities(Guid listingId, List<Guid> amenitiesIds)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
