@@ -24,15 +24,16 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     {
         if (IsNullable(phoneNumber))
             throw new EntityException<PhoneNumber>("The phone number cannot be empty");
+
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityValidationException<PhoneNumber>("Phone number not valid");
+
         if (IsUnique(phoneNumber.UserPhoneNumber))
             throw new DuplicateEntityException<PhoneNumber>("This phone number already exists");
 
         await _appDataContext.PhoneNumbers.AddAsync(phoneNumber, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return phoneNumber;
     }
@@ -57,18 +58,17 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
     public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
-
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityException<PhoneNumber>("Invalid phone number");
 
+        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
+
         updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
         updatedNumber.Code = phoneNumber.Code;
-        updatedNumber.ModifiedDate = DateTimeOffset.UtcNow;
         updatedNumber.CountryId = phoneNumber.CountryId;
 
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        await _appDataContext.PhoneNumbers.UpdateAsync(updatedNumber, cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return updatedNumber;
     }
@@ -79,32 +79,16 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
         if (deletedNumber is null)
             throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        await _appDataContext.PhoneNumbers.RemoveAsync(deletedNumber, cancellationToken);
 
-        deletedNumber.DeletedDate = DateTimeOffset.UtcNow;
-        deletedNumber.IsDeleted = true;
-
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return deletedNumber;
     }
 
     public async ValueTask<PhoneNumber> DeleteAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedNumber = await GetByIdAsync(phoneNumber.Id);
-
-        if (deletedNumber is null)
-            throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
-
-        deletedNumber.DeletedDate = DateTimeOffset.UtcNow;
-        deletedNumber.IsDeleted = true;
-
-        if (saveChanges)
-            await _appDataContext.PhoneNumbers.SaveChangesAsync(cancellationToken);
-
-        return deletedNumber;
-    }
-
+        => await DeleteAsync(phoneNumber.Id, saveChanges, cancellationToken);
+   
     private bool IsUnique(string phoneNumber) => GetUndeletedNumbers()
              .Any(number => number.UserPhoneNumber == phoneNumber);
 
@@ -112,22 +96,19 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     {
         if (string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
             return false;
+
         return true;
     }
 
     private async ValueTask<bool> IsValidPhoneNumber(PhoneNumber phoneNumber)
     {
-        if (!phoneNumber.UserPhoneNumber[1..].All(char.IsDigit))
-            return false;
-        if (phoneNumber.UserPhoneNumber[0] != '+')
-            return false;
+        if (!phoneNumber.UserPhoneNumber[1..].All(char.IsDigit)) return false;
+        if (phoneNumber.UserPhoneNumber[0] != '+') return false;
 
         var country = await _country.GetByIdAsync(phoneNumber.CountryId);
 
-        if (!phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode))
-            return false;
-        if (phoneNumber.UserPhoneNumber.Length != country.RegionPhoneNumberLength)
-            return false;
+        if (!phoneNumber.UserPhoneNumber.StartsWith(country.CountryDialingCode)) return false;
+        if (phoneNumber.UserPhoneNumber.Length != country.RegionPhoneNumberLength) return false;
 
         return true;
     }

@@ -9,4 +9,12 @@ public class PhoneNumber : SoftDeletedEntity
     public string UserPhoneNumber { get; set; }
     public string Code { get; set; }
     public Guid CountryId { get; set; }
+
+    public PhoneNumber(string userPhoneNumber, string code, Guid countryId)
+    {
+        UserPhoneNumber = userPhoneNumber;
+        Code = code;
+        CountryId = countryId;
+    }
+
 }

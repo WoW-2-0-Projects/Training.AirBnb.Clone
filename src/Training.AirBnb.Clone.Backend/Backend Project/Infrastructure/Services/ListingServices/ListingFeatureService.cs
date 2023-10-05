@@ -34,7 +34,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     public ValueTask<ListingFeature> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<ListingFeature>(GetUndeletedFeatures()
             .FirstOrDefault(feature => feature.Id == id)
-            ?? throw new EntityNotFoundException<ListingFeature>("Listing Feature not found!"));
+            ?? throw new EntityNotFoundException<ListingFeature> ("Listing Feature not found!"));
 
     public IQueryable<ListingFeature> Get(Expression<Func<ListingFeature, bool>> predicate)
         => GetUndeletedFeatures().Where(predicate.Compile()).AsQueryable();

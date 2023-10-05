@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Domain.Interfaces;
+namespace Backend_Project.Domain.Interfaces;
 
 public interface IValidationService
 {

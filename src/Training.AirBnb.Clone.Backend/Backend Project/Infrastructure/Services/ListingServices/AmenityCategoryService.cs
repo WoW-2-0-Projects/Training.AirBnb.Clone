@@ -25,8 +25,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
             await _appDataContext.AmenityCategories.AddAsync(amenityCategory, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return amenityCategory;
         }
@@ -47,9 +46,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         }
 
         public IQueryable<AmenityCategory> Get(Expression<Func<AmenityCategory, bool>> predicate)
-        {
-            return GetUndeletedAmentyCategories().Where(predicate.Compile()).AsQueryable();
-        }
+            => GetUndeletedAmentyCategories().Where(predicate.Compile()).AsQueryable();
 
         public async ValueTask<AmenityCategory> UpdateAsync(AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
@@ -62,10 +59,10 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
                 throw new DuplicateEntityException<AmenityCategory>("Category already exists!");
 
             updatedAmenityCategory.CategoryName = amenityCategory.CategoryName;
-            updatedAmenityCategory.ModifiedDate = DateTimeOffset.UtcNow;
 
-            if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
+            await _appDataContext.AmenityCategories.UpdateAsync(updatedAmenityCategory, cancellationToken);
+            
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return updatedAmenityCategory;
         }
@@ -74,41 +71,22 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         {
             var deletedAmenityCategory = await GetByIdAsync(id);
 
-            deletedAmenityCategory.IsDeleted = true;
-            deletedAmenityCategory.DeletedDate = DateTimeOffset.UtcNow;
+            await _appDataContext.AmenityCategories.RemoveAsync(deletedAmenityCategory, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return deletedAmenityCategory;
         }
 
         public async ValueTask<AmenityCategory> DeleteAsync(AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
-        {
-            var deletedAmenityCategory = await GetByIdAsync(amenityCategory.Id);
-
-            deletedAmenityCategory.IsDeleted = true;
-            deletedAmenityCategory.DeletedDate = DateTimeOffset.UtcNow;
-
-            if (saveChanges)
-                await _appDataContext.AmenityCategories.SaveChangesAsync(cancellationToken);
-
-            return deletedAmenityCategory;
-        }
+            => await DeleteAsync(amenityCategory.Id, saveChanges, cancellationToken);
 
         private bool IsValidCategoryName(string categoryName)
-        {
-            if (!string.IsNullOrEmpty(categoryName) && categoryName.Length > 2)
-                return true;
-            else
-                return false;
-        }
+            => !string.IsNullOrWhiteSpace(categoryName) && categoryName.Length > 2;
 
         private bool IsUniqueCategory(string categoryName)
-        {
-            return _appDataContext.AmenityCategories.Any(category => category.CategoryName == categoryName);
-        }
-
+            => GetUndeletedAmentyCategories().Any(category => category.CategoryName == categoryName);
+       
         private IQueryable<AmenityCategory> GetUndeletedAmentyCategories() => _appDataContext.AmenityCategories.
             Where(amenityCategory => !amenityCategory.IsDeleted).AsQueryable();
     }

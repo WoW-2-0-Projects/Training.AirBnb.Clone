@@ -24,7 +24,7 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
         if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return option;
-    }
+    }  
 
     public ValueTask<ICollection<ListingFeatureOption>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         => new ValueTask<ICollection<ListingFeatureOption>>(GetUndeletedOptions()
