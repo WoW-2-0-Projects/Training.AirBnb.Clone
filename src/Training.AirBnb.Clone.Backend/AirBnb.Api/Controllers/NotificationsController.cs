@@ -19,6 +19,11 @@ namespace AirBnb.Api.Controllers
             _emailService = emailService;
         }
 
+        [HttpPost("emailMenagment")]
+        public async Task<IActionResult> SendEmail([FromRoute] Guid userId, [FromRoute] Guid templateId)
+            => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
+        
+        
         [HttpGet("emailtemplates")]
         public IActionResult GetAllTemplates()
         {
@@ -62,10 +67,6 @@ namespace AirBnb.Api.Controllers
 
         [HttpPost("emails")]
         public async ValueTask<IActionResult> AddEmails([FromBody] Email email)
-            => Ok(await _emailService.CreateAsync(email));
-
-        [HttpPost("emailMenagment")]
-        public async Task<IActionResult> SendEmail([FromRoute] Guid userId, [FromRoute] Guid templateId)
-            => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
+            => Ok(await _emailService.CreateAsync(email));        
     }
 }

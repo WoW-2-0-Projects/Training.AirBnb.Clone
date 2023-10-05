@@ -41,6 +41,7 @@ builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, Lis
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
 builder.Services.AddScoped<IEntityBaseService<Email>, EmailService>();
 builder.Services.AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>();
+builder.Services.AddScoped<IEmailMenegmentService,EmailMenagmantService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
