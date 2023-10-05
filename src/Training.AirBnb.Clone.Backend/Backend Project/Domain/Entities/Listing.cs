@@ -11,6 +11,7 @@ public class Listing : SoftDeletedEntity
     public string Description { get; set; }
     public ListingStatus Status { get; set; }
     public Guid CategoryId { get; set; }
+    public Guid TypeId { get; set; }
     public Guid AddressId { get; set; }
     public Guid OccupancyId { get; set; }
     public Guid HostId { get; set; }

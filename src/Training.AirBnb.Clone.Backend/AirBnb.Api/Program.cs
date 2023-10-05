@@ -31,14 +31,15 @@ builder.Services.AddScoped<IDataContext, AppFileContext>(_ =>
 });
 
 builder.Services.AddScoped<IEntityBaseService<User>, UserService>();
-builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddSingleton<IValidationService, ValidationService>();
+builder.Services.AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
 
 builder.Services.AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>();
-builder.Services.AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
 builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>();
 builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
+builder.Services.AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>();
 builder.Services.AddScoped<IEntityBaseService<Email>, EmailService>();
 builder.Services.AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>();
 builder.Services.AddScoped<IEmailMenegmentService,EmailMenagmantService>();
