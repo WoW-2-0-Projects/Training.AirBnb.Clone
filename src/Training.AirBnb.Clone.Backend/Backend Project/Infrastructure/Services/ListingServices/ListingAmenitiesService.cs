@@ -22,7 +22,7 @@ public class ListingAmenitiesService : IEntityBaseService<ListingAmenities>
 
         await _appDataContext.ListingAmenities.AddAsync(listingAmenities, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingAmenities.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return listingAmenities;
     }
@@ -48,10 +48,9 @@ public class ListingAmenitiesService : IEntityBaseService<ListingAmenities>
     {
         var foundConnection = await GetByIdAsync(id, cancellationToken);
 
-        foundConnection.IsDeleted = true;
-        foundConnection.DeletedDate = DateTime.UtcNow;
+        await _appDataContext.ListingAmenities.RemoveAsync(foundConnection, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingAmenities.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundConnection;
     }

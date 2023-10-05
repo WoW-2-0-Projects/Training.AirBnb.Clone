@@ -1,8 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Exceptions.User;
-using Backend_Project.Domain.Exceptions.UserCredentialsExceptions;
 using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
@@ -27,32 +25,9 @@ public class UserCredentialsService : IEntityBaseService<UserCredentials>
 
         await _appDataContext.UserCredentials.AddAsync(userCredentials, cancellationToken);
 
-        if (saveChanges)
-            await _appDataContext.UserCredentials.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return userCredentials;
-    }
-
-    public async ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedUserCredentials = await GetByIdAsync(id);
-
-        deletedUserCredentials.IsDeleted = true;
-        deletedUserCredentials.DeletedDate = DateTimeOffset.UtcNow;
-
-        if (saveChanges)
-            await _appDataContext.UserCredentials.SaveChangesAsync(cancellationToken);
-        return deletedUserCredentials;
-    }
-
-    public async ValueTask<UserCredentials> DeleteAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var deletedUserCredentials = await DeleteAsync(userCredentials.Id);
-
-        if (saveChanges)
-            await _appDataContext.UserCredentials.SaveChangesAsync(cancellationToken);
-
-        return deletedUserCredentials;
     }
 
     public IQueryable<UserCredentials> Get(Expression<Func<UserCredentials, bool>> predicate) =>
@@ -73,17 +48,18 @@ public class UserCredentialsService : IEntityBaseService<UserCredentials>
 
     public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var userCredentals = await GetByIdAsync(newUserCredentials.Id);
         var passwordInfo = IsStrongPassword(newUserCredentials.Password);
-
+        var userCredentals = await GetByIdAsync(newUserCredentials.Id);
+        
         if (!passwordInfo.IsStrong) throw new EntityValidationException<UserCredentials>(passwordInfo.WarningMessage);
         if (!PasswordHasherService.Verify(newUserCredentials.Password, userCredentals.Password)) throw new EntityValidationException<UserCredentials>("New password can not be same as old password");
 
-        userCredentals.Password = PasswordHasherService.Hash(newUserCredentials.Password);
-        userCredentals.ModifiedDate = DateTimeOffset.UtcNow;
 
-        if (saveChanges)
-            await _appDataContext.UserCredentials.SaveChangesAsync(cancellationToken);
+        userCredentals.Password = PasswordHasherService.Hash(newUserCredentials.Password);
+        
+        await _appDataContext.UserCredentials.UpdateAsync(userCredentals, cancellationToken);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return userCredentals;
 
@@ -100,6 +76,21 @@ public class UserCredentialsService : IEntityBaseService<UserCredentials>
         if (!password.Any(char.IsPunctuation)) return (false, $"Password should contain at least one symbol like {"!@#$%^&?"}!");
         return (true, "");
     }
+
+    public async ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var deletedUserCredentials = await GetByIdAsync(id);
+
+        await _appDataContext.UserCredentials.RemoveAsync(deletedUserCredentials);
+
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
+
+        return deletedUserCredentials;
+    }
+
+    public async ValueTask<UserCredentials> DeleteAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
+        => await DeleteAsync(userCredentials.Id, saveChanges, cancellationToken);
+  
     private bool IsUnique(Guid userId) =>
         !GetUndeletedUserCredentials().Any(cred => cred.UserId == userId);
 }

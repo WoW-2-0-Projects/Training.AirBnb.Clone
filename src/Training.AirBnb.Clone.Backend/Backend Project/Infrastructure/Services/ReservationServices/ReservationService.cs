@@ -20,13 +20,12 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             if (!IsNotBookedReservation(reservation))
                 throw new EntityValidationException<Reservation> ("This reservations time already exists");
 
-            if (IsValidEntity(reservation))
-                await _appDataContext.Reservations.AddAsync(reservation, cancellationToken);
-            else
+            if (!IsValidEntity(reservation))
                 throw new EntityValidationException<Reservation>("Reservation didn't pass validation");
+            
+            await _appDataContext.Reservations.AddAsync(reservation, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return reservation;
         }
@@ -51,14 +50,10 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundReseervation = GetUndelatedReservations().FirstOrDefault(reservation =>
-                reservation.Id.Equals(reservation.Id));
-            
-            if (foundReseervation is null)
-                throw new EntityNotFoundException<Reservation> ("Reservation not found.");
-            
             if (!IsValidEntity(reservation))
                 throw new EntityValidationException<Reservation> ("Reservation is not valid.");
+            
+            var foundReseervation = await GetByIdAsync(reservation.Id, cancellationToken);
 
             foundReseervation.ListingId = reservation.ListingId;
             foundReseervation.BookedBy = reservation.BookedBy;
@@ -66,9 +61,9 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             foundReseervation.StartDate = reservation.StartDate;
             foundReseervation.EndDate = reservation.EndDate;
             foundReseervation.TotalPrice = reservation.TotalPrice;
-            foundReseervation.ModifiedDate = DateTimeOffset.UtcNow;
             
-            if (saveChanges)  await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
+            await _appDataContext.Reservations.UpdateAsync(foundReseervation, cancellationToken);
+            if (saveChanges)  await _appDataContext.SaveChangesAsync();
            
             return foundReseervation;
         }
@@ -77,11 +72,9 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         {
             var removedReservation = await GetByIdAsync(id);
 
-            removedReservation.IsDeleted = true;
-            removedReservation.DeletedDate = DateTimeOffset.UtcNow;
+            await _appDataContext.Reservations.RemoveAsync(removedReservation, cancellationToken);
 
-            if (saveChanges)
-                await _appDataContext.Reservations.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
             
             return removedReservation;
         }

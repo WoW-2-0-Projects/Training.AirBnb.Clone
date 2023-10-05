@@ -1,7 +1,4 @@
-﻿using Backend_Project.Domain.Entities;
-using System.Diagnostics;
-
-namespace Backend_Project.Infrastructure.Services.AccountServices;
+﻿namespace Backend_Project.Infrastructure.Services.AccountServices;
 
 public static class PasswordHasherService
 {

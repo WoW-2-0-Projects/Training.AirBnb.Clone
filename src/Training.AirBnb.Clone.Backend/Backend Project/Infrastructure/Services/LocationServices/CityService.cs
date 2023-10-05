@@ -24,8 +24,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
             await _appDataContext.Cities.AddAsync(city, cancellationToken);
             
-            if (saveChanges)
-                await _appDataContext.Cities.SaveChangesAsync(cancellationToken);
+            if (saveChanges) await _appDataContext.SaveChangesAsync();
 
             return city;
         }
@@ -37,11 +36,11 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             if (!IsValidCityName(city))
                 throw new EntityValidationException<City> ("The city is in the wrong format");
             
-            foundCity.ModifiedDate = DateTimeOffset.UtcNow;
             foundCity.Name = city.Name;
             
-            if (saveChanges)
-                await _appDataContext.Cities.SaveChangesAsync(cancellationToken);
+            await _appDataContext.Cities.UpdateAsync(foundCity, cancellationToken);
+
+            if (saveChanges) await _appDataContext.Cities.SaveChangesAsync(cancellationToken);
             
             return foundCity;
         }
@@ -63,8 +62,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             var deletedCity = await GetByIdAsync(id);
             
-            deletedCity.DeletedDate = DateTimeOffset.UtcNow;
-            deletedCity.IsDeleted = true;
+            await _appDataContext.Cities.RemoveAsync(deletedCity, cancellationToken);
             
             if (saveChanges)
                 await _appDataContext.Cities.SaveChangesAsync(cancellationToken);
