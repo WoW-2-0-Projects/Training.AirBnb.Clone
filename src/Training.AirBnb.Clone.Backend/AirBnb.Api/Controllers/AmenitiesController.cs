@@ -64,8 +64,8 @@ namespace AirBnb.Api.Controllers
 #endregion
 
 #region DeleteAmenties
-        [HttpDelete("amenties")]
-        public async Task<IActionResult> DeleteAmenityAsync(Guid Id )
+        [HttpDelete("amenties/{Id:guid}")]
+        public async Task<IActionResult> DeleteAmenityAsync([FromRoute] Guid Id )
         {
             await _amenitiesManagementService.DeleteAmenityAsync(Id);
 
