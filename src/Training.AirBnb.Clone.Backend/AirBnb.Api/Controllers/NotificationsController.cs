@@ -1,18 +1,22 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmailTemplateController : ControllerBase
+    public class NotificationsController : ControllerBase
     {
         private readonly IEntityBaseService<EmailTemplate> _emailTemplateService;
+        private readonly IEntityBaseService<Email> _emailService;
+        private readonly IEmailMenegmentService _emailMenagmentService;
 
-        public EmailTemplateController(IEntityBaseService<EmailTemplate> entityBaseService)
+        public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService)
         {
             _emailTemplateService = entityBaseService;
+            _emailService = emailService;
         }
 
         [HttpGet("emailtemplates")]
@@ -44,5 +48,24 @@ namespace AirBnb.Api.Controllers
             return NoContent();
         }
 
+
+        [HttpGet("emails")]
+        public IActionResult GetAllEmails()
+        {
+            var result = _emailService.Get(email => true).ToList();
+            return result.Any() ? Ok(result) : NoContent();
+        }
+
+        [HttpGet("emails/{emailId:guid}")]
+        public async ValueTask<IActionResult> GetEmailById(Guid emailId)
+            => Ok(await _emailService.GetByIdAsync(emailId));
+
+        [HttpPost("emails")]
+        public async ValueTask<IActionResult> AddEmails([FromBody] Email email)
+            => Ok(await _emailService.CreateAsync(email));
+
+        [HttpPost("emailMenagment")]
+        public async Task<IActionResult> SendEmail([FromRoute] Guid userId, [FromRoute] Guid templateId)
+            => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
     }
 }
