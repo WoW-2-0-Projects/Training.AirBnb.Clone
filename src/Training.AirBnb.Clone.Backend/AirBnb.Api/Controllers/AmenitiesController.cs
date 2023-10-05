@@ -86,14 +86,14 @@ namespace AirBnb.Api.Controllers
 
 #region GetAmenityCategoryById
         [HttpGet("amenitiesCategory/{amenitiesCategoryId:guid}")]
-        public async ValueTask<IActionResult> GetAmenitiesCategoryById(Guid amenitiesCategoryId, CancellationToken cancellationToken)
+        public async ValueTask<IActionResult> GetAmenitiesCategoryById([FromRoute] Guid amenitiesCategoryId, CancellationToken cancellationToken)
             => Ok(await _amenityCategoryService.GetByIdAsync(amenitiesCategoryId, cancellationToken));
 
 #endregion
 
 #region AddAmenitiesCategory
         [HttpPost("amenitiesCategory")]
-        public async Task<IActionResult> PostAsyncAmenityCategory(AmenityCategory amenityCategory)
+        public async Task<IActionResult> PostAsyncAmenityCategory([FromBody] AmenityCategory amenityCategory)
         {
             return Ok(await _amenityCategoryService.CreateAsync(amenityCategory));
         }
@@ -108,7 +108,7 @@ namespace AirBnb.Api.Controllers
         #endregion
 
 #region DeleteAmenitiesCategory
-        [HttpDelete("amenitiesCategory/delete")]
+        [HttpDelete("amenitiesCategory/{Id:guid}")]
         public async Task<IActionResult> DeleteAmenitiesCategory([FromRoute] Guid Id)
         {
             await _amenitiesManagementService.DeleteAmenitiesCategory(Id);
