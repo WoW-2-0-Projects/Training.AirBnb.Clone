@@ -1,7 +1,6 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Domain.Exceptions.User;
 using Backend_Project.Domain.Interfaces;
 
 namespace Backend_Project.Infrastructure.CompositionServices
@@ -38,7 +37,9 @@ namespace Backend_Project.Infrastructure.CompositionServices
 
             var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template);
 
-            var user = await _userService.GetByIdAsync(userId) ?? throw new UserNotFoundException();
+            var foundUser = await _userService.GetByIdAsync(userId);
+            if (foundUser is null)
+                throw new EntityException<User>("User Not found");
 
             var message = await _emailMessageService.ConvertToMessage(template, placeholders, "sultonbek.rakhimov.recovery@gmail.com", "asadbekrashidov000gmail.com");
 

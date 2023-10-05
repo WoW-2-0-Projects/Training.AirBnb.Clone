@@ -3,11 +3,6 @@ using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Enums;
 using Backend_Project.Persistance.DataContexts;
 using Bogus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Backend_Project.Persistance.SeedData;
 
