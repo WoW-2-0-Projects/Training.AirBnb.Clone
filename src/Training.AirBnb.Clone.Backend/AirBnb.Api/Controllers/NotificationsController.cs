@@ -1,6 +1,5 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers
@@ -13,10 +12,11 @@ namespace AirBnb.Api.Controllers
         private readonly IEntityBaseService<Email> _emailService;
         private readonly IEmailMenegmentService _emailMenagmentService;
 
-        public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService)
+        public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService, IEmailMenegmentService emailManagementService)
         {
             _emailTemplateService = entityBaseService;
             _emailService = emailService;
+            _emailMenagmentService = emailManagementService;
         }
 
         [HttpPost("emailMenagment")]
