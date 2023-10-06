@@ -34,7 +34,7 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
     public ValueTask<ListingFeatureOption> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => new ValueTask<ListingFeatureOption>(GetUndeletedOptions()
             .FirstOrDefault(option => option.Id == id)
-            ?? throw new EntityNotFoundException<ListingFeatureOption>());
+            ?? throw new EntityNotFoundException<ListingFeatureOption>("Listing Feature Option was not found."));
 
     public IQueryable<ListingFeatureOption> Get(Expression<Func<ListingFeatureOption, bool>> predicate)
         => GetUndeletedOptions().Where(predicate.Compile()).AsQueryable();
@@ -78,7 +78,8 @@ public class ListingFeatureOptionService : IEntityBaseService<ListingFeatureOpti
     }
 
     private bool IsValidOption(ListingFeatureOption option)
-        => !string.IsNullOrWhiteSpace(option.Name) && option.Name.Length > 2;
+        => (!string.IsNullOrWhiteSpace(option.Name) && option.Name.Length > 2 && option.Name.Length <= 100)
+            && (!string.IsNullOrWhiteSpace(option.Description) && option.Description.Length > 2 && option.Description.Length <= 200);
 
     private bool IsUniqueOption(ListingFeatureOption option)
         => !GetUndeletedOptions().Any(self => self.Name == option.Name);
