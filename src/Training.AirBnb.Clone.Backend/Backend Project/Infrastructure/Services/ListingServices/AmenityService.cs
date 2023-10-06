@@ -31,10 +31,16 @@ public class AmenityService : IEntityBaseService<Amenity>
             .Where(amenity => ids.Contains(amenity.Id))
             .ToList());
 
-    public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Amenity>(GetUndeletedAmenities()
-            .FirstOrDefault(amenity => amenity.Id == id)
-            ?? throw new EntityNotFoundException<Amenity>("Amenity not found."));
+    public  ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var a = GetUndeletedAmenities()
+            .FirstOrDefault(amenity => amenity.Id.Equals(id));
+
+            if( a is null)
+                throw new EntityNotFoundException<Amenity>("Amenity not found.");
+
+        return new ValueTask<Amenity>( a);
+    }
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)
         => GetUndeletedAmenities().Where(predicate.Compile()).AsQueryable();

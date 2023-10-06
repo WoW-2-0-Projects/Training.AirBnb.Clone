@@ -39,6 +39,11 @@ builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureSer
 builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
+
+builder.Services.AddScoped<IEntityBaseService<AmenityCategory>, AmenityCategoryService>();
+builder.Services.AddScoped<IEntityBaseService<ListingAmenities>, ListingAmenitiesService>();
+builder.Services.AddScoped<IAmenitiesManagementService, AmenitiesManagementService>();
+
 builder.Services.AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>();
 builder.Services.AddScoped<IEntityBaseService<Email>, EmailService>();
 builder.Services.AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>();
@@ -47,6 +52,7 @@ builder.Services.AddScoped<IEmailMenegmentService,EmailMenagmantService>();
 builder.Services.AddScoped<IEmailPlaceholderService, EmailPlaceholderService>();
 builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IEmailMessageService, EmailMessageSevice>();
+
 
 var app = builder.Build();
 
