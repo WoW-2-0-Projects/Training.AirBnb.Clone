@@ -8,16 +8,16 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 {
     private readonly IEntityBaseService<ListingCategory> _listingCategoryService;
     private readonly IEntityBaseService<ListingFeature> _listingFeatureService;
-    private readonly IEntityBaseService<ListingFeatureOption> _listingFeatureOptionService;
+    private readonly IEntityBaseService<ListingType> _listingTypeService;
     private readonly IEntityBaseService<ListingCategoryFeatureOption> _listingCategoryFeatureOptionService;
     private readonly IEntityBaseService<Listing> _listingService;
     private readonly IEntityBaseService<ListingProperty> _listingPropertyService;
 
-    public ListingCategoryDetailsService(IEntityBaseService<ListingCategory> listingCategoryService, IEntityBaseService<ListingFeature> listingFeatureService, IEntityBaseService<ListingFeatureOption> listingFeatureOptionService, IEntityBaseService<ListingCategoryFeatureOption> listingCategoryFeatureOptionService, IEntityBaseService<Listing> listingService, IEntityBaseService<ListingProperty> listingPropertyService)
+    public ListingCategoryDetailsService(IEntityBaseService<ListingCategory> listingCategoryService, IEntityBaseService<ListingFeature> listingFeatureService, IEntityBaseService<ListingType> listingFeatureOptionService, IEntityBaseService<ListingCategoryFeatureOption> listingCategoryFeatureOptionService, IEntityBaseService<Listing> listingService, IEntityBaseService<ListingProperty> listingPropertyService)
     {
         _listingCategoryService = listingCategoryService;
         _listingFeatureService = listingFeatureService;
-        _listingFeatureOptionService = listingFeatureOptionService;
+        _listingTypeService = listingFeatureOptionService;
         _listingCategoryFeatureOptionService = listingCategoryFeatureOptionService;
         _listingService = listingService;
         _listingPropertyService = listingPropertyService;
@@ -25,7 +25,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
     public async ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        await _listingFeatureOptionService.GetByIdAsync(feature.FeatureOptionsId, cancellationToken);
+        await _listingTypeService.GetByIdAsync(feature.FeatureOptionsId, cancellationToken);
         return await _listingFeatureService.CreateAsync(feature, saveChanges, cancellationToken);
     }
 
@@ -72,27 +72,27 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         return deletedCategory;
     }
 
-    public async ValueTask<ICollection<ListingFeatureOption>> GetFeatureOptionsByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    public async ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var relations = _listingCategoryFeatureOptionService
             .Get(relation => relation.ListingCategoryId == categoryId);
 
-        var featureOptions = new List<ListingFeatureOption>();
+        var featureOptions = new List<ListingType>();
 
         foreach (var relation in relations)
-            featureOptions.Add(await _listingFeatureOptionService.GetByIdAsync(relation.ListingFeatureOptionId));
+            featureOptions.Add(await _listingTypeService.GetByIdAsync(relation.ListingFeatureOptionId));
 
         return featureOptions;
     }
 
-    public async ValueTask<ListingFeatureOption> DeleteFeatureOptionAsync(Guid featureOptionId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if (_listingService.Get(listing => listing.TypeId == featureOptionId).Any())
-            throw new EntityNotDeletableException<ListingFeatureOption>("There are active listings of this type.");
+        if (_listingService.Get(listing => listing.TypeId == typeId).Any())
+            throw new EntityNotDeletableException<ListingType>("There are active listings of this type.");
 
-        await DeleteFeatureOptionsRelations(featureOptionId, saveChanges, cancellationToken);
+        await DeleteFeatureOptionsRelations(typeId, saveChanges, cancellationToken);
 
-        var deletedFeatureOption = await _listingFeatureOptionService.DeleteAsync(featureOptionId, saveChanges, cancellationToken);
+        var deletedFeatureOption = await _listingTypeService.DeleteAsync(typeId, saveChanges, cancellationToken);
 
         return deletedFeatureOption;
     }
@@ -100,7 +100,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     public async ValueTask<ListingCategoryFeatureOption> AddListingCategoryFeatureOptionAsync(ListingCategoryFeatureOption relation, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         await _listingCategoryService.GetByIdAsync(relation.ListingCategoryId, cancellationToken);
-        await _listingFeatureOptionService.GetByIdAsync(relation.ListingFeatureOptionId, cancellationToken);
+        await _listingTypeService.GetByIdAsync(relation.ListingFeatureOptionId, cancellationToken);
 
         return await _listingCategoryFeatureOptionService.CreateAsync(relation, saveChanges, cancellationToken);
     }
@@ -111,7 +111,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         foreach (var featureOption in featureOptions)
         {
-            await _listingFeatureOptionService.GetByIdAsync(featureOption, cancellationToken);
+            await _listingTypeService.GetByIdAsync(featureOption, cancellationToken);
             var newRelation = new ListingCategoryFeatureOption()
             {
                 ListingCategoryId = categoryId,
@@ -125,7 +125,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
     public async ValueTask<bool> UpdateListingCategoryFeatureOptionsAsync(Guid categoryId, List<Guid> updatedFeatureOptions, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundFeatureOptions = await GetFeatureOptionsByCategoryIdAsync(categoryId, cancellationToken);
+        var foundFeatureOptions = await GetListingTypesByCategoryIdAsync(categoryId, cancellationToken);
 
         var deletedFeatureOptions = foundFeatureOptions.
             Select(feature => feature.Id)
@@ -142,7 +142,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         foreach (var newOption in newFeatureOptions)
         {
-            await _listingFeatureOptionService.GetByIdAsync(newOption, cancellationToken);
+            await _listingTypeService.GetByIdAsync(newOption, cancellationToken);
 
             var newRelation = new ListingCategoryFeatureOption
             {

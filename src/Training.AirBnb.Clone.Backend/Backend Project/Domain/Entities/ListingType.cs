@@ -4,7 +4,7 @@ using Backend_Project.Domain.Common;
 
 namespace Backend_Project.Domain.Entities;
 
-public class ListingFeatureOption : SoftDeletedEntity
+public class ListingType : SoftDeletedEntity
 {
     public string Name { get; set; }
     public string Description { get; set; }
