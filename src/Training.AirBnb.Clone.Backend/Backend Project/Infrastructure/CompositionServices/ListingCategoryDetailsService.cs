@@ -25,13 +25,13 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
     public async ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        await _listingTypeService.GetByIdAsync(feature.FeatureOptionsId, cancellationToken);
+        await _listingTypeService.GetByIdAsync(feature.ListingTypeId, cancellationToken);
         return await _listingFeatureService.CreateAsync(feature, saveChanges, cancellationToken);
     }
 
     public async ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var listingProperties = await GetListingPropertiesByTypeId(feature.FeatureOptionsId);
+        var listingProperties = await GetListingPropertiesByTypeId(feature.ListingTypeId);
 
         var min = listingProperties.MinBy(self => self.PropertyCount)?.PropertyCount;
         var max = listingProperties.MaxBy(self => self.PropertyCount)?.PropertyCount;
@@ -46,13 +46,13 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     }
 
     public ICollection<ListingFeature> GetListingFeaturesByTypeId(Guid listingTypeId)
-       => _listingFeatureService.Get(feature => feature.FeatureOptionsId == listingTypeId).ToList();
+       => _listingFeatureService.Get(feature => feature.ListingTypeId == listingTypeId).ToList();
 
     public async ValueTask<ListingFeature> DeleteListingFeatureAsync(Guid featureId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var feature = await _listingFeatureService.GetByIdAsync(featureId, cancellationToken);
 
-        var listingProperties = await GetListingPropertiesByTypeId(feature.FeatureOptionsId);
+        var listingProperties = await GetListingPropertiesByTypeId(feature.ListingTypeId);
 
         if (listingProperties.Any(self => self.PropertyName == feature.Name))
             throw new EntityNotDeletableException<ListingFeature>("You can't delete this listing feature. There are active listings which have this listing feature.");
@@ -178,7 +178,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
             .Get(connection => connection.ListingTypeId == typeId);
 
         var connectedFeatures = _listingFeatureService
-            .Get(feature => feature.FeatureOptionsId == typeId);
+            .Get(feature => feature.ListingTypeId == typeId);
 
         foreach (var connection in connections)
             await _listingCategoryTypeService.DeleteAsync(connection, saveChanges, cancellationToken);
