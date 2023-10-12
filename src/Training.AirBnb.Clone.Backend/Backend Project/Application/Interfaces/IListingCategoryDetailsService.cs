@@ -9,9 +9,9 @@ public interface IListingCategoryDetailsService
     ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default);
     ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default);
     ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default);
-    ICollection<ListingFeature> GetListingFeaturesByOptionId(Guid listingFeatureOptionId);
+    ICollection<ListingFeature> GetListingFeaturesByTypeId(Guid listingTypeId);
     ValueTask<ListingFeature> DeleteListingFeatureAsync(Guid featureId, bool saveChanges = true, CancellationToken cancellationToken = default);
-    ValueTask<ListingCategoryFeatureOption> AddListingCategoryFeatureOptionAsync(ListingCategoryFeatureOption relation, bool saveChanges = true, CancellationToken cancellationToken = default);
-    ValueTask<bool> AddListingCategoryFeatureOptionsAsync(Guid categoryId, List<Guid> featureOptions, bool saveChanges = true, CancellationToken cancellationToken = default);
-    ValueTask<bool> UpdateListingCategoryFeatureOptionsAsync(Guid categoryId, List<Guid> updatedFeatureOptions, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<ListingCategoryType> AddListingCategoryTypeAsync(ListingCategoryType relation, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<bool> AddListingCategoryTypesAsync(Guid categoryId, List<Guid> listingTypes, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<bool> UpdateListingCategoryTypesAsync(Guid categoryId, List<Guid> updatedListingTypes, bool saveChanges = true, CancellationToken cancellationToken = default);
 }

@@ -94,10 +94,10 @@ public class CategoryDetailsController : ControllerBase
 
     #region Listing Features
 
-    [HttpGet("listingFeatures/{featureOptionId:guid}")]
-    public IActionResult GetFeaturesByOptionId(Guid featureOptionId)
+    [HttpGet("listingFeatures/{listingTypeId:guid}")]
+    public IActionResult GetFeaturesByTypeId(Guid listingTypeId)
     {
-        var result = _listingCategoryDetailsService.GetListingFeaturesByOptionId(featureOptionId);
+        var result = _listingCategoryDetailsService.GetListingFeaturesByTypeId(listingTypeId);
         return result.Any() ? Ok(result) : NotFound();
     }
 
@@ -121,20 +121,20 @@ public class CategoryDetailsController : ControllerBase
 
     #endregion
 
-    #region Listing Category Feature Options
+    #region Listing Category Types
 
-    [HttpPost("categoryFeatureOptions")]
-    public async ValueTask<IActionResult> AddCategoryFeatureOption([FromBody] ListingCategoryFeatureOption featureOption)
-        => Ok(await _listingCategoryDetailsService.AddListingCategoryFeatureOptionAsync(featureOption));
+    [HttpPost("categoryTypes")]
+    public async ValueTask<IActionResult> AddCategoryType([FromBody] ListingCategoryType listingType)
+        => Ok(await _listingCategoryDetailsService.AddListingCategoryTypeAsync(listingType));
 
-    [HttpPost("categoryFeatureOptions/{categoryId:guid}/featureOptions")]
-    public async ValueTask<IActionResult> AddCategoryFeatureOptions([FromRoute] Guid categoryId, [FromBody] List<Guid> featureOptions)
-        => Ok(await _listingCategoryDetailsService.AddListingCategoryFeatureOptionsAsync(categoryId, featureOptions));
+    [HttpPost("categoryTypes/{categoryId:guid}/listingTypes")]
+    public async ValueTask<IActionResult> AddCategoryFeatureOptions([FromRoute] Guid categoryId, [FromBody] List<Guid> listingTypes)
+        => Ok(await _listingCategoryDetailsService.AddListingCategoryTypesAsync(categoryId, listingTypes));
 
 
-    [HttpPut("categoryFeatureOptions/{categoryId:guid}/featureOptions")]
-    public async ValueTask<IActionResult> UpdateFeatureOptionByCategoryId([FromRoute] Guid categoryId, [FromBody] List<Guid> updatedFeatureOptions)
-        => Ok(await _listingCategoryDetailsService.UpdateListingCategoryFeatureOptionsAsync(categoryId, updatedFeatureOptions));
+    [HttpPut("categoryTypes/{categoryId:guid}/listingTypes")]
+    public async ValueTask<IActionResult> UpdateFeatureOptionByCategoryId([FromRoute] Guid categoryId, [FromBody] List<Guid> updatedListingTypes)
+        => Ok(await _listingCategoryDetailsService.UpdateListingCategoryTypesAsync(categoryId, updatedListingTypes));
 
     #endregion
 }
