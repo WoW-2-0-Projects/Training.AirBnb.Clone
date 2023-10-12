@@ -22,7 +22,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     }
     public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
-        var placeholders = GetPlaceholeders(emailTemplate.Body);
+        var placeholders = GetPlaceholeders(emailTemplate.Subject,emailTemplate.Body);
         
         var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>();
 
@@ -30,7 +30,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
         {
             var value = placeholder switch
             {
-                _fullName => string.Join(_firstName, " ", _lastName),
+                _fullName => string.Join(user.FirstName," "," "+user.LastName),
                 _firstName => user.FirstName,
                 _lastName => user.LastName,
                 _emailAddress => user.EmailAddress,
@@ -46,30 +46,51 @@ public class EmailPlaceholderService : IEmailPlaceholderService
         return values;
     }
 
-    private IEnumerable<string> GetPlaceholeders(string body)
+    private IEnumerable<string> GetPlaceholeders(string subject, string body)
     {
         var plaseholder = new StringBuilder();
         var isStartedToGether = false;
 
-        for (var index = 0; index < body.Length; index++)
+        for (var indexA = 0; indexA < body.Length; indexA++)
         {
-            if (body[index] == '{')
+            if (body[indexA] == '{')
             {
-                index++;
+                indexA++;
                 plaseholder = new StringBuilder();
                 plaseholder.Append("{{");
                 isStartedToGether = true;
             }
-            else if (body[index] == '}')
+            else if (body[indexA] == '}')
             {
-                index++;
+                indexA++;
                 plaseholder.Append("}}");
                 isStartedToGether = false;
                 yield return plaseholder.ToString();
             }
             else if (isStartedToGether)
             {
-                plaseholder.Append(body[index]);
+                plaseholder.Append(body[indexA]);
+            }
+        }
+        for (var indexB = 0; indexB < subject.Length; indexB++)
+        {
+            if (subject[indexB] == '{')
+            {
+                indexB++;
+                plaseholder = new StringBuilder();
+                plaseholder.Append("{{");
+                isStartedToGether = true;
+            }
+            else if (subject[indexB] == '}')
+            {
+                indexB++;
+                plaseholder.Append("}}");
+                isStartedToGether = false;
+                yield return plaseholder.ToString();
+            }
+            else if (isStartedToGether)
+            {
+                plaseholder.Append(subject[indexB]);
             }
         }
     }
