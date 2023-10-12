@@ -6,6 +6,7 @@ using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Infrastructure.Services.ListingServices;
 using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistance.SeedData;
 using FileBaseContext.Context.Models.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -26,7 +27,11 @@ builder.Services.AddScoped<IDataContext, AppFileContext>(_ =>
 
     var context = new AppFileContext(contextOptions);
     context.FetchAsync().AsTask().Wait();
-
+    
+    Task.Run(async () =>
+    {
+        await context.InitializeSeedDataAsync();
+    });
     return context;
 });
 
@@ -40,10 +45,10 @@ builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeat
 builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
 builder.Services.AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>();
+
 builder.Services.AddScoped<IEntityBaseService<Email>, EmailService>();
 builder.Services.AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>();
-
-builder.Services.AddScoped<IEmailMenegmentService,EmailMenagmantService>();
+builder.Services.AddScoped<IEmailManagementService,EmailManagementService>();
 builder.Services.AddScoped<IEmailPlaceholderService, EmailPlaceholderService>();
 builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IEmailMessageService, EmailMessageSevice>();
