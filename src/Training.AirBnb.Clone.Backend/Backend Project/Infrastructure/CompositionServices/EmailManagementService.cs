@@ -1,10 +1,12 @@
 ﻿using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
+using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistance.SeedData;
 
 namespace Backend_Project.Infrastructure.CompositionServices
 {
-    public class EmailMenagmantService : IEmailMenegmentService
+    public class EmailManagementService : IEmailManagementService
     {
   
         private readonly IEntityBaseService<EmailTemplate> _emailTemplateService;
@@ -13,14 +15,16 @@ namespace Backend_Project.Infrastructure.CompositionServices
         private readonly IEmailMessageService _emailMessageService;
         private readonly IEntityBaseService<Email> _emailService;
         private readonly IEntityBaseService<User> _userService;
+        private readonly IDataContext _appDataContext;
 
-        public EmailMenagmantService(
+        public EmailManagementService(
             IEntityBaseService<EmailTemplate> emailTemplateService,
             IEmailPlaceholderService emailPlaceholderService,
             IEmailSenderService emailSenderService,
             IEmailMessageService emailMessageService,
             IEntityBaseService<Email> emailService,
-            IEntityBaseService<User> userService
+            IEntityBaseService<User> userService,
+            IDataContext dataContext
         )
         {
             _emailTemplateService = emailTemplateService;
@@ -29,10 +33,11 @@ namespace Backend_Project.Infrastructure.CompositionServices
             _emailMessageService = emailMessageService;
             _emailService = emailService;
             _userService = userService;
+            _appDataContext = dataContext;
         }
         public async ValueTask<bool> SendEmailAsync(Guid userId, Guid templateId)
         {
-            var template = await _emailTemplateService.GetByIdAsync(templateId) ?? throw new EntityException<EmailTemplate>();
+            var template = await _emailTemplateService.GetByIdAsync(templateId) ?? throw new EntityException<EmailTemplate>("EmailTemplate Not Found");
 
             var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template);
 
@@ -40,7 +45,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
             if (foundUser is null)
                 throw new EntityException<User>("User Not found");
 
-            var message = await _emailMessageService.ConvertToMessage(template, placeholders, "sultonbek.rakhimov.recovery@gmail.com", "asadbekrashidov000gmail.com");
+            var message = await _emailMessageService.ConvertToMessage(template, placeholders, _appDataContext.GetUserSystem().Id, userId);
 
             var result = await _emailSenderService.SendEmailAsync(message);
 
@@ -55,8 +60,10 @@ namespace Backend_Project.Infrastructure.CompositionServices
         {
             return new Email()
             {
-                ReceiverEmailAddress = message.ReceiverAddress,
+                SendUserId = message.SenderUserId,
+                ReceiverUserId = message.ReceiverUserId,
                 SenderEmailAddress = message.SenderAddress,
+                ReceiverEmailAddress = message.ReceiverAddress,
                 Subject = message.Subject,
                 Body = message.Body,
             };
