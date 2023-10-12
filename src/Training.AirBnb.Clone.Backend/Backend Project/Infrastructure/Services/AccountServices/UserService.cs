@@ -46,9 +46,11 @@ public class UserService : IEntityBaseService<User>
 
     public ValueTask<User> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return new ValueTask<User>(GetUndeletedUsers()
-            .FirstOrDefault(user => user.Id == id) ??
-            throw new EntityNotFoundException<User>("User not found"));
+        var user = GetUndeletedUsers().FirstOrDefault(user => user.Id == id);
+        
+        if (user is null)
+            throw new EntityNotFoundException<User>("User not found");
+        return new ValueTask<User>(user);
     }
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
