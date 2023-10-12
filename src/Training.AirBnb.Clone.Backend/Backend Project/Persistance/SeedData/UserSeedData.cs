@@ -10,23 +10,34 @@ public static class UserSeedData
 {
     public static async ValueTask InitializeSeedDataAsync(this IDataContext fileContext)
     {
-        var admin =fileContext.GetUserSystem();
         if (!fileContext.Users.Any())
         {
+            var admin = fileContext.GetUserSystem();
             await fileContext.Users.AddAsync(admin);
-            await fileContext.AddAsync<User>(100);
-            
+            var userCredential = new UserCredentials { CreatedDate = DateTime.Now, UserId = admin.Id, Password = "Aa1234!@a" };
+            await fileContext.UserCredentials.AddAsync(userCredential);
+            await fileContext.SaveChangesAsync();
+        }
+
+
+        if (!fileContext.Users.Any())
+        {
+            await fileContext.AddAsync<User>(100);   
         }
 
         if (!fileContext.UserCredentials.Any())
         {
-            var userCredential = new UserCredentials { CreatedDate=DateTime.Now,UserId=admin.Id,Password="Aa1234!@a" };
-            await fileContext.UserCredentials.AddAsync(userCredential);
             await fileContext.AddAsync<UserCredentials>(100);
-
         }
     }
-    public static User GetUserSystem(this IDataContext fileContext)=> new User { FirstName = "System", LastName = "Project", UserRole = UserRole.Admin, EmailAddress = "system@gmail.com" };
+    public static User GetUserSystem(this IDataContext fileContext)
+    {
+        if (!fileContext.Users.Any())
+        {
+            return new User { Id = Guid.NewGuid(), FirstName = "System", LastName = "Project", UserRole = UserRole.Admin, EmailAddress = "sultonbek.rakhimov.recovery@gmail.com" };
+        }
+        return fileContext.Users.First(user => user.EmailAddress.Equals("sultonbek.rakhimov.recovery@gmail.com"));
+    }
 
      public static async ValueTask AddAsync<TEntity>(this IDataContext context, int count) where TEntity : IEntity
     {
