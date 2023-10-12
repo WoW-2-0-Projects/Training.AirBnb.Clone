@@ -10,9 +10,9 @@ namespace AirBnb.Api.Controllers
     {
         private readonly IEntityBaseService<EmailTemplate> _emailTemplateService;
         private readonly IEntityBaseService<Email> _emailService;
-        private readonly IEmailMenegmentService _emailMenagmentService;
+        private readonly IEmailManagementService _emailMenagmentService;
 
-        public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService, IEmailMenegmentService emailManagementService)
+        public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService, IEmailManagementService emailManagementService)
         {
             _emailTemplateService = entityBaseService;
             _emailService = emailService;
@@ -20,7 +20,7 @@ namespace AirBnb.Api.Controllers
         }
 
         [HttpPost("emailMenagment")]
-        public async Task<IActionResult> SendEmail([FromRoute] Guid userId, [FromRoute] Guid templateId)
+        public async Task<IActionResult> SendEmail(Guid userId, Guid templateId)
             => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
         
         
