@@ -29,6 +29,7 @@ public interface IDataContext
     IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
     IFileSet<Listing, Guid> Listings { get; }
     IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
+    IFileSet<Description, Guid> Descriptions { get; }
 
     ValueTask SaveChangesAsync();
 }

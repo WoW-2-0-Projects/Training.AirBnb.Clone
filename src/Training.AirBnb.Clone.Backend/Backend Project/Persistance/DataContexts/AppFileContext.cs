@@ -34,6 +34,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<Listing, Guid> Listings => Set<Listing, Guid>(nameof(Listings));
     public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber, Guid>(nameof(PhoneNumbers));
     public IFileSet<Rating, Guid> Ratings => Set<Rating, Guid>(nameof(Ratings));
+    public IFileSet<Description, Guid> Descriptions => Set<Description, Guid>(nameof(Descriptions));
 
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
