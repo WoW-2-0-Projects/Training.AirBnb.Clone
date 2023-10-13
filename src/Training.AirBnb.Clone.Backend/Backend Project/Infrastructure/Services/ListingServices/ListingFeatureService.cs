@@ -49,7 +49,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
         foundFeature.Name = feature.Name;
         foundFeature.MinValue = feature.MinValue;
         foundFeature.MaxValue = feature.MaxValue;   
-        foundFeature.FeatureOptionsId = feature.FeatureOptionsId;
+        foundFeature.ListingTypeId = feature.ListingTypeId;
 
         await _appDataContext.ListingFeatures.UpdateAsync(foundFeature, cancellationToken);
 
@@ -83,7 +83,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     private bool ValidateOnUpdate(ListingFeature feature, ListingFeature existingFeature)
     {
-        if (existingFeature.Name == feature.Name && existingFeature.FeatureOptionsId == feature.FeatureOptionsId)
+        if (existingFeature.Name == feature.Name && existingFeature.ListingTypeId == feature.ListingTypeId)
             return IsValidFeature(feature);
 
         if (FeatureExists(feature))
@@ -100,7 +100,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     private bool FeatureExists(ListingFeature feature)
         => GetUndeletedFeatures()
             .Any(self => self.Name == feature.Name 
-                && self.FeatureOptionsId == feature.FeatureOptionsId);
+                && self.ListingTypeId == feature.ListingTypeId);
 
     private IQueryable<ListingFeature> GetUndeletedFeatures()
         => _appDataContext.ListingFeatures.Where(feature => !feature.IsDeleted).AsQueryable();

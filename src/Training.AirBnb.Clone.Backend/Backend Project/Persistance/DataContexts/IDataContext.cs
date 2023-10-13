@@ -21,8 +21,8 @@ public interface IDataContext
     IFileSet<ListingRating, Guid> ListingRatings { get; }
     IFileSet<Amenity, Guid> Amenities { get; }
     IFileSet<Rating, Guid> Ratings { get; }
-    IFileSet<ListingFeatureOption, Guid> ListingFeatureOptions { get; }
-    IFileSet<ListingCategoryFeatureOption, Guid> ListingCategoryFeatureOptions { get; }
+    IFileSet<ListingType, Guid> ListingTypes { get; }
+    IFileSet<ListingCategoryType, Guid> ListingCategoryTypes { get; }
     IFileSet<ListingFeature, Guid> ListingFeatures { get; }
     IFileSet<ListingProperty, Guid> ListingProperties { get; }
     IFileSet<ListingAmenities, Guid> ListingAmenities { get; }

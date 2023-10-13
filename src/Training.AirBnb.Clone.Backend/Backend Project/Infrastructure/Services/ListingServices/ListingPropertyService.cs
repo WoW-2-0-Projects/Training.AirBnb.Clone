@@ -47,6 +47,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
 
         foundProperty.PropertyName = property.PropertyName;
         foundProperty.PropertyCount = property.PropertyCount;
+        foundProperty.IsShared = property.IsShared;
         
         await _appDataContext.ListingProperties.UpdateAsync(foundProperty, cancellationToken);
 
@@ -90,7 +91,8 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     private bool IsUniqueProperty(ListingProperty property)
         => !GetUndeletedProperties().Any(self => self.PropertyName == property.PropertyName
         && self.PropertyCount == property.PropertyCount
-        && self.ListingId == property.ListingId);
+        && self.ListingId == property.ListingId
+        && self.IsShared == property.IsShared);
 
     private IQueryable<ListingProperty> GetUndeletedProperties()
         => _appDataContext.ListingProperties.Where(property => !property.IsDeleted).AsQueryable();

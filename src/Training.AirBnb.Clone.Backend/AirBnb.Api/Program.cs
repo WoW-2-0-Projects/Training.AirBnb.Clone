@@ -36,8 +36,8 @@ builder.Services.AddScoped<IListingCategoryDetailsService, ListingCategoryDetail
 builder.Services.AddScoped<IEntityBaseService<Amenity>, AmenityService>();
 builder.Services.AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>();
 builder.Services.AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>();
-builder.Services.AddScoped<IEntityBaseService<ListingFeatureOption>, ListingFeatureOptionService>();
-builder.Services.AddScoped<IEntityBaseService<ListingCategoryFeatureOption>, ListingCategoryFeatureOptionService>();
+builder.Services.AddScoped<IEntityBaseService<ListingType>, ListingTypeService>();
+builder.Services.AddScoped<IEntityBaseService<ListingCategoryType>, ListingCategoryTypeService>();
 builder.Services.AddScoped<IEntityBaseService<Listing>, ListingService>();
 
 builder.Services.AddScoped<IEntityBaseService<AmenityCategory>, AmenityCategoryService>();
