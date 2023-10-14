@@ -35,6 +35,8 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber, Guid>(nameof(PhoneNumbers));
     public IFileSet<Rating, Guid> Ratings => Set<Rating, Guid>(nameof(Ratings));
 
+    public IFileSet<Location, Guid> Locations => Set<Location, Guid>(nameof(Locations));
+
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
