@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 
-namespace Backend_Project.Application.Interfaces
+namespace Backend_Project.Application.Listings
 {
     public interface IAmenitiesManagementService
     {
@@ -12,7 +12,7 @@ namespace Backend_Project.Application.Interfaces
         // AmenitiesCategorie's methods
         public ValueTask<ICollection<Amenity>> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default);
         public ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
-        
+
         // ListingAmenitesMethods
         public ValueTask<ListingAmenities> AddListingAmenitiesAsync(ListingAmenities listingAmenities, bool saveChanges = true, CancellationToken cancellationToken = default);
     }

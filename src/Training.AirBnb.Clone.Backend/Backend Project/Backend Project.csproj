@@ -10,8 +10,7 @@
   <ItemGroup>
     <Folder Include="Application\Configs\" />
     <Folder Include="Infrastructure\Configs\" />
-    <Folder Include="Persistance\DataContexts\" />
-    <Folder Include="Persistance\Configs\" />
+    <Folder Include="Persistence\DataContexts\" />
   </ItemGroup>
 
   <ItemGroup>

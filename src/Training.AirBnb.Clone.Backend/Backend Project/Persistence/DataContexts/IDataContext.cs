@@ -1,7 +1,7 @@
 using Backend_Project.Domain.Entities;
 using FileBaseContext.Abstractions.Models.FileSet;
 
-namespace Backend_Project.Persistance.DataContexts;
+namespace Backend_Project.Persistence.DataContexts;
 
 public interface IDataContext
 {
@@ -12,7 +12,7 @@ public interface IDataContext
     IFileSet<EmailMessage, Guid> EmailMessages { get; }
     IFileSet<Reservation, Guid> Reservations { get; }
     IFileSet<User, Guid> Users { get; }
-    IFileSet<Address, Guid> Addresses { get; }   
+    IFileSet<Address, Guid> Addresses { get; }
     IFileSet<ReservationOccupancy, Guid> ReservationOccupancies { get; }
     IFileSet<Comment, Guid> Comments { get; }
     IFileSet<UserCredentials, Guid> UserCredentials { get; }

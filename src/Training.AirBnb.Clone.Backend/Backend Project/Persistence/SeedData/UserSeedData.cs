@@ -1,34 +1,34 @@
 ﻿using Backend_Project.Domain.Common;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Enums;
-using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistence.DataContexts;
 using Bogus;
 
-namespace Backend_Project.Persistance.SeedData;
+namespace Backend_Project.Persistence.SeedData;
 
 public static class UserSeedData
 {
-    public static async ValueTask InitializeSeedDataAsync(this IDataContext fileContext)
+    public static async ValueTask InitializeUsersSeedDataAsync(this IDataContext fileContext)
     {
-        var admin =fileContext.GetUserSystem();
+        var admin = fileContext.GetUserSystem();
         if (!fileContext.Users.Any())
         {
             await fileContext.Users.AddAsync(admin);
             await fileContext.AddAsync<User>(100);
-            
+
         }
 
         if (!fileContext.UserCredentials.Any())
         {
-            var userCredential = new UserCredentials { CreatedDate=DateTime.Now,UserId=admin.Id,Password="Aa1234!@a" };
+            var userCredential = new UserCredentials { CreatedDate = DateTime.Now, UserId = admin.Id, Password = "Aa1234!@a" };
             await fileContext.UserCredentials.AddAsync(userCredential);
             await fileContext.AddAsync<UserCredentials>(100);
 
         }
     }
-    public static User GetUserSystem(this IDataContext fileContext)=> new User { FirstName = "System", LastName = "Project", UserRole = UserRole.Admin, EmailAddress = "system@gmail.com" };
+    public static User GetUserSystem(this IDataContext fileContext) => new User { FirstName = "System", LastName = "Project", UserRole = UserRole.Admin, EmailAddress = "system@gmail.com" };
 
-     public static async ValueTask AddAsync<TEntity>(this IDataContext context, int count) where TEntity : IEntity
+    public static async ValueTask AddAsync<TEntity>(this IDataContext context, int count) where TEntity : IEntity
     {
         var task = typeof(TEntity) switch
         {

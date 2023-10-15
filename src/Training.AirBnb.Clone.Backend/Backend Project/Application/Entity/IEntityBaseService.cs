@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Backend_Project.Application.Interfaces;
+namespace Backend_Project.Application.Entity;
 
 public interface IEntityBaseService<T> where T : class
 {

@@ -1,5 +1,4 @@
-﻿
-namespace Backend_Project.Application.Interfaces
+﻿namespace Backend_Project.Application.Notifications
 {
     public interface IEmailMenegmentService
     {
