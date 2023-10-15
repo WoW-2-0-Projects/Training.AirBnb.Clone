@@ -6,6 +6,7 @@ using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Infrastructure.Services.ListingServices;
 using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistance.SeedData;
 using FileBaseContext.Context.Models.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +56,9 @@ builder.Services.AddScoped<IEmailMessageService, EmailMessageSevice>();
 
 
 var app = builder.Build();
+
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<IDataContext>();
+await context.InitializeCategoryDetailsSeedData();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
