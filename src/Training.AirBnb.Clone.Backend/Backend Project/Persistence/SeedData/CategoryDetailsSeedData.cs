@@ -1,7 +1,7 @@
 ﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistence.DataContexts;
 
-namespace Backend_Project.Persistance.SeedData;
+namespace Backend_Project.Persistence.SeedData;
 
 public static class CategoryDetailsSeedData
 {
@@ -17,7 +17,7 @@ public static class CategoryDetailsSeedData
             await context.InitializeCategories();
 
         if (!context.ListingCategoryTypes.Any())
-            await context.InitializeCategoryTypes();    
+            await context.InitializeCategoryTypes();
     }
 
     private static async ValueTask InitializeListingTypes(this IDataContext context)
@@ -37,7 +37,7 @@ public static class CategoryDetailsSeedData
     {
         var featuresData = new List<string>
         {
-            "Bedroom", "Bed", "Full bathroom", "WC", "Full kitchen", "Kitchenette", "Living area", "Dining area", "Office", "Back garden", "Patio", 
+            "Bedroom", "Bed", "Full bathroom", "WC", "Full kitchen", "Kitchenette", "Living area", "Dining area", "Office", "Back garden", "Patio",
             "Pool", "Hot tub", "Laundry area", "Garage", "Gym"
         };
 
@@ -92,7 +92,7 @@ public static class CategoryDetailsSeedData
         var nonEntireCategories = new List<string> { "Bed & breakfast", "Hotel", "Kezhan", "Ryokan" };
         var relations = new List<ListingCategoryType>();
 
-        foreach (var category in  context.ListingCategories)
+        foreach (var category in context.ListingCategories)
         {
             if (nonEntireCategories.Contains(category.Name))
             {

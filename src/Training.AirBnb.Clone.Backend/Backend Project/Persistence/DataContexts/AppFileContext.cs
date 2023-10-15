@@ -6,23 +6,23 @@ using FileBaseContext.Abstractions.Models.FileSet;
 using FileBaseContext.Context.Models.Configurations;
 using FileBaseContext.Context.Models.FileContext;
 
-namespace Backend_Project.Persistance.DataContexts;
+namespace Backend_Project.Persistence.DataContexts;
 
 public class AppFileContext : FileContext, IDataContext
 {
     public IFileSet<EmailTemplate, Guid> EmailTemplates => Set<EmailTemplate, Guid>(nameof(EmailTemplates));
     public IFileSet<EmailMessage, Guid> EmailMessages => Set<EmailMessage, Guid>(nameof(EmailMessages));
-    public IFileSet<Email,Guid> Emails => Set<Email, Guid>(nameof(Emails));
+    public IFileSet<Email, Guid> Emails => Set<Email, Guid>(nameof(Emails));
     public IFileSet<Reservation, Guid> Reservations => Set<Reservation, Guid>(nameof(Reservations));
     public IFileSet<City, Guid> Cities => Set<City, Guid>(nameof(Cities));
     public IFileSet<Country, Guid> Countries => Set<Country, Guid>(nameof(Countries));
     public IFileSet<User, Guid> Users => Set<User, Guid>(nameof(Users));
     public IFileSet<Address, Guid> Addresses => Set<Address, Guid>(nameof(Addresses));
-    public IFileSet<ReservationOccupancy,Guid> ReservationOccupancies => Set<ReservationOccupancy, Guid>(nameof(ReservationOccupancies));
+    public IFileSet<ReservationOccupancy, Guid> ReservationOccupancies => Set<ReservationOccupancy, Guid>(nameof(ReservationOccupancies));
     public IFileSet<Comment, Guid> Comments => Set<Comment, Guid>(nameof(Comments));
     public IFileSet<UserCredentials, Guid> UserCredentials => Set<UserCredentials, Guid>(nameof(UserCredentials));
     public IFileSet<AmenityCategory, Guid> AmenityCategories => Set<AmenityCategory, Guid>(nameof(AmenityCategories));
-    public IFileSet<ListingCategory,Guid> ListingCategories => Set<ListingCategory, Guid>(nameof(ListingCategories));
+    public IFileSet<ListingCategory, Guid> ListingCategories => Set<ListingCategory, Guid>(nameof(ListingCategories));
     public IFileSet<ListingRating, Guid> ListingRatings => Set<ListingRating, Guid>(nameof(ListingRatings));
     public IFileSet<Amenity, Guid> Amenities => Set<Amenity, Guid>(nameof(Amenities));
     public IFileSet<ListingType, Guid> ListingTypes => Set<ListingType, Guid>(nameof(ListingTypes));
