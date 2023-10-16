@@ -30,7 +30,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
         {
             var value = placeholder switch
             {
-                _fullName => string.Join(user.FirstName," "," "+user.LastName),
+                _fullName => $"{user.FirstName} {user.LastName}",
                 _firstName => user.FirstName,
                 _lastName => user.LastName,
                 _emailAddress => user.EmailAddress,
