@@ -5,20 +5,24 @@ using Backend_Project.Persistance.DataContexts;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
-public class ListingDescriptionService : IEntityBaseService<Description>
+public class DescriptionService : IEntityBaseService<Description>
 {
     private readonly IDataContext _dataContext;
-    public ListingDescriptionService(IDataContext dataContext)
+
+    public DescriptionService(IDataContext dataContext)
     {
         _dataContext = dataContext;
     }
-    public async ValueTask<Description> CreateAsync(Description entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+
+    public async ValueTask<Description> CreateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        ValidateDescription(entity);
-        await _dataContext.Descriptions.AddAsync(entity, cancellationToken);
+        ValidateDescription(description);
+        await _dataContext.Descriptions.AddAsync(description, cancellationToken);
+
         if (saveChanges)
             await _dataContext.SaveChangesAsync();
-        return entity;
+
+        return description;
     }
 
     public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -59,7 +63,7 @@ public class ListingDescriptionService : IEntityBaseService<Description>
     }
     private bool ValidateDescription(Description description)
     {
-        if (description.ListingDescription.Length > 500 || string.IsNullOrEmpty(description.ListingDescription) || string
+        if (description.ListingDescription.Length > 500 | string
             .IsNullOrWhiteSpace(description.ListingDescription))
             return false;
 
