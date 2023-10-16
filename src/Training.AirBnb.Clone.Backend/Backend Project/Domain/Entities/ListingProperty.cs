@@ -8,5 +8,6 @@ public class ListingProperty : SoftDeletedEntity
 {
     public string PropertyName { get; set; }
     public int PropertyCount { get; set; }
+    public bool IsShared { get; set; }
     public Guid ListingId { get; set; }  
 }

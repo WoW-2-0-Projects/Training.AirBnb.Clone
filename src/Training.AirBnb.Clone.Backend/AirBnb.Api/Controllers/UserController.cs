@@ -1,7 +1,5 @@
-﻿using Backend_Project.Application.Interfaces;
+﻿using Backend_Project.Application.Entity;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Persistance.DataContexts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirBnb.Api.Controllers
@@ -41,7 +39,5 @@ namespace AirBnb.Api.Controllers
             var deletedUser = await _userService.DeleteAsync(id);
             return Ok(deletedUser);
         }
-
-
     }
 }

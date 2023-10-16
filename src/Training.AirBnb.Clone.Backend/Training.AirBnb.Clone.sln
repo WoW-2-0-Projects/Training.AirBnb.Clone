@@ -5,9 +5,7 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend Project", "Backend Project\Backend Project.csproj", "{84612BC9-DC9A-4201-BFFD-472C85CB5C0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test Console", "Test Console\Test Console.csproj", "{8882EB89-E730-4020-9FAB-B0549A3372A7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnb.Api", "AirBnb.Api\AirBnb.Api.csproj", "{D700B527-A518-43B3-9FC4-6B27D596A0BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBnb.Api", "AirBnb.Api\AirBnb.Api.csproj", "{D700B527-A518-43B3-9FC4-6B27D596A0BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{84612BC9-DC9A-4201-BFFD-472C85CB5C0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84612BC9-DC9A-4201-BFFD-472C85CB5C0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84612BC9-DC9A-4201-BFFD-472C85CB5C0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8882EB89-E730-4020-9FAB-B0549A3372A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8882EB89-E730-4020-9FAB-B0549A3372A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8882EB89-E730-4020-9FAB-B0549A3372A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8882EB89-E730-4020-9FAB-B0549A3372A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D700B527-A518-43B3-9FC4-6B27D596A0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D700B527-A518-43B3-9FC4-6B27D596A0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D700B527-A518-43B3-9FC4-6B27D596A0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
