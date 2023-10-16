@@ -1,964 +1,965 @@
-[   {
-        "AmenityName": "Bathtub",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:17:46.6790807+05:00",
-        "ModifiedDate": null,
-        "Id": "26d342ff-e8bf-4fa7-8188-5ef32bd28c6a"
-    },
-    {
-        "AmenityName": "Bidet",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:17:56.0667618+05:00",
-        "ModifiedDate": null,
-        "Id": "0cda0c89-9403-4fcc-b1f6-84952afbc20c"
-    },
-    {
-        "AmenityName": "Body soap",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:18:03.686062+05:00",
-        "ModifiedDate": null,
-        "Id": "739d9816-8088-4e7b-9a49-5de717d1c370"
-    },
-    {
-        "AmenityName": "Cleaning products",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:18:12.7125128+05:00",
-        "ModifiedDate": null,
-        "Id": "c81ed447-a6a3-4df3-8312-856b8845b9a1"
-    },
-    {
-        "AmenityName": "Conditioner",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:18:32.7836974+05:00",
-        "ModifiedDate": null,
-        "Id": "2140d383-21c0-40ac-ab6f-1e1d2698d65e"
-    },
-    {
-        "AmenityName": "Hair dryer",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:18:40.5331017+05:00",
-        "ModifiedDate": null,
-        "Id": "a80d94e8-bcc3-4d25-8d40-45d50d02dbee"
-    },
-    {
-        "AmenityName": "Hot water",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:19:27.1429325+05:00",
-        "ModifiedDate": null,
-        "Id": "214380d6-8081-4cfc-8da2-d2ba386e07f6"
-    },
-    {
-        "AmenityName": "Outdoor shower",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:19:36.9699149+05:00",
-        "ModifiedDate": null,
-        "Id": "316eb0f8-c279-448e-8c55-ed35a72b7d1d"
-    },
-    {
-        "AmenityName": "Shampoo",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:20:07.3863757+05:00",
-        "ModifiedDate": null,
-        "Id": "8bc591b6-8c92-4f83-9609-4d08c41c0343"
-    },
-    {
-        "AmenityName": "Shower gel",
-        "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:20:11.9008606+05:00",
-        "ModifiedDate": null,
-        "Id": "a302278c-a23c-4d72-b4b0-c9f039a88f4e"
-    },
-    {
-        "AmenityName": "Bed linens",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:22:45.8579221+05:00",
-        "ModifiedDate": null,
-        "Id": "ab1a5081-4d9d-4838-93b6-7d0a5af2ab21"
-    },
-    {
-        "AmenityName": "Clothing storage",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:22:58.4961785+05:00",
-        "ModifiedDate": null,
-        "Id": "6e914b6f-4a63-4391-a0e8-be1b34539c83"
-    },
-    {
-        "AmenityName": "Dryer",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:10.3357396+05:00",
-        "ModifiedDate": null,
-        "Id": "ec598d1d-3fb0-43fe-8c1f-c2cd976e0187"
-    },
-    {
-        "AmenityName": "Drying rack for clothing",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:19.1220055+05:00",
-        "ModifiedDate": null,
-        "Id": "c61ffdae-f41a-46ee-9895-2d43057947b6"
-    },
-    {
-        "AmenityName": "Extra pillows and blankets",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:34.0275675+05:00",
-        "ModifiedDate": null,
-        "Id": "cce8483d-01e5-4ec1-9829-2bd527282893"
-    },
-    {
-        "AmenityName": "Hangers",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:44.9679802+05:00",
-        "ModifiedDate": null,
-        "Id": "0c9125ae-7be4-47ac-aa9d-943f7446adc0"
-    },
-    {
-        "AmenityName": "Iron",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:49.9181099+05:00",
-        "ModifiedDate": null,
-        "Id": "f1a0dd43-ebab-48ce-a1e8-caef4506f9df"
-    },
-    {
-        "AmenityName": "Mosquito net",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:23:55.3323957+05:00",
-        "ModifiedDate": null,
-        "Id": "be77e59a-14e7-4a5e-b441-544cb6ba832f"
-    },
-    {
-        "AmenityName": "Room-darkening shades",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:24:11.4055838+05:00",
-        "ModifiedDate": null,
-        "Id": "3f6916d4-4de6-48df-88cb-7aa3093c8668"
-    },
-    {
-        "AmenityName": "Safe",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:24:36.7282948+05:00",
-        "ModifiedDate": null,
-        "Id": "56343180-15e9-4586-a66f-59e32b17505f"
-    },
-    {
-        "AmenityName": "Washer",
-        "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:24:42.830453+05:00",
-        "ModifiedDate": null,
-        "Id": "44a753ac-f99c-4ecd-b736-985f6ec8e0e4"
-    },
-    {
-        "AmenityName": "Batting cage",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:27:41.85839+05:00",
-        "ModifiedDate": null,
-        "Id": "ce6bf1b9-6e2f-4805-8984-0eb4d301b100"
-    },
-    {
-        "AmenityName": "Books and reading material",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:27:59.8581812+05:00",
-        "ModifiedDate": null,
-        "Id": "e99e7964-212d-4440-9281-a9551ad96949"
-    },
-    {
-        "AmenityName": "Bowling alley",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:28:13.0148281+05:00",
-        "ModifiedDate": null,
-        "Id": "48ad267a-066b-4d4c-b57d-43db51753aee"
-    },
-    {
-        "AmenityName": "Climbing wall",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:28:34.1337958+05:00",
-        "ModifiedDate": null,
-        "Id": "c33c0fc6-8307-4f91-ba79-284f6df03f9e"
-    },
-    {
-        "AmenityName": "Ethernet connection",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:28:46.5413694+05:00",
-        "ModifiedDate": null,
-        "Id": "8951665c-68e4-433f-9811-113d9aaf866a"
-    },
-    {
-        "AmenityName": "Exercise equipment",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:01.2049216+05:00",
-        "ModifiedDate": null,
-        "Id": "4030e46c-d2dc-4c7b-8ff3-840a721c2fc1"
-    },
-    {
-        "AmenityName": "Game console",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:10.9727632+05:00",
-        "ModifiedDate": null,
-        "Id": "a88cd0f5-7821-454a-9361-13ba9ccee147"
-    },
-    {
-        "AmenityName": "Laser tag",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:19.1958487+05:00",
-        "ModifiedDate": null,
-        "Id": "c8c4f034-199b-4da0-8d33-4eac2962d983"
-    },
-    {
-        "AmenityName": "Life size games",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:35.5030622+05:00",
-        "ModifiedDate": null,
-        "Id": "ad98e71b-b4f2-44ab-ba0d-14d826a7946a"
-    },
-    {
-        "AmenityName": "Mini golf",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:49.1911638+05:00",
-        "ModifiedDate": null,
-        "Id": "f753ec48-5fe8-447f-8a3d-d0aedec90804"
-    },
-    {
-        "AmenityName": "Movie theater",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:29:56.4719607+05:00",
-        "ModifiedDate": null,
-        "Id": "b1141a9e-7087-4b24-8cc4-919f1a7ee50d"
-    },
-    {
-        "AmenityName": "Piano",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:11.8788334+05:00",
-        "ModifiedDate": null,
-        "Id": "c104a998-05d8-4cfe-8fcb-a316edfeeff4"
-    },
-    {
-        "AmenityName": "Ping pong table",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:18.4280441+05:00",
-        "ModifiedDate": null,
-        "Id": "0f7912f5-a23d-45bd-87ee-ef0fd3b4454b"
-    },
-    {
-        "AmenityName": "Pool table",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:26.3321201+05:00",
-        "ModifiedDate": null,
-        "Id": "8923f34a-1126-49d0-9e45-0bc351912b0b"
-    },
-    {
-        "AmenityName": "Record player",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:34.7666997+05:00",
-        "ModifiedDate": null,
-        "Id": "572d7d58-3dd6-4b88-a589-790f49ccb49e"
-    },
-    {
-        "AmenityName": "Skate ramp",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:42.9456565+05:00",
-        "ModifiedDate": null,
-        "Id": "9d9463d5-8dea-41f7-b7bb-6e35b7bf3729"
-    },
-    {
-        "AmenityName": "Sound system",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:48.8047285+05:00",
-        "ModifiedDate": null,
-        "Id": "d8116035-e477-45d0-8fed-d26121a6bbcd"
-    },
-    {
-        "AmenityName": "Theme room",
-        "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:30:54.2173116+05:00",
-        "ModifiedDate": null,
-        "Id": "0f51257a-6463-422a-a6dc-9e810eef74af"
-    },
-    {
-        "AmenityName": "Window guards",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:12.0993833+05:00",
-        "ModifiedDate": null,
-        "Id": "feb383ee-0d39-415c-b7b0-aefaf3ddebc7"
-    },
-    {
-        "AmenityName": "Table corner guards",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:17.556457+05:00",
-        "ModifiedDate": null,
-        "Id": "446dd863-759d-44ef-a7a9-4fcf4a8ad439"
-    },
-    {
-        "AmenityName": "Outlet covers",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:23.2700383+05:00",
-        "ModifiedDate": null,
-        "Id": "7204cc7e-bd56-4c92-95b4-dd073712d229"
-    },
-    {
-        "AmenityName": "High chair",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:30.459336+05:00",
-        "ModifiedDate": null,
-        "Id": "2ea51dd5-1cd6-4752-ac08-a8b339241098"
-    },
-    {
-        "AmenityName": "Children’s dinnerware",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:38.3085701+05:00",
-        "ModifiedDate": null,
-        "Id": "afd315b7-2dce-4ab8-a4c3-23c13f62f54d"
-    },
-    {
-        "AmenityName": "Changing table",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:34:52.409289+05:00",
-        "ModifiedDate": null,
-        "Id": "5ac85efe-bdb3-4929-8871-d9e9b5bec2da"
-    },
-    {
-        "AmenityName": "Babysitter recommendations",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:35:00.0730864+05:00",
-        "ModifiedDate": null,
-        "Id": "ba38a195-27ac-478b-b799-bf3194a8ad1f"
-    },
-    {
-        "AmenityName": "Baby safety gates",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:35:21.4638886+05:00",
-        "ModifiedDate": null,
-        "Id": "ba681790-3b62-41b6-8f94-cd48ba1537a2"
-    },
-    {
-        "AmenityName": "Children’s bikes",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:35:43.3912096+05:00",
-        "ModifiedDate": null,
-        "Id": "4e817d2f-8230-46ff-9ed5-8b082918b250"
-    },
-    {
-        "AmenityName": "Baby monitor",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:36:01.8118756+05:00",
-        "ModifiedDate": null,
-        "Id": "9344c12b-ac86-4489-b88e-951a0b6bdeb6"
-    },
-    {
-        "AmenityName": "Baby bath",
-        "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:36:07.8673039+05:00",
-        "ModifiedDate": null,
-        "Id": "29e3ffa1-72a0-461e-a683-bb01611901a3"
-    },
-    {
-        "AmenityName": "Portable fans",
-        "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:37:19.4420242+05:00",
-        "ModifiedDate": null,
-        "Id": "b9155832-ab4c-4fe8-a5fa-d0a5a9bb3065"
-    },
-    {
-        "AmenityName": "Indoor fireplace",
-        "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:37:25.8338609+05:00",
-        "ModifiedDate": null,
-        "Id": "2bf1c8f7-5d74-4508-a762-a66f5b7b7ca1"
-    },
-    {
-        "AmenityName": "Heating",
-        "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:37:30.7677338+05:00",
-        "ModifiedDate": null,
-        "Id": "2b60d864-d380-4bf7-ac08-d29d00ce71bf"
-    },
-    {
-        "AmenityName": "Ceiling fan",
-        "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:37:36.1095393+05:00",
-        "ModifiedDate": null,
-        "Id": "c5916117-f24b-4a43-a967-b8b5e4477dd0"
-    },
-    {
-        "AmenityName": "Air conditioning",
-        "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:37:41.8673866+05:00",
-        "ModifiedDate": null,
-        "Id": "d8d0659f-4e58-4395-bced-31140d7a5802"
-    },
-    {
-        "AmenityName": "Smoke alarm",
-        "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:39:13.5248129+05:00",
-        "ModifiedDate": null,
-        "Id": "bc0ea104-ddf5-423d-bded-22db108d3be6"
-    },
-    {
-        "AmenityName": "First aid kit",
-        "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:39:19.3672051+05:00",
-        "ModifiedDate": null,
-        "Id": "35e59732-56aa-4ea5-81b9-d37497d2334b"
-    },
-    {
-        "AmenityName": "Fire extinguisher",
-        "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:39:25.616254+05:00",
-        "ModifiedDate": null,
-        "Id": "0d0a6e8f-5059-4961-8ead-51b95b096ed7"
-    },
-    {
-        "AmenityName": "Carbon monoxide alarm",
-        "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:39:32.2000082+05:00",
-        "ModifiedDate": null,
-        "Id": "67d8b631-2780-439d-8539-e4b2fad4bf94"
-    },
-    {
-        "AmenityName": "Wifi",
-        "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:40:22.9235002+05:00",
-        "ModifiedDate": null,
-        "Id": "ee12094a-7f9c-4f57-98b5-80bb78d6994f"
-    },
-    {
-        "AmenityName": "Pocket wifi",
-        "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:40:29.4410244+05:00",
-        "ModifiedDate": null,
-        "Id": "016dc29c-8462-42d7-8df6-d5d3861787c1"
-    },
-    {
-        "AmenityName": "Dedicated workspace",
-        "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:40:45.3115803+05:00",
-        "ModifiedDate": null,
-        "Id": "d98c4c8d-2878-416a-90d0-0593b87686b7"
-    },
-    {
-        "AmenityName": "Wine glasses",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:42:24.5414798+05:00",
-        "ModifiedDate": null,
-        "Id": "b89bf1cb-eaf9-43cc-9295-0a7ebbf9e89e"
-    },
-    {
-        "AmenityName": "Trash compactor",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:42:31.6279628+05:00",
-        "ModifiedDate": null,
-        "Id": "a4ea797c-1a8c-45a1-b96a-31aa6b4cbe05"
-    },
-    {
-        "AmenityName": "Toaster",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:42:40.627954+05:00",
-        "ModifiedDate": null,
-        "Id": "c33beaec-b2d7-4c68-a0d4-95a64671652a"
-    },
-    {
-        "AmenityName": "Refrigerator",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:42:46.3866467+05:00",
-        "ModifiedDate": null,
-        "Id": "9fc103d5-778b-43d1-8a6c-da449b032f55"
-    },
-    {
-        "AmenityName": "Microwave",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:43:04.5031586+05:00",
-        "ModifiedDate": null,
-        "Id": "2be13d24-5016-40ee-8552-6bb080302f0f"
-    },
-    {
-        "AmenityName": "Kitchen",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:43:16.3575321+05:00",
-        "ModifiedDate": null,
-        "Id": "a0dbedff-e8ca-4e30-a75f-b13a2f9617a4"
-    },
-    {
-        "AmenityName": "Freezer",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:43:21.052327+05:00",
-        "ModifiedDate": null,
-        "Id": "38734d9d-07f6-4c56-884c-b563dcd41108"
-    },
-    {
-        "AmenityName": "Dishwasher",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:43:41.7369921+05:00",
-        "ModifiedDate": null,
-        "Id": "3600ce67-ec8f-41d3-bf21-a21dc7c11059"
-    },
-    {
-        "AmenityName": "Bread maker",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:43:59.2505864+05:00",
-        "ModifiedDate": null,
-        "Id": "2d8c372c-4746-4812-8eae-5f6dc0ce10d5"
-    },
-    {
-        "AmenityName": "Barbecue utensils",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:44:11.0746715+05:00",
-        "ModifiedDate": null,
-        "Id": "4b30a705-aeb6-45fc-8bf3-431820da0560"
-    },
-    {
-        "AmenityName": "Baking sheet",
-        "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:44:26.4858813+05:00",
-        "ModifiedDate": null,
-        "Id": "ba1dfd70-26aa-4671-a833-beeacc940049"
-    },
-    {
-        "AmenityName": "Waterfront",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:47:48.0586932+05:00",
-        "ModifiedDate": null,
-        "Id": "300c6189-2c13-4ed0-97b3-84ddd97f7692"
-    },
-    {
-        "AmenityName": "Ski-in/Ski-out",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:47:52.4696843+05:00",
-        "ModifiedDate": null,
-        "Id": "c1e05242-4e1d-4310-8848-4971b3ef112d"
-    },
-    {
-        "AmenityName": "Resort access",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:48:18.1643497+05:00",
-        "ModifiedDate": null,
-        "Id": "497cdd51-daa1-496e-96d9-58e71f0dce23"
-    },
-    {
-        "AmenityName": "Private entrance",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:48:27.1156123+05:00",
-        "ModifiedDate": null,
-        "Id": "fdc78ebb-084c-4fbb-9ac4-9db5aed9d991"
-    },
-    {
-        "AmenityName": "Laundromat nearby",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:48:33.5823663+05:00",
-        "ModifiedDate": null,
-        "Id": "9771d443-86d0-4ae4-a1ae-1cd43c333c4e"
-    },
-    {
-        "AmenityName": "Lake access",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:48:41.7557497+05:00",
-        "ModifiedDate": null,
-        "Id": "823de7a3-9c5b-4e51-9738-8597ed56782a"
-    },
-    {
-        "AmenityName": "Beach access",
-        "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:48:48.1700329+05:00",
-        "ModifiedDate": null,
-        "Id": "1a9cae55-f544-4424-a6de-f3f17f1811fb"
-    },
-    {
-        "AmenityName": "BBQ grill",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:51:32.6030543+05:00",
-        "ModifiedDate": null,
-        "Id": "6a9bf86f-0195-4029-8888-13109794a502"
-    },
-    {
-        "AmenityName": "Beach essentials",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:51:44.6127267+05:00",
-        "ModifiedDate": null,
-        "Id": "6279ecde-0a66-4bd8-bd7a-d7124769f774"
-    },
-    {
-        "AmenityName": "Bikes",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:51:51.2794691+05:00",
-        "ModifiedDate": null,
-        "Id": "fd2a3d98-9f57-403c-9dd6-de5fea1d88e6"
-    },
-    {
-        "AmenityName": "Boat slip",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:01.9898184+05:00",
-        "ModifiedDate": null,
-        "Id": "ecc923ee-a806-4f65-b96a-dae2312cccaa"
-    },
-    {
-        "AmenityName": "Fire pit",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:18.1324017+05:00",
-        "ModifiedDate": null,
-        "Id": "6cc14cbc-e643-4cbf-aac2-d2fa3ce9ed3b"
-    },
-    {
-        "AmenityName": "Hammock",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:24.050065+05:00",
-        "ModifiedDate": null,
-        "Id": "cb0dda9c-57d4-4a59-a049-0cd5bbf57aff"
-    },
-    {
-        "AmenityName": "Kayak",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:30.6065483+05:00",
-        "ModifiedDate": null,
-        "Id": "a899884b-a81c-4ac8-9e25-313ae11da209"
-    },
-    {
-        "AmenityName": "Outdoor dining area",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:34.7582157+05:00",
-        "ModifiedDate": null,
-        "Id": "09e0e4b7-bffe-42d0-af9b-203d924c5a70"
-    },
-    {
-        "AmenityName": "Outdoor furniture",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:52:49.0449165+05:00",
-        "ModifiedDate": null,
-        "Id": "1aad5407-2e0b-44b6-901b-b67e71591dd9"
-    },
-    {
-        "AmenityName": "Outdoor kitchen",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:53:10.0825371+05:00",
-        "ModifiedDate": null,
-        "Id": "c7646d8a-4621-4e8d-9149-f24286e304d6"
-    },
-    {
-        "AmenityName": "Patio or balcony",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:53:39.9053135+05:00",
-        "ModifiedDate": null,
-        "Id": "a3287996-8ce8-4878-baa8-0ab991442180"
-    },
-    {
-        "AmenityName": "Sun loungers",
-        "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:53:46.1717855+05:00",
-        "ModifiedDate": null,
-        "Id": "d1075139-c333-4567-97b7-f52edbb27269"
-    },
-    {
-        "AmenityName": "Luggage dropoff allowed",
-        "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:55:45.7555544+05:00",
-        "ModifiedDate": null,
-        "Id": "3f5aed81-dce3-4f06-82d4-64402c8b0846"
-    },
-    {
-        "AmenityName": "Long term stays allowed",
-        "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:55:56.4068578+05:00",
-        "ModifiedDate": null,
-        "Id": "176b301a-b1eb-4467-bec6-b7c294c7d2aa"
-    },
-    {
-        "AmenityName": "Cleaning available during stay",
-        "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:56:03.1365433+05:00",
-        "ModifiedDate": null,
-        "Id": "125133d8-ee3c-42a9-8046-17b238add79c"
-    },
-    {
-        "AmenityName": "Breakfast",
-        "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:56:09.1706491+05:00",
-        "ModifiedDate": null,
-        "Id": "4fa499c5-bfa1-4e14-a157-e14df2ee5341"
-    },
-    {
-        "AmenityName": "Elevator",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:01.4785143+05:00",
-        "ModifiedDate": null,
-        "Id": "fdb5e040-e5aa-4fde-8b52-962b6b5e0db9"
-    },
-    {
-        "AmenityName": "EV charger",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:06.6404824+05:00",
-        "ModifiedDate": null,
-        "Id": "646fa768-4215-43ac-afde-11462a3aaaea"
-    },
-    {
-        "AmenityName": "Free parking on premises",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:12.5675683+05:00",
-        "ModifiedDate": null,
-        "Id": "82fa5985-c997-4968-b0b0-742ecdd6dac9"
-    },
-    {
-        "AmenityName": "Hockey rink",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:22.1303575+05:00",
-        "ModifiedDate": null,
-        "Id": "99cf8d04-81fc-401c-8866-e637d926161f"
-    },
-    {
-        "AmenityName": "Free street parking",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:32.6148937+05:00",
-        "ModifiedDate": null,
-        "Id": "42475d9c-24b8-4d61-b08e-65ae25389095"
-    },
-    {
-        "AmenityName": "Gym",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:39.3173937+05:00",
-        "ModifiedDate": null,
-        "Id": "deefe857-9274-4f11-9a55-9609876221d5"
-    },
-    {
-        "AmenityName": "Hot tub",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:43.9230984+05:00",
-        "ModifiedDate": null,
-        "Id": "51c0d578-f1c0-490d-bddb-cd374af9e30e"
-    },
-    {
-        "AmenityName": "Paid parking off premises",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:50.9084731+05:00",
-        "ModifiedDate": null,
-        "Id": "79808867-e96d-4206-b8f1-1851486b1a5f"
-    },
-    {
-        "AmenityName": "Pool",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:58:59.8273344+05:00",
-        "ModifiedDate": null,
-        "Id": "94cc83bb-ad14-4870-b123-999904878552"
-    },
-    {
-        "AmenityName": "Sauna",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:59:04.0441681+05:00",
-        "ModifiedDate": null,
-        "Id": "522e33c4-c04b-416a-b19f-15481d8eb2ef"
-    },
-    {
-        "AmenityName": "Single level home",
-        "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
-        "IsDeleted": false,
-        "DeletedDate": null,
-        "CreatedDate": "2023-10-05T21:59:10.5653464+05:00",
-        "ModifiedDate": null,
-        "Id": "401541fb-16e6-409b-b275-6823b071340f"
-    }
+[
+  {
+    "AmenityName": "Bathtub",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:17:46.6790807+05:00",
+    "ModifiedDate": null,
+    "Id": "26d342ff-e8bf-4fa7-8188-5ef32bd28c6a"
+  },
+  {
+    "AmenityName": "Bidet",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:17:56.0667618+05:00",
+    "ModifiedDate": null,
+    "Id": "0cda0c89-9403-4fcc-b1f6-84952afbc20c"
+  },
+  {
+    "AmenityName": "Body soap",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:18:03.686062+05:00",
+    "ModifiedDate": null,
+    "Id": "739d9816-8088-4e7b-9a49-5de717d1c370"
+  },
+  {
+    "AmenityName": "Cleaning products",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:18:12.7125128+05:00",
+    "ModifiedDate": null,
+    "Id": "c81ed447-a6a3-4df3-8312-856b8845b9a1"
+  },
+  {
+    "AmenityName": "Conditioner",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:18:32.7836974+05:00",
+    "ModifiedDate": null,
+    "Id": "2140d383-21c0-40ac-ab6f-1e1d2698d65e"
+  },
+  {
+    "AmenityName": "Hair dryer",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:18:40.5331017+05:00",
+    "ModifiedDate": null,
+    "Id": "a80d94e8-bcc3-4d25-8d40-45d50d02dbee"
+  },
+  {
+    "AmenityName": "Hot water",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:19:27.1429325+05:00",
+    "ModifiedDate": null,
+    "Id": "214380d6-8081-4cfc-8da2-d2ba386e07f6"
+  },
+  {
+    "AmenityName": "Outdoor shower",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:19:36.9699149+05:00",
+    "ModifiedDate": null,
+    "Id": "316eb0f8-c279-448e-8c55-ed35a72b7d1d"
+  },
+  {
+    "AmenityName": "Shampoo",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:20:07.3863757+05:00",
+    "ModifiedDate": null,
+    "Id": "8bc591b6-8c92-4f83-9609-4d08c41c0343"
+  },
+  {
+    "AmenityName": "Shower gel",
+    "CategoryId": "89e2fd36-a187-4fd6-a768-5c4e8b352da3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:20:11.9008606+05:00",
+    "ModifiedDate": null,
+    "Id": "a302278c-a23c-4d72-b4b0-c9f039a88f4e"
+  },
+  {
+    "AmenityName": "Bed linens",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:22:45.8579221+05:00",
+    "ModifiedDate": null,
+    "Id": "ab1a5081-4d9d-4838-93b6-7d0a5af2ab21"
+  },
+  {
+    "AmenityName": "Clothing storage",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:22:58.4961785+05:00",
+    "ModifiedDate": null,
+    "Id": "6e914b6f-4a63-4391-a0e8-be1b34539c83"
+  },
+  {
+    "AmenityName": "Dryer",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:10.3357396+05:00",
+    "ModifiedDate": null,
+    "Id": "ec598d1d-3fb0-43fe-8c1f-c2cd976e0187"
+  },
+  {
+    "AmenityName": "Drying rack for clothing",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:19.1220055+05:00",
+    "ModifiedDate": null,
+    "Id": "c61ffdae-f41a-46ee-9895-2d43057947b6"
+  },
+  {
+    "AmenityName": "Extra pillows and blankets",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:34.0275675+05:00",
+    "ModifiedDate": null,
+    "Id": "cce8483d-01e5-4ec1-9829-2bd527282893"
+  },
+  {
+    "AmenityName": "Hangers",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:44.9679802+05:00",
+    "ModifiedDate": null,
+    "Id": "0c9125ae-7be4-47ac-aa9d-943f7446adc0"
+  },
+  {
+    "AmenityName": "Iron",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:49.9181099+05:00",
+    "ModifiedDate": null,
+    "Id": "f1a0dd43-ebab-48ce-a1e8-caef4506f9df"
+  },
+  {
+    "AmenityName": "Mosquito net",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:23:55.3323957+05:00",
+    "ModifiedDate": null,
+    "Id": "be77e59a-14e7-4a5e-b441-544cb6ba832f"
+  },
+  {
+    "AmenityName": "Room-darkening shades",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:24:11.4055838+05:00",
+    "ModifiedDate": null,
+    "Id": "3f6916d4-4de6-48df-88cb-7aa3093c8668"
+  },
+  {
+    "AmenityName": "Safe",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:24:36.7282948+05:00",
+    "ModifiedDate": null,
+    "Id": "56343180-15e9-4586-a66f-59e32b17505f"
+  },
+  {
+    "AmenityName": "Washer",
+    "CategoryId": "4ef82408-4e7d-4a9d-9abb-c210d4ed4e2d",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:24:42.830453+05:00",
+    "ModifiedDate": null,
+    "Id": "44a753ac-f99c-4ecd-b736-985f6ec8e0e4"
+  },
+  {
+    "AmenityName": "Batting cage",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:27:41.85839+05:00",
+    "ModifiedDate": null,
+    "Id": "ce6bf1b9-6e2f-4805-8984-0eb4d301b100"
+  },
+  {
+    "AmenityName": "Books and reading material",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:27:59.8581812+05:00",
+    "ModifiedDate": null,
+    "Id": "e99e7964-212d-4440-9281-a9551ad96949"
+  },
+  {
+    "AmenityName": "Bowling alley",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:28:13.0148281+05:00",
+    "ModifiedDate": null,
+    "Id": "48ad267a-066b-4d4c-b57d-43db51753aee"
+  },
+  {
+    "AmenityName": "Climbing wall",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:28:34.1337958+05:00",
+    "ModifiedDate": null,
+    "Id": "c33c0fc6-8307-4f91-ba79-284f6df03f9e"
+  },
+  {
+    "AmenityName": "Ethernet connection",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:28:46.5413694+05:00",
+    "ModifiedDate": null,
+    "Id": "8951665c-68e4-433f-9811-113d9aaf866a"
+  },
+  {
+    "AmenityName": "Exercise equipment",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:01.2049216+05:00",
+    "ModifiedDate": null,
+    "Id": "4030e46c-d2dc-4c7b-8ff3-840a721c2fc1"
+  },
+  {
+    "AmenityName": "Game console",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:10.9727632+05:00",
+    "ModifiedDate": null,
+    "Id": "a88cd0f5-7821-454a-9361-13ba9ccee147"
+  },
+  {
+    "AmenityName": "Laser tag",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:19.1958487+05:00",
+    "ModifiedDate": null,
+    "Id": "c8c4f034-199b-4da0-8d33-4eac2962d983"
+  },
+  {
+    "AmenityName": "Life size games",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:35.5030622+05:00",
+    "ModifiedDate": null,
+    "Id": "ad98e71b-b4f2-44ab-ba0d-14d826a7946a"
+  },
+  {
+    "AmenityName": "Mini golf",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:49.1911638+05:00",
+    "ModifiedDate": null,
+    "Id": "f753ec48-5fe8-447f-8a3d-d0aedec90804"
+  },
+  {
+    "AmenityName": "Movie theater",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:29:56.4719607+05:00",
+    "ModifiedDate": null,
+    "Id": "b1141a9e-7087-4b24-8cc4-919f1a7ee50d"
+  },
+  {
+    "AmenityName": "Piano",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:11.8788334+05:00",
+    "ModifiedDate": null,
+    "Id": "c104a998-05d8-4cfe-8fcb-a316edfeeff4"
+  },
+  {
+    "AmenityName": "Ping pong table",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:18.4280441+05:00",
+    "ModifiedDate": null,
+    "Id": "0f7912f5-a23d-45bd-87ee-ef0fd3b4454b"
+  },
+  {
+    "AmenityName": "Pool table",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:26.3321201+05:00",
+    "ModifiedDate": null,
+    "Id": "8923f34a-1126-49d0-9e45-0bc351912b0b"
+  },
+  {
+    "AmenityName": "Record player",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:34.7666997+05:00",
+    "ModifiedDate": null,
+    "Id": "572d7d58-3dd6-4b88-a589-790f49ccb49e"
+  },
+  {
+    "AmenityName": "Skate ramp",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:42.9456565+05:00",
+    "ModifiedDate": null,
+    "Id": "9d9463d5-8dea-41f7-b7bb-6e35b7bf3729"
+  },
+  {
+    "AmenityName": "Sound system",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:48.8047285+05:00",
+    "ModifiedDate": null,
+    "Id": "d8116035-e477-45d0-8fed-d26121a6bbcd"
+  },
+  {
+    "AmenityName": "Theme room",
+    "CategoryId": "2856850f-5383-48af-a17f-225a8c38be00",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:30:54.2173116+05:00",
+    "ModifiedDate": null,
+    "Id": "0f51257a-6463-422a-a6dc-9e810eef74af"
+  },
+  {
+    "AmenityName": "Window guards",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:12.0993833+05:00",
+    "ModifiedDate": null,
+    "Id": "feb383ee-0d39-415c-b7b0-aefaf3ddebc7"
+  },
+  {
+    "AmenityName": "Table corner guards",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:17.556457+05:00",
+    "ModifiedDate": null,
+    "Id": "446dd863-759d-44ef-a7a9-4fcf4a8ad439"
+  },
+  {
+    "AmenityName": "Outlet covers",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:23.2700383+05:00",
+    "ModifiedDate": null,
+    "Id": "7204cc7e-bd56-4c92-95b4-dd073712d229"
+  },
+  {
+    "AmenityName": "High chair",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:30.459336+05:00",
+    "ModifiedDate": null,
+    "Id": "2ea51dd5-1cd6-4752-ac08-a8b339241098"
+  },
+  {
+    "AmenityName": "Children’s dinnerware",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:38.3085701+05:00",
+    "ModifiedDate": null,
+    "Id": "afd315b7-2dce-4ab8-a4c3-23c13f62f54d"
+  },
+  {
+    "AmenityName": "Changing table",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:34:52.409289+05:00",
+    "ModifiedDate": null,
+    "Id": "5ac85efe-bdb3-4929-8871-d9e9b5bec2da"
+  },
+  {
+    "AmenityName": "Babysitter recommendations",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:35:00.0730864+05:00",
+    "ModifiedDate": null,
+    "Id": "ba38a195-27ac-478b-b799-bf3194a8ad1f"
+  },
+  {
+    "AmenityName": "Baby safety gates",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:35:21.4638886+05:00",
+    "ModifiedDate": null,
+    "Id": "ba681790-3b62-41b6-8f94-cd48ba1537a2"
+  },
+  {
+    "AmenityName": "Children’s bikes",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:35:43.3912096+05:00",
+    "ModifiedDate": null,
+    "Id": "4e817d2f-8230-46ff-9ed5-8b082918b250"
+  },
+  {
+    "AmenityName": "Baby monitor",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:36:01.8118756+05:00",
+    "ModifiedDate": null,
+    "Id": "9344c12b-ac86-4489-b88e-951a0b6bdeb6"
+  },
+  {
+    "AmenityName": "Baby bath",
+    "CategoryId": "b4ea039e-8657-475a-b3b5-f3758bf70975",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:36:07.8673039+05:00",
+    "ModifiedDate": null,
+    "Id": "29e3ffa1-72a0-461e-a683-bb01611901a3"
+  },
+  {
+    "AmenityName": "Portable fans",
+    "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:37:19.4420242+05:00",
+    "ModifiedDate": null,
+    "Id": "b9155832-ab4c-4fe8-a5fa-d0a5a9bb3065"
+  },
+  {
+    "AmenityName": "Indoor fireplace",
+    "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:37:25.8338609+05:00",
+    "ModifiedDate": null,
+    "Id": "2bf1c8f7-5d74-4508-a762-a66f5b7b7ca1"
+  },
+  {
+    "AmenityName": "Heating",
+    "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:37:30.7677338+05:00",
+    "ModifiedDate": null,
+    "Id": "2b60d864-d380-4bf7-ac08-d29d00ce71bf"
+  },
+  {
+    "AmenityName": "Ceiling fan",
+    "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:37:36.1095393+05:00",
+    "ModifiedDate": null,
+    "Id": "c5916117-f24b-4a43-a967-b8b5e4477dd0"
+  },
+  {
+    "AmenityName": "Air conditioning",
+    "CategoryId": "549ed680-429b-425d-a853-1d79246076d3",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:37:41.8673866+05:00",
+    "ModifiedDate": null,
+    "Id": "d8d0659f-4e58-4395-bced-31140d7a5802"
+  },
+  {
+    "AmenityName": "Smoke alarm",
+    "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:39:13.5248129+05:00",
+    "ModifiedDate": null,
+    "Id": "bc0ea104-ddf5-423d-bded-22db108d3be6"
+  },
+  {
+    "AmenityName": "First aid kit",
+    "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:39:19.3672051+05:00",
+    "ModifiedDate": null,
+    "Id": "35e59732-56aa-4ea5-81b9-d37497d2334b"
+  },
+  {
+    "AmenityName": "Fire extinguisher",
+    "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:39:25.616254+05:00",
+    "ModifiedDate": null,
+    "Id": "0d0a6e8f-5059-4961-8ead-51b95b096ed7"
+  },
+  {
+    "AmenityName": "Carbon monoxide alarm",
+    "CategoryId": "88cc0c5a-0b3b-4d69-9a8a-73e48988c990",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:39:32.2000082+05:00",
+    "ModifiedDate": null,
+    "Id": "67d8b631-2780-439d-8539-e4b2fad4bf94"
+  },
+  {
+    "AmenityName": "Wifi",
+    "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:40:22.9235002+05:00",
+    "ModifiedDate": null,
+    "Id": "ee12094a-7f9c-4f57-98b5-80bb78d6994f"
+  },
+  {
+    "AmenityName": "Pocket wifi",
+    "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:40:29.4410244+05:00",
+    "ModifiedDate": null,
+    "Id": "016dc29c-8462-42d7-8df6-d5d3861787c1"
+  },
+  {
+    "AmenityName": "Dedicated workspace",
+    "CategoryId": "82abf4aa-fec2-4225-8edc-226a10c55585",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:40:45.3115803+05:00",
+    "ModifiedDate": null,
+    "Id": "d98c4c8d-2878-416a-90d0-0593b87686b7"
+  },
+  {
+    "AmenityName": "Wine glasses",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:42:24.5414798+05:00",
+    "ModifiedDate": null,
+    "Id": "b89bf1cb-eaf9-43cc-9295-0a7ebbf9e89e"
+  },
+  {
+    "AmenityName": "Trash compactor",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:42:31.6279628+05:00",
+    "ModifiedDate": null,
+    "Id": "a4ea797c-1a8c-45a1-b96a-31aa6b4cbe05"
+  },
+  {
+    "AmenityName": "Toaster",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:42:40.627954+05:00",
+    "ModifiedDate": null,
+    "Id": "c33beaec-b2d7-4c68-a0d4-95a64671652a"
+  },
+  {
+    "AmenityName": "Refrigerator",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:42:46.3866467+05:00",
+    "ModifiedDate": null,
+    "Id": "9fc103d5-778b-43d1-8a6c-da449b032f55"
+  },
+  {
+    "AmenityName": "Microwave",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:43:04.5031586+05:00",
+    "ModifiedDate": null,
+    "Id": "2be13d24-5016-40ee-8552-6bb080302f0f"
+  },
+  {
+    "AmenityName": "Kitchen",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:43:16.3575321+05:00",
+    "ModifiedDate": null,
+    "Id": "a0dbedff-e8ca-4e30-a75f-b13a2f9617a4"
+  },
+  {
+    "AmenityName": "Freezer",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:43:21.052327+05:00",
+    "ModifiedDate": null,
+    "Id": "38734d9d-07f6-4c56-884c-b563dcd41108"
+  },
+  {
+    "AmenityName": "Dishwasher",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:43:41.7369921+05:00",
+    "ModifiedDate": null,
+    "Id": "3600ce67-ec8f-41d3-bf21-a21dc7c11059"
+  },
+  {
+    "AmenityName": "Bread maker",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:43:59.2505864+05:00",
+    "ModifiedDate": null,
+    "Id": "2d8c372c-4746-4812-8eae-5f6dc0ce10d5"
+  },
+  {
+    "AmenityName": "Barbecue utensils",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:44:11.0746715+05:00",
+    "ModifiedDate": null,
+    "Id": "4b30a705-aeb6-45fc-8bf3-431820da0560"
+  },
+  {
+    "AmenityName": "Baking sheet",
+    "CategoryId": "03a5f585-142a-4b1a-b47c-b3481ee5e894",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:44:26.4858813+05:00",
+    "ModifiedDate": null,
+    "Id": "ba1dfd70-26aa-4671-a833-beeacc940049"
+  },
+  {
+    "AmenityName": "Waterfront",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:47:48.0586932+05:00",
+    "ModifiedDate": null,
+    "Id": "300c6189-2c13-4ed0-97b3-84ddd97f7692"
+  },
+  {
+    "AmenityName": "Ski-in/Ski-out",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:47:52.4696843+05:00",
+    "ModifiedDate": null,
+    "Id": "c1e05242-4e1d-4310-8848-4971b3ef112d"
+  },
+  {
+    "AmenityName": "Resort access",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:48:18.1643497+05:00",
+    "ModifiedDate": null,
+    "Id": "497cdd51-daa1-496e-96d9-58e71f0dce23"
+  },
+  {
+    "AmenityName": "Private entrance",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:48:27.1156123+05:00",
+    "ModifiedDate": null,
+    "Id": "fdc78ebb-084c-4fbb-9ac4-9db5aed9d991"
+  },
+  {
+    "AmenityName": "Laundromat nearby",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:48:33.5823663+05:00",
+    "ModifiedDate": null,
+    "Id": "9771d443-86d0-4ae4-a1ae-1cd43c333c4e"
+  },
+  {
+    "AmenityName": "Lake access",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:48:41.7557497+05:00",
+    "ModifiedDate": null,
+    "Id": "823de7a3-9c5b-4e51-9738-8597ed56782a"
+  },
+  {
+    "AmenityName": "Beach access",
+    "CategoryId": "c826cb55-c7b0-4551-b281-a7cc6a62432c",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:48:48.1700329+05:00",
+    "ModifiedDate": null,
+    "Id": "1a9cae55-f544-4424-a6de-f3f17f1811fb"
+  },
+  {
+    "AmenityName": "BBQ grill",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:51:32.6030543+05:00",
+    "ModifiedDate": null,
+    "Id": "6a9bf86f-0195-4029-8888-13109794a502"
+  },
+  {
+    "AmenityName": "Beach essentials",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:51:44.6127267+05:00",
+    "ModifiedDate": null,
+    "Id": "6279ecde-0a66-4bd8-bd7a-d7124769f774"
+  },
+  {
+    "AmenityName": "Bikes",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:51:51.2794691+05:00",
+    "ModifiedDate": null,
+    "Id": "fd2a3d98-9f57-403c-9dd6-de5fea1d88e6"
+  },
+  {
+    "AmenityName": "Boat slip",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:01.9898184+05:00",
+    "ModifiedDate": null,
+    "Id": "ecc923ee-a806-4f65-b96a-dae2312cccaa"
+  },
+  {
+    "AmenityName": "Fire pit",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:18.1324017+05:00",
+    "ModifiedDate": null,
+    "Id": "6cc14cbc-e643-4cbf-aac2-d2fa3ce9ed3b"
+  },
+  {
+    "AmenityName": "Hammock",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:24.050065+05:00",
+    "ModifiedDate": null,
+    "Id": "cb0dda9c-57d4-4a59-a049-0cd5bbf57aff"
+  },
+  {
+    "AmenityName": "Kayak",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:30.6065483+05:00",
+    "ModifiedDate": null,
+    "Id": "a899884b-a81c-4ac8-9e25-313ae11da209"
+  },
+  {
+    "AmenityName": "Outdoor dining area",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:34.7582157+05:00",
+    "ModifiedDate": null,
+    "Id": "09e0e4b7-bffe-42d0-af9b-203d924c5a70"
+  },
+  {
+    "AmenityName": "Outdoor furniture",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:52:49.0449165+05:00",
+    "ModifiedDate": null,
+    "Id": "1aad5407-2e0b-44b6-901b-b67e71591dd9"
+  },
+  {
+    "AmenityName": "Outdoor kitchen",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:53:10.0825371+05:00",
+    "ModifiedDate": null,
+    "Id": "c7646d8a-4621-4e8d-9149-f24286e304d6"
+  },
+  {
+    "AmenityName": "Patio or balcony",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:53:39.9053135+05:00",
+    "ModifiedDate": null,
+    "Id": "a3287996-8ce8-4878-baa8-0ab991442180"
+  },
+  {
+    "AmenityName": "Sun loungers",
+    "CategoryId": "2e3e9763-be55-4c52-b808-ab84a151f467",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:53:46.1717855+05:00",
+    "ModifiedDate": null,
+    "Id": "d1075139-c333-4567-97b7-f52edbb27269"
+  },
+  {
+    "AmenityName": "Luggage dropoff allowed",
+    "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:55:45.7555544+05:00",
+    "ModifiedDate": null,
+    "Id": "3f5aed81-dce3-4f06-82d4-64402c8b0846"
+  },
+  {
+    "AmenityName": "Long term stays allowed",
+    "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:55:56.4068578+05:00",
+    "ModifiedDate": null,
+    "Id": "176b301a-b1eb-4467-bec6-b7c294c7d2aa"
+  },
+  {
+    "AmenityName": "Cleaning available during stay",
+    "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:56:03.1365433+05:00",
+    "ModifiedDate": null,
+    "Id": "125133d8-ee3c-42a9-8046-17b238add79c"
+  },
+  {
+    "AmenityName": "Breakfast",
+    "CategoryId": "27283d6a-0a0c-4a06-bb63-b291fca94a5e",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:56:09.1706491+05:00",
+    "ModifiedDate": null,
+    "Id": "4fa499c5-bfa1-4e14-a157-e14df2ee5341"
+  },
+  {
+    "AmenityName": "Elevator",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:01.4785143+05:00",
+    "ModifiedDate": null,
+    "Id": "fdb5e040-e5aa-4fde-8b52-962b6b5e0db9"
+  },
+  {
+    "AmenityName": "EV charger",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:06.6404824+05:00",
+    "ModifiedDate": null,
+    "Id": "646fa768-4215-43ac-afde-11462a3aaaea"
+  },
+  {
+    "AmenityName": "Free parking on premises",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:12.5675683+05:00",
+    "ModifiedDate": null,
+    "Id": "82fa5985-c997-4968-b0b0-742ecdd6dac9"
+  },
+  {
+    "AmenityName": "Hockey rink",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:22.1303575+05:00",
+    "ModifiedDate": null,
+    "Id": "99cf8d04-81fc-401c-8866-e637d926161f"
+  },
+  {
+    "AmenityName": "Free street parking",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:32.6148937+05:00",
+    "ModifiedDate": null,
+    "Id": "42475d9c-24b8-4d61-b08e-65ae25389095"
+  },
+  {
+    "AmenityName": "Gym",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:39.3173937+05:00",
+    "ModifiedDate": null,
+    "Id": "deefe857-9274-4f11-9a55-9609876221d5"
+  },
+  {
+    "AmenityName": "Hot tub",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:43.9230984+05:00",
+    "ModifiedDate": null,
+    "Id": "51c0d578-f1c0-490d-bddb-cd374af9e30e"
+  },
+  {
+    "AmenityName": "Paid parking off premises",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:50.9084731+05:00",
+    "ModifiedDate": null,
+    "Id": "79808867-e96d-4206-b8f1-1851486b1a5f"
+  },
+  {
+    "AmenityName": "Pool",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:58:59.8273344+05:00",
+    "ModifiedDate": null,
+    "Id": "94cc83bb-ad14-4870-b123-999904878552"
+  },
+  {
+    "AmenityName": "Sauna",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:59:04.0441681+05:00",
+    "ModifiedDate": null,
+    "Id": "522e33c4-c04b-416a-b19f-15481d8eb2ef"
+  },
+  {
+    "AmenityName": "Single level home",
+    "CategoryId": "a0737ec3-236f-4347-af88-417a5232d757",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-05T21:59:10.5653464+05:00",
+    "ModifiedDate": null,
+    "Id": "401541fb-16e6-409b-b275-6823b071340f"
+  }
 ]
