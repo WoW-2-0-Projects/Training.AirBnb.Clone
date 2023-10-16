@@ -1,1 +1,98 @@
-[]
+[
+  {
+    "CategoryName": "Bathroom",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674283+05:00",
+    "ModifiedDate": null,
+    "Id": "de39b064-edb7-480b-b0c2-40e3a2acdaa9"
+  },
+  {
+    "CategoryName": "Bedroom and laundry",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674617+05:00",
+    "ModifiedDate": null,
+    "Id": "67e8add9-12a2-491b-a474-67c76acead8d"
+  },
+  {
+    "CategoryName": "Entertainment",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.467462+05:00",
+    "ModifiedDate": null,
+    "Id": "f78b99e3-5803-464e-b56e-b82bc4cff109"
+  },
+  {
+    "CategoryName": "Family",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674621+05:00",
+    "ModifiedDate": null,
+    "Id": "f9d492b6-9c53-4dba-aa6b-b17777ccafa4"
+  },
+  {
+    "CategoryName": "Heating and cooling",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674621+05:00",
+    "ModifiedDate": null,
+    "Id": "3d05d6e0-3e5b-48e4-aec7-62ed76db9118"
+  },
+  {
+    "CategoryName": "Home safety",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674623+05:00",
+    "ModifiedDate": null,
+    "Id": "b177124c-1e5a-454e-a9c4-04fbeb6c0a43"
+  },
+  {
+    "CategoryName": "Internet and office",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674623+05:00",
+    "ModifiedDate": null,
+    "Id": "c7a4d2ae-d4c5-4e71-9069-c54532d38b17"
+  },
+  {
+    "CategoryName": "Kitchen and dining",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674624+05:00",
+    "ModifiedDate": null,
+    "Id": "af181445-a654-4239-ab6a-da5da3d37ff3"
+  },
+  {
+    "CategoryName": "Location features",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674625+05:00",
+    "ModifiedDate": null,
+    "Id": "30186f42-874f-4699-b304-da6da29c7205"
+  },
+  {
+    "CategoryName": "Outdoor",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674626+05:00",
+    "ModifiedDate": null,
+    "Id": "6e0f6194-1abf-4681-8817-3ab1aa83af57"
+  },
+  {
+    "CategoryName": "Parking and facilities",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674626+05:00",
+    "ModifiedDate": null,
+    "Id": "3b968abf-e41b-4eba-86f5-717aec27c837"
+  },
+  {
+    "CategoryName": "Services",
+    "IsDeleted": false,
+    "DeletedDate": null,
+    "CreatedDate": "2023-10-16T12:09:56.4674627+05:00",
+    "ModifiedDate": null,
+    "Id": "da93c6b7-5d3b-4e19-95c5-17bd46ebc524"
+  }
+]
