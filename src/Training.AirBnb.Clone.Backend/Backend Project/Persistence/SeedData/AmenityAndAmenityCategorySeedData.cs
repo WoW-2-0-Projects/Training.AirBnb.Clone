@@ -1,6 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Persistence.DataContexts;
-using FileBaseContext.Abstractions.Models.FileSet;
 
 namespace Backend_Project.Persistence.SeedData;
 
