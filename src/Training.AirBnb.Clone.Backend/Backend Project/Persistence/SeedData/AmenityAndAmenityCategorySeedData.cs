@@ -86,23 +86,15 @@ public static class AmenityAndAmenityCategorySeedData
         var amenityCategoryId = GetCategoriesIds(context.AmenityCategories.ToList());
 
         for (int i = 0; i < amenities.Count; i++)
-        {
-            var addAmenities = await GetAmenityByCategoryId(amenityCategoryId[i], amenities[i]);
-            
-            await context.Amenities.AddRangeAsync(addAmenities);
-            await context.SaveChangesAsync();
-        }
+            await context.AddAmenityByCategoryId(amenityCategoryId[i], amenities[i]);
     }
 
-    private static ValueTask<List<Amenity>> GetAmenityByCategoryId(Guid categoryId, List<string> amenities)
+    private static async ValueTask AddAmenityByCategoryId(this IDataContext context, Guid categoryId, List<string> amenities)
     {
-        List<Amenity> addAmenity = new List<Amenity>();
-
         foreach (var amenity in amenities)
-            addAmenity.Add(new Amenity { AmenityName = amenity, CategoryId = categoryId });
+            await context.Amenities.AddAsync(new Amenity { AmenityName = amenity, CategoryId = categoryId });
 
-        return new ValueTask<List<Amenity>>(addAmenity);
-
+        await context.SaveChangesAsync();
     }
 
     private static List<Guid> GetCategoriesIds(List<AmenityCategory> amenityCategories)
