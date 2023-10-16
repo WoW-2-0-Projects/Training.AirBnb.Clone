@@ -9,5 +9,5 @@ public class ListingFeature : SoftDeletedEntity
     public string Name { get; set; }
     public int MinValue { get; set; }
     public int MaxValue { get; set; }
-    public Guid FeatureOptionsId { get; set; }
+    public Guid ListingTypeId { get; set; }
 }

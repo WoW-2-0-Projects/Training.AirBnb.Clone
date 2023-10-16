@@ -10,8 +10,7 @@
   <ItemGroup>
     <Folder Include="Application\Configs\" />
     <Folder Include="Infrastructure\Configs\" />
-    <Folder Include="Persistance\DataContexts\" />
-    <Folder Include="Persistance\Configs\" />
+    <Folder Include="Persistence\DataContexts\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +18,6 @@
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
     <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.4" />
   </ItemGroup>
 
 </Project>
