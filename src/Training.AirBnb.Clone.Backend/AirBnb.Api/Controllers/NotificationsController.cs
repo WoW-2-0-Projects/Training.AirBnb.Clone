@@ -19,8 +19,8 @@ namespace AirBnb.Api.Controllers
             _emailMenagmentService = emailManagementService;
         }
 
-        [HttpPost("emailMenagment")]
-        public async Task<IActionResult> SendEmail(Guid userId, Guid templateId)
+        [HttpPost("emailMenagement")]
+        public async Task<IActionResult> SendEmail([FromRoute] Guid userId,Guid templateId)
             => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
         
         
