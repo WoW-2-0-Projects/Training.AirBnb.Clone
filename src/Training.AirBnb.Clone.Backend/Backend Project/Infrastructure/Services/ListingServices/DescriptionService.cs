@@ -43,18 +43,18 @@ public class DescriptionService : IEntityBaseService<Description>
     {
         ValidateDescription(description);
 
-        var foundlistingdescription = await GetByIdAsync(description.Id);
+        var foundListingDescription = await GetByIdAsync(description.Id);
 
-        foundlistingdescription.ListingDescription = description.ListingDescription;
-        foundlistingdescription.TheSpace = description.TheSpace;
-        foundlistingdescription.OtherDetails = description.OtherDetails;
-        foundlistingdescription.InteractionWithGuests = description.InteractionWithGuests;
+        foundListingDescription.ListingDescription = description.ListingDescription;
+        foundListingDescription.TheSpace = description.TheSpace;
+        foundListingDescription.OtherDetails = description.OtherDetails;
+        foundListingDescription.InteractionWithGuests = description.InteractionWithGuests;
 
-        await _dataContext.Descriptions.UpdateAsync(foundlistingdescription);
+        await _dataContext.Descriptions.UpdateAsync(foundListingDescription);
 
         if (saveChanges) await _dataContext.SaveChangesAsync();
 
-        return foundlistingdescription;
+        return foundListingDescription;
     }
 
     public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
