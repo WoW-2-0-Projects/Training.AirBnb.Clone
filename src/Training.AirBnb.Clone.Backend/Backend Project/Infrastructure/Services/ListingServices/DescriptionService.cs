@@ -1,7 +1,7 @@
-﻿using Backend_Project.Application.Interfaces;
+﻿using Backend_Project.Application.Entity;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistence.DataContexts;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -28,8 +28,11 @@ public class DescriptionService : IEntityBaseService<Description>
     public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var removedListingDescription = await GetByIdAsync(id, cancellationToken);
+
         await _dataContext.Descriptions.RemoveAsync(removedListingDescription, cancellationToken);
+        
         if (saveChanges) await _dataContext.SaveChangesAsync();
+        
         return removedListingDescription;
     }
 
@@ -42,7 +45,8 @@ public class DescriptionService : IEntityBaseService<Description>
     public ValueTask<ICollection<Description>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
          => new ValueTask<ICollection<Description>>(GetUndeletedListingDescription()
              .Where(description => ids
-             .Contains(description.Id)).ToList());
+                .Contains(description.Id))
+             .ToList());
 
     public ValueTask<Description> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
          => new ValueTask<Description>(GetUndeletedListingDescription()
@@ -53,12 +57,16 @@ public class DescriptionService : IEntityBaseService<Description>
     {
         ValidateDescription(entity);
         var foundlistingdescription = await GetByIdAsync(entity.Id);
+
         foundlistingdescription.ListingDescription = entity.ListingDescription;
         foundlistingdescription.TheSpace = entity.TheSpace;
         foundlistingdescription.OtherDetails = entity.OtherDetails;
         foundlistingdescription.InteractionWithGuests = entity.InteractionWithGuests;
+
         await _dataContext.Descriptions.UpdateAsync(foundlistingdescription);
+
         if (saveChanges) await _dataContext.SaveChangesAsync();
+
         return foundlistingdescription;
     }
     private bool ValidateDescription(Description description)
