@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
-using Backend_Project.Application.Interfaces;
+using Backend_Project.Application.Notifications;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 

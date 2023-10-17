@@ -1,7 +1,7 @@
-﻿using Backend_Project.Application.Interfaces;
+using Backend_Project.Application.Entity;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistence.DataContexts;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices
@@ -40,9 +40,13 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public ValueTask<AmenityCategory> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return new ValueTask<AmenityCategory>(GetUndeletedAmentyCategories().
-                FirstOrDefault(amenityCategory => amenityCategory.Id == id) ??
-                throw new EntityNotFoundException<AmenityCategory>("AmentyCategory not found!"));
+            var result = GetUndeletedAmentyCategories().
+                FirstOrDefault(amenityCategory => amenityCategory.Id.Equals(id));
+
+            if(result is null)
+                throw new EntityNotFoundException<AmenityCategory>("AmentyCategory not found!");
+
+            return new ValueTask< AmenityCategory>(result);
         }
 
         public IQueryable<AmenityCategory> Get(Expression<Func<AmenityCategory, bool>> predicate)
@@ -55,7 +59,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             if (!IsValidCategoryName(amenityCategory.CategoryName))
                 throw new EntityValidationException<AmenityCategory>("Invalid categoryName!");
 
-            if (!IsUniqueCategory(amenityCategory.CategoryName))
+            if (IsUniqueCategory(amenityCategory.CategoryName))
                 throw new DuplicateEntityException<AmenityCategory>("Category already exists!");
 
             updatedAmenityCategory.CategoryName = amenityCategory.CategoryName;
@@ -82,7 +86,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             => await DeleteAsync(amenityCategory.Id, saveChanges, cancellationToken);
 
         private bool IsValidCategoryName(string categoryName)
-            => !string.IsNullOrWhiteSpace(categoryName) && categoryName.Length > 2;
+            => !string.IsNullOrWhiteSpace(categoryName) || categoryName.Length > 2;
 
         private bool IsUniqueCategory(string categoryName)
             => GetUndeletedAmentyCategories().Any(category => category.CategoryName == categoryName);

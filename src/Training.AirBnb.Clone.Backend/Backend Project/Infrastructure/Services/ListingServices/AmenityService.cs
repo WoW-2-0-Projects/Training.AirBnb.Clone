@@ -1,7 +1,7 @@
-﻿using Backend_Project.Application.Interfaces;
+﻿using Backend_Project.Application.Entity;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Persistance.DataContexts;
+using Backend_Project.Persistence.DataContexts;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -31,10 +31,16 @@ public class AmenityService : IEntityBaseService<Amenity>
             .Where(amenity => ids.Contains(amenity.Id))
             .ToList());
 
-    public ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Amenity>(GetUndeletedAmenities()
-            .FirstOrDefault(amenity => amenity.Id == id)
-            ?? throw new EntityNotFoundException<Amenity>("Amenity not found."));
+    public  ValueTask<Amenity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var a = GetUndeletedAmenities()
+            .FirstOrDefault(amenity => amenity.Id.Equals(id));
+
+            if( a is null)
+                throw new EntityNotFoundException<Amenity>("Amenity not found.");
+
+        return new ValueTask<Amenity>( a);
+    }
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)
         => GetUndeletedAmenities().Where(predicate.Compile()).AsQueryable();

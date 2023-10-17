@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Interfaces;
+﻿using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using System.Net;

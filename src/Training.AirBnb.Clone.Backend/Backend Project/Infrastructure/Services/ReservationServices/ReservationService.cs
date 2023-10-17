@@ -1,8 +1,8 @@
 using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
-using Backend_Project.Persistance.DataContexts;
-using Backend_Project.Application.Interfaces;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
+using Backend_Project.Application.Entity;
+using Backend_Project.Persistence.DataContexts;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
