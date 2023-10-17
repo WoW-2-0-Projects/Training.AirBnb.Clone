@@ -25,20 +25,6 @@ public class DescriptionService : IEntityBaseService<Description>
         return description;
     }
 
-    public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var removedListingDescription = await GetByIdAsync(id, cancellationToken);
-
-        await _dataContext.Descriptions.RemoveAsync(removedListingDescription, cancellationToken);
-        
-        if (saveChanges) await _dataContext.SaveChangesAsync();
-        
-        return removedListingDescription;
-    }
-
-    public async ValueTask<Description> DeleteAsync(Description entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-         => await DeleteAsync(entity.Id, saveChanges, cancellationToken);
-
     public IQueryable<Description> Get(Expression<Func<Description, bool>> predicate)
         => GetUndeletedListingDescription().Where(predicate.Compile()).AsQueryable();
 
@@ -53,15 +39,29 @@ public class DescriptionService : IEntityBaseService<Description>
              .FirstOrDefault(description => description.Id.Equals(id))
              ?? throw new EntityNotFoundException<Description>("Description not found."));
 
-    public async ValueTask<Description> UpdateAsync(Description entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        ValidateDescription(entity);
-        var foundlistingdescription = await GetByIdAsync(entity.Id);
+        var removedListingDescription = await GetByIdAsync(id, cancellationToken);
 
-        foundlistingdescription.ListingDescription = entity.ListingDescription;
-        foundlistingdescription.TheSpace = entity.TheSpace;
-        foundlistingdescription.OtherDetails = entity.OtherDetails;
-        foundlistingdescription.InteractionWithGuests = entity.InteractionWithGuests;
+        await _dataContext.Descriptions.RemoveAsync(removedListingDescription, cancellationToken);
+        
+        if (saveChanges) await _dataContext.SaveChangesAsync();
+        
+        return removedListingDescription;
+    }
+
+    public async ValueTask<Description> DeleteAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
+         => await DeleteAsync(description.Id, saveChanges, cancellationToken);
+
+    public async ValueTask<Description> UpdateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        ValidateDescription(description);
+        var foundlistingdescription = await GetByIdAsync(description.Id);
+
+        foundlistingdescription.ListingDescription = description.ListingDescription;
+        foundlistingdescription.TheSpace = description.TheSpace;
+        foundlistingdescription.OtherDetails = description.OtherDetails;
+        foundlistingdescription.InteractionWithGuests = description.InteractionWithGuests;
 
         await _dataContext.Descriptions.UpdateAsync(foundlistingdescription);
 
