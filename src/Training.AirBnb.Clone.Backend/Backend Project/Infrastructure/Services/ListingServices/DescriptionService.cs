@@ -39,20 +39,6 @@ public class DescriptionService : IEntityBaseService<Description>
              .FirstOrDefault(description => description.Id.Equals(id))
              ?? throw new EntityNotFoundException<Description>("Description not found."));
 
-    public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        var removedListingDescription = await GetByIdAsync(id, cancellationToken);
-
-        await _dataContext.Descriptions.RemoveAsync(removedListingDescription, cancellationToken);
-        
-        if (saveChanges) await _dataContext.SaveChangesAsync();
-        
-        return removedListingDescription;
-    }
-
-    public async ValueTask<Description> DeleteAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
-         => await DeleteAsync(description.Id, saveChanges, cancellationToken);
-
     public async ValueTask<Description> UpdateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         ValidateDescription(description);
@@ -69,6 +55,21 @@ public class DescriptionService : IEntityBaseService<Description>
 
         return foundlistingdescription;
     }
+
+    public async ValueTask<Description> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var removedListingDescription = await GetByIdAsync(id, cancellationToken);
+
+        await _dataContext.Descriptions.RemoveAsync(removedListingDescription, cancellationToken);
+        
+        if (saveChanges) await _dataContext.SaveChangesAsync();
+        
+        return removedListingDescription;
+    }
+
+    public async ValueTask<Description> DeleteAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
+         => await DeleteAsync(description.Id, saveChanges, cancellationToken);
+
     private bool ValidateDescription(Description description)
     {
         if (description.ListingDescription.Length > 500 | string
