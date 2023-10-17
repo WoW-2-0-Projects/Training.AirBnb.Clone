@@ -88,6 +88,7 @@ public static partial class HostConfiguration
         await context.InitializeUsersSeedDataAsync();
         await context.InitializeCategoryDetailsSeedData();
         await context.InitializeAmenityAndAmenityCategorySeedData();
+        await context.InitializeEmailTemplateSeedDate();
 
         return app;
     }
@@ -174,7 +175,7 @@ public static partial class HostConfiguration
             .AddScoped<IEmailPlaceholderService, EmailPlaceholderService>()
             .AddScoped<IEmailSenderService, EmailSenderService>()
             .AddScoped<IEmailMessageService, EmailMessageSevice>()
-            .AddScoped<IEmailMenegmentService, EmailMenagmantService>();
+            .AddScoped<IEmailManagementService, EmailManagementService>();
 
         return builder;
     }

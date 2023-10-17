@@ -2,8 +2,8 @@
 using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Persistance.DataContexts;
-using Backend_Project.Persistance.SeedData;
+using Backend_Project.Persistence.DataContexts;
+using Backend_Project.Persistence.SeedData;
 
 namespace Backend_Project.Infrastructure.CompositionServices
 {
