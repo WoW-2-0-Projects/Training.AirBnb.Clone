@@ -16,7 +16,8 @@ public class DescriptionService : IEntityBaseService<Description>
 
     public async ValueTask<Description> CreateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        ValidateDescription(description);
+        if (!ValidateDescription(description))
+            throw new EntityValidationException<Description>("This description is Invalid!!");
 
         await _dataContext.Descriptions.AddAsync(description, cancellationToken);
 
@@ -42,7 +43,8 @@ public class DescriptionService : IEntityBaseService<Description>
 
     public async ValueTask<Description> UpdateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        ValidateDescription(description);
+        if (!ValidateDescription(description))
+            throw new EntityNotUpdatableException<Description>("This Description is Not Valid!!");
 
         var foundListingDescription = await GetByIdAsync(description.Id);
 
@@ -78,16 +80,28 @@ public class DescriptionService : IEntityBaseService<Description>
             .IsNullOrWhiteSpace(description.ListingDescription))
             return false;
 
-        if (string.IsNullOrWhiteSpace(description.TheSpace))
+        if (description.TheSpace == null)
+            return true;
+
+        if (description.TheSpace != null && string.IsNullOrWhiteSpace(description.TheSpace))
             return false;
 
-        if (string.IsNullOrWhiteSpace(description.GuestAccess))
+        if (description.GuestAccess == null)
+            return true;
+
+        if (description.GuestAccess != null && string.IsNullOrWhiteSpace(description.GuestAccess))
             return false;
 
-        if (string.IsNullOrWhiteSpace(description.OtherDetails))
+        if(description.OtherDetails == null)
+            return true;
+
+        if (description.OtherDetails != null && string.IsNullOrWhiteSpace(description.OtherDetails))
             return false;
 
-        if (string.IsNullOrWhiteSpace(description.InteractionWithGuests))
+        if(description.InteractionWithGuests == null)
+            return true;
+
+        if (description.InteractionWithGuests != null && string.IsNullOrWhiteSpace(description.InteractionWithGuests))
             return false;
 
         return true;
