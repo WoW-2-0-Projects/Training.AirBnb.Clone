@@ -42,6 +42,7 @@ public class DescriptionService : IEntityBaseService<Description>
     public async ValueTask<Description> UpdateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         ValidateDescription(description);
+
         var foundlistingdescription = await GetByIdAsync(description.Id);
 
         foundlistingdescription.ListingDescription = description.ListingDescription;
