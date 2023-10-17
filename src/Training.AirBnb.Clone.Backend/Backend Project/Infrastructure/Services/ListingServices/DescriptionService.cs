@@ -17,6 +17,7 @@ public class DescriptionService : IEntityBaseService<Description>
     public async ValueTask<Description> CreateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         ValidateDescription(description);
+
         await _dataContext.Descriptions.AddAsync(description, cancellationToken);
 
         if (saveChanges)
