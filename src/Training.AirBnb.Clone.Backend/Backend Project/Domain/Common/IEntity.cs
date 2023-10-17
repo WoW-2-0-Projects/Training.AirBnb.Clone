@@ -1,6 +1,7 @@
-﻿namespace Backend_Project.Domain.Common;
+﻿using FileBaseContext.Abstractions.Models.Entity;
 
-public interface IEntity
+namespace Backend_Project.Domain.Common;
+
+public interface IEntity : IFileSetEntity<Guid>
 {
-    Guid Id { get; set; }
 }
