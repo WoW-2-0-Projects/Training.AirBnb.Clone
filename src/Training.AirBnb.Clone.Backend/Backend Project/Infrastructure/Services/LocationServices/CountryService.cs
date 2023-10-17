@@ -86,7 +86,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             if (country.CountryDialingCode is null)
                 return false;
 
-            if ((country.CountryDialingCode[0].Equals("+")
+            if (!(country.CountryDialingCode[0].Equals("+")
                 || country.CountryDialingCode.Length < 2
                 || country.CountryDialingCode.Length > 5))
                 return false;
