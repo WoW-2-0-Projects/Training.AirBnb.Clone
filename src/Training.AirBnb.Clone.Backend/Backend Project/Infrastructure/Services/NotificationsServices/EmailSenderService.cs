@@ -1,6 +1,5 @@
 ﻿using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.EntityExceptions;
 using System.Net;
 using System.Net.Mail;
 
@@ -29,7 +28,7 @@ public class EmailSenderService : IEmailSenderService
             emailMessage.SendDate = DateTimeOffset.UtcNow;
             result = true;
         }
-        catch(EntityException<Exception> exception)
+        catch(Exception)
         {
             emailMessage.IsSent = false;
             emailMessage.SendDate = DateTimeOffset.UtcNow;
