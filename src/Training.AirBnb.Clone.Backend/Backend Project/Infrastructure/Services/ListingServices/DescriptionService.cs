@@ -80,29 +80,17 @@ public class DescriptionService : IEntityBaseService<Description>
             .IsNullOrWhiteSpace(description.ListingDescription))
             return false;
 
-        if (description.TheSpace == null)
-            return true;
+        if (string.IsNullOrWhiteSpace(description.TheSpace))
+            description.TheSpace = null;
 
-        if (description.TheSpace != null && string.IsNullOrWhiteSpace(description.TheSpace))
-            return false;
+        if (string.IsNullOrWhiteSpace(description.GuestAccess))
+            description.GuestAccess = null;
 
-        if (description.GuestAccess == null)
-            return true;
+        if (string.IsNullOrWhiteSpace(description.OtherDetails))
+            description.OtherDetails = null;
 
-        if (description.GuestAccess != null && string.IsNullOrWhiteSpace(description.GuestAccess))
-            return false;
-
-        if(description.OtherDetails == null)
-            return true;
-
-        if (description.OtherDetails != null && string.IsNullOrWhiteSpace(description.OtherDetails))
-            return false;
-
-        if(description.InteractionWithGuests == null)
-            return true;
-
-        if (description.InteractionWithGuests != null && string.IsNullOrWhiteSpace(description.InteractionWithGuests))
-            return false;
+        if (string.IsNullOrWhiteSpace(description.InteractionWithGuests))
+            description.InteractionWithGuests = null;
 
         return true;
     }
