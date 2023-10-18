@@ -23,9 +23,9 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     }
     public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
-        var placeholders = GetPlaceholeders(emailTemplate.Subject,emailTemplate.Body);
+        var placeholders = GetPlaceholeders(emailTemplate.Subject, emailTemplate.Body);
         
-        var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>();
+        var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>("User Not Found");
 
         var result = placeholders.Select(placeholder =>
         {
