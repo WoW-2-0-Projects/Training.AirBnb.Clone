@@ -2,6 +2,6 @@
 
 public enum UnitsOfSize
 {
-    MetricSystem,
-    USStandardSystem
+    SquareMetres,
+    SquareFeet
 }

@@ -77,16 +77,16 @@ public class ListingPropertyTypeService : IEntityBaseService<ListingPropertyType
     private void ValidateListingPropertyType(ListingPropertyType listingPropertyType)
     {
         if (listingPropertyType.FloorsCount < 1 || listingPropertyType.FloorsCount > 180)
-            throw new EntityValidationException<ListingPropertyType>("Listing property type is not valid!");
+            throw new EntityValidationException<ListingPropertyType>("Listing property type's FloorsCount isn't valid!");
 
         if (listingPropertyType.ListingFloor < 0 || listingPropertyType.ListingFloor > listingPropertyType.FloorsCount)
-            throw new EntityValidationException<ListingPropertyType>("Listing property type is not valid!");
+            throw new EntityValidationException<ListingPropertyType>("Listing property type's ListingFloor isn't valid!");
 
         if (listingPropertyType.YearBuilt < 1900 || listingPropertyType.YearBuilt > DateTime.UtcNow.Year)
-            throw new EntityValidationException<ListingPropertyType>("Listing property type is not valid!");
+            throw new EntityValidationException<ListingPropertyType>("Listing property type's YearBuilt isn't valid!");
 
         if (listingPropertyType.PropertySize < 0)
-            throw new EntityValidationException<ListingPropertyType>("Listing property type is not valid!");
+            throw new EntityValidationException<ListingPropertyType>("Listing property type's PropertySize isn't valid!");
     }
 
     private IQueryable<ListingPropertyType> GetUndeletedListingPropertyType()
