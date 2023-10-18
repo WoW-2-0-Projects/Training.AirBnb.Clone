@@ -15,16 +15,16 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
         _context = context;
     }
 
-    public async ValueTask<ListingRules> CreateAsync(ListingRules entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingRules> CreateAsync(ListingRules listingRules, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        Validate(entity);
+        Validate(listingRules);
 
-        await _context.ListingRules.AddAsync(entity, cancellationToken);
+        await _context.ListingRules.AddAsync(listingRules, cancellationToken);
 
         if (saveChanges)
             await _context.SaveChangesAsync();
 
-        return entity;
+        return listingRules;
 
     }
 
@@ -41,8 +41,8 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
         return foundListingRules;
     }
 
-    public ValueTask<ListingRules> DeleteAsync(ListingRules entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => DeleteAsync(entity.Id, saveChanges, cancellationToken);
+    public ValueTask<ListingRules> DeleteAsync(ListingRules listingRules, bool saveChanges = true, CancellationToken cancellationToken = default)
+        => DeleteAsync(listingRules.Id, saveChanges, cancellationToken);
 
     public IQueryable<ListingRules> Get(Expression<Func<ListingRules, bool>> predicate)
         => _context.ListingRules.Where(predicate.Compile()).AsQueryable();
@@ -52,32 +52,32 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
     public async ValueTask<ListingRules> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => await _context.ListingRules.FindAsync(id, cancellationToken)
-            ?? throw new EntityNotFoundException<ListingRules>("Entity not found with this id");
+            ?? throw new EntityNotFoundException<ListingRules>("Listing rules not found with this id");
 
-    public async ValueTask<ListingRules> UpdateAsync(ListingRules entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingRules> UpdateAsync(ListingRules listingRules, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundListingRules = await GetByIdAsync(entity.Id, cancellationToken)
+        var foundListingRules = await GetByIdAsync(listingRules.Id, cancellationToken)
             ?? throw new EntityNotFoundException<ListingRules>("ListingRules not found with this id!");
 
-        Validate(entity);
+        Validate(listingRules);
 
-        foundListingRules.GuestsCount = entity.GuestsCount;
+        foundListingRules.GuestsCount = listingRules.GuestsCount;
 
-        foundListingRules.PetsAllowed = entity.PetsAllowed;
+        foundListingRules.PetsAllowed = listingRules.PetsAllowed;
 
-        foundListingRules.EventsAllowed = entity.EventsAllowed;
+        foundListingRules.EventsAllowed = listingRules.EventsAllowed;
 
-        foundListingRules.SmokingAllowed = entity.SmokingAllowed;
+        foundListingRules.SmokingAllowed = listingRules.SmokingAllowed;
 
-        foundListingRules.CommercialFilmingAllowed = entity.CommercialFilmingAllowed;
+        foundListingRules.CommercialFilmingAllowed = listingRules.CommercialFilmingAllowed;
 
-        foundListingRules.CheckInTimeStart = entity.CheckInTimeStart;
+        foundListingRules.CheckInTimeStart = listingRules.CheckInTimeStart;
 
-        foundListingRules.CheckInTimeEnd = entity.CheckInTimeEnd;
+        foundListingRules.CheckInTimeEnd = listingRules.CheckInTimeEnd;
 
-        foundListingRules.CheckOutTime = entity.CheckOutTime;
+        foundListingRules.CheckOutTime = listingRules.CheckOutTime;
 
-        foundListingRules.AdditionalRules = entity.AdditionalRules;
+        foundListingRules.AdditionalRules = listingRules.AdditionalRules;
 
         await _context.ListingRules.UpdateAsync(foundListingRules, cancellationToken);
 
