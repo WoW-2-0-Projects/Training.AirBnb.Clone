@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Persistence.DataContexts;
+using Bogus;
 
 namespace Backend_Project.Persistence.SeedData;
 
@@ -12,6 +13,12 @@ public static class LocationSeedData
 
         if(!context.Cities.Any())
             await context.AddCities(context.Countries.ToList());
+
+        if (!context.Addresses.Any())
+            await context.AddAddresses(context.Cities.ToList());
+
+        if (!context.Locations.Any())
+            await context.AddLocations(context.Addresses.ToList());
     }
     public static async ValueTask AddCountries(this IDataContext context)
     {
@@ -151,5 +158,48 @@ public static class LocationSeedData
 
         await context.Cities.AddRangeAsync(cities);
         await context.SaveChangesAsync();
+    }
+
+    public static async ValueTask AddAddresses(this IDataContext context, List<City> cities)
+    {
+        var addresses = new List<Address>();
+        var faker = new Faker();
+
+        foreach (var city in cities)
+        {
+            addresses.Add(new Address
+            {
+                CountryId = city.CountryId,
+                CityId = city.Id,
+                AddressLine1 = faker.Address.StreetAddress(),
+                AddressLine2 = faker.Lorem.Word(),
+                AddressLine3 = faker.Lorem.Word(),
+                AddressLine4 = faker.Lorem.Word(),
+                Province = faker.Address.SecondaryAddress(),
+                ZipCode = faker.Address.ZipCode(),
+            });
+        }
+
+        await context.Addresses.AddRangeAsync(addresses);
+        await context.SaveChangesAsync();
+    }
+
+    public static async ValueTask AddLocations(this IDataContext context, List<Address> addresses)
+    {
+        var faker = new Faker();
+        var locations = new List<Location>();
+
+        foreach (var address in addresses)
+        {
+            locations.Add(new Location
+            {
+                AddressId = address.Id,
+                NeighborhoodDescription = faker.Lorem.Word(),
+                GettingAround = faker.Lorem.Word()
+            });
+        }
+
+        await context.Locations.AddRangeAsync(locations);
+        await context.SaveChangesAsync();   
     }
 }
