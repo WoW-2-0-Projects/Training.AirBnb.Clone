@@ -79,6 +79,8 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
         foundListingRules.AdditionalRules = entity.AdditionalRules;
 
+        await _context.ListingRules.UpdateAsync(foundListingRules, cancellationToken);
+
         if (saveChanges)
             await _context.SaveChangesAsync();
 
