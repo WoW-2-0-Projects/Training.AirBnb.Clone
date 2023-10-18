@@ -194,8 +194,8 @@ public static class LocationSeedData
             locations.Add(new Location
             {
                 AddressId = address.Id,
-                NeighborhoodDescription = faker.Lorem.Word(),
-                GettingAround = faker.Lorem.Word()
+                NeighborhoodDescription = faker.Lorem.Text(),
+                GettingAround = faker.Lorem.Text()
             });
         }
 
