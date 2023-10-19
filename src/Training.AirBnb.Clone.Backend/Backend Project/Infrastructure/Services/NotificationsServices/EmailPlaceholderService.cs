@@ -1,15 +1,15 @@
 ﻿using Backend_Project.Application.Entity;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
-using Backend_Project.Domain.Exceptions.EntityExceptions;
 using System.Data;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
     private readonly IEntityBaseService<User> _userService;
+    
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
     private const string _lastName = "{{LastName}}";
@@ -17,61 +17,48 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
    
-    public EmailPlaceholderService(IEntityBaseService<User> user)
+    public EmailPlaceholderService(IEntityBaseService<User> userService)
     {
-        _userService = user;
+        _userService = userService;
     }
+
     public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
     {
-        var placeholders = GetPlaceholeders(emailTemplate.Body);
+        var user  = await _userService.GetByIdAsync(userId);
         
-        var user = await _userService.GetByIdAsync(userId) ?? throw new EntityNotFoundException<User>();
-
-        var result = placeholders.Select(placeholder =>
+        var values = new Dictionary<string, string>();
+        
+        foreach (var placeholders in GetPlaceholeders(emailTemplate))
         {
-            var value = placeholder switch
+            var placeholdersWithValues = placeholders.Select(placeholder =>
             {
-                _fullName => string.Join(_firstName, " ", _lastName),
-                _firstName => user.FirstName,
-                _lastName => user.LastName,
-                _emailAddress => user.EmailAddress,
-                _date => DateTime.UtcNow.ToString("dd.MM.yyyy"),
-                _companyName => "AirBnB",
-                _ => throw new EvaluateException("Invalid Exeption")
-            };
-            return new KeyValuePair<string, string>(placeholder, value);
-        });
+                var value = placeholder.Value switch
+                {
+                    _fullName => (placeholder.Value, $"{user.FirstName} {user.LastName}"),
+                    _firstName => (placeholder.Value, user.FirstName),
+                    _lastName => (placeholder.Value, user.LastName),
+                    _emailAddress => (placeholder.Value, user.EmailAddress),
+                    _date => (placeholder.Value, DateTimeOffset.UtcNow.ToString("dd.MM.yyyy")),
+                    _companyName => (placeholder.Value, "AirBnB"),
+                    _ => throw new EvaluateException("Invalid Exeption")
+                };
 
-        var values = new Dictionary<string, string>(result);
+                return new KeyValuePair<string, string>(placeholder.Value, value.Item2);
+            });
 
-        return values;
+            foreach (var value in placeholdersWithValues)
+                values[value.Key] = value.Value;
+        }
+         return values;
     }
 
-    private IEnumerable<string> GetPlaceholeders(string body)
+    private List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
     {
-        var plaseholder = new StringBuilder();
-        var isStartedToGether = false;
+        var pattern = @"\{\{([^\{\}]+)\}\}";
 
-        for (var index = 0; index < body.Length; index++)
-        {
-            if (body[index] == '{')
-            {
-                index++;
-                plaseholder = new StringBuilder();
-                plaseholder.Append("{{");
-                isStartedToGether = true;
-            }
-            else if (body[index] == '}')
-            {
-                index++;
-                plaseholder.Append("}}");
-                isStartedToGether = false;
-                yield return plaseholder.ToString();
-            }
-            else if (isStartedToGether)
-            {
-                plaseholder.Append(body[index]);
-            }
-        }
+        var updatedSubject = Regex.Matches(emailTemplate.Subject, pattern);
+        var updatedBody = Regex.Matches(emailTemplate.Body, pattern);
+        
+        return new List<MatchCollection>() {updatedSubject, updatedBody};
     }
 }
