@@ -97,6 +97,7 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     private bool ValidationExits(EmailTemplate emailTemplate)
     {
         var foundEmailTemplate = GetUndeletedEmailTemplate().FirstOrDefault(search => search.Equals(emailTemplate));
+        
         if (foundEmailTemplate is null)
             return false;
         

@@ -6,7 +6,6 @@ namespace Backend_Project.Domain.Entities;
 
 public class Address : SoftDeletedEntity
 {
-    public Guid CountryId { get; set; }
     public Guid CityId { get; set; }
     public string AddressLine1 { get; set; }
     public string? AddressLine2 { get; set; }

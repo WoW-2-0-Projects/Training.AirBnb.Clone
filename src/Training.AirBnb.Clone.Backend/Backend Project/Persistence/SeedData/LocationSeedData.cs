@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Persistence.DataContexts;
+using Bogus;
 
 namespace Backend_Project.Persistence.SeedData;
 
@@ -7,11 +8,17 @@ public static class LocationSeedData
 {
     public static async ValueTask InitializeLocationSeedData(this IDataContext context)
     {
-        if(!context.Countries.Any())
+        if (!context.Countries.Any())
             await context.AddCountries();
 
-        if(!context.Cities.Any())
-            await context.AddCities(context.Countries.ToList());
+        if (!context.Cities.Any())
+            await context.AddCities();
+
+        if (!context.Addresses.Any())
+            await context.AddAddresses(100);
+
+        if (!context.Locations.Any())
+            await context.AddLocations(100);
     }
     public static async ValueTask AddCountries(this IDataContext context)
     {
@@ -43,8 +50,9 @@ public static class LocationSeedData
         await context.SaveChangesAsync();
     }
 
-    public static async ValueTask AddCities(this IDataContext context, List<Country> countries)
+    public static async ValueTask AddCities(this IDataContext context)
     {
+        var countries = context.Countries.ToList();
         var cities = new List<City>
         {
             new City{ Name = "Casey", CountryId = countries[0].Id},
@@ -150,6 +158,33 @@ public static class LocationSeedData
         };
 
         await context.Cities.AddRangeAsync(cities);
+        await context.SaveChangesAsync();
+    }
+
+    public static async ValueTask AddAddresses(this IDataContext context, int count)
+    {
+        var addressFaker = new Faker<Address>()
+            .RuleFor(address => address.CityId, faker => faker.PickRandom(context.Cities.Select(city => city.Id)))
+            .RuleFor(address => address.AddressLine1, faker => faker.Address.StreetAddress())
+            .RuleFor(address => address.AddressLine2, faker => faker.Lorem.Word())
+            .RuleFor(address => address.AddressLine3, faker => faker.Lorem.Word())
+            .RuleFor(address => address.AddressLine4, faker => faker.Lorem.Word())
+            .RuleFor(address => address.Province, faker => faker.Address.SecondaryAddress())
+            .RuleFor(address => address.ZipCode, faker => faker.Address.ZipCode());
+
+        await context.Addresses.AddRangeAsync(addressFaker.Generate(count));
+        await context.SaveChangesAsync();
+    }
+
+    public static async ValueTask AddLocations(this IDataContext context, int count)
+    {
+        var addressId = new Stack<Guid>(context.Addresses.Select(address => address.Id));
+        var locationFaker = new Faker<Location>()
+            .RuleFor(location => location.AddressId, addressId.Pop())
+            .RuleFor(location => location.NeighborhoodDescription, faker => faker.Lorem.Text())
+            .RuleFor(location => location.GettingAround, faker => faker.Lorem.Text());
+
+        await context.Locations.AddRangeAsync(locationFaker.Generate(count));
         await context.SaveChangesAsync();
     }
 }

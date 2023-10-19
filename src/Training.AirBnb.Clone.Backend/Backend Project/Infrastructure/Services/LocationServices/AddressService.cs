@@ -21,12 +21,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            if (!IsValidAddressLines(address.AddressLine1))
-                throw new EntityValidationException<Address>("Invalid province!");
-            if (!IsValidZipCode(address.ZipCode))
-                throw new EntityValidationException<Address>("Invalid zipCode!");
-            if (!await IsCityWithInCountry(address))
-                throw new EntityValidationException<Address>("City does not match country!");
+            Validate(address);
 
             await _appDataContext.Addresses.AddAsync(address, cancellationToken);
 
@@ -58,15 +53,9 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         {
             var updatedAddress = await GetByIdAsync(address.Id);
 
-            if (!IsValidAddressLines(address.AddressLine1))
-                throw new EntityValidationException<Address>("Invalid province!");
-            if (!IsValidZipCode(address.ZipCode))
-                throw new EntityValidationException<Address>("Invalid zipCode!");
-            if (!await IsCityWithInCountry(address))
-                throw new EntityValidationException<Address>("City does not match country!");
+            Validate(address);
 
             updatedAddress.CityId = address.CityId;
-            updatedAddress.CountryId = address.CountryId;
             updatedAddress.AddressLine1 = address.AddressLine1;
             updatedAddress.AddressLine2 = address.AddressLine2;
             updatedAddress.AddressLine3 = address.AddressLine3;
@@ -95,14 +84,9 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<Address> DeleteAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(address.Id, saveChanges, cancellationToken);
-       
+
         private bool IsValidAddressLines(string addressLine)
-        {
-            if (!string.IsNullOrWhiteSpace(addressLine))
-                return true;
-            else
-                return false;
-        }
+        => !string.IsNullOrWhiteSpace(addressLine);
 
         private bool IsValidZipCode(string? zipCode)
         {
@@ -114,18 +98,14 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
                     return false;
             return true;
         }
-
-        private async ValueTask<bool> IsCityWithInCountry(Address address)
+        private void Validate(Address address)
         {
-            var country = await _countryService.GetByIdAsync(address.CountryId);
-            var city = await _cityService.GetByIdAsync(address.CityId);
-            
-            if (country.Id == city.CountryId)
-                return true;
-            else
-                return false;
+            if (!IsValidAddressLines(address.AddressLine1))
+                throw new EntityValidationException<Address>("Invalid province!");
+            if (!IsValidZipCode(address.ZipCode))
+                throw new EntityValidationException<Address>("Invalid zipCode!");
         }
-
+       
         private IQueryable<Address> GetUndeletedAddresses() => _appDataContext.Addresses
             .Where(address => !address.IsDeleted).AsQueryable();
     }

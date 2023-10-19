@@ -28,8 +28,11 @@ public interface IDataContext
     IFileSet<ListingAmenities, Guid> ListingAmenities { get; }
     IFileSet<ListingOccupancy, Guid> ListingOccupancies { get; }
     IFileSet<Listing, Guid> Listings { get; }
+    IFileSet<ListingRules, Guid> ListingRules { get; }
     IFileSet<Location, Guid> Locations { get; }
     IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
     IFileSet<ListingPropertyType, Guid> ListingPropertyTypes { get; }
+    IFileSet<Description, Guid> Descriptions { get; }
+
     ValueTask SaveChangesAsync();
 }
