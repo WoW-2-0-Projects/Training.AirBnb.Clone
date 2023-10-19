@@ -88,7 +88,7 @@ public static partial class HostConfiguration
         await context.InitializeUsersSeedDataAsync();
         await context.InitializeCategoryDetailsSeedData();
         await context.InitializeAmenityAndAmenityCategorySeedData();
-        await context.InitializeSeedDataAsync();
+        await context.InitializeListingPropertySeedData();
 
         return app;
     }
