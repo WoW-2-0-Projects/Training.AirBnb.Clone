@@ -38,6 +38,8 @@ public class AppFileContext : FileContext, IDataContext
 
     public IFileSet<Location, Guid> Locations => Set<Location, Guid>(nameof(Locations));
 
+    public IFileSet<ListingRules, Guid> ListingRules => Set<ListingRules, Guid>(nameof(ListingRules));
+
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
