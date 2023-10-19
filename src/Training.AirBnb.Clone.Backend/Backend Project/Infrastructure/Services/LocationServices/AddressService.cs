@@ -104,11 +104,8 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
                 throw new EntityValidationException<Address>("Invalid province!");
             if (!IsValidZipCode(address.ZipCode))
                 throw new EntityValidationException<Address>("Invalid zipCode!");
-            if (!IsValidCityId(address.CityId))
-                throw new EntityValidationException<Address>("Invalid city id!");
         }
-        private bool IsValidCityId(Guid cityId) => _appDataContext.Cities.Select(city => city.Id).Contains(cityId);
-        
+       
         private IQueryable<Address> GetUndeletedAddresses() => _appDataContext.Addresses
             .Where(address => !address.IsDeleted).AsQueryable();
     }
