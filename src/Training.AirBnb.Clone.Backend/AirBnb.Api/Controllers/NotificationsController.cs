@@ -11,21 +11,21 @@ namespace AirBnb.Api.Controllers
     {
         private readonly IEntityBaseService<EmailTemplate> _emailTemplateService;
         private readonly IEntityBaseService<Email> _emailService;
-        private readonly IEmailManagementService _emailMenagmentService;
+        private readonly IEmailManagementService _emailManagementService;
 
         public NotificationsController(IEntityBaseService<EmailTemplate> entityBaseService, IEntityBaseService<Email> emailService, IEmailManagementService emailManagementService)
         {
             _emailTemplateService = entityBaseService;
             _emailService = emailService;
-            _emailMenagmentService = emailManagementService;
+            _emailManagementService = emailManagementService;
         }
 
         [HttpPost("emailManagement{userId:guid}/{templateId:guid}")]
         public async Task<IActionResult> SendEmail(Guid userId, Guid templateId)
-            => Ok(await _emailMenagmentService.SendEmailAsync(userId, templateId));
+            => Ok(await _emailManagementService.SendEmailAsync(userId, templateId));
         
         
-        [HttpGet("emailtemplates")]
+        [HttpGet("emailTemplates")]
         public IActionResult GetAllTemplates()
         {
             var result = _emailTemplateService.Get(emailtemplate => true).ToList();

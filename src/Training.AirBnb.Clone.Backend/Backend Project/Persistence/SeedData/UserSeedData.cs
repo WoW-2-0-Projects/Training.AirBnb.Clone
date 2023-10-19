@@ -13,9 +13,13 @@ public static class UserSeedData
         if (!fileContext.Users.Any())
         {
             var admin = fileContext.GetUserSystem();
+
             await fileContext.Users.AddAsync(admin);
-            var userCredential = new UserCredentials { CreatedDate = DateTime.Now, UserId = admin.Id, Password = "Aa1234!@a" };
+
+            var userCredential = new UserCredentials { CreatedDate = DateTimeOffset.UtcNow, UserId = admin.Id, Password = "Max.Sulton725" };
+
             await fileContext.UserCredentials.AddAsync(userCredential);
+
             await fileContext.SaveChangesAsync();
         }
 
@@ -34,14 +38,14 @@ public static class UserSeedData
     {
         if (!fileContext.Users.Any())
         {
-            return new User { Id = Guid.NewGuid(), FirstName = "System", LastName = "Project", UserRole = UserRole.Admin, EmailAddress = "sultonbek.rakhimov.recovery@gmail.com" };
+            return new User { Id = Guid.NewGuid(), FirstName = "Sultonbek", LastName = "Rakhimov", UserRole = UserRole.Admin, EmailAddress = "sultonbek.rakhimov.recovery@gmail.com" };
         }
         return fileContext.Users.First(user => user.EmailAddress.Equals("sultonbek.rakhimov.recovery@gmail.com"));
     }
 
     public static async ValueTask AddAsync<TEntity>(this IDataContext context, int count) where TEntity : IEntity
     {
-        var task = typeof(TEntity) switch
+        var _ = typeof(TEntity) switch
         {
             { } t when t == typeof(User) => context.AddUsersAsync(count),
             { } t when t == typeof(UserCredentials) => context.AddUserCredentials(count),
@@ -52,7 +56,7 @@ public static class UserSeedData
     {
         var faker = GetUserFaker(context);
         var uniqueUsers = new HashSet<User>(faker.Generate(100_000));
-        var test = uniqueUsers.Take(count);
+        var _ = uniqueUsers.Take(count);
         await context.Users.AddRangeAsync(uniqueUsers.Take(count).ToList());
     }
     public static async ValueTask AddUserCredentials(this IDataContext context, int count)
