@@ -17,7 +17,7 @@ public class LocationService : IEntityBaseService<Location>
 
     public async ValueTask<Location> CreateAsync(Location location, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        if(!IsUnique(location)) throw new DuplicateEntityException<Location>();
+        Validate(location);
 
         await _appDataContext.Locations.AddAsync(location, cancellationToken);
         
@@ -41,6 +41,8 @@ public class LocationService : IEntityBaseService<Location>
 
     public async ValueTask<Location> UpdateAsync(Location location, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
+        Validate(location);
+
         var foundLocation = await GetByIdAsync(location.Id, cancellationToken);
 
         foundLocation.NeighborhoodDescription = location.NeighborhoodDescription;
@@ -67,6 +69,14 @@ public class LocationService : IEntityBaseService<Location>
     public IQueryable<Location> GetUndeletedLocations()
     => _appDataContext.Locations.Where(location => !location.IsDeleted).AsQueryable();
 
-    public bool IsUnique(Location givenLocation)
+    private bool IsUnique(Location givenLocation)
         => !GetUndeletedLocations().Any(location => location.AddressId == givenLocation.AddressId);
+
+    private void Validate(Location location)
+    {
+        if (!IsUnique(location)) throw new DuplicateEntityException<Location>();
+
+        if (!_appDataContext.Addresses.Select(address => address.Id).Contains(location.AddressId))
+            throw new EntityValidationException<Address>("Invalid address id!");
+    }
 }

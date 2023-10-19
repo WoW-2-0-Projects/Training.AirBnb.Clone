@@ -87,8 +87,8 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
                 return false;
 
             if (!(country.CountryDialingCode[0].Equals("+")
-                || country.CountryDialingCode.Length > 1
-                || country.CountryDialingCode.Length < 5))
+                || country.CountryDialingCode.Length < 2
+                || country.CountryDialingCode.Length > 5))
                 return false;
 
             for (int letter = 1; letter < country.CountryDialingCode.Length; letter++)

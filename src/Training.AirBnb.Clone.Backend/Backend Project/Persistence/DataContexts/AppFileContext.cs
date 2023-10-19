@@ -29,13 +29,17 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingCategoryType, Guid> ListingCategoryTypes => Set<ListingCategoryType, Guid>(nameof(ListingCategoryTypes));
     public IFileSet<ListingFeature, Guid> ListingFeatures => Set<ListingFeature, Guid>(nameof(ListingFeatures));
     public IFileSet<ListingProperty, Guid> ListingProperties => Set<ListingProperty, Guid>(nameof(ListingProperties));
+    public IFileSet<ListingPropertyType, Guid> ListingPropertyTypes => Set<ListingPropertyType, Guid>(nameof(ListingPropertyTypes));
     public IFileSet<ListingAmenities, Guid> ListingAmenities => Set<ListingAmenities, Guid>(nameof(ListingAmenities));
     public IFileSet<ListingOccupancy, Guid> ListingOccupancies => Set<ListingOccupancy, Guid>(nameof(ListingOccupancies));
     public IFileSet<Listing, Guid> Listings => Set<Listing, Guid>(nameof(Listings));
     public IFileSet<PhoneNumber, Guid> PhoneNumbers => Set<PhoneNumber, Guid>(nameof(PhoneNumbers));
     public IFileSet<Rating, Guid> Ratings => Set<Rating, Guid>(nameof(Ratings));
+    public IFileSet<Description, Guid> Descriptions => Set<Description, Guid>(nameof(Descriptions));
 
     public IFileSet<Location, Guid> Locations => Set<Location, Guid>(nameof(Locations));
+
+    public IFileSet<ListingRules, Guid> ListingRules => Set<ListingRules, Guid>(nameof(ListingRules));
 
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {

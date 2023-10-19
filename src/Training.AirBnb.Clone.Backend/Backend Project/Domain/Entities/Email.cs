@@ -12,6 +12,5 @@ public class Email : SoftDeletedEntity
     public string Body { get; set;}
     public string ReceiverEmailAddress { get; set; }
     public string SenderEmailAddress { get; set; }
-    public bool IsSent { get; set; }
-       
+    public bool IsSent { get; set; }     
 }
