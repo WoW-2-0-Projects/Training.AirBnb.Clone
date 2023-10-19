@@ -58,8 +58,8 @@ public class ScenicViewService : IEntityBaseService<ScenicView>
         return scenicView;
     }
 
-    public ValueTask<ScenicView> DeleteAsync(ScenicView entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-    => DeleteAsync(entity, saveChanges, cancellationToken);
+    public ValueTask<ScenicView> DeleteAsync(ScenicView scenicView, bool saveChanges = true, CancellationToken cancellationToken = default)
+    => DeleteAsync(scenicView.Id, saveChanges, cancellationToken);
 
     private void Validate(ScenicView scenicView)
     {
