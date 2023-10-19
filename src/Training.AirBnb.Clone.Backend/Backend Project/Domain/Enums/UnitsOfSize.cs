@@ -2,6 +2,6 @@
 
 public enum UnitsOfSize
 {
-    SquareMetres,
-    SquareFeet
+    SquareMetres = 0,
+    SquareFeet = 1
 }

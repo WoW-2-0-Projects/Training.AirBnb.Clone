@@ -1,4 +1,5 @@
 ﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Enums;
 using Backend_Project.Persistence.DataContexts;
 
 namespace Backend_Project.Persistence.SeedData;
@@ -15,18 +16,23 @@ public static class ListingPropertyTypeSeedData
     {
         var listingPropertyTypes = new List<ListingPropertyType>();
 
-        var listingCategories = context.ListingCategories.ToList();
-        var listingTypes = context.ListingTypes.ToList();
-
         var random = new Random();
 
         for(int index = 0; index < 1000; index++)
         {
+            var floorsCount = random.Next(1, 180);
+
             listingPropertyTypes.Add(new ListingPropertyType()
             {
-               // CategoryId = listingCategories[random.Next(0, listingCategories.Count())],
-               // TypeId = listingCategoryTypes[random.Next(0, context.ListingTypes.)]
-
+                CategoryId = context.ListingCategoryTypes.ToList()[random.Next(0, context.ListingCategoryTypes
+                    .ToList().Count())].ListingCategoryId,
+                TypeId = context.ListingCategoryTypes.ToList()[random.Next(0, context.ListingCategoryTypes
+                    .ToList().Count())].ListingTypeId,
+                FloorsCount = floorsCount,
+                ListingFloor = random.Next(1, floorsCount),
+                YearBuilt = random.Next(1900, DateTime.UtcNow.Year),
+                PropertySize = random.Next(1,1_000_000_000),
+                UnitOfSize = floorsCount % 2 == 0 ?  UnitsOfSize.SquareMetres : UnitsOfSize.SquareFeet                
             });
         }
 
