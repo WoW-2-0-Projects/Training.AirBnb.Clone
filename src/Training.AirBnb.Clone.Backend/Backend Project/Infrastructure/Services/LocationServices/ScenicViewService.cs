@@ -49,13 +49,13 @@ public class ScenicViewService : IEntityBaseService<ScenicView>
 
     public async ValueTask<ScenicView> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var scenicView = await GetByIdAsync(id);
+        var foundScenicView = await GetByIdAsync(id);
 
-        await _appDataContext.ScenicViews.RemoveAsync(scenicView, cancellationToken);
+        await _appDataContext.ScenicViews.RemoveAsync(foundScenicView, cancellationToken);
 
         if (saveChanges) await _appDataContext.SaveChangesAsync();
 
-        return scenicView;
+        return foundScenicView;
     }
 
     public ValueTask<ScenicView> DeleteAsync(ScenicView scenicView, bool saveChanges = true, CancellationToken cancellationToken = default)
