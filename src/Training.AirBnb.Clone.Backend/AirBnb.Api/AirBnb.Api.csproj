@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Backend Project\Backend Project.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\DataStorage\" />
+  </ItemGroup>
+
 </Project>

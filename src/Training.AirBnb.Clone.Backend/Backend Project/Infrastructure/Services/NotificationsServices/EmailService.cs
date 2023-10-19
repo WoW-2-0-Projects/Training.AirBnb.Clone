@@ -11,9 +11,9 @@ public class EmailService : IEntityBaseService<Email>
 {
     private readonly IDataContext _appDataContext;
     private readonly IValidationService _validationService;
-    public EmailService(IDataContext dataContext, IValidationService validationService)
+    public EmailService(IDataContext appDataContext, IValidationService validationService)
     {
-        _appDataContext = dataContext;
+        _appDataContext = appDataContext;
         _validationService = validationService;
     }
     public async ValueTask<Email> CreateAsync(Email email, bool saveChanges = true, CancellationToken cancellationToken = default)
