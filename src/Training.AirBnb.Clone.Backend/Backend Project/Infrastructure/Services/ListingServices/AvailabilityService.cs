@@ -73,7 +73,7 @@ public class AvailabilityService : IEntityBaseService<Availability>
 
     private void ValidateAvailability(Availability availability)
     {
-        if (availability.MinNights < 1 | availability.MinNights > availability.MaxNights)
+        if (availability.MinNights < 1 || availability.MinNights > availability.MaxNights)
             throw new EntityValidationException<Availability>("Availability minNights is not valid!");
 
         if (availability.MaxNights > 730)
@@ -83,7 +83,7 @@ public class AvailabilityService : IEntityBaseService<Availability>
             throw new EntityValidationException<Availability>("Availability Propertiondays isn't valid!");
 
         if (availability.AvailabilityWindow < DateTime.UtcNow.Month + 3
-            | availability.AvailabilityWindow > DateTime.UtcNow.Month + 24)
+            || availability.AvailabilityWindow > DateTime.UtcNow.Month + 24)
             throw new EntityValidationException<Availability>("Availability Window isn't valid!");
     }
 
