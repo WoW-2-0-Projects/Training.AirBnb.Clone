@@ -10,9 +10,9 @@ public class AvailabilityService : IEntityBaseService<Availability>
 {
     private readonly IDataContext _appDataContext;
 
-    public AvailabilityService(IDataContext dataContext)
+    public AvailabilityService(IDataContext appDataContext)
     {
-        _appDataContext = dataContext;
+        _appDataContext = appDataContext;
     }
 
     public async ValueTask<Availability> CreateAsync(Availability availability, bool saveChanges = true, CancellationToken cancellationToken = default)
