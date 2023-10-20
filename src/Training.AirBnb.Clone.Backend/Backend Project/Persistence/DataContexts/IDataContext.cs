@@ -35,5 +35,7 @@ public interface IDataContext
     IFileSet<Description, Guid> Descriptions { get; }
     IFileSet<Availability, Guid> Availabilities { get; }
 
+    IFileSet<ScenicView, Guid> ScenicViews { get; }
+
     ValueTask SaveChangesAsync();
 }
