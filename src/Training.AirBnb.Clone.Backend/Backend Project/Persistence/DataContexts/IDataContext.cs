@@ -35,5 +35,7 @@ public interface IDataContext
 
     IFileSet<ScenicView, Guid> ScenicViews { get; }
 
+    IFileSet<LocationScenicViews, Guid> LocationScenicViews { get; }
+
     ValueTask SaveChangesAsync();
 }
