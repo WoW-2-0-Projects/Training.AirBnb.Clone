@@ -78,8 +78,8 @@ public class BlockedNightService : IEntityBaseService<BlockedNight>
         if(blockedNight.Date < DateOnly.FromDateTime(DateTime.Today))
             return false;
 
-        if(_dataContext.BlockedNights.Any(x => x.Date == blockedNight.Date) && 
-            _dataContext.Listings.Any(x => x.Id == blockedNight.Id))
+        if(_dataContext.BlockedNights.Any(blocked => blocked.Date == blockedNight.Date) && 
+            _dataContext.Listings.Any(blocked => blocked.Id == blockedNight.ListingId))
             return false;
 
         return true;
