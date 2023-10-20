@@ -47,7 +47,7 @@ public class AvailabilityService : IEntityBaseService<Availability>
 
         findAvailability.MinNights = availability.MinNights;
         findAvailability.MaxNights = availability.MaxNights;
-        findAvailability.PropertionDays = availability.PropertionDays;
+        findAvailability.PreparationDays = availability.PreparationDays;
         findAvailability.AvailabilityWindow = availability.AvailabilityWindow;
 
         await _appDataContext.Availabilities.UpdateAsync(findAvailability, cancellationToken);
@@ -79,11 +79,12 @@ public class AvailabilityService : IEntityBaseService<Availability>
         if (availability.MaxNights > 730)
             throw new EntityValidationException<Availability>("Availability maxNights isn't valid!");
 
-        if (availability.PropertionDays is not null && availability.PropertionDays > 2)
+        if (availability.PreparationDays is not null && (availability.PreparationDays > 2
+            || availability.PreparationDays < 0))
             throw new EntityValidationException<Availability>("Availability Propertiondays isn't valid!");
 
-        if (availability.AvailabilityWindow < DateTime.UtcNow.Month + 3
-            || availability.AvailabilityWindow > DateTime.UtcNow.Month + 24)
+        if (availability.AvailabilityWindow < 3
+            || availability.AvailabilityWindow > 24)
             throw new EntityValidationException<Availability>("Availability Window isn't valid!");
     }
 
