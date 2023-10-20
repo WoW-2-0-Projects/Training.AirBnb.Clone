@@ -33,6 +33,7 @@ public interface IDataContext
     IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
     IFileSet<ListingPropertyType, Guid> ListingPropertyTypes { get; }
     IFileSet<Description, Guid> Descriptions { get; }
+    IFileSet<BlockedNight, Guid>  BlockedNights { get; }
 
     IFileSet<ScenicView, Guid> ScenicViews { get; }
 

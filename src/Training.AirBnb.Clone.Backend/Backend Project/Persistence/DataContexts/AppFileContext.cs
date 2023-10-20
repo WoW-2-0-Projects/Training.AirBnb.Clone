@@ -42,6 +42,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ListingRules, Guid> ListingRules => Set<ListingRules, Guid>(nameof(ListingRules));
 
     public IFileSet<ScenicView, Guid> ScenicViews => Set<ScenicView, Guid>(nameof(ScenicViews));
+    public IFileSet<BlockedNight, Guid> BlockedNights => Set<BlockedNight, Guid>(nameof(BlockedNights));
 
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
