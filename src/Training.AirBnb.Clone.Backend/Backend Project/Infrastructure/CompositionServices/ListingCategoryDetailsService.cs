@@ -2,6 +2,7 @@
 using Backend_Project.Application.Listings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
+using Backend_Project.Domain.Extensions;
 
 namespace Backend_Project.Infrastructure.CompositionServices;
 
@@ -63,7 +64,6 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         return await _listingFeatureService.DeleteAsync(featureId, saveChanges, cancellationToken);
     }
 
-    // Check
     public async ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.CategoryId == categoryId).Any())
@@ -76,28 +76,28 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         return deletedCategory;
     }
 
-    public async ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    public ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var relations = _listingCategoryTypeService
             .Get(relation => relation.ListingCategoryId == categoryId);
 
-        var listingTypes = new List<ListingType>();
+        var listingTypes = _listingTypeService.Get(type => true);
 
-        foreach (var relation in relations)
-            listingTypes.Add(await _listingTypeService.GetByIdAsync(relation.ListingTypeId));
+        var query = from categoryType in relations
+                    join type in listingTypes on categoryType.ListingTypeId equals type.Id
+                    select type;
 
-        return listingTypes;
+        return new ValueTask<ICollection<ListingType>>(query.ToList());
     }
 
-    // Check
     public async ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.TypeId == typeId).Any())
             throw new EntityNotDeletableException<ListingType>("There are active listings of this type.");
 
-        await DeleteListingTypesRelations(typeId, saveChanges, cancellationToken);
-
         var deletedFeatureOption = await _listingTypeService.DeleteAsync(typeId, saveChanges, cancellationToken);
+
+        await DeleteListingTypesRelations(typeId, saveChanges, cancellationToken);
 
         return deletedFeatureOption;
     }
@@ -114,13 +114,14 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     {
         await _listingCategoryService.GetByIdAsync(categoryId, cancellationToken);
 
-        foreach (var featureOption in listingTypes)
+        foreach (var type in listingTypes)
         {
-            await _listingTypeService.GetByIdAsync(featureOption, cancellationToken);
+            await _listingTypeService.GetByIdAsync(type, cancellationToken);
+
             var newRelation = new ListingCategoryType()
             {
                 ListingCategoryId = categoryId,
-                ListingTypeId = featureOption
+                ListingTypeId = type
             };
             await _listingCategoryTypeService.CreateAsync(newRelation, saveChanges, cancellationToken);
         }
@@ -130,42 +131,31 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
     public async ValueTask<bool> UpdateListingCategoryTypesAsync(Guid categoryId, List<Guid> updatedListingTypes, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundFeatureOptions = await GetListingTypesByCategoryIdAsync(categoryId, cancellationToken);
+        var foundTypes = await GetListingTypesByCategoryIdAsync(categoryId, cancellationToken);
 
-        var deletedFeatureOptions = foundFeatureOptions.
-            Select(feature => feature.Id)
-            .Except(updatedListingTypes)
-            .ToList();
 
-        var newFeatureOptions = updatedListingTypes
-            .Except(foundFeatureOptions
-                .Select(feature => feature.Id))
-            .ToList();
+        var (newTypes, deletedTypes) = foundTypes
+            .Select(type => type.Id)
+            .GetAddedAndRemovedItems(updatedListingTypes);
 
-        var listingCategoryFeatureOptions = _listingCategoryTypeService
-            .Get(relation => relation.ListingCategoryId == categoryId);
-
-        foreach (var newOption in newFeatureOptions)
-        {
-            await _listingTypeService.GetByIdAsync(newOption, cancellationToken);
-
-            var newRelation = new ListingCategoryType
-            {
-                ListingCategoryId = categoryId,
-                ListingTypeId = newOption
-            };
-
-            await _listingCategoryTypeService.CreateAsync(newRelation);
-        }
-
-        foreach (var deletedOption in deletedFeatureOptions)
-        {
-            var deletedRelationId = listingCategoryFeatureOptions
-                .Single(relation => relation.ListingTypeId == deletedOption).Id;
-            await _listingCategoryTypeService.DeleteAsync(deletedRelationId);
-        }
+        await AddListingCategoryTypesAsync(categoryId, newTypes.ToList(), saveChanges, cancellationToken);
+        await DeleteListingCategoryTypes(categoryId, deletedTypes.ToList(), saveChanges, cancellationToken);
 
         return true;
+    }
+
+    private async ValueTask DeleteListingCategoryTypes(Guid categoryId, ICollection<Guid> typesId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var listingCategoryTypes = _listingCategoryTypeService
+           .Get(relation => relation.ListingCategoryId == categoryId);
+
+        foreach (var type in typesId)
+        {
+            var deletedRelationId = listingCategoryTypes
+                .Single(relation => relation.ListingTypeId == type).Id;
+
+            await _listingCategoryTypeService.DeleteAsync(deletedRelationId, saveChanges, cancellationToken);
+        }
     }
 
     private async ValueTask DeleteCategoryRelations(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -192,17 +182,19 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
             await _listingFeatureService.DeleteAsync(feature, saveChanges, cancellationToken);
     }
 
-    // Check
-    private async ValueTask<ICollection<ListingProperty>> GetListingPropertiesByTypeId(Guid typeId)
+    private ValueTask<ICollection<ListingProperty>> GetListingPropertiesByTypeId(Guid typeId)
     {
-        var listingPropertyTypes = _listingPropertyTypeService.Get(propertyType => propertyType.TypeId == typeId);
+        var listingPropertyTypes = _listingPropertyTypeService
+            .Get(propertyType => propertyType.TypeId == typeId);
+
         var listings = _listingService.Get(listing => true);
+        var listingProperties = _listingPropertyService.Get(property => true);
 
-        var listingIds = from propertyTypes in listingPropertyTypes
-                    join listing in listings on propertyTypes.Id equals listing.PropertyTypeId into listingProperty
-                    from listingId in listingProperty.Select(listing => listing.Id)
-                    select listingId;
+        var properties = from propertyTypes in listingPropertyTypes
+                         join listing in listings on propertyTypes.Id equals listing.PropertyTypeId
+                         join property in listingProperties on listing.Id equals property.ListingId
+                         select property;
 
-        return await _listingPropertyService.GetAsync(listingIds);
+        return new ValueTask<ICollection<ListingProperty>>(properties.ToList());
     }
 }
