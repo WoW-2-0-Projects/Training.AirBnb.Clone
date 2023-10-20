@@ -33,5 +33,7 @@ public interface IDataContext
     IFileSet<ListingPropertyType, Guid> ListingPropertyTypes { get; }
     IFileSet<Description, Guid> Descriptions { get; }
 
+    IFileSet<ScenicView, Guid> ScenicViews { get; }
+
     ValueTask SaveChangesAsync();
 }

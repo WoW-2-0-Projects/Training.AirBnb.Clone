@@ -40,6 +40,8 @@ public class AppFileContext : FileContext, IDataContext
 
     public IFileSet<ListingRules, Guid> ListingRules => Set<ListingRules, Guid>(nameof(ListingRules));
 
+    public IFileSet<ScenicView, Guid> ScenicViews => Set<ScenicView, Guid>(nameof(ScenicViews));
+
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;
