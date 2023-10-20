@@ -9,32 +9,32 @@ public static class ListingPropertySeedData
     public static async ValueTask InitializeListingPropertySeedData(this IDataContext context)
     {
         if (!context.ListingPropertyTypes.Any())
-            await context.InitializeListingProperty();
+            await context.InitializeListingProperty(1000);
     }
 
-    private static async ValueTask InitializeListingProperty(this IDataContext context)
+    private static async ValueTask InitializeListingProperty(this IDataContext context, int count)
     {
         var listingPropertyTypes = new List<ListingPropertyType>();
 
         var random = new Random();
 
-        for (int index = 0; index < 1000; index++)
+        for (int index = 0; index < count; index++)
         {
             var floorsCount = random.Next(1, 180);
+            var categoryTypes = context.ListingCategoryTypes.ToList()[random.Next(context.ListingCategoryTypes.Count())];
 
             listingPropertyTypes.Add(new ListingPropertyType()
             {
-                CategoryId = context.ListingCategoryTypes.ToList()[random.Next(0, context.ListingCategoryTypes
-                    .ToList().Count())].ListingCategoryId,
-                TypeId = context.ListingCategoryTypes.ToList()[random.Next(0, context.ListingCategoryTypes
-                    .ToList().Count())].ListingTypeId,
+                CategoryId = categoryTypes.ListingCategoryId,
+                TypeId = categoryTypes.ListingTypeId,
                 FloorsCount = floorsCount,
                 ListingFloor = random.Next(1, floorsCount),
                 YearBuilt = random.Next(1900, DateTime.UtcNow.Year),
-                PropertySize = random.Next(1, 1_000_000_000),
+                PropertySize = random.Next(1, 10_000),
                 UnitOfSize = floorsCount % 2 == 0 ? UnitsOfSize.SquareMetres : UnitsOfSize.SquareFeet
             });
         }
+
         await context.ListingPropertyTypes.AddRangeAsync(listingPropertyTypes);
         await context.SaveChangesAsync();
     }
