@@ -48,9 +48,7 @@ public class ListingService : IEntityBaseService<Listing>
         var foundListing = await GetByIdAsync(listing.Id, cancellationToken);
 
         foundListing.Title = listing.Title;
-        foundListing.Description = listing.Description;
         foundListing.Status = listing.Status;
-        foundListing.OccupancyId = listing.OccupancyId;
         foundListing.Price = listing.Price;
         
         await _appDataContext.Listings.UpdateAsync(foundListing, cancellationToken);
@@ -75,8 +73,7 @@ public class ListingService : IEntityBaseService<Listing>
         => await DeleteAsync(listing.Id, saveChanges, cancellationToken);
 
     private bool IsValidListing(Listing listing)
-        => (!string.IsNullOrWhiteSpace(listing.Title) && listing.Title.Length > 2 && listing.Title.Length <= 50)
-            && (!string.IsNullOrWhiteSpace(listing.Description) && listing.Description.Length > 2 && listing.Description.Length <= 4000)
+        => (!string.IsNullOrWhiteSpace(listing.Title) && listing.Title.Length > 2 && listing.Title.Length <= 30)
             && listing.Price > 0;
 
     private IQueryable<Listing> GetUndeletedListings()
