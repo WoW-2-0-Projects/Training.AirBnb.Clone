@@ -17,7 +17,7 @@ public class BlockedNightService : IEntityBaseService<BlockedNight>
     public async ValueTask<BlockedNight> CreateAsync(BlockedNight blockedNight, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidateBlockedNights(blockedNight))
-            throw new EntityValidationException<BlockedNight>("this days are gone");
+            throw new EntityValidationException<BlockedNight>("This Blocked Night is not Valid!!");
 
         await _dataContext.BlockedNights.AddAsync(blockedNight, cancellationToken);
 
