@@ -4,7 +4,7 @@ using Backend_Project.Persistence.DataContexts;
 
 namespace Backend_Project.Persistence.SeedData;
 
-public static class ListingPropertySeedData
+public static class ListingPropertyTypeSeedData
 {
     public static async ValueTask InitializeListingPropertySeedData(this IDataContext context)
     {
