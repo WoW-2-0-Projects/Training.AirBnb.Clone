@@ -112,6 +112,7 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IEntityBaseService<Listing>, ListingService>()
             .AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>()
+            .AddScoped<IEntityBaseService<ListingPropertyType>, ListingPropertyTypeService>()
             .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>();
 
         return builder;
