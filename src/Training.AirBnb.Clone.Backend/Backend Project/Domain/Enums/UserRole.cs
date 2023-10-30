@@ -3,7 +3,7 @@ namespace Backend_Project.Domain.Enums;
 
 public enum UserRole
 {
-    Admin,
-    Host,
-    Guest
+    Admin = 0, 
+    Host = 1,
+    Guest = 2
 }
