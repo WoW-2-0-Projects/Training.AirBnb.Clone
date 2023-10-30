@@ -1,6 +1,8 @@
 ﻿using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Extensions;
 using Backend_Project.Persistence.DataContexts;
 using Bogus;
+using System.Security.Cryptography;
 
 namespace Backend_Project.Persistence.SeedData;
 
@@ -19,6 +21,12 @@ public static class LocationSeedData
 
         if (!context.Locations.Any())
             await context.AddLocations(100);
+
+        if(!context.ScenicViews.Any())
+            await context.AddScenicViews();
+
+        if (!context.LocationScenicViews.Any())
+            await context.AddLocationScenicView(150);
     }
     public static async ValueTask AddCountries(this IDataContext context)
     {
@@ -185,6 +193,46 @@ public static class LocationSeedData
             .RuleFor(location => location.GettingAround, faker => faker.Lorem.Text());
 
         await context.Locations.AddRangeAsync(locationFaker.Generate(count));
+        await context.SaveChangesAsync();
+    }
+    public static async ValueTask AddScenicViews(this IDataContext context)
+    {
+        var ScenicViews = new List<ScenicView>
+        {
+            new ScenicView{ Name = "Bay view" },
+            new ScenicView{ Name = "Beach view" },
+            new ScenicView{ Name = "Canal view" },
+            new ScenicView{ Name = "City skyline view" },
+            new ScenicView{ Name = "Courtyard view" },
+            new ScenicView{ Name = "Desert view" },
+            new ScenicView{ Name = "Garden view" },
+            new ScenicView{ Name = "Golf course view" },
+            new ScenicView{ Name = "Harbour view" },
+            new ScenicView{ Name = "Lake view" },
+            new ScenicView{ Name = "Marina view" },            
+            new ScenicView{ Name = "Mountain view" },
+            new ScenicView{ Name = "Ocean view" },
+            new ScenicView{ Name = "Park view" },
+            new ScenicView{ Name = "Pool view" },
+            new ScenicView{ Name = "Resort view" },
+            new ScenicView{ Name = "River view" },
+            new ScenicView{ Name = "Sea view" },
+            new ScenicView{ Name = "Valley view" },
+            new ScenicView{ Name = "Vineyard view" },
+        };
+
+        await context.ScenicViews.AddRangeAsync(ScenicViews);
+        await context.SaveChangesAsync();
+    }
+    public static async ValueTask AddLocationScenicView(this IDataContext context, int count)
+    {
+        var locationScenicViewFaker = new Faker<LocationScenicViews>()
+            .RuleFor(lsv => lsv.LocationId, faker => faker.PickRandom(
+                context.Locations.Select(location => location.Id)))
+            .RuleFor(lsv => lsv.ScenicViewId, faker => faker.PickRandom(
+                context.ScenicViews.Select(scenicView => scenicView.Id)));
+
+        await context.LocationScenicViews.AddRangeAsync(locationScenicViewFaker.Generate(count));
         await context.SaveChangesAsync();
     }
 }
