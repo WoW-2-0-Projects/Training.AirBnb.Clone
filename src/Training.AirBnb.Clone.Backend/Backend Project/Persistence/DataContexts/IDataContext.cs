@@ -32,8 +32,8 @@ public interface IDataContext
     IFileSet<PhoneNumber, Guid> PhoneNumbers { get; }
     IFileSet<ListingPropertyType, Guid> ListingPropertyTypes { get; }
     IFileSet<Description, Guid> Descriptions { get; }
-
     IFileSet<ScenicView, Guid> ScenicViews { get; }
+    IFileSet<ListingRegistrationProgress, Guid> ListingRegistrationProgresses { get; }
 
     ValueTask SaveChangesAsync();
 }
