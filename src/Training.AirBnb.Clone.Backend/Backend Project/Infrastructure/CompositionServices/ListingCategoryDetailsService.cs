@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings;
+using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Domain.Extensions;

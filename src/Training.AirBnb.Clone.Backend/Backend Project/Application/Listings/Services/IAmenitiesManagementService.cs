@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 
-namespace Backend_Project.Application.Listings
+namespace Backend_Project.Application.Listings.Services
 {
     public interface IAmenitiesManagementService
     {

@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 
-namespace Backend_Project.Application.Notifications;
+namespace Backend_Project.Application.Notifications.Services;
 
 public interface IEmailSenderService
 {
