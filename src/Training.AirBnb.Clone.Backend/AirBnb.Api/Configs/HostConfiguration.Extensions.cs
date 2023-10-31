@@ -112,6 +112,7 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingServices(this WebApplicationBuilder builder)
     {
         builder.Services.Configure<ListingPropertyTypeSettings>(builder.Configuration.GetSection(nameof(ListingPropertyTypeSettings)));
+        builder.Services.Configure<ListingSettings>(builder.Configuration.GetSection(nameof(ListingSettings)));
 
         builder.Services
             .AddScoped<IEntityBaseService<Listing>, ListingService>()
@@ -124,6 +125,8 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddListingCategoryServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<ListingTypeSettings>(builder.Configuration.GetSection(nameof(ListingTypeSettings)));
+
         builder.Services
             .AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>()
             .AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>()
