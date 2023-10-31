@@ -2,6 +2,7 @@
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Application.Validation;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Infrastructure.CompositionServices;
@@ -113,12 +114,17 @@ public static partial class HostConfiguration
     {
         builder.Services.Configure<ListingPropertyTypeSettings>(builder.Configuration.GetSection(nameof(ListingPropertyTypeSettings)));
         builder.Services.Configure<ListingSettings>(builder.Configuration.GetSection(nameof(ListingSettings)));
+        builder.Services.Configure<ListingRulesSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
+        builder.Services.Configure<ListingRegistrationProgressSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
+
 
         builder.Services
             .AddScoped<IEntityBaseService<Listing>, ListingService>()
             .AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>()
             .AddScoped<IEntityBaseService<ListingPropertyType>, ListingPropertyTypeService>()
-            .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>();
+            .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>()
+            .AddScoped<IEntityBaseService<ListingRules>, ListingRulesService>()
+            .AddScoped<IEntityBaseService<ListingRegistrationProgress>, ListingRegistrationProgressService>();
 
         return builder;
     }
@@ -173,6 +179,8 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddReviewServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<RatingSettings>(builder.Configuration.GetSection(nameof(RatingSettings)));
+
         builder.Services
             .AddScoped<IEntityBaseService<Comment>, CommentService>()
             .AddScoped<IEntityBaseService<Rating>, RatingService>();
