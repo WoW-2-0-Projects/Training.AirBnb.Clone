@@ -1,17 +1,21 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class DescriptionService : IEntityBaseService<Description>
 {
     private readonly IDataContext _dataContext;
+    private readonly ListingSettings _descriptionSettings;
 
-    public DescriptionService(IDataContext dataContext)
+    public DescriptionService(IDataContext dataContext, IOptions<ListingSettings> descriptionSettings)
     {
         _dataContext = dataContext;
+        _descriptionSettings = descriptionSettings.Value;
     }
 
     public async ValueTask<Description> CreateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -76,7 +80,7 @@ public class DescriptionService : IEntityBaseService<Description>
 
     private bool ValidateDescription(Description description)
     {
-        if (description.ListingDescription.Length > 500 || string
+        if (description.ListingDescription.Length > _descriptionSettings.ListingDescriptionMaxLength || string
             .IsNullOrWhiteSpace(description.ListingDescription))
             return false;
 

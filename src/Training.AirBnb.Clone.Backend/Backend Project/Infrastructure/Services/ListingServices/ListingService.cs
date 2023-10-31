@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingService : IEntityBaseService<Listing>
 { 
     private readonly IDataContext _appDataContext;
+    private readonly ListingSettings _listingSettings;
 
-    public ListingService(IDataContext appDataContext)
+    public ListingService(IDataContext appDataContext, IOptions<ListingSettings> listingSettings)
     {
         _appDataContext = appDataContext;
+        _listingSettings = listingSettings.Value;
     }
 
     public async ValueTask<Listing> CreateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -73,8 +77,8 @@ public class ListingService : IEntityBaseService<Listing>
         => await DeleteAsync(listing.Id, saveChanges, cancellationToken);
 
     private bool IsValidListing(Listing listing)
-        => (!string.IsNullOrWhiteSpace(listing.Title) && listing.Title.Length > 2 && listing.Title.Length <= 30)
-            && listing.Price > 0;
+        => (!string.IsNullOrWhiteSpace(listing.Title) && listing.Title.Length >= _listingSettings.MinTitleLength && listing.Title.Length <= _listingSettings.MaxTitleLength)
+            && listing.Price > _listingSettings.MinListingPrice;
 
     private IQueryable<Listing> GetUndeletedListings()
         => _appDataContext.Listings.Where(listing => !listing.IsDeleted).AsQueryable();
