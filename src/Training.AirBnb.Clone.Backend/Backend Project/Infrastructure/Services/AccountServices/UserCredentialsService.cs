@@ -9,6 +9,7 @@ namespace Backend_Project.Infrastructure.Services.AccountServices;
 public class UserCredentialsService : IEntityBaseService<UserCredentials>
 {
     private readonly IDataContext _appDataContext;
+
     public UserCredentialsService(IDataContext appDataContext)
     {
         _appDataContext = appDataContext;

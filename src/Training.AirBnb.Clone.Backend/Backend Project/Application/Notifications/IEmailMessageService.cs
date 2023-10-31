@@ -4,5 +4,5 @@ namespace Backend_Project.Application.Notifications;
 
 public interface IEmailMessageService
 {
-    ValueTask<EmailMessage> ConvertToMessage(EmailTemplate entity, IEnumerable<KeyValuePair<string, string>> values, Guid senderUserId, Guid receiverUserId);
+    ValueTask<EmailMessage> ConvertToMessage(EmailTemplate emailTemplate, IEnumerable<KeyValuePair<string, string>> values, Guid senderUserId, Guid receiverUserId);
 }

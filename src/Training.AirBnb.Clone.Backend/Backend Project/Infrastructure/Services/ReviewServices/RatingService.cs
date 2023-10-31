@@ -70,7 +70,7 @@ public class RatingService : IEntityBaseService<Rating>
         => await DeleteAsync(rating.Id, saveChanges, cancellationToken);
     
     private bool IsValidRating(Rating rating) =>
-        rating.Mark > 0 && rating.GivenBy != default && rating.ListingId != default;
+        rating.Mark > 0;
 
     private IQueryable<Rating> GetUndeletedRatings() =>
         _appDataContext.Ratings.Where(rating => !rating.IsDeleted).AsQueryable();

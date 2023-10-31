@@ -76,7 +76,7 @@ public class DescriptionService : IEntityBaseService<Description>
 
     private bool ValidateDescription(Description description)
     {
-        if (description.ListingDescription.Length > 500 | string
+        if (description.ListingDescription.Length > 500 || string
             .IsNullOrWhiteSpace(description.ListingDescription))
             return false;
 

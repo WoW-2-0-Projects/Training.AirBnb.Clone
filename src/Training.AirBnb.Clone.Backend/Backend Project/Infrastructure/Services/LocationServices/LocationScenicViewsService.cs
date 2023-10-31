@@ -2,7 +2,6 @@
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices;
@@ -48,7 +47,7 @@ public class LocationScenicViewsService : IEntityBaseService<LocationScenicViews
     {
         var foundLocationScenicView = await GetByIdAsync(id);
 
-        _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
+        await _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
 
         if (saveChanges) await _context.SaveChangesAsync();
 

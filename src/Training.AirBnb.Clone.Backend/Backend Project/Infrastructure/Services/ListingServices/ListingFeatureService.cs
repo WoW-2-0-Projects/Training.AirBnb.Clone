@@ -94,7 +94,6 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     private bool IsValidFeature(ListingFeature feature)
         => !string.IsNullOrWhiteSpace(feature.Name)
-            && feature.Name.Length > 2
             && feature.MinValue >= 0;
 
     private bool FeatureExists(ListingFeature feature)

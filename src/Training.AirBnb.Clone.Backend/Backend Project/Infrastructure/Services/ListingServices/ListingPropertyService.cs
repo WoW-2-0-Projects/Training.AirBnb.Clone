@@ -83,7 +83,6 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     {
         if (string.IsNullOrWhiteSpace(property.PropertyName)) return false;
         if (property.PropertyCount < 1) return false;
-        if (property.ListingId == Guid.Empty) return false;
 
         return true;
     }

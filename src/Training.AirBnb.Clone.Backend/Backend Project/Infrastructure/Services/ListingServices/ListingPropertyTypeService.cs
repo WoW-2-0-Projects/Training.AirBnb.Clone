@@ -88,7 +88,7 @@ public class ListingPropertyTypeService : IEntityBaseService<ListingPropertyType
         if (listingPropertyType.PropertySize < 0)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's PropertySize isn't valid!");
 
-        if (listingPropertyType.PropertySize > 0 && listingPropertyType.UnitOfSize is null)
+        if (listingPropertyType.PropertySize is not null && listingPropertyType.UnitOfSize is null)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's Unit of size isn't valid");
     }
 

@@ -81,8 +81,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         }
 
         private bool IsValidListingCategory(ListingCategory listingCategory)
-            => !string.IsNullOrWhiteSpace(listingCategory.Name)
-            && listingCategory.Name.Length > 2;
+            => !string.IsNullOrWhiteSpace(listingCategory.Name);
 
         private IQueryable<ListingCategory> GetUndelatedListingCategories() => _appDataContext.ListingCategories
             .Where(res => !res.IsDeleted).AsQueryable();

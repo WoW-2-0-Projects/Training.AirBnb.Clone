@@ -1,5 +1,4 @@
 using Backend_Project.Application.Validation;
-using Backend_Project.Domain.Entities;
 using System.Text.RegularExpressions;
 
 namespace Backend_Project.Infrastructure.Services;

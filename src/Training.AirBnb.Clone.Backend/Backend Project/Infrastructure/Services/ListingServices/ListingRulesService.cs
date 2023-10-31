@@ -109,11 +109,9 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
             throw new EntityValidationException<ListingRules>("Invalid 'CheckInTimeStart' or 'CheckInTimeEnd'");
         }
 
-        if (listingRules.AdditionalRules.All(@char => @char == ' '))
+        if (listingRules.AdditionalRules is not null && listingRules.AdditionalRules.All(@char => @char == ' '))
         {
             listingRules.AdditionalRules = null;
         }
-
     }
-
 }
