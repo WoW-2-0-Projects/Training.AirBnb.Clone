@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingRegistrationProgressService : IEntityBaseService<ListingRegistrationProgress>
 {
     private readonly IDataContext _appFileContext;
+    private readonly ListingRegistrationProgressSettings _registrationSettings;
 
-    public ListingRegistrationProgressService(IDataContext context)
+    public ListingRegistrationProgressService(IDataContext context, IOptions<ListingRegistrationProgressSettings> registrationSettings)
     {
         _appFileContext = context;
+        _registrationSettings = registrationSettings.Value;
     }
 
     public async ValueTask<ListingRegistrationProgress> CreateAsync(ListingRegistrationProgress progress, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -70,13 +74,13 @@ public class ListingRegistrationProgressService : IEntityBaseService<ListingRegi
         => await DeleteAsync(progress.Id, saveChanges, cancellationToken);
 
     private bool IsValidProgress(ListingRegistrationProgress progress)
-        => progress.Progress > 0 && progress.Progress <= 9;
+        => progress.Progress >= _registrationSettings.ProgressMinValue && progress.Progress <= _registrationSettings.ProgressMaxValue;
 
     private bool IsUnique(ListingRegistrationProgress progress)
         => GetUndeletedProgresses().Any(self => self.ListingId == progress.ListingId);
 
     private bool IsValidOnUpdate(ListingRegistrationProgress oldProgress, ListingRegistrationProgress updatedProgress)
-        => oldProgress.Progress <= updatedProgress.Progress && updatedProgress.Progress <= 9;
+        => oldProgress.Progress <= updatedProgress.Progress && updatedProgress.Progress <= _registrationSettings.ProgressMaxValue;
 
     private IEnumerable<ListingRegistrationProgress> GetUndeletedProgresses()
         => _appFileContext.ListingRegistrationProgresses.Where(self => !self.IsDeleted);
