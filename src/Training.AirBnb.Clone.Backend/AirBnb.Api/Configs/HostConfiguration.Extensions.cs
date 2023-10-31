@@ -179,7 +179,7 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddReviewServices(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<RatingSettings>(builder.Configuration.GetSection(nameof(RatingSettings)));
+        builder.Services.Configure<ReviewSettings>(builder.Configuration.GetSection(nameof(ReviewSettings)));
 
         builder.Services
             .AddScoped<IEntityBaseService<Comment>, CommentService>()

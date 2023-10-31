@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReviewServices
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
     public class CommentService : IEntityBaseService<Comment>
     {
         private readonly IDataContext _appDataContext;
+        private readonly ReviewSettings _commentSettings;
 
-        public CommentService(IDataContext appDataContext)
+        public CommentService(IDataContext appDataContext, IOptions<ReviewSettings> commentSettings)
         {
             _appDataContext = appDataContext;
+            _commentSettings = commentSettings.Value;
         }
 
         public async ValueTask<Comment> CreateAsync(Comment comment, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -76,7 +80,7 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
        
         private bool IsValidCommentMessage(string commentMessage)
         {
-            if (!string.IsNullOrWhiteSpace(commentMessage) && commentMessage.Length < 1000)
+            if (!string.IsNullOrWhiteSpace(commentMessage) && commentMessage.Length <= _commentSettings.MaxCommentLength)
                 return true;
             else return false;
         }

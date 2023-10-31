@@ -11,9 +11,9 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
     public class ListingRatingService : IEntityBaseService<ListingRating>
     {
         private readonly IDataContext _appDataContext;
-        private readonly RatingSettings _ratingSettings;
+        private readonly ReviewSettings _ratingSettings;
 
-        public ListingRatingService(IDataContext appDataContext, IOptions<RatingSettings> ratingSettings)
+        public ListingRatingService(IDataContext appDataContext, IOptions<ReviewSettings> ratingSettings)
         {
             _appDataContext = appDataContext;
             _ratingSettings = ratingSettings.Value;
