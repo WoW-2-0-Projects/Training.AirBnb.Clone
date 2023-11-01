@@ -63,9 +63,9 @@ public class ScenicViewService : IEntityBaseService<ScenicView>
 
     private void Validate(ScenicView scenicView)
     {
-        if(string.IsNullOrWhiteSpace(scenicView.Name)) throw new EntityValidationException<Address>("Invalid scenic view!");
+        if(string.IsNullOrWhiteSpace(scenicView.Name)) throw new EntityValidationException<ScenicView>("Invalid scenic view!");
 
-        if(GetUndeletedScenicViews().Select(scenicView => scenicView.Name).Contains(scenicView.Name, StringComparer.OrdinalIgnoreCase)) throw new DuplicateEntityException<Location>();
+        if(GetUndeletedScenicViews().Select(scenicView => scenicView.Name).Contains(scenicView.Name, StringComparer.OrdinalIgnoreCase)) throw new DuplicateEntityException<ScenicView>();
     }
 
     private IQueryable<ScenicView> GetUndeletedScenicViews()

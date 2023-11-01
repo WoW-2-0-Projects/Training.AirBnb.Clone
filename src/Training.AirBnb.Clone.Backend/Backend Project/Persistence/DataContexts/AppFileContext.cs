@@ -43,6 +43,9 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<ScenicView, Guid> ScenicViews => Set<ScenicView, Guid>(nameof(ScenicViews));
     public IFileSet<BlockedNight, Guid> BlockedNights => Set<BlockedNight, Guid>(nameof(BlockedNights));
 
+    public IFileSet<LocationScenicViews, Guid> LocationScenicViews => 
+        Set<LocationScenicViews, Guid>(nameof(LocationScenicViews));
+
     public AppFileContext(IFileContextOptions<AppFileContext> fileContextOptions) : base(fileContextOptions)
     {
         OnSaveChanges += AddPrimaryKeys;

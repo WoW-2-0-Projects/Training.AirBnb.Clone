@@ -91,6 +91,7 @@ public static partial class HostConfiguration
         await context.InitializeListingPropertySeedData();
         await context.InitializeLocationSeedData();
         await context.InitializeEmailTemplateSeedDate();
+        await context.InitializeAvailabilitySeedData();
 
         return app;
     }
