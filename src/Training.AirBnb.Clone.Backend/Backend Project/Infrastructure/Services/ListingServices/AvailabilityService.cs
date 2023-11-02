@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class AvailabilityService : IEntityBaseService<Availability>
 {
     private readonly IDataContext _appDataContext;
+    private readonly AvailabilitySettings _availabilitySettings;
 
-    public AvailabilityService(IDataContext appDataContext)
+    public AvailabilityService(IDataContext appDataContext, IOptions<AvailabilitySettings> availabilitySettings)
     {
         _appDataContext = appDataContext;
+        _availabilitySettings = availabilitySettings.Value;
     }
 
     public async ValueTask<Availability> CreateAsync(Availability availability, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -73,18 +77,18 @@ public class AvailabilityService : IEntityBaseService<Availability>
 
     private void ValidateAvailability(Availability availability)
     {
-        if (availability.MinNights < 1 || availability.MinNights > availability.MaxNights)
+        if (availability.MinNights < _availabilitySettings.MinNights || availability.MinNights > availability.MaxNights)
             throw new EntityValidationException<Availability>("Availability minNights is not valid!");
 
-        if (availability.MaxNights > 730)
+        if (availability.MaxNights > _availabilitySettings.MaxNights)
             throw new EntityValidationException<Availability>("Availability maxNights isn't valid!");
 
-        if (availability.PreparationDays is not null && (availability.PreparationDays > 2
-            || availability.PreparationDays < 0))
+        if (availability.PreparationDays is not null && (availability.PreparationDays > _availabilitySettings.PreparationMaxDays
+            || availability.PreparationDays < _availabilitySettings.PreparationMinDays))
             throw new EntityValidationException<Availability>("Availability Propertiondays isn't valid!");
 
-        if (availability.AvailabilityWindow < 3
-            || availability.AvailabilityWindow > 24)
+        if (availability.AvailabilityWindow < _availabilitySettings.AvailabilityWindowMinValue
+            || availability.AvailabilityWindow > _availabilitySettings.AvailabilityWindowMaxValue)
             throw new EntityValidationException<Availability>("Availability Window isn't valid!");
     }
 

@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReviewServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices;
 public class RatingService : IEntityBaseService<Rating>
 {
     private readonly IDataContext _appDataContext;
+    private readonly ReviewSettings _ratingSettings;
 
-    public RatingService(IDataContext appDataContext)
+    public RatingService(IDataContext appDataContext, IOptions<ReviewSettings> ratingSettings)
     {
         _appDataContext = appDataContext;
+        _ratingSettings = ratingSettings.Value;
     }
 
     public async ValueTask<Rating> CreateAsync(Rating rating, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -70,7 +74,7 @@ public class RatingService : IEntityBaseService<Rating>
         => await DeleteAsync(rating.Id, saveChanges, cancellationToken);
     
     private bool IsValidRating(Rating rating) =>
-        rating.Mark > 0 && rating.GivenBy != default && rating.ListingId != default;
+        rating.Mark >= _ratingSettings.RatingMinValue && rating.Mark <= _ratingSettings.RatingMaxValue;
 
     private IQueryable<Rating> GetUndeletedRatings() =>
         _appDataContext.Ratings.Where(rating => !rating.IsDeleted).AsQueryable();
