@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingCategoryTypeService : IEntityBaseService<ListingCategoryType>
+public class ListingCategoryTypeService : IListingCategoryTypeService
 {
     private readonly IDataContext _appDataContext;
 
@@ -39,12 +39,6 @@ public class ListingCategoryTypeService : IEntityBaseService<ListingCategoryType
 
     public IQueryable<ListingCategoryType> Get(Expression<Func<ListingCategoryType, bool>> predicate)
         => GetUndeletedOptions().Where(predicate.Compile()).AsQueryable();
-
-    // Non Updatable entity
-    public ValueTask<ListingCategoryType> UpdateAsync(ListingCategoryType option, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new InvalidOperationException("Non updatable entity");
-    }
 
     public async ValueTask<ListingCategoryType> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {

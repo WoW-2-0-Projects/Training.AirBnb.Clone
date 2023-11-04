@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Configs\" />
-    <Folder Include="Application\Foundations\ListingServices\" />
     <Folder Include="Application\Foundations\ReviewServices\" />
     <Folder Include="Application\Foundations\ReservationServices\" />
     <Folder Include="Application\Foundations\NotificationServices\" />
@@ -21,7 +20,6 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
-    <PackageReference Include="Bogus" Version="34.0.2" />
   </ItemGroup>
 
 </Project>

@@ -60,7 +60,7 @@ public class PhoneNumberService : IPhoneNumberService
     public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!await IsValidPhoneNumber(phoneNumber))
-            throw new EntityException<PhoneNumber>("Invalid phone number");
+            throw new EntityValidationException<PhoneNumber>("Invalid phone number");
 
         var updatedNumber = await GetByIdAsync(phoneNumber.Id);
 

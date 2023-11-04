@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Application.Entity;
 using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
@@ -113,10 +114,13 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Listing>, ListingService>()
-            .AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>()
-            .AddScoped<IEntityBaseService<ListingPropertyType>, ListingPropertyTypeService>()
-            .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>();
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IListingPropertyService, ListingPropertyService>()
+            .AddScoped<IListingPropertyTypeService, ListingPropertyTypeService>()
+            .AddScoped<IListingRatingService, ListingRatingService>()
+            .AddScoped<IListingRulesService, ListingRulesService>()
+            .AddScoped<IDescriptionService, DescriptionService>()
+            .AddScoped<IBlockedNightService, BlockedNightService>();
 
         return builder;
     }
@@ -124,10 +128,10 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingCategoryServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>()
-            .AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>()
-            .AddScoped<IEntityBaseService<ListingType>, ListingTypeService>()
-            .AddScoped<IEntityBaseService<ListingCategoryType>, ListingCategoryTypeService>()
+            .AddScoped<IListingCategoryService, ListingCategoryService>()
+            .AddScoped<IListingFeatureService, ListingFeatureService>()
+            .AddScoped<IListingTypeService, ListingTypeService>()
+            .AddScoped<IListingCategoryTypeService, ListingCategoryTypeService>()
             .AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
 
         return builder;
@@ -136,9 +140,9 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingAmenityServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Amenity>, AmenityService>()
-            .AddScoped<IEntityBaseService<AmenityCategory>, AmenityCategoryService>()
-            .AddScoped<IEntityBaseService<ListingAmenities>, ListingAmenitiesService>()
+            .AddScoped<IAmenityService, AmenityService>()
+            .AddScoped<IAmenityCategoryService, AmenityCategoryService>()
+            .AddScoped<IListingAmenitiesService, ListingAmenitiesService>()
             .AddScoped<IAmenitiesManagementService, AmenitiesManagementService>();
 
         return builder;
@@ -161,7 +165,8 @@ public static partial class HostConfiguration
     {
         builder.Services
             .AddScoped<IEntityBaseService<Reservation>, ReservationService>()
-            .AddScoped<IEntityBaseService<ReservationOccupancy>, ReservationOccupancyService>();
+            .AddScoped<IEntityBaseService<ReservationOccupancy>, ReservationOccupancyService>()
+            .AddScoped<IAvailabilityService, AvailabilityService>();
 
         return builder;
     }
