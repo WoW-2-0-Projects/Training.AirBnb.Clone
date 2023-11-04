@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace AirBnb.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IEntityBaseService<User> _userService;
+        private readonly IUserService _userService;
 
-        public UserController(IEntityBaseService<User> userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

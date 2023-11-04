@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,8 +6,8 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices
 {
-    public class AddressService : IEntityBaseService<Address>
-    {
+    public class AddressService : IAddressService
+    { 
         private readonly IDataContext _appDataContext;
 
         public AddressService(IDataContext appDataContext)
@@ -47,7 +47,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<Address> UpdateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var updatedAddress = await GetByIdAsync(address.Id);
+            var updatedAddress = await GetByIdAsync(address.Id, cancellationToken);
 
             Validate(address);
 
@@ -68,7 +68,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<Address> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedAddress = await GetByIdAsync(id);
+            var deletedAddress = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.Addresses.RemoveAsync(deletedAddress, cancellationToken);
 
@@ -81,10 +81,10 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         public async ValueTask<Address> DeleteAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(address.Id, saveChanges, cancellationToken);
 
-        private bool IsValidAddressLines(string addressLine)
+        private static bool IsValidAddressLines(string addressLine)
         => !string.IsNullOrWhiteSpace(addressLine);
 
-        private bool IsValidZipCode(string? zipCode)
+        private static bool IsValidZipCode(string? zipCode)
         {
             if (zipCode is null)
                 return true;
@@ -94,7 +94,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
                     return false;
             return true;
         }
-        private void Validate(Address address)
+        private static void Validate(Address address)
         {
             if (!IsValidAddressLines(address.AddressLine1))
                 throw new EntityValidationException<Address>("Invalid province!");

@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class AmenityService : IEntityBaseService<Amenity>
+public class AmenityService : IAmenityService
 {
     private readonly IDataContext _appDataContext;
 
@@ -27,7 +27,7 @@ public class AmenityService : IEntityBaseService<Amenity>
     }
 
     public ValueTask<ICollection<Amenity>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<Amenity>>(GetUndeletedAmenities()
+        => new (GetUndeletedAmenities()
             .Where(amenity => ids.Contains(amenity.Id))
             .ToList());
 
@@ -36,10 +36,8 @@ public class AmenityService : IEntityBaseService<Amenity>
         var a = GetUndeletedAmenities()
             .FirstOrDefault(amenity => amenity.Id.Equals(id));
 
-            if( a is null)
-                throw new EntityNotFoundException<Amenity>("Amenity not found.");
-
-        return new ValueTask<Amenity>( a);
+        return a is null ? throw new EntityNotFoundException<Amenity>("Amenity not found.") 
+            : new ValueTask<Amenity>( a);
     }
 
     public IQueryable<Amenity> Get(Expression<Func<Amenity, bool>> predicate)
@@ -47,7 +45,7 @@ public class AmenityService : IEntityBaseService<Amenity>
 
     public async ValueTask<Amenity> UpdateAsync(Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundAmenity = await GetByIdAsync(amenity.Id);
+        var foundAmenity = await GetByIdAsync(amenity.Id, cancellationToken);
 
         ValidateAmenity(amenity);
 
@@ -83,7 +81,7 @@ public class AmenityService : IEntityBaseService<Amenity>
             throw new DuplicateEntityException<Amenity>();
     }
 
-    private bool IsValidAmenity(Amenity amenity)
+    private static bool IsValidAmenity(Amenity amenity)
         => !string.IsNullOrWhiteSpace(amenity.AmenityName);
 
     private bool IsUnique(Amenity amenity)

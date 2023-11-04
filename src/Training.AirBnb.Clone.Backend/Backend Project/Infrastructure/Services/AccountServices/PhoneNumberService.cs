@@ -1,4 +1,5 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -7,13 +8,13 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
 
-public class PhoneNumberService : IEntityBaseService<PhoneNumber>
+public class PhoneNumberService : IPhoneNumberService
 {
     private readonly IDataContext _appDataContext;
 
-    private readonly IEntityBaseService<Country> _country;
+    private readonly ICountryService _country;
 
-    public PhoneNumberService(IDataContext appDataContext, IEntityBaseService<Country> country)
+    public PhoneNumberService(IDataContext appDataContext,ICountryService country)
     {
         _appDataContext = appDataContext;
 
@@ -59,9 +60,9 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     public async ValueTask<PhoneNumber> UpdateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!await IsValidPhoneNumber(phoneNumber))
-            throw new EntityException<PhoneNumber>("Invalid phone number");
+            throw new EntityValidationException<PhoneNumber>("Invalid phone number");
 
-        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
+        var updatedNumber = await GetByIdAsync(phoneNumber.Id, cancellationToken);
 
         updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
         updatedNumber.Code = phoneNumber.Code;
@@ -75,10 +76,9 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
 
     public async ValueTask<PhoneNumber> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deletedNumber = await GetByIdAsync(id);
-
-        if (deletedNumber is null)
-            throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        var deletedNumber = await GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        
         await _appDataContext.PhoneNumbers.RemoveAsync(deletedNumber, cancellationToken);
 
         if (saveChanges) await _appDataContext.SaveChangesAsync();
@@ -92,7 +92,7 @@ public class PhoneNumberService : IEntityBaseService<PhoneNumber>
     private bool IsUnique(string phoneNumber) => GetUndeletedNumbers()
              .Any(number => number.UserPhoneNumber == phoneNumber);
 
-    private bool IsNullable(PhoneNumber phoneNumber)
+    private static bool IsNullable(PhoneNumber phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
             return false;

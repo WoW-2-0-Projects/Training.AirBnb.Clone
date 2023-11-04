@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingFeatureService : IEntityBaseService<ListingFeature>
+public class ListingFeatureService : IListingFeatureService
 {
     private readonly IDataContext _appDataContext;
     private readonly ListingRulesSettings _featureSettings;
@@ -31,12 +31,12 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
     }
 
     public ValueTask<ICollection<ListingFeature>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingFeature>>(GetUndeletedFeatures()
+        => new (GetUndeletedFeatures()
                 .Where(feature => ids.Contains(feature.Id))
                 .ToList());
 
     public ValueTask<ListingFeature> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingFeature>(GetUndeletedFeatures()
+        => new (GetUndeletedFeatures()
             .FirstOrDefault(feature => feature.Id == id)
             ?? throw new EntityNotFoundException<ListingFeature> ("Listing Feature not found!"));
 

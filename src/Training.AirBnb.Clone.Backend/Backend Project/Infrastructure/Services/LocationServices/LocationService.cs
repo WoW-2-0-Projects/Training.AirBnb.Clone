@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices;
 
-public class LocationService : IEntityBaseService<Location>
+public class LocationService : ILocationService
 {
     private readonly IDataContext _appDataContext;
 
@@ -30,13 +30,12 @@ public class LocationService : IEntityBaseService<Location>
         => GetUndeletedLocations().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<Location>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<Location>>
-        (Get(location => 
+        => new(Get(location => 
         ids.Contains(location.Id))
             .ToList());
 
     public ValueTask<Location> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Location>(Get(location => location.Id == id).FirstOrDefault() 
+        => new(Get(location => location.Id == id).FirstOrDefault()
             ?? throw new EntityNotFoundException<Location>("Locationn not found."));
 
     public async ValueTask<Location> UpdateAsync(Location location, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -55,7 +54,7 @@ public class LocationService : IEntityBaseService<Location>
     }
     public async ValueTask<Location> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundLocation = await GetByIdAsync(id);
+        var foundLocation = await GetByIdAsync(id, cancellationToken);
 
         await _appDataContext.Locations.RemoveAsync(foundLocation, cancellationToken);
 

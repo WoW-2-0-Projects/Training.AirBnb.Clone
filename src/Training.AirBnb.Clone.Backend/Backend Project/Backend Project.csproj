@@ -19,7 +19,6 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Max.FileBaseContext.Context" Version="0.0.7" />
-    <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
   </ItemGroup>
 

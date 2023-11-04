@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingRegistrationProgressService : IEntityBaseService<ListingRegistrationProgress>
+public class ListingRegistrationProgressService : IListingRegistrationProgressService
 {
     private readonly IDataContext _appFileContext;
     private readonly ListingRegistrationProgressSettings _registrationSettings;
@@ -45,7 +45,7 @@ public class ListingRegistrationProgressService : IEntityBaseService<ListingRegi
 
     public async ValueTask<ListingRegistrationProgress> UpdateAsync(ListingRegistrationProgress progress, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundProgress = await GetByIdAsync(progress.Id);
+        var foundProgress = await GetByIdAsync(progress.Id, cancellationToken);
 
         if (!IsValidOnUpdate(foundProgress, progress))
             throw new EntityValidationException<ListingRegistrationProgress>("Invalid listing registration progress!");
@@ -61,7 +61,7 @@ public class ListingRegistrationProgressService : IEntityBaseService<ListingRegi
 
     public async ValueTask<ListingRegistrationProgress> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundProgress = await GetByIdAsync(id);
+        var foundProgress = await GetByIdAsync(id, cancellationToken);
 
         await _appFileContext.ListingRegistrationProgresses.RemoveAsync(foundProgress, cancellationToken);
 

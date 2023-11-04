@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingService : IEntityBaseService<Listing>
+public class ListingService : IListingService
 { 
     private readonly IDataContext _appDataContext;
     private readonly ListingSettings _listingSettings;
@@ -32,12 +32,12 @@ public class ListingService : IEntityBaseService<Listing>
     }
 
     public ValueTask<ICollection<Listing>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<Listing>>(GetUndeletedListings()
+        => new (GetUndeletedListings()
             .Where(listing => ids.Contains(listing.Id))
             .ToList());
 
     public ValueTask<Listing> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Listing>(GetUndeletedListings()
+        => new (GetUndeletedListings()
                 .FirstOrDefault(listing => listing.Id == id)
                 ?? throw new EntityNotFoundException<Listing> ("Listing not found."));
 

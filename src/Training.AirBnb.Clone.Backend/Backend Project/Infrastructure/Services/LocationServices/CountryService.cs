@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices
 {
-    public class CountryService : IEntityBaseService<Country>
+    public class CountryService : ICountryService
     {
         private readonly IDataContext _appDataContext;
         public CountryService(IDataContext dataContext)
@@ -34,7 +34,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<Country> UpdateAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundCountry = await GetByIdAsync(country.Id);
+            var foundCountry = await GetByIdAsync(country.Id, cancellationToken);
 
             if (!IsValidCountryName(country))
                 throw new EntityValidationException<Country> ("The Country is in the wrong format");
@@ -57,18 +57,18 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             => GetUndeletedCountries().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<Country>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-            => new ValueTask<ICollection<Country>>(GetUndeletedCountries()
+            => new(GetUndeletedCountries()
                 .Where(country => ids
                 .Contains(country.Id)).ToList());
 
         public ValueTask<Country> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => new ValueTask<Country> (GetUndeletedCountries()
+            => new (GetUndeletedCountries()
                 .FirstOrDefault(country => country.Id.Equals(id))
                 ?? throw new EntityNotFoundException<Country> ("Reservation not found."));
             
         public async ValueTask<Country> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedCountry = await GetByIdAsync(id);
+            var deletedCountry = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.Countries.RemoveAsync(deletedCountry, cancellationToken);
 
@@ -81,7 +81,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         public async ValueTask<Country> DeleteAsync(Country country, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(country.Id, saveChanges, cancellationToken);
         
-        private bool IsValidCountryDailingCode(Country country)
+        private static bool IsValidCountryDailingCode(Country country)
         {
             if (country.CountryDialingCode is null)
                 return false;
@@ -98,13 +98,13 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             return true;
         }
 
-        private bool IsValidRegionPhoneNumberLength(Country country)
+        private static bool IsValidRegionPhoneNumberLength(Country country)
             => country.RegionPhoneNumberLength >= 7 && country.RegionPhoneNumberLength <= 15;
 
         private IQueryable<Country> GetUndeletedCountries() => _appDataContext.Countries
             .Where(country => !country.IsDeleted).AsQueryable();
 
-        private bool IsValidCountryName(Country country)
+        private static bool IsValidCountryName(Country country)
             => !string.IsNullOrWhiteSpace(country.Name)
                 && country.Name.Length > 4
                 && country.Name.Length < 185;

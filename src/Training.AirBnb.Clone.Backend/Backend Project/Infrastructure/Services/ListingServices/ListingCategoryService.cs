@@ -1,4 +1,4 @@
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices
 {
-    public class ListingCategoryService : IEntityBaseService<ListingCategory>
+    public class ListingCategoryService : IListingCategoryService
     {
         private readonly IDataContext _appDataContext;
 
@@ -33,7 +33,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         {
             ValidateCategory(listingCategory);
 
-            var foundListingCategory = await GetByIdAsync(listingCategory.Id);
+            var foundListingCategory = await GetByIdAsync(listingCategory.Id, cancellationToken);
 
             foundListingCategory.Name = listingCategory.Name;
 
@@ -48,12 +48,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             => GetUndelatedListingCategories().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<ListingCategory>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-            => new ValueTask<ICollection<ListingCategory>> (GetUndelatedListingCategories()
+            => new (GetUndelatedListingCategories()
                 .Where(listingCategory => ids
                 .Contains(listingCategory.Id)).ToList());
 
         public ValueTask<ListingCategory> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => new ValueTask<ListingCategory> (GetUndelatedListingCategories()
+            => new  (GetUndelatedListingCategories()
                 .FirstOrDefault(listingCategory => listingCategory.Id.Equals(id))
                 ?? throw new EntityNotFoundException<ListingCategory> ("ListingCategory not found."));
 
@@ -80,7 +80,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
                 throw new DuplicateEntityException<ListingCategory>("This listing category already exists");
         }
 
-        private bool IsValidListingCategory(ListingCategory listingCategory)
+        private static bool IsValidListingCategory(ListingCategory listingCategory)
             => !string.IsNullOrWhiteSpace(listingCategory.Name);
 
         private IQueryable<ListingCategory> GetUndelatedListingCategories() => _appDataContext.ListingCategories

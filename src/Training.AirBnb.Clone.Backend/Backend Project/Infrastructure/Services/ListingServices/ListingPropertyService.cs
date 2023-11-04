@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingPropertyService : IEntityBaseService<ListingProperty>
+public class ListingPropertyService : IListingPropertyService
 {
     private readonly IDataContext _appDataContext;
     private readonly ListingRulesSettings _propertySettings;
@@ -31,12 +31,12 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     }
 
     public ValueTask<ICollection<ListingProperty>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingProperty>>(GetUndeletedProperties()
+        => new (GetUndeletedProperties()
         .Where(property => ids.Contains(property.Id))
         .ToList());
 
     public ValueTask<ListingProperty> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingProperty>(GetUndeletedProperties()
+        => new (GetUndeletedProperties()
         .FirstOrDefault(property => property.Id == id)
         ?? throw new EntityNotFoundException<ListingProperty>());
 

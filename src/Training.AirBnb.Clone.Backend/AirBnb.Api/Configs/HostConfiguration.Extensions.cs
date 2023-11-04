@@ -1,10 +1,12 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Services;
-using Backend_Project.Application.Listings.Settings;
-using Backend_Project.Application.Notifications.Services;
-using Backend_Project.Application.Review.Settings;
+using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Foundations.LocationServices;
+using Backend_Project.Application.Foundations.NotificationServices;
+using Backend_Project.Application.Foundations.ReservationServices;
+using Backend_Project.Application.Foundations.ReviewServices;
+using Backend_Project.Application.Listings;
+using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
-using Backend_Project.Domain.Entities;
 using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;
@@ -115,9 +117,9 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddAccountServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<User>, UserService>()
-            .AddScoped<IEntityBaseService<UserCredentials>, UserCredentialsService>()
-            .AddScoped<IEntityBaseService<PhoneNumber>, PhoneNumberService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserCredentialsService, UserCredentialsService>()
+            .AddScoped<IPhoneNumberService, PhoneNumberService>();
 
         return builder;
     }
@@ -131,13 +133,13 @@ public static partial class HostConfiguration
 
 
         builder.Services
-            .AddScoped<IEntityBaseService<Listing>, ListingService>()
-            .AddScoped<IEntityBaseService<ListingProperty>, ListingPropertyService>()
-            .AddScoped<IEntityBaseService<ListingPropertyType>, ListingPropertyTypeService>()
-            .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>()
-            .AddScoped<IEntityBaseService<ListingRules>, ListingRulesService>()
-            .AddScoped<IEntityBaseService<ListingRegistrationProgress>, ListingRegistrationProgressService>()
-            .AddScoped<IListingRegistrationService, ListingRegistrationService>();
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IListingPropertyService, ListingPropertyService>()
+            .AddScoped<IListingPropertyTypeService, ListingPropertyTypeService>()
+            .AddScoped<IListingRatingService, ListingRatingService>()
+            .AddScoped<IListingRulesService, ListingRulesService>()
+            .AddScoped<IDescriptionService, DescriptionService>()
+            .AddScoped<IBlockedNightService, BlockedNightService>();
 
         return builder;
     }
@@ -147,11 +149,10 @@ public static partial class HostConfiguration
         builder.Services.Configure<ListingTypeSettings>(builder.Configuration.GetSection(nameof(ListingTypeSettings)));
 
         builder.Services
-            .AddScoped<IEntityBaseService<ListingCategory>, ListingCategoryService>()
-            .AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>()
-            .AddScoped<IEntityBaseService<ListingType>, ListingTypeService>()
-            .AddScoped<IEntityBaseService<ListingCategoryType>, ListingCategoryTypeService>()
-            .AddScoped<IEntityBaseService<Description>, DescriptionService>()
+            .AddScoped<IListingCategoryService, ListingCategoryService>()
+            .AddScoped<IListingFeatureService, ListingFeatureService>()
+            .AddScoped<IListingTypeService, ListingTypeService>()
+            .AddScoped<IListingCategoryTypeService, ListingCategoryTypeService>()
             .AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
 
         return builder;
@@ -160,9 +161,9 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingAmenityServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Amenity>, AmenityService>()
-            .AddScoped<IEntityBaseService<AmenityCategory>, AmenityCategoryService>()
-            .AddScoped<IEntityBaseService<ListingAmenities>, ListingAmenitiesService>()
+            .AddScoped<IAmenityService, AmenityService>()
+            .AddScoped<IAmenityCategoryService, AmenityCategoryService>()
+            .AddScoped<IListingAmenitiesService, ListingAmenitiesService>()
             .AddScoped<IAmenitiesManagementService, AmenitiesManagementService>();
 
         return builder;
@@ -171,10 +172,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddLocationServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Address>, AddressService>()
-            .AddScoped<IEntityBaseService<Country>, CountryService>()
-            .AddScoped<IEntityBaseService<City>, CityService>();
-
+            .AddScoped<IAddressService, AddressService>()
+            .AddScoped<ICountryService, CountryService>()
+            .AddScoped<ICityService, CityService>()
+            .AddScoped<ILocationScenicViewsService, LocationScenicViewsService>()
+            .AddScoped<ILocationService, LocationService>()
+            .AddScoped<IScenicViewService, ScenicViewService>();
 
         return builder;
     }
@@ -184,9 +187,9 @@ public static partial class HostConfiguration
         builder.Services.Configure<AvailabilitySettings>(builder.Configuration.GetSection(nameof(AvailabilitySettings)));
 
         builder.Services
-            .AddScoped<IEntityBaseService<Reservation>, ReservationService>()
-            .AddScoped<IEntityBaseService<ReservationOccupancy>, ReservationOccupancyService>()
-            .AddScoped<IEntityBaseService<Availability>, AvailabilityService>();
+            .AddScoped<IReservationService, ReservationService>()
+            .AddScoped<IReservationOccupancyService, ReservationOccupancyService>()
+            .AddScoped<IAvailabilityService, AvailabilityService>();
 
         return builder;
     }
@@ -196,8 +199,8 @@ public static partial class HostConfiguration
         builder.Services.Configure<ReviewSettings>(builder.Configuration.GetSection(nameof(ReviewSettings)));
 
         builder.Services
-            .AddScoped<IEntityBaseService<Comment>, CommentService>()
-            .AddScoped<IEntityBaseService<Rating>, RatingService>();
+            .AddScoped<ICommentService, CommentService>()
+            .AddScoped<IRatingService, RatingService>();
 
         return builder;
     }
@@ -205,8 +208,8 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddNotificationServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Email>, EmailService>()
-            .AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<IEmailPlaceholderService, EmailPlaceholderService>()
             .AddScoped<IEmailSenderService, EmailSenderService>()
             .AddScoped<IEmailMessageService, EmailMessageSevice>()
