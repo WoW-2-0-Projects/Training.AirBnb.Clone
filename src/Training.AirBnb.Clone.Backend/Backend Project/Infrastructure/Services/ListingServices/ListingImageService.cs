@@ -54,7 +54,7 @@ public class ListingImageService : IListingImageService
 
     private static bool ValidateOnCreate(ListingImage image)
     {
-        var fileSize = image.Size / 1048 / 1048;
+        var fileSize = image.Size / 1024 / 1024;
 
         if(fileSize < 3)
             return false;
