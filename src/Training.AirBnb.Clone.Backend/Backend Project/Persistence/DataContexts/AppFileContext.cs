@@ -40,6 +40,7 @@ public class AppFileContext : FileContext, IDataContext
     public IFileSet<Availability, Guid> Availabilities => Set<Availability, Guid>(nameof(Availabilities));
     public IFileSet<ScenicView, Guid> ScenicViews => Set<ScenicView, Guid>(nameof(ScenicViews));
     public IFileSet<BlockedNight, Guid> BlockedNights => Set<BlockedNight, Guid>(nameof(BlockedNights));
+    public IFileSet<ListingImage, Guid> ListingImages => Set<ListingImage, Guid>(nameof(ListingImages));
     public IFileSet<ListingRegistrationProgress, Guid> ListingRegistrationProgresses 
             => Set<ListingRegistrationProgress, Guid>(nameof(ListingRegistrationProgresses));
 
@@ -53,7 +54,7 @@ public class AppFileContext : FileContext, IDataContext
         OnSaveChanges += AddSoftDeletionDetails;
     }
 
-    public ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
+    public static ValueTask AddPrimaryKeys(IEnumerable<IFileSetBase> fileSets)
     {
         foreach (var fileSet in fileSets)
             foreach (var entry in fileSet.GetEntries())
@@ -69,7 +70,7 @@ public class AppFileContext : FileContext, IDataContext
         return new ValueTask(Task.CompletedTask);
     }
 
-    public ValueTask AddAuditableDetails(IEnumerable<IFileSetBase> fileSets)
+    public static ValueTask AddAuditableDetails(IEnumerable<IFileSetBase> fileSets)
     {
         foreach (var fileSet in fileSets)
             foreach (var entry in fileSet.GetEntries())
@@ -88,7 +89,7 @@ public class AppFileContext : FileContext, IDataContext
         return new ValueTask(Task.CompletedTask);
     }
 
-    public ValueTask AddSoftDeletionDetails(IEnumerable<IFileSetBase> fileSets)
+    public static ValueTask AddSoftDeletionDetails(IEnumerable<IFileSetBase> fileSets)
     {
         foreach (var fileSet in fileSets)
             foreach (var entry in fileSet.GetEntries())
