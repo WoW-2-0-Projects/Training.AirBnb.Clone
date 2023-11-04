@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices
 {
-    public class CityService : IEntityBaseService<City>
+    public class CityService : ICityService
     {
         private readonly IDataContext _appDataContext;
         public CityService(IDataContext dataContext)

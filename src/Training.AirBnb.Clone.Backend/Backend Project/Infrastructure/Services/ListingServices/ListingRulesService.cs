@@ -105,15 +105,12 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
         if (listingRules.CheckInTimeStart is not null
             && (listingRules.CheckInTimeEnd is null
             || (listingRules.CheckInTimeEnd - listingRules.CheckInTimeStart) < TimeSpan.FromHours(2)))
-        {
             throw new EntityValidationException<ListingRules>("Invalid 'CheckInTimeStart' or 'CheckInTimeEnd'");
-        }
 
-        if (listingRules.AdditionalRules.All(@char => @char == ' '))
+        if (listingRules.AdditionalRules is not null && 
+            listingRules.AdditionalRules.All(@char => @char == ' '))
         {
             listingRules.AdditionalRules = null;
         }
-
     }
-
 }

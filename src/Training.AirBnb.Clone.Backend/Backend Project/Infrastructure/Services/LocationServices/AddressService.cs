@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices
 {
-    public class AddressService : IEntityBaseService<Address>
-    {
+    public class AddressService : IAddressService
+    { 
         private IDataContext _appDataContext;
-        private IEntityBaseService<City> _cityService;
-        private IEntityBaseService<Country> _countryService;
+        private ICityService _cityService;
+        private ICountryService _countryService;
 
-        public AddressService(IDataContext appDataContext, IEntityBaseService<City> cityService, IEntityBaseService<Country> countryService)
+        public AddressService(IDataContext appDataContext, ICityService cityService, ICountryService countryService)
         {
             _appDataContext = appDataContext;
             _cityService = cityService;

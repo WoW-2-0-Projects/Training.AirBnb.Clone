@@ -1,5 +1,6 @@
 ﻿using Backend_Project.Application.Entity;
 using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
@@ -146,10 +147,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddLocationServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Address>, AddressService>()
-            .AddScoped<IEntityBaseService<Country>, CountryService>()
-            .AddScoped<IEntityBaseService<City>, CityService>();
-
+            .AddScoped<IAddressService, AddressService>()
+            .AddScoped<ICountryService, CountryService>()
+            .AddScoped<ICityService, CityService>()
+            .AddScoped<ILocationScenicViewsService, LocationScenicViewsService>()
+            .AddScoped<ILocationService, LocationService>()
+            .AddScoped<IScenicViewService, ScenicViewService>();
 
         return builder;
     }

@@ -1,5 +1,5 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Foundations.AccountServices;
+﻿using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -12,9 +12,9 @@ public class PhoneNumberService : IPhoneNumberService
 {
     private readonly IDataContext _appDataContext;
 
-    private readonly IEntityBaseService<Country> _country;
+    private readonly ICountryService _country;
 
-    public PhoneNumberService(IDataContext appDataContext, IEntityBaseService<Country> country)
+    public PhoneNumberService(IDataContext appDataContext,ICountryService country)
     {
         _appDataContext = appDataContext;
 

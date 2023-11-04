@@ -1,13 +1,12 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices;
 
-public class LocationScenicViewsService : IEntityBaseService<LocationScenicViews>
+public class LocationScenicViewsService : ILocationScenicViewsService
 {
     private readonly IDataContext _context;
     public LocationScenicViewsService(IDataContext context)
@@ -37,18 +36,11 @@ public class LocationScenicViewsService : IEntityBaseService<LocationScenicViews
         (Get(locationScenicView => locationScenicView.Id == id).FirstOrDefault() ?? 
         throw new EntityNotFoundException<LocationScenicViews>("Location scenic view not found"));
 
-    /// <summary>
-    /// Non-updatable entity
-    /// </summary>
-    public async ValueTask<LocationScenicViews> UpdateAsync
-        (LocationScenicViews locationScenicViews, bool saveChanges = true, CancellationToken cancellationToken = default)
-    => throw new InvalidOperationException("Location Scenic  View is non-updatable entity");
-
     public async ValueTask<LocationScenicViews> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var foundLocationScenicView = await GetByIdAsync(id);
 
-        _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
+        await _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
 
         if (saveChanges) await _context.SaveChangesAsync();
 
