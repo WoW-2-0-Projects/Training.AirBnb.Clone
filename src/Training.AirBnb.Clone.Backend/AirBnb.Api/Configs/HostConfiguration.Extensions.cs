@@ -4,6 +4,7 @@ using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Foundations.ReservationServices;
+using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
@@ -176,8 +177,8 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddReviewServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Comment>, CommentService>()
-            .AddScoped<IEntityBaseService<Rating>, RatingService>();
+            .AddScoped<ICommentService, CommentService>()
+            .AddScoped<IRatingService, RatingService>();
 
         return builder;
     }

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Configs\" />
-    <Folder Include="Application\Foundations\ReviewServices\" />
     <Folder Include="Infrastructure\Configs\" />
     <Folder Include="Persistence\DataContexts\" />
   </ItemGroup>
