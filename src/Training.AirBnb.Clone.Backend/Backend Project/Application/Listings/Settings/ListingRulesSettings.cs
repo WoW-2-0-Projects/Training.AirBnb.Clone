@@ -4,6 +4,8 @@ public class ListingRulesSettings
 {
     public int GuestsMinCount { get; set; }
 
+    public int GuestsMaxCount { get; set; }
+
     public int MinCheckInDurationInHours { get; set; }
 
     public int FeatureMinValue { get; set; }

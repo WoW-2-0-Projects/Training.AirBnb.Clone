@@ -65,7 +65,7 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
         Validate(listingRules);
 
-        foundListingRules.GuestsCount = listingRules.GuestsCount;
+        foundListingRules.Guests = listingRules.Guests;
 
         foundListingRules.PetsAllowed = listingRules.PetsAllowed;
 
@@ -94,7 +94,7 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
     private void Validate(ListingRules listingRules)
     {
-        if (listingRules.GuestsCount < _rulesSettings.GuestsMinCount)
+        if (listingRules.Guests < _rulesSettings.GuestsMinCount)
         {
             throw new EntityValidationException<ListingRules>("Guests count isn't valid!");
         }
