@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingAmenitiesService : IEntityBaseService<ListingAmenities>
+public class ListingAmenitiesService : IListingAmenitiesService
 {
     private readonly IDataContext _appDataContext;
 
@@ -28,22 +28,18 @@ public class ListingAmenitiesService : IEntityBaseService<ListingAmenities>
     }
 
     public ValueTask<ICollection<ListingAmenities>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingAmenities>>(GetUndeletedListingAmenities()
+        => new (GetUndeletedListingAmenities()
             .Where(self => ids.Contains(self.Id))
             .ToList());
 
     public ValueTask<ListingAmenities> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingAmenities>(GetUndeletedListingAmenities()
+        => new (GetUndeletedListingAmenities()
             .FirstOrDefault(self => self.Id == id)
             ?? throw new EntityNotFoundException<ListingAmenities>());
 
     public IQueryable<ListingAmenities> Get(Expression<Func<ListingAmenities, bool>> predicate)
         => GetUndeletedListingAmenities().Where(predicate.Compile()).AsQueryable();
 
-    // Non Updatable Entity.
-    public ValueTask<ListingAmenities> UpdateAsync(ListingAmenities listingAmenities, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => throw new InvalidOperationException();
-    
     public async ValueTask<ListingAmenities> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var foundConnection = await GetByIdAsync(id, cancellationToken);

@@ -1,12 +1,12 @@
 using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Application.Entity;
 using Backend_Project.Persistence.DataContexts;
+using Backend_Project.Application.Foundations.ReservationServices;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
-    public class ReservationService : IEntityBaseService<Reservation>
+    public class ReservationService : IReservationService
     {
         private readonly IDataContext _appDataContext;
 
@@ -34,7 +34,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             => GetUndelatedReservations().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<Reservation>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-            => new ValueTask<ICollection<Reservation>>(GetUndelatedReservations()
+            => new (GetUndelatedReservations()
                 .Where(reservation => ids
                 .Contains(reservation.Id))
                 .ToList());
@@ -42,10 +42,10 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public ValueTask<Reservation> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var reservation = GetUndelatedReservations().FirstOrDefault(reservation => reservation.Id.Equals(id));
-            
-            if (reservation is null) throw new EntityNotFoundException<Reservation> ("Reservation not found.");
-            
-            return new ValueTask<Reservation>(reservation);
+
+            return reservation is null
+                ? throw new EntityNotFoundException<Reservation>("Reservation not found.")
+                : new ValueTask<Reservation>(reservation);
         }
 
         public async ValueTask<Reservation> UpdateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -70,7 +70,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
         public async ValueTask<Reservation> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var removedReservation = await GetByIdAsync(id);
+            var removedReservation = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.Reservations.RemoveAsync(removedReservation, cancellationToken);
 
@@ -82,7 +82,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default) 
             => await DeleteAsync(reservation.Id, saveChanges, cancellationToken);
 
-        private bool IsValidEntity(Reservation reservation)
+        private static bool IsValidEntity(Reservation reservation)
         {
             if (reservation.ListingId.Equals(Guid.Empty)) return false;
 
@@ -105,13 +105,14 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
         }
 
-        private bool IsValidDateStartDate(DateTime startDate)
+        private static bool IsValidDateStartDate(DateTime startDate)
         {
             if (startDate <= DateTime.UtcNow) return false;
 
             return true;
         }
-        private bool IsValidDateEndDate(DateTime startDate, DateTime endDate)
+
+        private static bool IsValidDateEndDate(DateTime startDate, DateTime endDate)
         {
             if (endDate <= startDate) return false;
 
@@ -119,6 +120,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
             return true;
         }
+
         private IQueryable<Reservation> GetUndelatedReservations() => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
 

@@ -1,4 +1,4 @@
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +9,12 @@ namespace AirBnb.Api.Controllers
     [Route("api/[controller]")]
     public class AmenitiesController : ControllerBase
     {
-        private readonly IEntityBaseService<Amenity> _amenityService;
+        private readonly IAmenityService _amenityService;
         private readonly IAmenitiesManagementService _amenitiesManagementService;
-        private readonly IEntityBaseService<AmenityCategory> _amenityCategoryService;
-        public AmenitiesController(IEntityBaseService<Amenity> amenityService,
+        private readonly IAmenityCategoryService _amenityCategoryService;
+        public AmenitiesController(IAmenityService amenityService,
             IAmenitiesManagementService amenitiesManagementService,
-            IEntityBaseService<AmenityCategory> amenityCategoryService)
+            IAmenityCategoryService amenityCategoryService)
         {
             _amenitiesManagementService = amenitiesManagementService;
             _amenityService = amenityService;

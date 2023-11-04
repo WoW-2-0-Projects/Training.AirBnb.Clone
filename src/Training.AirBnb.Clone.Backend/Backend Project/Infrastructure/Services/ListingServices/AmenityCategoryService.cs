@@ -1,4 +1,4 @@
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices
 {
-    public class AmenityCategoryService : IEntityBaseService<AmenityCategory>
+    public class AmenityCategoryService : IAmenityCategoryService
     {
         private readonly IDataContext _appDataContext;
 
@@ -43,10 +43,9 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             var result = GetUndeletedAmentyCategories().
                 FirstOrDefault(amenityCategory => amenityCategory.Id.Equals(id));
 
-            if(result is null)
-                throw new EntityNotFoundException<AmenityCategory>("AmentyCategory not found!");
-
-            return new ValueTask< AmenityCategory>(result);
+            return result is null
+                ? throw new EntityNotFoundException<AmenityCategory>("AmentyCategory not found!")
+                : new ValueTask< AmenityCategory>(result);
         }
 
         public IQueryable<AmenityCategory> Get(Expression<Func<AmenityCategory, bool>> predicate)
@@ -54,7 +53,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public async ValueTask<AmenityCategory> UpdateAsync(AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var updatedAmenityCategory = await GetByIdAsync(amenityCategory.Id);
+            var updatedAmenityCategory = await GetByIdAsync(amenityCategory.Id, cancellationToken);
 
             if (!IsValidCategoryName(amenityCategory.CategoryName))
                 throw new EntityValidationException<AmenityCategory>("Invalid categoryName!");
@@ -73,7 +72,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public async ValueTask<AmenityCategory> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedAmenityCategory = await GetByIdAsync(id);
+            var deletedAmenityCategory = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.AmenityCategories.RemoveAsync(deletedAmenityCategory, cancellationToken);
 
@@ -85,7 +84,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
         public async ValueTask<AmenityCategory> DeleteAsync(AmenityCategory amenityCategory, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(amenityCategory.Id, saveChanges, cancellationToken);
 
-        private bool IsValidCategoryName(string categoryName)
+        private static bool IsValidCategoryName(string categoryName)
             => !string.IsNullOrWhiteSpace(categoryName);
 
         private bool IsUniqueCategory(string categoryName)

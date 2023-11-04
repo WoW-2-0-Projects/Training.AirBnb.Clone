@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class BlockedNightService : IEntityBaseService<BlockedNight>
+public class BlockedNightService : IBlockedNightService
 {
     private readonly IDataContext _dataContext;
     public BlockedNightService(IDataContext dataContext)
@@ -32,13 +32,13 @@ public class BlockedNightService : IEntityBaseService<BlockedNight>
         => GetUndeletedListingBlockedNight().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<BlockedNight>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<BlockedNight>>(GetUndeletedListingBlockedNight()
+        => new (GetUndeletedListingBlockedNight()
             .Where(blockedNights => ids
             .Contains(blockedNights.Id))
             .ToList());
 
     public ValueTask<BlockedNight> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<BlockedNight>(GetUndeletedListingBlockedNight()
+        => new (GetUndeletedListingBlockedNight()
             .FirstOrDefault(blockedNights => blockedNights.Id.Equals(id))
             ?? throw new EntityNotFoundException<BlockedNight>("Blocked Night not Found"));
 
@@ -47,12 +47,12 @@ public class BlockedNightService : IEntityBaseService<BlockedNight>
         if(!IsValidBlockedNights(blockedNight))
             throw new EntityNotUpdatableException<BlockedNight>("This Blocked Night is Not Valid!");
 
-        var foundListingBlockedNight = await GetByIdAsync(blockedNight.Id);
+        var foundListingBlockedNight = await GetByIdAsync(blockedNight.Id, cancellationToken);
 
         foundListingBlockedNight.Date = blockedNight.Date;
         foundListingBlockedNight.IsCustomBlock = blockedNight.IsCustomBlock;
 
-        await _dataContext.BlockedNights.UpdateAsync(foundListingBlockedNight);
+        await _dataContext.BlockedNights.UpdateAsync(foundListingBlockedNight, cancellationToken);
 
         if(saveChanges)
             await _dataContext.SaveChangesAsync();  

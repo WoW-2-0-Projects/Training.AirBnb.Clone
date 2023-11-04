@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReviewServices
 {
-    public class CommentService : IEntityBaseService<Comment>
+    public class CommentService : ICommentService
     {
         private readonly IDataContext _appDataContext;
         private readonly ReviewSettings _commentSettings;
@@ -52,7 +52,7 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
 
         public async ValueTask<Comment> UpdateAsync(Comment comment, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var updatedComment = await GetByIdAsync(comment.Id);
+            var updatedComment = await GetByIdAsync(comment.Id, cancellationToken);
 
             if (!IsValidCommentMessage(comment.CommentMessage))
                 throw new EntityValidationException<Comment>("Invalid comment!");
@@ -66,7 +66,7 @@ namespace Backend_Project.Infrastructure.Services.ReviewServices
 
         public async ValueTask<Comment> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedComment = await GetByIdAsync(id);
+            var deletedComment = await GetByIdAsync(id,cancellationToken);
             
             await _appDataContext.Comments.RemoveAsync(deletedComment, cancellationToken);
 

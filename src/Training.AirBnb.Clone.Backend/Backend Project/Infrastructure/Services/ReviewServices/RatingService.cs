@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReviewServices;
 
-public class RatingService : IEntityBaseService<Rating>
+public class RatingService : IRatingService
 {
     private readonly IDataContext _appDataContext;
     private readonly ReviewSettings _ratingSettings;
@@ -36,12 +36,12 @@ public class RatingService : IEntityBaseService<Rating>
 
     public ValueTask<ICollection<Rating>> GetAsync(IEnumerable<Guid> ids,
         CancellationToken cancellationToken = default) =>
-        new ValueTask<ICollection<Rating>>(GetUndeletedRatings()
+        new (GetUndeletedRatings()
             .Where(rating => ids.Contains(rating.Id)).ToList());
 
 
     public ValueTask<Rating> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        new ValueTask<Rating>(GetUndeletedRatings().FirstOrDefault(rating => rating.Id == id) ??
+        new (GetUndeletedRatings().FirstOrDefault(rating => rating.Id == id) ??
             throw new EntityNotFoundException<Rating>("Rating not found"));
 
     public async ValueTask<Rating> UpdateAsync(Rating rating, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -61,7 +61,7 @@ public class RatingService : IEntityBaseService<Rating>
 
     public async ValueTask<Rating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deletingRating = await GetByIdAsync(id);
+        var deletingRating = await GetByIdAsync(id,cancellationToken);
 
         await _appDataContext.Ratings.RemoveAsync(deletingRating, cancellationToken);
 

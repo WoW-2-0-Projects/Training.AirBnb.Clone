@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.LocationServices;
 
-public class LocationScenicViewsService : IEntityBaseService<LocationScenicViews>
+public class LocationScenicViewsService : ILocationScenicViewsService
 {
     private readonly IDataContext _context;
     public LocationScenicViewsService(IDataContext context)
@@ -29,23 +29,16 @@ public class LocationScenicViewsService : IEntityBaseService<LocationScenicViews
     => GetUndeletedLocationScenicViews().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<LocationScenicViews>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-    => new ValueTask<ICollection<LocationScenicViews>>(Get(locationScenicView => ids.Contains(locationScenicView.Id)).ToList());
+    => new (Get(locationScenicView => ids.Contains(locationScenicView.Id)).ToList());
 
     public ValueTask<LocationScenicViews> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    => new ValueTask<LocationScenicViews>
+    => new 
         (Get(locationScenicView => locationScenicView.Id == id).FirstOrDefault() ?? 
         throw new EntityNotFoundException<LocationScenicViews>("Location scenic view not found"));
 
-    /// <summary>
-    /// Non-updatable entity
-    /// </summary>
-    public async ValueTask<LocationScenicViews> UpdateAsync
-        (LocationScenicViews locationScenicViews, bool saveChanges = true, CancellationToken cancellationToken = default)
-    => throw new InvalidOperationException("Location Scenic  View is non-updatable entity");
-
     public async ValueTask<LocationScenicViews> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundLocationScenicView = await GetByIdAsync(id);
+        var foundLocationScenicView = await GetByIdAsync(id, cancellationToken);
 
         await _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
 

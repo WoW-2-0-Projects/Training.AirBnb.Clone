@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Validation;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
-public class EmailService : IEntityBaseService<Email>
+public class EmailService : IEmailService
 {
     private readonly IDataContext _appDataContext;
     private readonly IValidationService _validationService;
@@ -38,35 +38,15 @@ public class EmailService : IEntityBaseService<Email>
     {
         var email = _appDataContext.Emails.FirstOrDefault(email => email.Id == id);
 
-        if (email is null)
-            throw new EntityNotFoundException<Email>("Email not found");
-
-        return new ValueTask<Email>(email);
+        return email is null ? throw new EntityNotFoundException<Email>("Email not found") 
+            : new ValueTask<Email>(email);
     }
-    
+
     public IQueryable<Email> Get(Expression<Func<Email, bool>> predicate)
     {
         return _appDataContext.Emails.Where(predicate.Compile()).AsQueryable();
     }
 
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> UpdateAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> DeleteAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-    
     //Validation method
     private bool ValidationToNull(Email email)
     {

@@ -1,4 +1,5 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -8,15 +9,21 @@ namespace Backend_Project.Infrastructure.CompositionServices;
 
 public class ListingCategoryDetailsService : IListingCategoryDetailsService
 {
-    private readonly IEntityBaseService<ListingCategory> _listingCategoryService;
-    private readonly IEntityBaseService<ListingFeature> _listingFeatureService;
-    private readonly IEntityBaseService<ListingType> _listingTypeService;
-    private readonly IEntityBaseService<ListingCategoryType> _listingCategoryTypeService;
-    private readonly IEntityBaseService<Listing> _listingService;
-    private readonly IEntityBaseService<ListingProperty> _listingPropertyService;
-    private readonly IEntityBaseService<ListingPropertyType> _listingPropertyTypeService;
+    private readonly IListingCategoryService _listingCategoryService;
+    private readonly IListingFeatureService _listingFeatureService;
+    private readonly IListingTypeService _listingTypeService;
+    private readonly IListingCategoryTypeService _listingCategoryTypeService;
+    private readonly IListingService _listingService;
+    private readonly IListingPropertyService _listingPropertyService;
+    private readonly IListingPropertyTypeService _listingPropertyTypeService;
 
-    public ListingCategoryDetailsService(IEntityBaseService<ListingCategory> listingCategoryService, IEntityBaseService<ListingFeature> listingFeatureService, IEntityBaseService<ListingType> listingTypeService, IEntityBaseService<ListingCategoryType> listingCategoryTypeService, IEntityBaseService<Listing> listingService, IEntityBaseService<ListingProperty> listingPropertyService, IEntityBaseService<ListingPropertyType> listingPropertyTypeService)
+    public ListingCategoryDetailsService(IListingCategoryService listingCategoryService,
+        IListingFeatureService listingFeatureService, 
+        IListingTypeService listingTypeService, 
+        IListingCategoryTypeService listingCategoryTypeService, 
+        IListingService listingService, 
+        IListingPropertyService listingPropertyService, 
+        IListingPropertyTypeService listingPropertyTypeService)
     {
         _listingCategoryService = listingCategoryService;
         _listingFeatureService = listingFeatureService;
@@ -69,7 +76,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         if (_listingPropertyTypeService.Get(property => property.CategoryId == categoryId).Any())
             throw new EntityNotDeletableException<ListingCategory>("There are active listings which are in this category.");
 
-        var deletedCategory = await _listingCategoryService.DeleteAsync(categoryId);
+        var deletedCategory = await _listingCategoryService.DeleteAsync(categoryId, saveChanges, cancellationToken);
 
         await DeleteCategoryRelations(categoryId, saveChanges, cancellationToken);
 
