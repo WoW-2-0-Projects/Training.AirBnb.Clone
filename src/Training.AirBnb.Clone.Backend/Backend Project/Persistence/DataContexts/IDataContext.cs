@@ -36,6 +36,7 @@ public interface IDataContext
     IFileSet<Availability, Guid> Availabilities { get; }
     IFileSet<ScenicView, Guid> ScenicViews { get; }
     IFileSet<ListingRegistrationProgress, Guid> ListingRegistrationProgresses { get; }
+    IFileSet<ListingImage, Guid> ListingImages { get; }
     IFileSet<LocationScenicViews, Guid> LocationScenicViews { get; }
 
     ValueTask SaveChangesAsync();

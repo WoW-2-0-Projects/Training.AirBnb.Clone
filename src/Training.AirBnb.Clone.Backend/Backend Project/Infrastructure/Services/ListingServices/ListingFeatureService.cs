@@ -68,7 +68,7 @@ public class ListingFeatureService : IListingFeatureService
 
         await _appDataContext.ListingFeatures.RemoveAsync(foundFeature, cancellationToken);
 
-        if (saveChanges) await _appDataContext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundFeature;
     }
