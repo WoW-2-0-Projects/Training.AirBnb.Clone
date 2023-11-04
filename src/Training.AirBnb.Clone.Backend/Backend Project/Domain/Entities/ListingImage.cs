@@ -6,7 +6,7 @@ public class ListingImage : SoftDeletedEntity
 {
     public string FilePath { get; set; } = default!;
 
-    public string Extension { get; set; } = string.Empty;
+    public string Extension { get; set; } = default!;
 
     public long Size { get; set; } 
 
