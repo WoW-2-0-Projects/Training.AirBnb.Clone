@@ -50,7 +50,7 @@ public class ListingImageService : IListingImageService
     }
 
     public async ValueTask<ListingImage> DeleteAsync(ListingImage listingImage, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => await DeleteAsync(listingImage, saveChanges, cancellationToken);
+        => await DeleteAsync(listingImage.Id, saveChanges, cancellationToken);
 
     private static bool ValidateOnCreate(ListingImage image)
     {
