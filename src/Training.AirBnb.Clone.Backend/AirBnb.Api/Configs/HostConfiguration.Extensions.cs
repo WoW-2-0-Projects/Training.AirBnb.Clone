@@ -1,4 +1,5 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
@@ -101,9 +102,9 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddAccountServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<User>, UserService>()
-            .AddScoped<IEntityBaseService<UserCredentials>, UserCredentialsService>()
-            .AddScoped<IEntityBaseService<PhoneNumber>, PhoneNumberService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserCredentialsService, UserCredentialsService>()
+            .AddScoped<IPhoneNumberService, PhoneNumberService>();
 
         return builder;
     }
