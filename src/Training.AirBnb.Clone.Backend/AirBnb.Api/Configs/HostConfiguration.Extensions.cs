@@ -4,8 +4,10 @@ using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Application.Foundations.ReviewServices;
-using Backend_Project.Application.Listings;
-using Backend_Project.Application.Notifications;
+using Backend_Project.Application.Listings.Services;
+using Backend_Project.Application.Listings.Settings;
+using Backend_Project.Application.Notifications.Services;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Application.Validation;
 using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Services;
@@ -139,7 +141,8 @@ public static partial class HostConfiguration
             .AddScoped<IListingRatingService, ListingRatingService>()
             .AddScoped<IListingRulesService, ListingRulesService>()
             .AddScoped<IDescriptionService, DescriptionService>()
-            .AddScoped<IBlockedNightService, BlockedNightService>();
+            .AddScoped<IListingRegistrationProgressService, ListingRegistrationProgressService>()
+            .AddScoped<IListingRegistrationService, ListingRegistrationService>();
 
         return builder;
     }
@@ -189,7 +192,8 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IReservationService, ReservationService>()
             .AddScoped<IReservationOccupancyService, ReservationOccupancyService>()
-            .AddScoped<IAvailabilityService, AvailabilityService>();
+            .AddScoped<IAvailabilityService, AvailabilityService>()
+            .AddScoped<IBlockedNightService, BlockedNightService>();
 
         return builder;
     }

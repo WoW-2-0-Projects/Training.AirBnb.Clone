@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CS8618
 
-namespace Backend_Project.Application.Location.Dtos;
+namespace Backend_Project.Application.Locations.Dtos;
 
 public class AddressDto
 {

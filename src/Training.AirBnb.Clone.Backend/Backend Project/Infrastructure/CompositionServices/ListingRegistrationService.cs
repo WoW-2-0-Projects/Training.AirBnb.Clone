@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Dtos;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
@@ -11,12 +11,12 @@ namespace Backend_Project.Infrastructure.CompositionServices;
 public class ListingRegistrationService : IListingRegistrationService
 {
     private readonly IMapper _mapper;
-    private readonly IEntityBaseService<Listing> _listingService;
-    private readonly IEntityBaseService<ListingRegistrationProgress> _listingRegistrationProgressService;
+    private readonly IListingService _listingService;
+    private readonly IListingRegistrationProgressService _listingRegistrationProgressService;
     private readonly ListingRulesSettings _listingRuleSettings;
     private readonly ListingRegistrationProgressSettings _listingRegistrationProgressSettings;
 
-    public ListingRegistrationService(IEntityBaseService<Listing> listingService, IEntityBaseService<ListingRegistrationProgress> listingRegistrationProgressService, IMapper mapper, IOptions<ListingRulesSettings> listingRulesSettings, IOptions<ListingRegistrationProgressSettings> listingRegistrationProgressSettings)
+    public ListingRegistrationService(IListingService listingService, IListingRegistrationProgressService listingRegistrationProgressService, IMapper mapper, IOptions<ListingRulesSettings> listingRulesSettings, IOptions<ListingRegistrationProgressSettings> listingRegistrationProgressSettings)
     {
         _listingService = listingService;
         _listingRegistrationProgressService = listingRegistrationProgressService;

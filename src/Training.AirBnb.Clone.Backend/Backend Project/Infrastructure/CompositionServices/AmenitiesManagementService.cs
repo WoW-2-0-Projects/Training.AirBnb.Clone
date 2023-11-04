@@ -1,5 +1,4 @@
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -25,9 +24,9 @@ namespace Backend_Project.Infrastructure.CompositionServices
         public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, 
             CancellationToken cancellationToken = default)
         {
-            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellation);
+            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
 
-            return await _amenityService.CreateAsync(amenity, saveChanges, cancellation);
+            return await _amenityService.CreateAsync(amenity, saveChanges, cancellationToken);
         }
 
         public async ValueTask<Amenity> UpdateAmenityAsycn(Amenity amenity, bool saveChanges = true,
