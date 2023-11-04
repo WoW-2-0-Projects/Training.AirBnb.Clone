@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Entity;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
@@ -51,6 +51,17 @@ public static partial class HostConfiguration
 
             return context;
         });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddMapping(this WebApplicationBuilder builder)
+    {
+        var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load).ToList();
+
+        assemblies.Add(Assembly.GetExecutingAssembly());
+
+        builder.Services.AddAutoMapper(assemblies);
 
         return builder;
     }
