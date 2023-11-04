@@ -1,5 +1,4 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Settings;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
-public class DescriptionService : IEntityBaseService<Description>
+public class DescriptionService : IDescriptionService
 {
     private readonly IDataContext _dataContext;
     private readonly ListingSettings _descriptionSettings;
@@ -48,7 +47,7 @@ public class DescriptionService : IEntityBaseService<Description>
     public async ValueTask<Description> UpdateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidateDescription(description))
-            throw new EntityNotUpdatableException<Description>("This Description is Not Valid!!");
+            throw new EntityValidationException<Description>("This Description is Not Valid!!");
 
         var foundListingDescription = await GetByIdAsync(description.Id);
 

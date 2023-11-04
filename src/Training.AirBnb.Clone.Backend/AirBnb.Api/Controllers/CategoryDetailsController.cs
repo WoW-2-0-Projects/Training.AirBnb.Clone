@@ -1,5 +1,5 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Services;
+using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings;
 using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +10,12 @@ namespace AirBnb.Api.Controllers;
 public class CategoryDetailsController : ControllerBase
 {
     private readonly IListingCategoryDetailsService _listingCategoryDetailsService;
-    private readonly IEntityBaseService<ListingCategory> _listingCategoryService;
-    private readonly IEntityBaseService<ListingType> _listingTypeService;
+    private readonly IListingCategoryService _listingCategoryService;
+    private readonly IListingTypeService _listingTypeService;
 
-    public CategoryDetailsController(IListingCategoryDetailsService listingCategoryDetailsService, IEntityBaseService<ListingCategory> listingCategoryService, IEntityBaseService<ListingType> listingTypeService)
+    public CategoryDetailsController(IListingCategoryDetailsService listingCategoryDetailsService,
+        IListingCategoryService listingCategoryService, 
+        IListingTypeService listingTypeService)
     {
         _listingCategoryDetailsService = listingCategoryDetailsService;
         _listingCategoryService = listingCategoryService;

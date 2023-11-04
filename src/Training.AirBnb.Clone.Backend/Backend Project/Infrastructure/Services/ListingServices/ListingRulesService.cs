@@ -1,5 +1,4 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Settings;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingRulesService : IEntityBaseService<ListingRules>
+public class ListingRulesService : IListingRulesService
 {
     private readonly IDataContext _context;
     private readonly ListingRulesSettings _rulesSettings;
@@ -106,12 +105,11 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
         if (listingRules.CheckInTimeStart is not null
             && (listingRules.CheckInTimeEnd is null
-            || (listingRules.CheckInTimeEnd - listingRules.CheckInTimeStart) < TimeSpan.FromHours(_rulesSettings.MinCheckInDurationInHours)))
-        {
+            || (listingRules.CheckInTimeEnd - listingRules.CheckInTimeStart) < TimeSpan.FromHours(2)))
             throw new EntityValidationException<ListingRules>("Invalid 'CheckInTimeStart' or 'CheckInTimeEnd'");
-        }
 
-        if (listingRules.AdditionalRules is not null && listingRules.AdditionalRules.All(@char => @char == ' '))
+        if (listingRules.AdditionalRules is not null && 
+            listingRules.AdditionalRules.All(@char => @char == ' '))
         {
             listingRules.AdditionalRules = null;
         }

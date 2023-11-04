@@ -1,5 +1,5 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Services;
+using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 
@@ -7,15 +7,15 @@ namespace Backend_Project.Infrastructure.CompositionServices
 {
     public class AmenitiesManagementService : IAmenitiesManagementService
     {
-        private readonly IEntityBaseService<Amenity> _amenityService;
-        private readonly IEntityBaseService<AmenityCategory> _amenityCategoryService;
-        private readonly IEntityBaseService<ListingAmenities> _listingAmenitiesService;
-        private readonly IEntityBaseService<Listing> _listingService;
+        private readonly IAmenityService _amenityService;
+        private readonly IAmenityCategoryService _amenityCategoryService;
+        private readonly IListingAmenitiesService _listingAmenitiesService;
+        private readonly IListingService _listingService;
 
-        public AmenitiesManagementService(IEntityBaseService<Amenity> amenityService,
-            IEntityBaseService<AmenityCategory> amenityCategoryService,
-            IEntityBaseService<ListingAmenities> listingAmenitiesService,
-            IEntityBaseService<Listing> listingService)
+        public AmenitiesManagementService(IAmenityService amenityService,
+            IAmenityCategoryService amenityCategoryService,
+            IListingAmenitiesService listingAmenitiesService,
+            IListingService listingService)
         {
             _amenityService = amenityService;
             _amenityCategoryService = amenityCategoryService;

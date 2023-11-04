@@ -1,5 +1,5 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Notifications.Services;
+using Backend_Project.Application.Foundations.NotificationServices;
+using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
@@ -8,19 +8,19 @@ namespace Backend_Project.Infrastructure.CompositionServices
 {
     public class EmailManagementService : IEmailManagementService
     {
-        private readonly IEntityBaseService<EmailTemplate> _emailTemplateService;
+        private readonly IEmailTemplateService _emailTemplateService;
         private readonly IEmailPlaceholderService _emailPlaceholderService;
         private readonly IEmailSenderService _emailSenderService;
         private readonly IEmailMessageService _emailMessageService;
-        private readonly IEntityBaseService<Email> _emailService;
+        private readonly IEmailService _emailService;
         private readonly IDataContext _appDataContext;
 
         public EmailManagementService(
-            IEntityBaseService<EmailTemplate> emailTemplateService,
+            IEmailTemplateService emailTemplateService,
             IEmailPlaceholderService emailPlaceholderService,
             IEmailSenderService emailSenderService,
             IEmailMessageService emailMessageService,
-            IEntityBaseService<Email> emailService,
+            IEmailService emailService,
             IDataContext dataContext
         )
         {

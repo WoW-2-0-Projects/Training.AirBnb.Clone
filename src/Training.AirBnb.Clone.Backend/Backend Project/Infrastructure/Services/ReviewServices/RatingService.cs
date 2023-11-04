@@ -1,5 +1,4 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Review.Settings;
+using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReviewServices;
 
-public class RatingService : IEntityBaseService<Rating>
+public class RatingService : IRatingService
 {
     private readonly IDataContext _appDataContext;
     private readonly ReviewSettings _ratingSettings;

@@ -1,5 +1,4 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Listings.Settings;
+using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
 
-public class ListingTypeService : IEntityBaseService<ListingType>
+public class ListingTypeService : IListingTypeService
 {
     private readonly IDataContext _appDataContext;
     private readonly ListingTypeSettings _typeSettings;

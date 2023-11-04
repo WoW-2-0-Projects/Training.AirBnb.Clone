@@ -1,4 +1,4 @@
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Validation;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
 
-public class UserService : IEntityBaseService<User>
+public class UserService : IUserService
 {
     private readonly IDataContext _appDataContext;
     private readonly IValidationService _validationService;

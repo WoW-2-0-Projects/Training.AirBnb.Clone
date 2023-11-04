@@ -1,12 +1,12 @@
 using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Application.Entity;
 using Backend_Project.Persistence.DataContexts;
+using Backend_Project.Application.Foundations.NotificationServices;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
-public class EmailTemplateService : IEntityBaseService<EmailTemplate>
+public class EmailTemplateService : IEmailTemplateService
 {
     private readonly IDataContext _dataContext;
 
@@ -94,15 +94,18 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
         
         return true;
     }
+
     private bool ValidationExits(EmailTemplate emailTemplate)
     {
-        var foundEmailTemplate = GetUndeletedEmailTemplate().FirstOrDefault(search => search.Equals(emailTemplate));
+        var foundEmailTemplate = GetUndeletedEmailTemplate()
+            .FirstOrDefault(search => search.Equals(emailTemplate));
         
         if (foundEmailTemplate is null)
             return false;
         
         return true;
     }
+
     private IQueryable<EmailTemplate> GetUndeletedEmailTemplate() =>
         _dataContext.EmailTemplates.Where(emailTemplate => !emailTemplate.IsDeleted).AsQueryable();
 }
