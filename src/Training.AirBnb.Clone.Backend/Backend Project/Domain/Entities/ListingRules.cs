@@ -4,7 +4,7 @@ namespace Backend_Project.Domain.Entities;
 
 public class ListingRules : SoftDeletedEntity
 {
-    public int GuestsCount { get; set; }
+    public int Guests { get; set; }
 
     public bool PetsAllowed { get; set; }
 

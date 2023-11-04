@@ -7,6 +7,7 @@ public static partial class HostConfiguration
         builder
             .AddExposers()
             .AddDevTools()
+            .AddMapping()
             .AddDataContext()
             .AddServices();
             

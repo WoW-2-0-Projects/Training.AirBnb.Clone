@@ -20,6 +20,7 @@ using Backend_Project.Infrastructure.Services.ReviewServices;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
 using FileBaseContext.Context.Models.Configurations;
+using System.Reflection;
 
 namespace AirBnb.Api.Configs;
 
@@ -55,6 +56,17 @@ public static partial class HostConfiguration
 
             return context;
         });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddMapping(this WebApplicationBuilder builder)
+    {
+        var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load).ToList();
+
+        assemblies.Add(Assembly.GetExecutingAssembly());
+
+        builder.Services.AddAutoMapper(assemblies);
 
         return builder;
     }
@@ -119,7 +131,7 @@ public static partial class HostConfiguration
         builder.Services.Configure<ListingPropertyTypeSettings>(builder.Configuration.GetSection(nameof(ListingPropertyTypeSettings)));
         builder.Services.Configure<ListingSettings>(builder.Configuration.GetSection(nameof(ListingSettings)));
         builder.Services.Configure<ListingRulesSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
-        builder.Services.Configure<ListingRegistrationProgressSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
+        builder.Services.Configure<ListingRegistrationProgressSettings>(builder.Configuration.GetSection(nameof(ListingRegistrationProgressSettings)));
 
 
         builder.Services
@@ -129,7 +141,8 @@ public static partial class HostConfiguration
             .AddScoped<IListingRatingService, ListingRatingService>()
             .AddScoped<IListingRulesService, ListingRulesService>()
             .AddScoped<IDescriptionService, DescriptionService>()
-            .AddScoped<IBlockedNightService, BlockedNightService>();
+            .AddScoped<IListingRegistrationProgressService, ListingRegistrationProgressService>()
+            .AddScoped<IListingRegistrationService, ListingRegistrationService>();
 
         return builder;
     }
@@ -179,7 +192,8 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IReservationService, ReservationService>()
             .AddScoped<IReservationOccupancyService, ReservationOccupancyService>()
-            .AddScoped<IAvailabilityService, AvailabilityService>();
+            .AddScoped<IAvailabilityService, AvailabilityService>()
+            .AddScoped<IBlockedNightService, BlockedNightService>();
 
         return builder;
     }

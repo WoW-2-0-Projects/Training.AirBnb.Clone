@@ -1,5 +1,4 @@
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -23,11 +22,11 @@ namespace Backend_Project.Infrastructure.CompositionServices
 
 #region Amenitie's methods
         public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, 
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
-            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellation);
+            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
 
-            return await _amenityService.CreateAsync(amenity, saveChanges, cancellation);
+            return await _amenityService.CreateAsync(amenity, saveChanges, cancellationToken);
         }
 
         public async ValueTask<Amenity> UpdateAmenityAsycn(Amenity amenity, bool saveChanges = true,
@@ -58,7 +57,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
                 =>  new (
                  _amenityService.Get(ac => ac.CategoryId.Equals(amenityCategoryId)).ToList());
 
-        public async ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges, CancellationToken cancellationToken = default)
+        public async ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var amenitiesCategory = await _amenityCategoryService.GetByIdAsync(id, cancellationToken);
 
@@ -75,7 +74,6 @@ namespace Backend_Project.Infrastructure.CompositionServices
         public async ValueTask<ListingAmenities> AddListingAmenitiesAsync(ListingAmenities listingAmenities,
             bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            //await _listingService.GetByIdAsync(listingAmenities.ListingId);
             await _amenityService.GetByIdAsync(listingAmenities.AmenityId, cancellationToken);
 
             return await _listingAmenitiesService.CreateAsync(listingAmenities, saveChanges, cancellationToken);
