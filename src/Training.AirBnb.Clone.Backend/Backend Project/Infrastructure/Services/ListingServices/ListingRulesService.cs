@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingRulesService : IEntityBaseService<ListingRules>
 {
     private readonly IDataContext _context;
+    private readonly ListingRulesSettings _rulesSettings;
 
-    public ListingRulesService(IDataContext context)
+    public ListingRulesService(IDataContext context, IOptions<ListingRulesSettings> rulesSettings)
     {
         _context = context;
+        _rulesSettings = rulesSettings.Value;
     }
 
     public async ValueTask<ListingRules> CreateAsync(ListingRules listingRules, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -31,7 +35,7 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
     public async ValueTask<ListingRules> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var foundListingRules = await _context.ListingRules.FindAsync(id, cancellationToken)
-            ?? throw new EntityNotFoundException<ListingRules>("Listing rules not found!"); ;
+            ?? throw new EntityNotFoundException<ListingRules>("Listing rules not found!");
 
         await _context.ListingRules.RemoveAsync(foundListingRules, cancellationToken);
 
@@ -90,9 +94,7 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
     private void Validate(ListingRules listingRules)
     {
-        var minGuestsCount = 1;
-
-        if (listingRules.GuestsCount < minGuestsCount)
+        if (listingRules.GuestsCount < _rulesSettings.GuestsMinCount)
         {
             throw new EntityValidationException<ListingRules>("Guests count isn't valid!");
         }
@@ -104,16 +106,14 @@ public class ListingRulesService : IEntityBaseService<ListingRules>
 
         if (listingRules.CheckInTimeStart is not null
             && (listingRules.CheckInTimeEnd is null
-            || (listingRules.CheckInTimeEnd - listingRules.CheckInTimeStart) < TimeSpan.FromHours(2)))
+            || (listingRules.CheckInTimeEnd - listingRules.CheckInTimeStart) < TimeSpan.FromHours(_rulesSettings.MinCheckInDurationInHours)))
         {
             throw new EntityValidationException<ListingRules>("Invalid 'CheckInTimeStart' or 'CheckInTimeEnd'");
         }
 
-        if (listingRules.AdditionalRules.All(@char => @char == ' '))
+        if (listingRules.AdditionalRules is not null && listingRules.AdditionalRules.All(@char => @char == ' '))
         {
             listingRules.AdditionalRules = null;
         }
-
     }
-
 }

@@ -8,7 +8,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
     public class ReservationOccupancyService : IEntityBaseService<ReservationOccupancy>
     {
-        private IDataContext _appDataContext;
+        private readonly IDataContext _appDataContext;
         public ReservationOccupancyService(IDataContext appDataContext)
         {
             _appDataContext = appDataContext;
@@ -73,11 +73,10 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             => await DeleteAsync(reservationOccupancy.Id, saveChanges, cancellationToken);
 
         private bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
-            => (reservationOccupancy.Adults < 0 && reservationOccupancy.Adults > 50)
-            || (reservationOccupancy.Children < 0 && reservationOccupancy.Children > 50)
-            || (reservationOccupancy.Infants < 0 && reservationOccupancy.Infants > 50)
-            || (reservationOccupancy.Pets < 0 && reservationOccupancy.Pets > 50)
-            ? false: true;
+            => (reservationOccupancy.Adults >= 1 && reservationOccupancy.Adults <= 50)
+            || (reservationOccupancy.Children >= 0 && reservationOccupancy.Children <= 50)
+            || (reservationOccupancy.Infants >= 0 && reservationOccupancy.Infants <= 50)
+            || (reservationOccupancy.Pets >= 0 && reservationOccupancy.Pets <= 5);
         
         private IQueryable<ReservationOccupancy> GetUndelatedReservatinOccupancies() => _appDataContext.ReservationOccupancies
             .Where(rsO => !rsO.IsDeleted).AsQueryable();

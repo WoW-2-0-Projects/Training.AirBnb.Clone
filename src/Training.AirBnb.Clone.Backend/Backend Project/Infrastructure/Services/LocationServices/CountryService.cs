@@ -8,7 +8,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class CountryService : IEntityBaseService<Country>
     {
-        private IDataContext _appDataContext;
+        private readonly IDataContext _appDataContext;
         public CountryService(IDataContext dataContext)
         {
             _appDataContext = dataContext;
@@ -99,16 +99,15 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         }
 
         private bool IsValidRegionPhoneNumberLength(Country country)
-            => country.RegionPhoneNumberLength < 7 && country.RegionPhoneNumberLength > 15
-                ? false : true;
+            => country.RegionPhoneNumberLength >= 7 && country.RegionPhoneNumberLength <= 15;
 
         private IQueryable<Country> GetUndeletedCountries() => _appDataContext.Countries
             .Where(country => !country.IsDeleted).AsQueryable();
 
         private bool IsValidCountryName(Country country)
-            => string.IsNullOrWhiteSpace(country.Name)
-                || country.Name.Length <= 4
-                || country.Name.Length > 185 ? false : true;
+            => !string.IsNullOrWhiteSpace(country.Name)
+                && country.Name.Length > 4
+                && country.Name.Length < 185;
 
         private bool IsUnique(Country country) => !GetUndeletedCountries().Any(countries => countries.Name.Equals(country.Name));
     }

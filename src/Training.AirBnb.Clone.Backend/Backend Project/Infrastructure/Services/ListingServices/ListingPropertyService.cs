@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingPropertyService : IEntityBaseService<ListingProperty>
 {
     private readonly IDataContext _appDataContext;
+    private readonly ListingRulesSettings _propertySettings;
 
-    public ListingPropertyService(IDataContext appDataContext)
+    public ListingPropertyService(IDataContext appDataContext, IOptions<ListingRulesSettings> propertySettings)
     {
         _appDataContext = appDataContext;
+        _propertySettings = propertySettings.Value;
     }
 
     public async ValueTask<ListingProperty> CreateAsync(ListingProperty property, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -82,8 +86,7 @@ public class ListingPropertyService : IEntityBaseService<ListingProperty>
     private bool IsValidProperty(ListingProperty property)
     {
         if (string.IsNullOrWhiteSpace(property.PropertyName)) return false;
-        if (property.PropertyCount < 1) return false;
-        if (property.ListingId == Guid.Empty) return false;
+        if (property.PropertyCount < _propertySettings.PropertyMinValue) return false;
 
         return true;
     }

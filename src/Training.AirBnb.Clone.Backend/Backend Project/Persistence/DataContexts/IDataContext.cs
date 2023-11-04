@@ -35,6 +35,7 @@ public interface IDataContext
     IFileSet<BlockedNight, Guid>  BlockedNights { get; }
     IFileSet<Availability, Guid> Availabilities { get; }
     IFileSet<ScenicView, Guid> ScenicViews { get; }
+    IFileSet<ListingRegistrationProgress, Guid> ListingRegistrationProgresses { get; }
 
     IFileSet<LocationScenicViews, Guid> LocationScenicViews { get; }
 

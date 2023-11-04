@@ -2,7 +2,7 @@
 
 public enum ListingStatus
 {
-    Listed,
-    Unlisted,
-    InProgress
+    Listed = 0,
+    Unlisted = 1,
+    InProgress = 2
 }

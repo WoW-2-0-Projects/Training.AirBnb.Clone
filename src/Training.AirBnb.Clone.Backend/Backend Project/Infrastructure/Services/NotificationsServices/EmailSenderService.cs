@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Notifications;
+﻿using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Domain.Entities;
 using System.Net;
 using System.Net.Mail;

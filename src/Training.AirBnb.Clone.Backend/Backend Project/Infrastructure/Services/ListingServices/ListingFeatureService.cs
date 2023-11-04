@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingFeatureService : IEntityBaseService<ListingFeature>
 {
     private readonly IDataContext _appDataContext;
+    private readonly ListingRulesSettings _featureSettings;
 
-    public ListingFeatureService(IDataContext appDataContext)
+    public ListingFeatureService(IDataContext appDataContext, IOptions<ListingRulesSettings> featureSettings)
     {
         _appDataContext = appDataContext;
+        _featureSettings = featureSettings.Value;
     }
 
     public async ValueTask<ListingFeature> CreateAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -94,8 +98,7 @@ public class ListingFeatureService : IEntityBaseService<ListingFeature>
 
     private bool IsValidFeature(ListingFeature feature)
         => !string.IsNullOrWhiteSpace(feature.Name)
-            && feature.Name.Length > 2
-            && feature.MinValue >= 0;
+            && feature.MinValue >= _featureSettings.FeatureMinValue;
 
     private bool FeatureExists(ListingFeature feature)
         => GetUndeletedFeatures()

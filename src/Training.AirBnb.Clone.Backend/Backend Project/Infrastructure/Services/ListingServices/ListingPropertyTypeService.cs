@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingPropertyTypeService : IEntityBaseService<ListingPropertyType>
 {
     private readonly IDataContext _appDataContext;
+    private readonly ListingPropertyTypeSettings _propertyTypeSetting;
 
-    public ListingPropertyTypeService(IDataContext appDataContext)
+    public ListingPropertyTypeService(IDataContext appDataContext, IOptions<ListingPropertyTypeSettings> propertyTypeSettings)
     {
         _appDataContext = appDataContext;
+        _propertyTypeSetting = propertyTypeSettings.Value;
     }
 
     public async ValueTask<ListingPropertyType> CreateAsync(ListingPropertyType listingPropertyType, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -76,23 +80,22 @@ public class ListingPropertyTypeService : IEntityBaseService<ListingPropertyType
 
     private void ValidateListingPropertyType(ListingPropertyType listingPropertyType)
     {
-        if (listingPropertyType.FloorsCount < 1 || listingPropertyType.FloorsCount > 180)
+        if (listingPropertyType.FloorsCount < _propertyTypeSetting.MinFloorsCount || listingPropertyType.FloorsCount > _propertyTypeSetting.MaxFloorsCount)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's FloorsCount isn't valid!");
 
-        if (listingPropertyType.ListingFloor < 0 || listingPropertyType.ListingFloor > listingPropertyType.FloorsCount)
+        if (listingPropertyType.ListingFloor < _propertyTypeSetting.MinListingFloor || listingPropertyType.ListingFloor > listingPropertyType.FloorsCount)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's ListingFloor isn't valid!");
 
-        if (listingPropertyType.YearBuilt < 1900 || listingPropertyType.YearBuilt > DateTime.UtcNow.Year)
+        if (listingPropertyType.YearBuilt < _propertyTypeSetting.BuiltYearMinValue || listingPropertyType.YearBuilt > DateTime.UtcNow.Year)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's YearBuilt isn't valid!");
 
-        if (listingPropertyType.PropertySize < 0)
+        if (listingPropertyType.PropertySize < _propertyTypeSetting.PropertySizeMinValue)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's PropertySize isn't valid!");
 
-        if (listingPropertyType.PropertySize > 0 && listingPropertyType.UnitOfSize is null)
+        if (listingPropertyType.PropertySize is not null && listingPropertyType.UnitOfSize is null)
             throw new EntityValidationException<ListingPropertyType>("Listing property type's Unit of size isn't valid");
     }
 
     private IQueryable<ListingPropertyType> GetUndeletedListingPropertyType()
         => _appDataContext.ListingPropertyTypes.Where(property => !property.IsDeleted).AsQueryable();
-
 }

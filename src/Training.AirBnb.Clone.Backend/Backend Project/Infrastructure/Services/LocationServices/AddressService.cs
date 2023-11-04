@@ -8,15 +8,11 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 {
     public class AddressService : IEntityBaseService<Address>
     {
-        private IDataContext _appDataContext;
-        private IEntityBaseService<City> _cityService;
-        private IEntityBaseService<Country> _countryService;
+        private readonly IDataContext _appDataContext;
 
-        public AddressService(IDataContext appDataContext, IEntityBaseService<City> cityService, IEntityBaseService<Country> countryService)
+        public AddressService(IDataContext appDataContext)
         {
             _appDataContext = appDataContext;
-            _cityService = cityService;
-            _countryService = countryService;
         }
 
         public async ValueTask<Address> CreateAsync(Address address, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -93,7 +89,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             if (zipCode is null)
                 return true;
             
-            for (int index = 0; index < zipCode?.Length; index++)
+            for (int index = 0; index < zipCode.Length; index++)
                 if (!char.IsNumber(zipCode[index]))
                     return false;
             return true;

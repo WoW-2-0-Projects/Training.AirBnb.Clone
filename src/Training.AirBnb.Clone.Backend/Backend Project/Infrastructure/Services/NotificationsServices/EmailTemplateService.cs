@@ -106,4 +106,3 @@ public class EmailTemplateService : IEntityBaseService<EmailTemplate>
     private IQueryable<EmailTemplate> GetUndeletedEmailTemplate() =>
         _dataContext.EmailTemplates.Where(emailTemplate => !emailTemplate.IsDeleted).AsQueryable();
 }
-

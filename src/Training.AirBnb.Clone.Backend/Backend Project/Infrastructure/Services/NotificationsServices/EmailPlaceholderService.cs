@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Notifications;
+using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Domain.Entities;
 using System.Data;
 using System.Text.RegularExpressions;

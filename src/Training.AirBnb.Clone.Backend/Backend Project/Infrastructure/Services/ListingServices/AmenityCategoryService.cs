@@ -86,7 +86,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
             => await DeleteAsync(amenityCategory.Id, saveChanges, cancellationToken);
 
         private bool IsValidCategoryName(string categoryName)
-            => !string.IsNullOrWhiteSpace(categoryName) || categoryName.Length > 2;
+            => !string.IsNullOrWhiteSpace(categoryName);
 
         private bool IsUniqueCategory(string categoryName)
             => GetUndeletedAmentyCategories().Any(category => category.CategoryName == categoryName);

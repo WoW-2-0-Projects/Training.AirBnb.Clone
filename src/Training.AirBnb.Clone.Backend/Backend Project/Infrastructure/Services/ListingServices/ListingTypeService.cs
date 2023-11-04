@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices;
@@ -9,10 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 public class ListingTypeService : IEntityBaseService<ListingType>
 {
     private readonly IDataContext _appDataContext;
+    private readonly ListingTypeSettings _typeSettings;
 
-    public ListingTypeService(IDataContext appDataContext)
+    public ListingTypeService(IDataContext appDataContext, IOptions<ListingTypeSettings> typeSettings)
     {
         _appDataContext = appDataContext;
+        _typeSettings = typeSettings.Value;
     }
 
     public async ValueTask<ListingType> CreateAsync(ListingType option, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -79,8 +83,8 @@ public class ListingTypeService : IEntityBaseService<ListingType>
     }
 
     private bool IsValidOption(ListingType option)
-        => (!string.IsNullOrWhiteSpace(option.Name) && option.Name.Length > 2 && option.Name.Length <= 100)
-            && (!string.IsNullOrWhiteSpace(option.Description) && option.Description.Length > 2 && option.Description.Length <= 200);
+        => (!string.IsNullOrWhiteSpace(option.Name) && option.Name.Length >= _typeSettings.MinListingTypeNameLength && option.Name.Length <= _typeSettings.MaxListingTypeNameLength)
+            && (!string.IsNullOrWhiteSpace(option.Description) && option.Description.Length >= _typeSettings.MinListingTypeDescriptionLength && option.Description.Length <= _typeSettings.MaxListingTypeDescriptionLength);
 
     private bool IsUniqueOption(ListingType option)
         => !GetUndeletedOptions().Any(self => self.Name == option.Name);

@@ -84,9 +84,7 @@ public class AmenityService : IEntityBaseService<Amenity>
     }
 
     private bool IsValidAmenity(Amenity amenity)
-        => !string.IsNullOrWhiteSpace(amenity.AmenityName)
-            && amenity.AmenityName.Length > 2
-            && amenity.CategoryId != Guid.Empty;
+        => !string.IsNullOrWhiteSpace(amenity.AmenityName);
 
     private bool IsUnique(Amenity amenity)
         => !GetUndeletedAmenities()

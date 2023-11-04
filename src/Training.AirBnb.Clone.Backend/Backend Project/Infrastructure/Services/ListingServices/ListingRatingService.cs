@@ -1,7 +1,9 @@
 ﻿using Backend_Project.Application.Entity;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ListingServices
@@ -9,9 +11,12 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
     public class ListingRatingService : IEntityBaseService<ListingRating>
     {
         private readonly IDataContext _appDataContext;
-        public ListingRatingService(IDataContext appDataContext)
+        private readonly ReviewSettings _ratingSettings;
+
+        public ListingRatingService(IDataContext appDataContext, IOptions<ReviewSettings> ratingSettings)
         {
             _appDataContext = appDataContext;
+            _ratingSettings = ratingSettings.Value;
         }
 
         public async ValueTask<ListingRating> CreateAsync(ListingRating listingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -80,7 +85,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         private bool IsValidRating(double rating)
         {
-            if (rating >= 0 && rating <= 5.0)
+            if (rating >= _ratingSettings.RatingMinValue && rating <= _ratingSettings.RatingMaxValue)
                 return true;
             else
                 return false;
