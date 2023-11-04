@@ -1,4 +1,4 @@
-using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Entity;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
@@ -16,6 +16,7 @@ using Backend_Project.Infrastructure.Services.ReviewServices;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
 using FileBaseContext.Context.Models.Configurations;
+using System.Reflection;
 
 namespace AirBnb.Api.Configs;
 
@@ -126,7 +127,7 @@ public static partial class HostConfiguration
         builder.Services.Configure<ListingPropertyTypeSettings>(builder.Configuration.GetSection(nameof(ListingPropertyTypeSettings)));
         builder.Services.Configure<ListingSettings>(builder.Configuration.GetSection(nameof(ListingSettings)));
         builder.Services.Configure<ListingRulesSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
-        builder.Services.Configure<ListingRegistrationProgressSettings>(builder.Configuration.GetSection(nameof(ListingRulesSettings)));
+        builder.Services.Configure<ListingRegistrationProgressSettings>(builder.Configuration.GetSection(nameof(ListingRegistrationProgressSettings)));
 
 
         builder.Services
@@ -135,7 +136,8 @@ public static partial class HostConfiguration
             .AddScoped<IEntityBaseService<ListingPropertyType>, ListingPropertyTypeService>()
             .AddScoped<IEntityBaseService<ListingRating>, ListingRatingService>()
             .AddScoped<IEntityBaseService<ListingRules>, ListingRulesService>()
-            .AddScoped<IEntityBaseService<ListingRegistrationProgress>, ListingRegistrationProgressService>();
+            .AddScoped<IEntityBaseService<ListingRegistrationProgress>, ListingRegistrationProgressService>()
+            .AddScoped<IListingRegistrationService, ListingRegistrationService>();
 
         return builder;
     }
@@ -149,6 +151,7 @@ public static partial class HostConfiguration
             .AddScoped<IEntityBaseService<ListingFeature>, ListingFeatureService>()
             .AddScoped<IEntityBaseService<ListingType>, ListingTypeService>()
             .AddScoped<IEntityBaseService<ListingCategoryType>, ListingCategoryTypeService>()
+            .AddScoped<IEntityBaseService<Description>, DescriptionService>()
             .AddScoped<IListingCategoryDetailsService, ListingCategoryDetailsService>();
 
         return builder;
