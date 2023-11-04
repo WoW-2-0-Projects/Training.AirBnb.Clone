@@ -10,22 +10,19 @@ namespace Backend_Project.Infrastructure.CompositionServices
         private readonly IEntityBaseService<Amenity> _amenityService;
         private readonly IEntityBaseService<AmenityCategory> _amenityCategoryService;
         private readonly IEntityBaseService<ListingAmenities> _listingAmenitiesService;
-        private readonly IEntityBaseService<Listing> _listingService;
 
         public AmenitiesManagementService(IEntityBaseService<Amenity> amenityService,
             IEntityBaseService<AmenityCategory> amenityCategoryService,
-            IEntityBaseService<ListingAmenities> listingAmenitiesService,
-            IEntityBaseService<Listing> listingService)
+            IEntityBaseService<ListingAmenities> listingAmenitiesService)
         {
             _amenityService = amenityService;
             _amenityCategoryService = amenityCategoryService;
             _listingAmenitiesService = listingAmenitiesService;
-            _listingService = listingService;
         }
 
 #region Amenitie's methods
         public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, 
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             await _amenityCategoryService.GetByIdAsync(amenity.CategoryId);
 
@@ -60,7 +57,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
                 =>  new ValueTask<ICollection<Amenity>>(
                  _amenityService.Get(ac => ac.CategoryId.Equals(amenityCategoryId)).ToList());
 
-        public async ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges, CancellationToken cancellationToken = default)
+        public async ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var amenitiesCategory = await _amenityCategoryService.GetByIdAsync(id, cancellationToken);
 
@@ -77,7 +74,6 @@ namespace Backend_Project.Infrastructure.CompositionServices
         public async ValueTask<ListingAmenities> AddListingAmenitiesAsync(ListingAmenities listingAmenities,
             bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            //await _listingService.GetByIdAsync(listingAmenities.ListingId);
             await _amenityService.GetByIdAsync(listingAmenities.AmenityId);
 
             return await _listingAmenitiesService.CreateAsync(listingAmenities, saveChanges, cancellationToken);

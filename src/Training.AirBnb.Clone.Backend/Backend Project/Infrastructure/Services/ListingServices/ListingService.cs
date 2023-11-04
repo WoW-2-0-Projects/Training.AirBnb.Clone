@@ -22,7 +22,7 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> CreateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
+            throw new EntityValidationException<Listing>("Listing did not pass validation.");
 
         await _appDataContext.Listings.AddAsync(listing, cancellationToken);
 
@@ -47,7 +47,7 @@ public class ListingService : IEntityBaseService<Listing>
     public async ValueTask<Listing> UpdateAsync(Listing listing, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!IsValidListing(listing))
-            throw new EntityValidationException<Listing> ("Listing did not pass validation.");
+            throw new EntityValidationException<Listing>("Listing did not pass validation.");
 
         var foundListing = await GetByIdAsync(listing.Id, cancellationToken);
 
@@ -77,8 +77,15 @@ public class ListingService : IEntityBaseService<Listing>
         => await DeleteAsync(listing.Id, saveChanges, cancellationToken);
 
     private bool IsValidListing(Listing listing)
-        => (!string.IsNullOrWhiteSpace(listing.Title) && listing.Title.Length >= _listingSettings.MinTitleLength && listing.Title.Length <= _listingSettings.MaxTitleLength)
-            && listing.Price > _listingSettings.MinListingPrice;
+    {
+        if (string.IsNullOrWhiteSpace(listing.Title) || listing.Title.Length < _listingSettings.MinTitleLength || listing.Title.Length > _listingSettings.MaxTitleLength) 
+            return false;
+
+        if (listing.Price is not null && listing.Price < _listingSettings.MinListingPrice)
+            return false;
+
+        return true;
+    }
 
     private IQueryable<Listing> GetUndeletedListings()
         => _appDataContext.Listings.Where(listing => !listing.IsDeleted).AsQueryable();

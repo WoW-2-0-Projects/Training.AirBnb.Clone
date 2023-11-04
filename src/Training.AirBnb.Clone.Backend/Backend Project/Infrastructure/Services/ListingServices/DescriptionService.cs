@@ -21,7 +21,7 @@ public class DescriptionService : IEntityBaseService<Description>
     public async ValueTask<Description> CreateAsync(Description description, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidateDescription(description))
-            throw new EntityValidationException<Description>("This description is Invalid!!");
+            throw new EntityValidationException<Description>("This description is Invalid!");
 
         await _dataContext.Descriptions.AddAsync(description, cancellationToken);
 
@@ -80,8 +80,8 @@ public class DescriptionService : IEntityBaseService<Description>
 
     private bool ValidateDescription(Description description)
     {
-        if (description.ListingDescription.Length > _descriptionSettings.ListingDescriptionMaxLength || string
-            .IsNullOrWhiteSpace(description.ListingDescription))
+        if (string.IsNullOrWhiteSpace(description.ListingDescription)
+            || description.ListingDescription.Length > _descriptionSettings.ListingDescriptionMaxLength)
             return false;
 
         if (string.IsNullOrWhiteSpace(description.TheSpace))

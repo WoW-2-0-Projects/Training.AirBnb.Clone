@@ -77,7 +77,7 @@ public class ListingRegistrationProgressService : IEntityBaseService<ListingRegi
         => progress.Progress >= _registrationSettings.ProgressMinValue && progress.Progress <= _registrationSettings.ProgressMaxValue;
 
     private bool IsUnique(ListingRegistrationProgress progress)
-        => GetUndeletedProgresses().Any(self => self.ListingId == progress.ListingId);
+        => !GetUndeletedProgresses().Any(self => self.ListingId == progress.ListingId);
 
     private bool IsValidOnUpdate(ListingRegistrationProgress oldProgress, ListingRegistrationProgress updatedProgress)
         => oldProgress.Progress <= updatedProgress.Progress && updatedProgress.Progress <= _registrationSettings.ProgressMaxValue;
