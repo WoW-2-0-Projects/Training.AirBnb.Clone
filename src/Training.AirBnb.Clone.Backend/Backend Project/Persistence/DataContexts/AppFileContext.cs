@@ -86,7 +86,7 @@ public class AppFileContext : FileContext, IDataContext
                 if (entry is not IFileEntityEntry<IFileSetEntity<Guid>>) continue;
             }
 
-        return new ValueTask(Task.CompletedTask);
+        return new (Task.CompletedTask);
     }
 
     public static ValueTask AddSoftDeletionDetails(IEnumerable<IFileSetBase> fileSets)

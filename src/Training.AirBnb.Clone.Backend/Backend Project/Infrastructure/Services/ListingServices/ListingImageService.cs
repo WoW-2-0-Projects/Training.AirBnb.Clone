@@ -8,18 +8,18 @@ namespace Backend_Project.Infrastructure.Services.ListingServices;
 
 public class ListingImageService : IListingImageService
 {
-    private readonly IDataContext _appDatacontext;
+    private readonly IDataContext _appDataContext;
 
-    public ListingImageService(IDataContext dataContext) => _appDatacontext = dataContext;
+    public ListingImageService(IDataContext dataContext) => _appDataContext = dataContext;
 
     public async ValueTask<ListingImage> CreateAsync(ListingImage listingImage, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (!ValidateOnCreate(listingImage))
             throw new EntityValidationException<ListingImage>("Listing image not valid!");
         
-        await _appDatacontext.ListingImages.AddAsync(listingImage, cancellationToken);
+        await _appDataContext.ListingImages.AddAsync(listingImage, cancellationToken);
 
-        if(saveChanges) await _appDatacontext.SaveChangesAsync();
+        if(saveChanges) await _appDataContext.SaveChangesAsync();
 
         return listingImage;
     }
@@ -42,9 +42,9 @@ public class ListingImageService : IListingImageService
     {
         var foundListingImage = await GetByIdAsync(id, cancellationToken);
 
-        await _appDatacontext.ListingImages.RemoveAsync(foundListingImage, cancellationToken);
+        await _appDataContext.ListingImages.RemoveAsync(foundListingImage, cancellationToken);
 
-        if (saveChanges) await _appDatacontext.ListingFeatures.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _appDataContext.SaveChangesAsync();
 
         return foundListingImage;
     }
@@ -67,6 +67,6 @@ public class ListingImageService : IListingImageService
     }
 
     private IQueryable<ListingImage> GetUndeletedListingImages()
-            => _appDatacontext.ListingImages
+            => _appDataContext.ListingImages
                 .Where(feature => !feature.IsDeleted).AsQueryable();
 }
