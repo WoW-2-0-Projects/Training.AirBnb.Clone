@@ -45,7 +45,7 @@ public static class CategoryDetailsSeedData
         var roomId = context.ListingTypes.First(type => type.Name == "A room").Id;
         var sharedRoomId = context.ListingTypes.First(type => type.Name == "A shared room").Id;
 
-        await context.InitializeFeaturesByType(roomId, featuresData, new List<string> { "Bed" });
+        await context.InitializeFeaturesByType(roomId, featuresData, new List<string> { "Bed", "Bedroom" });
         await context.InitializeFeaturesByType(sharedRoomId, featuresData, new List<string> { "Bed", "WC", "Full bathroom" });
         await context.InitializeFeaturesByType(entirePlaceId, featuresData, new List<string> { "Bedroom", "Bed", "WC", "Full bathroom" });
     }
