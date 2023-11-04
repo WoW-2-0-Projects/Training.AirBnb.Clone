@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Domain.Entities;
 using System.Data;
@@ -8,7 +8,7 @@ namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
-    private readonly IEntityBaseService<User> _userService;
+    private readonly IUserService _userService;
     
     private const string _fullName = "{{FullName}}";
     private const string _firstName = "{{FirstName}}";
@@ -17,7 +17,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
    
-    public EmailPlaceholderService(IEntityBaseService<User> userService)
+    public EmailPlaceholderService(IUserService userService)
     {
         _userService = userService;
     }

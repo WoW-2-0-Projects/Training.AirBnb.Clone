@@ -94,5 +94,4 @@ public class ListingPropertyTypeService : IListingPropertyTypeService
 
     private IQueryable<ListingPropertyType> GetUndeletedListingPropertyType()
         => _appDataContext.ListingPropertyTypes.Where(property => !property.IsDeleted).AsQueryable();
-
 }

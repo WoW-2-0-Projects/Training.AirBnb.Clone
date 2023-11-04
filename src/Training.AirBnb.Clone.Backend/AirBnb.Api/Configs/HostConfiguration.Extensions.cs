@@ -1,5 +1,4 @@
-﻿using Backend_Project.Application.Entity;
-using Backend_Project.Application.Foundations.AccountServices;
+﻿using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Foundations.NotificationServices;
@@ -8,7 +7,6 @@ using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
-using Backend_Project.Domain.Entities;
 using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;

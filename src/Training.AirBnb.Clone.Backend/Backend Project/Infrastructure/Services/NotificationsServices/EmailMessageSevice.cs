@@ -1,14 +1,14 @@
 ﻿using Backend_Project.Domain.Entities;
 using Backend_Project.Application.Notifications;
-using Backend_Project.Application.Entity;
+using Backend_Project.Application.Foundations.AccountServices;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailMessageSevice : IEmailMessageService
 {
-    private readonly IEntityBaseService<User> _userService;
+    private readonly IUserService _userService;
 
-    public EmailMessageSevice(IEntityBaseService<User> userService)
+    public EmailMessageSevice(IUserService userService)
     {
         _userService = userService;
     }
