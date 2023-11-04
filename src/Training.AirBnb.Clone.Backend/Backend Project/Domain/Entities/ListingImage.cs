@@ -8,7 +8,7 @@ public class ListingImage : SoftDeletedEntity
 
     public string Extension { get; set; } = string.Empty;
 
-    public long Size { get; set; }
+    public long Size { get; set; } 
 
     public Guid ListingId { get; set; }
 }
