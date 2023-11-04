@@ -2,6 +2,8 @@
 using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
+using Backend_Project.Application.Foundations.NotificationServices;
+using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Application.Listings;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Validation;
@@ -164,8 +166,8 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddReservationServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Reservation>, ReservationService>()
-            .AddScoped<IEntityBaseService<ReservationOccupancy>, ReservationOccupancyService>()
+            .AddScoped<IReservationService, ReservationService>()
+            .AddScoped<IReservationOccupancyService, ReservationOccupancyService>()
             .AddScoped<IAvailabilityService, AvailabilityService>();
 
         return builder;
@@ -183,8 +185,8 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddNotificationServices(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IEntityBaseService<Email>, EmailService>()
-            .AddScoped<IEntityBaseService<EmailTemplate>, EmailTemplateService>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<IEmailPlaceholderService, EmailPlaceholderService>()
             .AddScoped<IEmailSenderService, EmailSenderService>()
             .AddScoped<IEmailMessageService, EmailMessageSevice>()

@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Validation;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
-public class EmailService : IEntityBaseService<Email>
+public class EmailService : IEmailService
 {
     private readonly IDataContext _appDataContext;
     private readonly IValidationService _validationService;
@@ -49,24 +49,6 @@ public class EmailService : IEntityBaseService<Email>
         return _appDataContext.Emails.Where(predicate.Compile()).AsQueryable();
     }
 
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> UpdateAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> DeleteAsync(Email entity, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    //This method is deprecated in Email Preparation
-    public ValueTask<Email> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-    
     //Validation method
     private bool ValidationToNull(Email email)
     {

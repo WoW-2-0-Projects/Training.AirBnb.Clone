@@ -1,12 +1,12 @@
 using Backend_Project.Domain.Entities;
 using System.Linq.Expressions;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Application.Entity;
 using Backend_Project.Persistence.DataContexts;
+using Backend_Project.Application.Foundations.ReservationServices;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
-    public class ReservationService : IEntityBaseService<Reservation>
+    public class ReservationService : IReservationService
     {
         private readonly IDataContext _appDataContext;
 
@@ -111,6 +111,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
             return true;
         }
+
         private bool IsValidDateEndDate(DateTime startDate, DateTime endDate)
         {
             if (endDate <= startDate) return false;
@@ -119,6 +120,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
 
             return true;
         }
+
         private IQueryable<Reservation> GetUndelatedReservations() => _appDataContext.Reservations
             .Where(res => !res.IsDeleted).AsQueryable();
 

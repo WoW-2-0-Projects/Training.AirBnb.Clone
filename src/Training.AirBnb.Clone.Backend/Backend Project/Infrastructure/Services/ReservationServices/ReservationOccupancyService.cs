@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Entity;
+﻿using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
-    public class ReservationOccupancyService : IEntityBaseService<ReservationOccupancy>
+    public class ReservationOccupancyService : IReservationOccupancyService
     {
         private IDataContext _appDataContext;
         public ReservationOccupancyService(IDataContext appDataContext)

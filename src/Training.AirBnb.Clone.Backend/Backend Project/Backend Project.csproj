@@ -10,8 +10,6 @@
   <ItemGroup>
     <Folder Include="Application\Configs\" />
     <Folder Include="Application\Foundations\ReviewServices\" />
-    <Folder Include="Application\Foundations\ReservationServices\" />
-    <Folder Include="Application\Foundations\NotificationServices\" />
     <Folder Include="Infrastructure\Configs\" />
     <Folder Include="Persistence\DataContexts\" />
   </ItemGroup>
