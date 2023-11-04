@@ -30,13 +30,12 @@ public class LocationService : ILocationService
         => GetUndeletedLocations().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<Location>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<Location>>
-        (Get(location => 
+        => new(Get(location => 
         ids.Contains(location.Id))
             .ToList());
 
     public ValueTask<Location> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Location>(Get(location => location.Id == id).FirstOrDefault() 
+        => new(Get(location => location.Id == id).FirstOrDefault()
             ?? throw new EntityNotFoundException<Location>("Locationn not found."));
 
     public async ValueTask<Location> UpdateAsync(Location location, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -55,7 +54,7 @@ public class LocationService : ILocationService
     }
     public async ValueTask<Location> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundLocation = await GetByIdAsync(id);
+        var foundLocation = await GetByIdAsync(id, cancellationToken);
 
         await _appDataContext.Locations.RemoveAsync(foundLocation, cancellationToken);
 

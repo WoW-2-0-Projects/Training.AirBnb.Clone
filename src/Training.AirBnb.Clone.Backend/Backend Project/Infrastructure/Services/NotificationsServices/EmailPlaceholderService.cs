@@ -1,5 +1,6 @@
 using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Notifications;
+using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Domain.Entities;
 using System.Data;
 using System.Text.RegularExpressions;
@@ -52,7 +53,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
          return values;
     }
 
-    private List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
+    private static List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
     {
         var pattern = @"\{\{([^\{\}]+)\}\}";
 

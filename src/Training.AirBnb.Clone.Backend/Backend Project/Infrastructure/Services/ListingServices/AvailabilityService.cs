@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -33,12 +34,12 @@ public class AvailabilityService : IAvailabilityService
         => GetUndeletedAvailability().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<Availability>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<Availability>>(GetUndeletedAvailability()
+        => new (GetUndeletedAvailability()
             .Where(availability => ids.Contains(availability.Id))
             .ToList());
 
     public ValueTask<Availability> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<Availability>(GetUndeletedAvailability()
+        => new (GetUndeletedAvailability()
             .FirstOrDefault(availability => availability.Id.Equals(id))
             ?? throw new EntityNotFoundException<Availability>("Availability not found!"));
 

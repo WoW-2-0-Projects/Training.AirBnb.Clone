@@ -29,16 +29,16 @@ public class LocationScenicViewsService : ILocationScenicViewsService
     => GetUndeletedLocationScenicViews().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<LocationScenicViews>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-    => new ValueTask<ICollection<LocationScenicViews>>(Get(locationScenicView => ids.Contains(locationScenicView.Id)).ToList());
+    => new (Get(locationScenicView => ids.Contains(locationScenicView.Id)).ToList());
 
     public ValueTask<LocationScenicViews> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    => new ValueTask<LocationScenicViews>
+    => new 
         (Get(locationScenicView => locationScenicView.Id == id).FirstOrDefault() ?? 
         throw new EntityNotFoundException<LocationScenicViews>("Location scenic view not found"));
 
     public async ValueTask<LocationScenicViews> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundLocationScenicView = await GetByIdAsync(id);
+        var foundLocationScenicView = await GetByIdAsync(id, cancellationToken);
 
         await _context.LocationScenicViews.RemoveAsync(foundLocationScenicView, cancellationToken);
 

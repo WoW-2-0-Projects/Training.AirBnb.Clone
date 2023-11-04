@@ -1,6 +1,7 @@
 using Backend_Project.Domain.Entities;
 using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Notifications.Services;
 
 namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 

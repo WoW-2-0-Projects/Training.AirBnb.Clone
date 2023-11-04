@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -30,12 +31,12 @@ public class ListingTypeService : IListingTypeService
     }  
 
     public ValueTask<ICollection<ListingType>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingType>>(GetUndeletedOptions()
+        => new (GetUndeletedOptions()
         .Where(option => ids.Contains(option.Id))
         .ToList());
 
     public ValueTask<ListingType> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingType>(GetUndeletedOptions()
+        => new (GetUndeletedOptions()
             .FirstOrDefault(option => option.Id == id)
             ?? throw new EntityNotFoundException<ListingType>("Listing Type was not found."));
 

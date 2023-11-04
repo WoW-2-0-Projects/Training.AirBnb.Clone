@@ -28,12 +28,12 @@ public class ListingCategoryTypeService : IListingCategoryTypeService
     }
 
     public ValueTask<ICollection<ListingCategoryType>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingCategoryType>>(GetUndeletedOptions()
+        => new (GetUndeletedOptions()
             .Where(option => ids.Contains(option.Id))
             .ToList());
 
     public ValueTask<ListingCategoryType> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingCategoryType>(GetUndeletedOptions()
+        => new (GetUndeletedOptions()
             .FirstOrDefault(option => option.Id == id)
             ?? throw new EntityNotFoundException<ListingCategoryType>());
 

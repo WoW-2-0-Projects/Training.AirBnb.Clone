@@ -17,9 +17,11 @@ public class EmailSenderService : IEmailSenderService
                 smtp.Credentials = new NetworkCredential("sultonbek.rakhimov.recovery@gmail.com", "szabguksrhwsbtie");
                 smtp.EnableSsl = true;
 
-                var mail = new MailMessage(emailMessage.SenderAddress, emailMessage.ReceiverAddress);
-                mail.Subject = emailMessage.Subject;
-                mail.Body = emailMessage.Body;
+                var mail = new MailMessage(emailMessage.SenderAddress, emailMessage.ReceiverAddress)
+                {
+                    Subject = emailMessage.Subject,
+                    Body = emailMessage.Body
+                };
 
                 await smtp.SendMailAsync(mail);
             }

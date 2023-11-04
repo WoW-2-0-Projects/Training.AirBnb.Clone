@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -51,7 +52,7 @@ public class ListingRulesService : IListingRulesService
         => _context.ListingRules.Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<ListingRules>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingRules>>(_context.ListingRules.Where(listingRules => ids.Contains(listingRules.Id)).ToList());
+        => new (_context.ListingRules.Where(listingRules => ids.Contains(listingRules.Id)).ToList());
 
     public async ValueTask<ListingRules> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => await _context.ListingRules.FindAsync(id, cancellationToken)

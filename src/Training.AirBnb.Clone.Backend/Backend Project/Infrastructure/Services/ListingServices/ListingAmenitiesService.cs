@@ -28,12 +28,12 @@ public class ListingAmenitiesService : IListingAmenitiesService
     }
 
     public ValueTask<ICollection<ListingAmenities>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingAmenities>>(GetUndeletedListingAmenities()
+        => new (GetUndeletedListingAmenities()
             .Where(self => ids.Contains(self.Id))
             .ToList());
 
     public ValueTask<ListingAmenities> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingAmenities>(GetUndeletedListingAmenities()
+        => new (GetUndeletedListingAmenities()
             .FirstOrDefault(self => self.Id == id)
             ?? throw new EntityNotFoundException<ListingAmenities>());
 

@@ -31,7 +31,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
 
         public async ValueTask<City> UpdateAsync(City city, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var foundCity = await GetByIdAsync(city.Id);
+            var foundCity = await GetByIdAsync(city.Id, cancellationToken);
             
             if (!IsValidCityName(city))
                 throw new EntityValidationException<City> ("The city is in the wrong format");
@@ -49,18 +49,18 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
             => GetUndeletedCities().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<City>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-            => new ValueTask<ICollection<City>>(GetUndeletedCities()
+            => new (GetUndeletedCities()
                 .Where(city => ids
                 .Contains(city.Id)).ToList());
     
         public ValueTask<City> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => new ValueTask<City>(GetUndeletedCities()
+            => new (GetUndeletedCities()
             .FirstOrDefault(amenity => amenity.Id == id)
             ?? throw new EntityNotFoundException<Amenity>());
 
         public async ValueTask<City> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedCity = await GetByIdAsync(id);
+            var deletedCity = await GetByIdAsync(id, cancellationToken);
             
             await _appDataContext.Cities.RemoveAsync(deletedCity, cancellationToken);
             
@@ -76,7 +76,7 @@ namespace Backend_Project.Infrastructure.Services.LocationServices
         private IQueryable<City> GetUndeletedCities() => _appDataContext.Cities
             .Where(city => !city.IsDeleted).AsQueryable();
 
-        private bool IsValidCityName(City city)
+        private static bool IsValidCityName(City city)
         {
             if (string.IsNullOrWhiteSpace(city.Name)
                 || city.Name.Length <= 4

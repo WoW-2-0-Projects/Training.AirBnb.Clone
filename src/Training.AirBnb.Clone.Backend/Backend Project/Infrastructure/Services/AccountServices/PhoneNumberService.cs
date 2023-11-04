@@ -62,7 +62,7 @@ public class PhoneNumberService : IPhoneNumberService
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityValidationException<PhoneNumber>("Invalid phone number");
 
-        var updatedNumber = await GetByIdAsync(phoneNumber.Id);
+        var updatedNumber = await GetByIdAsync(phoneNumber.Id, cancellationToken);
 
         updatedNumber.UserPhoneNumber = phoneNumber.UserPhoneNumber;
         updatedNumber.Code = phoneNumber.Code;
@@ -76,10 +76,9 @@ public class PhoneNumberService : IPhoneNumberService
 
     public async ValueTask<PhoneNumber> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deletedNumber = await GetByIdAsync(id);
-
-        if (deletedNumber is null)
-            throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        var deletedNumber = await GetByIdAsync(id, cancellationToken)
+            ?? throw new EntityNotFoundException<PhoneNumber>("Phone number not found");
+        
         await _appDataContext.PhoneNumbers.RemoveAsync(deletedNumber, cancellationToken);
 
         if (saveChanges) await _appDataContext.SaveChangesAsync();
@@ -93,7 +92,7 @@ public class PhoneNumberService : IPhoneNumberService
     private bool IsUnique(string phoneNumber) => GetUndeletedNumbers()
              .Any(number => number.UserPhoneNumber == phoneNumber);
 
-    private bool IsNullable(PhoneNumber phoneNumber)
+    private static bool IsNullable(PhoneNumber phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber.UserPhoneNumber))
             return false;

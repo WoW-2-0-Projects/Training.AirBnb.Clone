@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -34,13 +35,13 @@ public class DescriptionService : IDescriptionService
         => GetUndeletedListingDescription().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<Description>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-         => new ValueTask<ICollection<Description>>(GetUndeletedListingDescription()
+         => new (GetUndeletedListingDescription()
              .Where(description => ids
                 .Contains(description.Id))
              .ToList());
 
     public ValueTask<Description> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-         => new ValueTask<Description>(GetUndeletedListingDescription()
+         => new (GetUndeletedListingDescription()
              .FirstOrDefault(description => description.Id.Equals(id))
              ?? throw new EntityNotFoundException<Description>("Description not found."));
 
@@ -49,14 +50,14 @@ public class DescriptionService : IDescriptionService
         if (!ValidateDescription(description))
             throw new EntityValidationException<Description>("This Description is Not Valid!!");
 
-        var foundListingDescription = await GetByIdAsync(description.Id);
+        var foundListingDescription = await GetByIdAsync(description.Id, cancellationToken);
 
         foundListingDescription.ListingDescription = description.ListingDescription;
         foundListingDescription.TheSpace = description.TheSpace;
         foundListingDescription.OtherDetails = description.OtherDetails;
         foundListingDescription.InteractionWithGuests = description.InteractionWithGuests;
 
-        await _dataContext.Descriptions.UpdateAsync(foundListingDescription);
+        await _dataContext.Descriptions.UpdateAsync(foundListingDescription, cancellationToken);
 
         if (saveChanges) await _dataContext.SaveChangesAsync();
 

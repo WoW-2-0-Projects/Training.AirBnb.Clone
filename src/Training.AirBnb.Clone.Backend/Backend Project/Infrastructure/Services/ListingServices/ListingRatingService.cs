@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Review.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -54,7 +55,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public async ValueTask<ListingRating> UpdateAsync(ListingRating listingRating, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var updatedListingRating = await GetByIdAsync(listingRating.Id);
+            var updatedListingRating = await GetByIdAsync(listingRating.Id, cancellationToken);
 
             if (!IsValidRating(listingRating.Rating))
                 throw new EntityValidationException<ListingRating>("Invalid listingRating!");
@@ -70,7 +71,7 @@ namespace Backend_Project.Infrastructure.Services.ListingServices
 
         public async ValueTask<ListingRating> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var deletedListingRating = await GetByIdAsync(id);
+            var deletedListingRating = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.ListingRatings.RemoveAsync(deletedListingRating, cancellationToken);
 

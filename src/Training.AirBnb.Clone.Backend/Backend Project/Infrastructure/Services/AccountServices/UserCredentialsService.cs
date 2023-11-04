@@ -17,8 +17,8 @@ public class UserCredentialsService : IUserCredentialsService
 
     public async ValueTask<UserCredentials> CreateAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var passwordInfo = IsStrongPassword(userCredentials.Password);
-        if (!passwordInfo.IsStrong) throw new EntityValidationException<UserCredentials>(passwordInfo.WarningMessage);
+        var (IsStrong, WarningMessage) = IsStrongPassword(userCredentials.Password);
+        if (!IsStrong) throw new EntityValidationException<UserCredentials>(WarningMessage);
         if (userCredentials.UserId == default) throw new EntityValidationException<UserCredentials>("User id is not valid");
         if (!IsUnique(userCredentials.UserId)) throw new DuplicateEntityException<UserCredentials>("This user already has credential");
 
@@ -43,16 +43,16 @@ public class UserCredentialsService : IUserCredentialsService
     }
 
     public ValueTask<UserCredentials> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        new ValueTask<UserCredentials>(GetUndeletedUserCredentials()
+        new (GetUndeletedUserCredentials()
             .FirstOrDefault(credential => credential.Id == id) ??
         throw new EntityNotFoundException<UserCredentials>("Credential not found"));
 
     public async ValueTask<UserCredentials> UpdateAsync(UserCredentials newUserCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var passwordInfo = IsStrongPassword(newUserCredentials.Password);
-        var userCredentals = await GetByIdAsync(newUserCredentials.Id);
+        var (IsStrong, WarningMessage) = IsStrongPassword(newUserCredentials.Password);
+        var userCredentals = await GetByIdAsync(newUserCredentials.Id, cancellationToken);
         
-        if (!passwordInfo.IsStrong) throw new EntityValidationException<UserCredentials>(passwordInfo.WarningMessage);
+        if (!IsStrong) throw new EntityValidationException<UserCredentials>(WarningMessage);
         if (!PasswordHasherService.Verify(newUserCredentials.Password, userCredentals.Password)) throw new EntityValidationException<UserCredentials>("New password can not be same as old password");
 
 
@@ -68,7 +68,7 @@ public class UserCredentialsService : IUserCredentialsService
     private IQueryable<UserCredentials> GetUndeletedUserCredentials() =>
         _appDataContext.UserCredentials
             .Where(userCredentials => !userCredentials.IsDeleted).AsQueryable();
-    private (bool IsStrong, string WarningMessage) IsStrongPassword(string password)
+    private static (bool IsStrong, string WarningMessage) IsStrongPassword(string password)
     {
         if (password.Length < 8) return (false, "Password can not be less than 8 character");
         if (!password.Any(char.IsDigit)) return (false, "Password should contain at least one digit!");
@@ -80,9 +80,9 @@ public class UserCredentialsService : IUserCredentialsService
 
     public async ValueTask<UserCredentials> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deletedUserCredentials = await GetByIdAsync(id);
+        var deletedUserCredentials = await GetByIdAsync(id, cancellationToken);
 
-        await _appDataContext.UserCredentials.RemoveAsync(deletedUserCredentials);
+        await _appDataContext.UserCredentials.RemoveAsync(deletedUserCredentials, cancellationToken);
 
         if (saveChanges) await _appDataContext.SaveChangesAsync();
 

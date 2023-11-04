@@ -54,7 +54,7 @@ public static class UserSeedData
     }
     public static async ValueTask AddUsersAsync(this IDataContext context, int count)
     {
-        var faker = GetUserFaker(context);
+        var faker = GetUserFaker();
         var uniqueUsers = new HashSet<User>(faker.Generate(100_000));
         var _ = uniqueUsers.Take(count);
         await context.Users.AddRangeAsync(uniqueUsers.Take(count).ToList());
@@ -65,7 +65,7 @@ public static class UserSeedData
         var userCredentials = faker.Generate(context.Users.Count());
         await context.UserCredentials.AddRangeAsync(userCredentials.Take(count).ToList());
     }
-    public static Faker<User> GetUserFaker(IDataContext context)
+    public static Faker<User> GetUserFaker()
     {
         return new Faker<User>()
             .RuleFor(keySelector => keySelector.Id, Guid.NewGuid)

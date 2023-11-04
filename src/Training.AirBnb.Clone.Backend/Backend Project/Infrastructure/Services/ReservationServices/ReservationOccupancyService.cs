@@ -31,7 +31,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             if (!IsValidOccupancy(reservationOccupancy))
                 throw new EntityValidationException<ReservationOccupancy> ("This ReservationOccupation not valid");
             
-            var foundReservationOccupancy = await GetByIdAsync(reservationOccupancy.Id);
+            var foundReservationOccupancy = await GetByIdAsync(reservationOccupancy.Id, cancellationToken);
             
             foundReservationOccupancy.Adults = reservationOccupancy.Adults;
             foundReservationOccupancy.Children = reservationOccupancy.Children;
@@ -49,18 +49,18 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
             => GetUndelatedReservatinOccupancies().Where(predicate.Compile()).AsQueryable();
 
         public ValueTask<ICollection<ReservationOccupancy>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-            => new ValueTask<ICollection<ReservationOccupancy>>(GetUndelatedReservatinOccupancies()
+            => new(GetUndelatedReservatinOccupancies()
                 .Where(reservationOccupancy => ids
                 .Contains(reservationOccupancy.Id)).ToList());
 
         public ValueTask<ReservationOccupancy> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => new ValueTask<ReservationOccupancy> (GetUndelatedReservatinOccupancies()
+            => new (GetUndelatedReservatinOccupancies()
                 .FirstOrDefault(reservationOccupancy =>  reservationOccupancy.Id.Equals(id))
                 ?? throw new EntityNotFoundException<ReservationOccupancy> ("ReservationOccupancy not found."));
 
         public async ValueTask<ReservationOccupancy> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var removedReservationOccupancy = await GetByIdAsync(id);
+            var removedReservationOccupancy = await GetByIdAsync(id, cancellationToken);
 
             await _appDataContext.ReservationOccupancies.RemoveAsync(removedReservationOccupancy, cancellationToken);
 
@@ -72,7 +72,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public async ValueTask<ReservationOccupancy> DeleteAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(reservationOccupancy.Id, saveChanges, cancellationToken);
 
-        private bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
+        private static bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
             => (reservationOccupancy.Adults >= 1 && reservationOccupancy.Adults <= 50)
             || (reservationOccupancy.Children >= 0 && reservationOccupancy.Children <= 50)
             || (reservationOccupancy.Infants >= 0 && reservationOccupancy.Infants <= 50)

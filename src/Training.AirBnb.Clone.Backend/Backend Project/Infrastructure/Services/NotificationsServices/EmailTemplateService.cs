@@ -41,13 +41,12 @@ public class EmailTemplateService : IEmailTemplateService
     public ValueTask<EmailTemplate> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var emailTemplate = GetUndeletedEmailTemplate().FirstOrDefault(emailTemplate => emailTemplate.Id == id);
-        
-        if (emailTemplate is null)
-            throw new EntityNotFoundException<EmailTemplate>("EmailTemplate not found");
-        
-        return new ValueTask<EmailTemplate>(emailTemplate);
+
+        return emailTemplate is null
+            ? throw new EntityNotFoundException<EmailTemplate>("EmailTemplate not found")
+            : new ValueTask<EmailTemplate>(emailTemplate);
     }
-    
+
     public IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>> predicate)
     {
         return GetUndeletedEmailTemplate().Where(predicate.Compile()).AsQueryable();
@@ -58,7 +57,7 @@ public class EmailTemplateService : IEmailTemplateService
         if (!ValidationToNull(emailTemplate))
             throw new EntityValidationException<EmailTemplate>("This a member of these emailTemplate null");
 
-        var foundEmailTemplate = await GetByIdAsync(emailTemplate.Id);
+        var foundEmailTemplate = await GetByIdAsync(emailTemplate.Id, cancellationToken);
 
         foundEmailTemplate.Subject = emailTemplate.Subject;
         foundEmailTemplate.Body = emailTemplate.Body;
@@ -72,7 +71,7 @@ public class EmailTemplateService : IEmailTemplateService
     
     public async ValueTask<EmailTemplate> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var foundEmailTemplate = await GetByIdAsync(id);
+        var foundEmailTemplate = await GetByIdAsync(id, cancellationToken);
 
         await _dataContext.EmailTemplates.RemoveAsync(foundEmailTemplate, cancellationToken);
 
@@ -87,7 +86,7 @@ public class EmailTemplateService : IEmailTemplateService
     
     //validation methods
 
-    private bool ValidationToNull(EmailTemplate emailTemplate)
+    private static bool ValidationToNull(EmailTemplate emailTemplate)
     {
         if (string.IsNullOrWhiteSpace(emailTemplate.Subject) || string.IsNullOrWhiteSpace(emailTemplate.Body))
             return false;

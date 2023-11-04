@@ -1,5 +1,6 @@
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings;
+using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Domain.Extensions;
@@ -75,7 +76,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         if (_listingPropertyTypeService.Get(property => property.CategoryId == categoryId).Any())
             throw new EntityNotDeletableException<ListingCategory>("There are active listings which are in this category.");
 
-        var deletedCategory = await _listingCategoryService.DeleteAsync(categoryId);
+        var deletedCategory = await _listingCategoryService.DeleteAsync(categoryId, saveChanges, cancellationToken);
 
         await DeleteCategoryRelations(categoryId, saveChanges, cancellationToken);
 

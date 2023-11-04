@@ -47,15 +47,14 @@ public class UserService : IUserService
     public ValueTask<User> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = GetUndeletedUsers().FirstOrDefault(user => user.Id == id);
-        
-        if (user is null)
-            throw new EntityNotFoundException<User>("User not found");
-        return new ValueTask<User>(user);
+
+        return user is null ? throw new EntityNotFoundException<User>("User not found") 
+            : new (user);
     }
 
     public async ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var updatedUser = await GetByIdAsync(user.Id);
+        var updatedUser = await GetByIdAsync(user.Id, cancellationToken);
 
         if (!_validationService.IsValidNameAsync(user.FirstName)) throw new EntityValidationException<User>("Invalid first name");
         if (!_validationService.IsValidNameAsync(user.LastName)) throw new EntityValidationException<User>("Invalid last name");
@@ -73,7 +72,7 @@ public class UserService : IUserService
     
     public async ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deletedUser = await GetByIdAsync(id);
+        var deletedUser = await GetByIdAsync(id, cancellationToken);
 
         await _appDataContext.Users.RemoveAsync(deletedUser, cancellationToken);
        
@@ -86,7 +85,7 @@ public class UserService : IUserService
         => await DeleteAsync(user.Id, saveChanges, cancellationToken);
 
     private ValueTask<bool> IsUnique(string email) =>
-         new ValueTask<bool>(!GetUndeletedUsers()
+         new (!GetUndeletedUsers()
              .Any(user => user.EmailAddress.Equals(email)));
     private IQueryable<User> GetUndeletedUsers() =>
         _appDataContext.Users.Where(user => !user.IsDeleted).AsQueryable();

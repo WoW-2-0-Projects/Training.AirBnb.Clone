@@ -38,12 +38,10 @@ public class EmailService : IEmailService
     {
         var email = _appDataContext.Emails.FirstOrDefault(email => email.Id == id);
 
-        if (email is null)
-            throw new EntityNotFoundException<Email>("Email not found");
-
-        return new ValueTask<Email>(email);
+        return email is null ? throw new EntityNotFoundException<Email>("Email not found") 
+            : new ValueTask<Email>(email);
     }
-    
+
     public IQueryable<Email> Get(Expression<Func<Email, bool>> predicate)
     {
         return _appDataContext.Emails.Where(predicate.Compile()).AsQueryable();

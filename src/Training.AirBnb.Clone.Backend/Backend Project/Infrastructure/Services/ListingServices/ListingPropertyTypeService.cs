@@ -1,4 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -33,12 +34,12 @@ public class ListingPropertyTypeService : IListingPropertyTypeService
         => GetUndeletedListingPropertyType().Where(predicate.Compile()).AsQueryable();
 
     public ValueTask<ICollection<ListingPropertyType>> GetAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => new ValueTask<ICollection<ListingPropertyType>>(GetUndeletedListingPropertyType()
+        => new (GetUndeletedListingPropertyType()
             .Where(listingPropertyType => ids.Contains(listingPropertyType.Id))
             .ToList());
 
     public ValueTask<ListingPropertyType> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => new ValueTask<ListingPropertyType>(GetUndeletedListingPropertyType()
+        => new (GetUndeletedListingPropertyType()
             .FirstOrDefault(listingPropertyType => listingPropertyType.Id.Equals(id))
             ?? throw new EntityNotFoundException<ListingPropertyType>("Listing property type not found!"));
 

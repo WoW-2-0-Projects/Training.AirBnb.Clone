@@ -1,5 +1,5 @@
 using Backend_Project.Application.Foundations.NotificationServices;
-using Backend_Project.Application.Notifications;
+using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
@@ -48,7 +48,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
             return result;
         }
 
-        private Email ToEmail(EmailMessage message)
+        private static Email ToEmail(EmailMessage message)
         {
             return new Email()
             {
