@@ -13,4 +13,6 @@ public class EmailSenderSettings
     public string DateFormat { get; set; } = default!;
 
     public string CompanyName { get; set; } = default!;
+
+    public string PlaceholderPattern { get; set; } = default!;
 }
