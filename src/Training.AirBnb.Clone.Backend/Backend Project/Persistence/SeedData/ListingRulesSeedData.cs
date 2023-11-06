@@ -48,7 +48,7 @@ public static class ListingRulesSeedData
                 CommercialFilmingAllowed = random.NextDouble() < 0.5,  
                 CheckInTimeStart = checkInTimeStart,  
                 CheckInTimeEnd = checkInTimeEnd,  
-                CheckOutTime = new TimeOnly(random.Next(0, 24), random.Next(0, 0)),  
+                CheckOutTime = new TimeOnly(random.Next(0, 24), 0),  
                 AdditionalRules = "Random rule " + i  
             };
 
