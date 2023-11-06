@@ -3,16 +3,20 @@ using System.Linq.Expressions;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Application.Foundations.ReservationServices;
+using Backend_Project.Application.Reservations;
+using Microsoft.Extensions.Options;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
     public class ReservationService : IReservationService
     {
+        private readonly ReservationOccupancySettings _occupancySettings;
         private readonly IDataContext _appDataContext;
 
-        public ReservationService(IDataContext appDateContext)
+        public ReservationService(IOptions<ReservationOccupancySettings> occupancySettings, IDataContext appDateContext)
         {
             _appDataContext = appDateContext;
+            _occupancySettings = occupancySettings.Value;
         }
 
         public async ValueTask<Reservation> CreateAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -82,14 +86,8 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public async ValueTask<Reservation> DeleteAsync(Reservation reservation, bool saveChanges = true, CancellationToken cancellationToken = default) 
             => await DeleteAsync(reservation.Id, saveChanges, cancellationToken);
 
-        private static bool IsValidEntity(Reservation reservation)
+        private bool IsValidEntity(Reservation reservation)
         {
-            if (reservation.ListingId.Equals(Guid.Empty)) return false;
-
-            if (reservation.BookedBy.Equals(Guid.Empty)) return false;
-
-            if (reservation.OccupancyId.Equals(Guid.Empty)) return false;
-
             if (reservation.StartDate.Equals(default)
                 || !IsValidDateStartDate(reservation.StartDate))
                 return false;
@@ -98,7 +96,7 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
                 || !IsValidDateEndDate(reservation.StartDate, reservation.EndDate))
                 return false;
 
-            if (reservation.TotalPrice <= 0)
+            if (reservation.TotalPrice <= _occupancySettings.MinReservationTotalPrice)
                 return false;
 
             return true;

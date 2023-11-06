@@ -1,16 +1,21 @@
 ﻿using Backend_Project.Application.Foundations.ReservationServices;
+using Backend_Project.Application.Reservations;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {
     public class ReservationOccupancyService : IReservationOccupancyService
     {
+        private readonly ReservationOccupancySettings _occupancysettings;
         private readonly IDataContext _appDataContext;
-        public ReservationOccupancyService(IDataContext appDataContext)
+
+        public ReservationOccupancyService(IOptions<ReservationOccupancySettings> reservationOccupansySettings, IDataContext appDataContext)
         {
+            _occupancysettings = reservationOccupansySettings.Value;
             _appDataContext = appDataContext;
         }
 
@@ -72,11 +77,11 @@ namespace Backend_Project.Infrastructure.Services.ReservationServices
         public async ValueTask<ReservationOccupancy> DeleteAsync(ReservationOccupancy reservationOccupancy, bool saveChanges = true, CancellationToken cancellationToken = default)
             => await DeleteAsync(reservationOccupancy.Id, saveChanges, cancellationToken);
 
-        private static bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
-            => (reservationOccupancy.Adults >= 1 && reservationOccupancy.Adults <= 50)
-            || (reservationOccupancy.Children >= 0 && reservationOccupancy.Children <= 50)
-            || (reservationOccupancy.Infants >= 0 && reservationOccupancy.Infants <= 50)
-            || (reservationOccupancy.Pets >= 0 && reservationOccupancy.Pets <= 5);
+        private bool IsValidOccupancy(ReservationOccupancy reservationOccupancy)
+            => (reservationOccupancy.Adults >= _occupancysettings.MinAdults && reservationOccupancy.Adults <= _occupancysettings.MaxAdults)
+            || (reservationOccupancy.Children >= _occupancysettings.MinChildren && reservationOccupancy.Children <= _occupancysettings.MaxChildren)
+            || (reservationOccupancy.Infants >= _occupancysettings.MinInfants && reservationOccupancy.Infants <= _occupancysettings.MaxInfants)
+            || (reservationOccupancy.Pets >= _occupancysettings.MinPets && reservationOccupancy.Pets <= _occupancysettings.MaxPets);
         
         private IQueryable<ReservationOccupancy> GetUndelatedReservatinOccupancies() => _appDataContext.ReservationOccupancies
             .Where(rsO => !rsO.IsDeleted).AsQueryable();

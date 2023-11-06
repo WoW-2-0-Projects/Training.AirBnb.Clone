@@ -44,7 +44,7 @@ public class EmailTemplateService : IEmailTemplateService
 
         return emailTemplate is null
             ? throw new EntityNotFoundException<EmailTemplate>("EmailTemplate not found")
-            : new ValueTask<EmailTemplate>(emailTemplate);
+            : new (emailTemplate);
     }
 
     public IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>> predicate)
