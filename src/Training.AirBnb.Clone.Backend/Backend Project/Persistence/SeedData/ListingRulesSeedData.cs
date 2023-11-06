@@ -22,14 +22,14 @@ public static class ListingRulesSeedData
             if (random.NextDouble() < 0.5)
             {
                 var checkInTimeStartHour = random.Next(0, 22); 
-                var checkInTimeStartMinutes = random.Next(0, 0);
+                var checkInTimeStartMinutes = 0;
                 checkInTimeStart = new TimeOnly(checkInTimeStartHour, checkInTimeStartMinutes);
 
                 if ( checkInTimeStart != null && random.NextDouble() < 0.5)
                 {
                     var minCheckInTimeEndHour = checkInTimeStartHour + 2; 
                     var checkInTimeEndHour = random.Next(minCheckInTimeEndHour, 24);
-                    var checkInTimeEndMinutes = random.Next(0, 00);
+                    var checkInTimeEndMinutes = 0;
                     checkInTimeEnd = new TimeOnly(checkInTimeEndHour, checkInTimeEndMinutes);
                 }
 
@@ -53,7 +53,8 @@ public static class ListingRulesSeedData
             };
 
             await context.ListingRules.AddAsync(listingRule);
-            await context.SaveChangesAsync();
         }
+
+        await context.SaveChangesAsync();
     }
 }
