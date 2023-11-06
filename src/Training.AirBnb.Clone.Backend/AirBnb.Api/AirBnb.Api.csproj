@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Data\DataStorage\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
