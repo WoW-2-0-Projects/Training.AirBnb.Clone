@@ -15,10 +15,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Backend Project\Backend Project.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Folder Include="Data\DataStorage\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
-
+  
 </Project>
