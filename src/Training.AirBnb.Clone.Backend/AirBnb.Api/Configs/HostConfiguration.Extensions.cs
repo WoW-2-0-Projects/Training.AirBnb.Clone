@@ -1,3 +1,6 @@
+using Backend_Project.Application.Files.Brokers;
+using Backend_Project.Application.Files.Services;
+using Backend_Project.Application.Files.Settings;
 using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
@@ -12,6 +15,8 @@ using Backend_Project.Application.Reservations;
 using Backend_Project.Application.Review.Settings;
 using Backend_Project.Application.Validation;
 using Backend_Project.Infrastructure.CompositionServices;
+using Backend_Project.Infrastructure.Files.Brokers;
+using Backend_Project.Infrastructure.Files.Service;
 using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Infrastructure.Services.ListingServices;
@@ -84,7 +89,8 @@ public static partial class HostConfiguration
             .AddLocationServices()
             .AddReservationServices()
             .AddReviewServices()
-            .AddNotificationServices();
+            .AddNotificationServices()
+            .AddFilesInfrastructure();
 
         return builder;
     }
@@ -112,6 +118,7 @@ public static partial class HostConfiguration
         await context.InitializeLocationSeedData();
         await context.InitializeEmailTemplateSeedDate();
         await context.InitializeAvailabilitySeedData();
+        await context.InitializeListingRulesSeedData();
 
         return app;
     }
@@ -227,6 +234,21 @@ public static partial class HostConfiguration
             .AddScoped<IEmailSenderService, EmailSenderService>()
             .AddScoped<IEmailMessageService, EmailMessageSevice>()
             .AddScoped<IEmailManagementService, EmailManagementService>();
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddFilesInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<FileSettings>(builder.Configuration.GetSection(nameof(FileSettings)));
+        builder.Services.Configure<ImageSettings>(builder.Configuration.GetSection(nameof(ImageSettings)));
+
+        builder.Services
+            .AddScoped<IDirectoryBroker, DirectoryBroker>()
+            .AddScoped<IFileBroker, FileBroker>()
+            .AddScoped<IImageInfoService, ImageInfoService>()
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IFileProcessingService, FileProcessingService>();
 
         return builder;
     }
