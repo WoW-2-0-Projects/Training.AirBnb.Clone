@@ -55,7 +55,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
 
     private static List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
     {
-        var pattern = @"\{\{([^\{\}]+)\}\}";
+        var pattern = place;
 
         var updatedSubject = Regex.Matches(emailTemplate.Subject, pattern);
         var updatedBody = Regex.Matches(emailTemplate.Body, pattern);
