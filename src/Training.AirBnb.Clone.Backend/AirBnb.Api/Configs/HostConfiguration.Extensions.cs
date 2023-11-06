@@ -1,3 +1,4 @@
+using AirBnb.Api.Filters;
 using Backend_Project.Application.Foundations.AccountServices;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Foundations.LocationServices;
@@ -28,7 +29,7 @@ public static partial class HostConfiguration
 {
     public static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(configs => configs.Filters.Add<ExceptionFilter>());
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
         return builder;
