@@ -1,7 +1,8 @@
 using Backend_Project.Application.Foundations.AccountServices;
-using Backend_Project.Application.Notifications;
 using Backend_Project.Application.Notifications.Services;
+using Backend_Project.Application.Notifications.Settings;
 using Backend_Project.Domain.Entities;
+using Microsoft.Extensions.Options;
 using System.Data;
 using System.Text.RegularExpressions;
 
@@ -9,6 +10,8 @@ namespace Backend_Project.Infrastructure.Services.NotificationsServices;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
+    private readonly EmailSenderSettings _senderSettings;
+
     private readonly IUserService _userService;
     
     private const string _fullName = "{{FullName}}";
@@ -18,9 +21,10 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
    
-    public EmailPlaceholderService(IUserService userService)
+    public EmailPlaceholderService(IOptions<EmailSenderSettings> senderSettings, IUserService userService)
     {
         _userService = userService;
+        _senderSettings = senderSettings.Value;
     }
 
     public async ValueTask<Dictionary<string, string>> GetTemplateValues(Guid userId, EmailTemplate emailTemplate)
@@ -39,8 +43,8 @@ public class EmailPlaceholderService : IEmailPlaceholderService
                     _firstName => (placeholder.Value, user.FirstName),
                     _lastName => (placeholder.Value, user.LastName),
                     _emailAddress => (placeholder.Value, user.EmailAddress),
-                    _date => (placeholder.Value, DateTimeOffset.UtcNow.ToString("dd.MM.yyyy")),
-                    _companyName => (placeholder.Value, "AirBnB"),
+                    _date => (placeholder.Value, DateTimeOffset.UtcNow.ToString(_senderSettings.DateFormat)),
+                    _companyName => (placeholder.Value, _senderSettings.CompanyName),
                     _ => throw new EvaluateException("Invalid Exeption")
                 };
 
@@ -53,9 +57,9 @@ public class EmailPlaceholderService : IEmailPlaceholderService
          return values;
     }
 
-    private static List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
+    private List<MatchCollection> GetPlaceholeders(EmailTemplate emailTemplate)
     {
-        var pattern = @"\{\{([^\{\}]+)\}\}";
+        var pattern = _senderSettings.PlaceholderPattern;
 
         var updatedSubject = Regex.Matches(emailTemplate.Subject, pattern);
         var updatedBody = Regex.Matches(emailTemplate.Body, pattern);

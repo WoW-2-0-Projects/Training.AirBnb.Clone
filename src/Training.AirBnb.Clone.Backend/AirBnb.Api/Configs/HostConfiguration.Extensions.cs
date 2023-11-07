@@ -10,6 +10,8 @@ using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
+using Backend_Project.Application.Notifications.Settings;
+using Backend_Project.Application.Reservations;
 using Backend_Project.Application.Review.Settings;
 using Backend_Project.Application.Validation;
 using Backend_Project.Infrastructure.CompositionServices;
@@ -194,7 +196,12 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddReservationServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<ReservationOccupancySettings>(builder.Configuration.GetSection(nameof(ReservationOccupancySettings)));
+        
         builder.Services.Configure<AvailabilitySettings>(builder.Configuration.GetSection(nameof(AvailabilitySettings)));
+
+        var setting = new ReservationOccupancySettings();
+        builder.Configuration.GetSection(nameof(ReservationOccupancySettings)).Bind(setting);
 
         builder.Services
             .AddScoped<IReservationService, ReservationService>()
@@ -218,6 +225,8 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddNotificationServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<EmailSenderSettings>(builder.Configuration.GetSection(nameof(EmailSenderSettings)));
+
         builder.Services
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
