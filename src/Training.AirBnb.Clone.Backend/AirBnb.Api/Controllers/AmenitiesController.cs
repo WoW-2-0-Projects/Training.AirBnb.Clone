@@ -1,3 +1,4 @@
+using Backend_Project.Application.Amenities;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
@@ -49,17 +50,17 @@ namespace AirBnb.Api.Controllers
 
 #region AddAmenites
         [HttpPost("amenities")]
-        public async Task<IActionResult> AddAmenityAsync([FromBody] Amenity amenity, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> AddAmenityAsync([FromBody] AmenityDto amenityDto, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            return Ok(await _amenitiesManagementService.AddAmenity(amenity, saveChanges, cancellationToken));
+            return Ok(await _amenitiesManagementService.AddAmenity(amenityDto, saveChanges, cancellationToken));
         }
         #endregion
 
 #region UpdateAmenity
         [HttpPut("amenities/update")]
-        public async Task<IActionResult> UpdateAmenityAsync(Amenity amenity, bool saveChanges = true , CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAmenityAsync(AmenityDto amenityDto, bool saveChanges = true , CancellationToken cancellationToken = default)
         {
-            return Ok(await _amenitiesManagementService.UpdateAmenityAsycn(amenity, saveChanges, cancellationToken));
+            return Ok(await _amenitiesManagementService.UpdateAmenityAsycn(amenityDto, saveChanges, cancellationToken));
         }
         
 #endregion

@@ -1,3 +1,5 @@
+using AutoMapper;
+using Backend_Project.Application.Amenities;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
@@ -7,37 +9,44 @@ namespace Backend_Project.Infrastructure.CompositionServices
 {
     public class AmenitiesManagementService : IAmenitiesManagementService
     {
+        private readonly IMapper _mapper;
         private readonly IAmenityService _amenityService;
         private readonly IAmenityCategoryService _amenityCategoryService;
         private readonly IListingAmenitiesService _listingAmenitiesService;
 
         public AmenitiesManagementService(IAmenityService amenityService,
             IAmenityCategoryService amenityCategoryService,
-            IListingAmenitiesService listingAmenitiesService)
+            IListingAmenitiesService listingAmenitiesService,
+            IMapper mapper)
         {
             _amenityService = amenityService;
             _amenityCategoryService = amenityCategoryService;
             _listingAmenitiesService = listingAmenitiesService;
+            _mapper = mapper;
         }
 
 #region Amenitie's methods
-        public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, 
+        public async ValueTask<AmenityDto> AddAmenity(AmenityDto amenityDto, bool saveChanges = true, 
             CancellationToken cancellationToken = default)
         {
+            var amenity = _mapper.Map<Amenity>(amenityDto);
+
             await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
 
-            return await _amenityService.CreateAsync(amenity, saveChanges, cancellationToken);
+            return _mapper.Map<AmenityDto>(await _amenityService.CreateAsync(amenity, saveChanges, cancellationToken));
         }
 
-        public async ValueTask<Amenity> UpdateAmenityAsycn(Amenity amenity, bool saveChanges = true,
+        public async ValueTask<AmenityDto> UpdateAmenityAsycn(AmenityDto amenityDto, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
-            await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
+            var amenity = _mapper.Map<Amenity>(amenityDto);
+
+            await _amenityCategoryService.GetByIdAsync(amenityDto.CategoryId, cancellationToken);
             
-            return await _amenityService.UpdateAsync(amenity, saveChanges, cancellationToken);
+            return _mapper.Map<AmenityDto>(await _amenityService.UpdateAsync(amenity, saveChanges, cancellationToken));
         }
         
-        public async ValueTask<Amenity> DeleteAmenityAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async ValueTask<AmenityDto> DeleteAmenityAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var amenity = await _amenityService.GetByIdAsync(id, cancellationToken);
 
@@ -47,7 +56,7 @@ namespace Backend_Project.Infrastructure.CompositionServices
             if (listingAmenities.Any())
                 throw new EntityNotDeletableException<Amenity>("this amenity not Deletable");
 
-            return await _amenityService.DeleteAsync(amenity, saveChanges, cancellationToken);
+            return _mapper.Map<AmenityDto>( await _amenityService.DeleteAsync(amenity, saveChanges, cancellationToken));
         }
 
         #endregion
