@@ -24,7 +24,7 @@ public class PhoneNumberService : IPhoneNumberService
     public async ValueTask<PhoneNumber> CreateAsync(PhoneNumber phoneNumber, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (IsNullable(phoneNumber))
-            throw new EntityException<PhoneNumber>("The phone number cannot be empty");
+            throw new EntityValidationException<PhoneNumber>("The phone number cannot be empty");
 
         if (!await IsValidPhoneNumber(phoneNumber))
             throw new EntityValidationException<PhoneNumber>("Phone number not valid");
