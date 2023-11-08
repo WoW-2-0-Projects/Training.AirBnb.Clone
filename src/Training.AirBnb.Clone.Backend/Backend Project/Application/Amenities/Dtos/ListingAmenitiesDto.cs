@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Application.Amenities;
+﻿namespace Backend_Project.Application.Amenities.Dtos;
 
 public class ListingAmenitiesDto
 {

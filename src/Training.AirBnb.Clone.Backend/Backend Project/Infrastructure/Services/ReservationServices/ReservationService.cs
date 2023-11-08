@@ -3,8 +3,8 @@ using System.Linq.Expressions;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Application.Foundations.ReservationServices;
-using Backend_Project.Application.Reservations;
 using Microsoft.Extensions.Options;
+using Backend_Project.Application.Reservations.Settings;
 
 namespace Backend_Project.Infrastructure.Services.ReservationServices
 {

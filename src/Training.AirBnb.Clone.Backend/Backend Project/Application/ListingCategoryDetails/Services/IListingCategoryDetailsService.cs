@@ -1,6 +1,6 @@
 ﻿using Backend_Project.Domain.Entities;
 
-namespace Backend_Project.Application.Listings.Services;
+namespace Backend_Project.Application.ListingCategoryDetails.Services;
 
 public interface IListingCategoryDetailsService
 {

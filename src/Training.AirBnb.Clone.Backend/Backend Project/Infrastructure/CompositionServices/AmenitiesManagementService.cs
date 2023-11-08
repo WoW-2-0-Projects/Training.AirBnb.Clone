@@ -1,7 +1,7 @@
 using AutoMapper;
-using Backend_Project.Application.Amenities;
+using Backend_Project.Application.Amenities.Dtos;
+using Backend_Project.Application.Amenities.Services;
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 
@@ -62,9 +62,11 @@ namespace Backend_Project.Infrastructure.CompositionServices
         #endregion
 
         // AmenitiesCategorie's methods
-        public ValueTask<ICollection<Amenity>> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default)
+        public ValueTask<ICollection<AmenityDto>> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default)
                 => new(
-                 _amenityService.Get(ac => ac.CategoryId.Equals(amenityCategoryId)).ToList());
+                 _amenityService.Get(ac => ac.CategoryId.Equals(amenityCategoryId))
+                    .Select(ac => _mapper.Map<AmenityDto>(ac))
+                    .ToList());
 
         public async ValueTask<AmenityCategoryDto> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {

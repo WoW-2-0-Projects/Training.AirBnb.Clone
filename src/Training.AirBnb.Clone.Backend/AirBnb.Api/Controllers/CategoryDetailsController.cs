@@ -1,5 +1,5 @@
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings.Services;
+using Backend_Project.Application.ListingCategoryDetails.Services;
 using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 

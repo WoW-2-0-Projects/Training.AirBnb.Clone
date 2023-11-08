@@ -1,7 +1,7 @@
 using AutoMapper;
-using Backend_Project.Application.Amenities;
+using Backend_Project.Application.Amenities.Dtos;
+using Backend_Project.Application.Amenities.Services;
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +31,8 @@ namespace AirBnb.Api.Controllers
         [HttpGet("amenities")]
         public IActionResult GetAllAmenities()
         {
-            var result = _amenityService.Get(amenties => true);
+            var result = _amenityService.Get(amenties => true)
+                .Select(a => _mapper.Map<AmenityDto>(a));
 
             return result.Any() ? Ok(result) : NotFound();
         }
@@ -84,8 +85,9 @@ namespace AirBnb.Api.Controllers
         [HttpGet("amenitiesCategory")]
         public IActionResult GetAllAmeniitiesCategory()
         {
-            var result = _amenityCategoryService.Get(amenityCategory => true);
-
+            var result = _amenityCategoryService.Get(amenityCategory => true)
+                .Select(ac => _mapper.Map<AmenityCategoryDto>(ac)).ToList();
+                
             return result.Any() ? Ok(result) : NoContent();
         }
 

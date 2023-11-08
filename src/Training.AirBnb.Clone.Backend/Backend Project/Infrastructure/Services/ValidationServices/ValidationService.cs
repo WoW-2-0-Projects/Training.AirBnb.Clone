@@ -1,7 +1,7 @@
 using Backend_Project.Application.Validation;
 using System.Text.RegularExpressions;
 
-namespace Backend_Project.Infrastructure.Services;
+namespace Backend_Project.Infrastructure.Services.ValidationServices;
 
 public class ValidationService : IValidationService
 {
