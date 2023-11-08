@@ -1,12 +1,13 @@
-﻿using Backend_Project.Domain.Entities;
+﻿using Backend_Project.Application.ListingCategoryDetails.Dtos;
+using Backend_Project.Domain.Entities;
 
 namespace Backend_Project.Application.ListingCategoryDetails.Services;
 
 public interface IListingCategoryDetailsService
 {
-    ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default);
-    ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default);
-    ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<ListingCategoryDto> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<ICollection<ListingTypeDto>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default);
+    ValueTask<ListingTypeDto> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default);
     ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default);
     ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default);
     ICollection<ListingFeature> GetListingFeaturesByTypeId(Guid listingTypeId);

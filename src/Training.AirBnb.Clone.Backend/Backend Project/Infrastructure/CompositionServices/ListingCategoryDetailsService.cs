@@ -1,4 +1,6 @@
+using AutoMapper;
 using Backend_Project.Application.Foundations.ListingServices;
+using Backend_Project.Application.ListingCategoryDetails.Dtos;
 using Backend_Project.Application.ListingCategoryDetails.Services;
 using Backend_Project.Application.Listings;
 using Backend_Project.Domain.Entities;
@@ -16,14 +18,16 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     private readonly IListingService _listingService;
     private readonly IListingPropertyService _listingPropertyService;
     private readonly IListingPropertyTypeService _listingPropertyTypeService;
+    private readonly IMapper _mapper;
 
     public ListingCategoryDetailsService(IListingCategoryService listingCategoryService,
-        IListingFeatureService listingFeatureService, 
-        IListingTypeService listingTypeService, 
-        IListingCategoryTypeService listingCategoryTypeService, 
-        IListingService listingService, 
-        IListingPropertyService listingPropertyService, 
-        IListingPropertyTypeService listingPropertyTypeService)
+        IListingFeatureService listingFeatureService,
+        IListingTypeService listingTypeService,
+        IListingCategoryTypeService listingCategoryTypeService,
+        IListingService listingService,
+        IListingPropertyService listingPropertyService,
+        IListingPropertyTypeService listingPropertyTypeService,
+        IMapper mapper)
     {
         _listingCategoryService = listingCategoryService;
         _listingFeatureService = listingFeatureService;
@@ -32,6 +36,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         _listingService = listingService;
         _listingPropertyService = listingPropertyService;
         _listingPropertyTypeService = listingPropertyTypeService;
+        _mapper = mapper;
     }
 
     public async ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -71,7 +76,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         return await _listingFeatureService.DeleteAsync(featureId, saveChanges, cancellationToken);
     }
 
-    public async ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingCategoryDto> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.CategoryId == categoryId).Any())
             throw new EntityNotDeletableException<ListingCategory>("There are active listings which are in this category.");
@@ -80,10 +85,10 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         await DeleteCategoryRelations(categoryId, saveChanges, cancellationToken);
 
-        return deletedCategory;
+        return _mapper.Map<ListingCategoryDto>(deletedCategory);
     }
 
-    public ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    public ValueTask<ICollection<ListingTypeDto>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var relations = _listingCategoryTypeService
             .Get(relation => relation.ListingCategoryId == categoryId);
@@ -94,10 +99,10 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
                     join type in listingTypes on categoryType.ListingTypeId equals type.Id
                     select type;
 
-        return new ValueTask<ICollection<ListingType>>(query.ToList());
+        return new(query.Select(lt => _mapper.Map<ListingTypeDto>(lt)).ToList());
     }
 
-    public async ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingTypeDto> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.TypeId == typeId).Any())
             throw new EntityNotDeletableException<ListingType>("There are active listings of this type.");
@@ -106,7 +111,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         await DeleteListingTypesRelations(typeId, saveChanges, cancellationToken);
 
-        return deletedFeatureOption;
+        return _mapper.Map<ListingTypeDto>(deletedFeatureOption);
     }
 
     public async ValueTask<ListingCategoryType> AddListingCategoryTypeAsync(ListingCategoryType relation, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -171,7 +176,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
             .Get(self => self.ListingCategoryId == categoryId);
 
         foreach (var connection in connections)
-          await _listingCategoryTypeService.DeleteAsync(connection, saveChanges, cancellationToken);
+            await _listingCategoryTypeService.DeleteAsync(connection, saveChanges, cancellationToken);
     }
 
     private async ValueTask DeleteListingTypesRelations(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -185,7 +190,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         foreach (var connection in connections)
             await _listingCategoryTypeService.DeleteAsync(connection, saveChanges, cancellationToken);
 
-        foreach (var  feature in connectedFeatures)
+        foreach (var feature in connectedFeatures)
             await _listingFeatureService.DeleteAsync(feature, saveChanges, cancellationToken);
     }
 
