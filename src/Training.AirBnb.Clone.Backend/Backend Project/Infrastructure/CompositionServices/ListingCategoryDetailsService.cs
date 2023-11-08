@@ -19,15 +19,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     private readonly IListingPropertyService _listingPropertyService;
     private readonly IListingPropertyTypeService _listingPropertyTypeService;
 
-    public ListingCategoryDetailsService(
-        IListingCategoryService listingCategoryService,
-        IListingFeatureService listingFeatureService,
-        IListingTypeService listingTypeService,
-        IListingCategoryTypeService listingCategoryTypeService,
-        IListingService listingService,
-        IListingPropertyService listingPropertyService,
-        IListingPropertyTypeService listingPropertyTypeService,
-        IMapper mapper)
+    public ListingCategoryDetailsService(IListingCategoryService listingCategoryService, IListingFeatureService listingFeatureService, IListingTypeService listingTypeService, IListingCategoryTypeService listingCategoryTypeService, IListingService listingService, IListingPropertyService listingPropertyService, IListingPropertyTypeService listingPropertyTypeService, IMapper mapper)
     {
         _mapper = mapper;
         _listingCategoryService = listingCategoryService;
