@@ -16,12 +16,11 @@ public class ValidationService : IValidationService
             return false;
         for (int index = 0; index < name.Length; index++)
         {
-            if (char.IsLetter(name[index]) || index > 0
+            if (!(char.IsLetter(name[index]) || index > 0
                 && (name[index - 1].ToString().Equals("o", StringComparison.OrdinalIgnoreCase)
                 || name[index - 1].ToString().Equals("g", StringComparison.OrdinalIgnoreCase))
-                && (name[index].ToString().Equals("'") || name[index] == '`'))
-                continue;
-            else return false;
+                && (name[index].ToString().Equals("'") || name[index] == '`')))
+                return false;
         }
         return true;
     }

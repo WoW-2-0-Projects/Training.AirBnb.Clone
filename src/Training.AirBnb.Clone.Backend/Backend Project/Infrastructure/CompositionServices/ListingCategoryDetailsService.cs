@@ -1,9 +1,7 @@
 using AutoMapper;
-using AutoMapper.Features;
 using Backend_Project.Application.Foundations.ListingServices;
 using Backend_Project.Application.ListingCategoryDetails.Dtos;
 using Backend_Project.Application.ListingCategoryDetails.Services;
-using Backend_Project.Application.Listings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Domain.Extensions;
@@ -21,7 +19,8 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     private readonly IListingPropertyTypeService _listingPropertyTypeService;
     private readonly IMapper _mapper;
 
-    public ListingCategoryDetailsService(IListingCategoryService listingCategoryService,
+    public ListingCategoryDetailsService(
+        IListingCategoryService listingCategoryService,
         IListingFeatureService listingFeatureService,
         IListingTypeService listingTypeService,
         IListingCategoryTypeService listingCategoryTypeService,
