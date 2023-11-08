@@ -1,14 +1,21 @@
 using Backend_Project.Application.Validation.Services;
+using Backend_Project.Application.Validation.Settins;
+using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
 namespace Backend_Project.Infrastructure.Services.ValidationServices;
 
 public class ValidationService : IValidationService
 {
-    private const string _emailPattern = @"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    private readonly ValidationSettings _settings;
+
+    public ValidationService(IOptions<ValidationSettings> settings)
+    {
+        _settings = settings.Value;
+    }
 
     public bool IsValidEmailAddress(string emailAddress) =>
-        !string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress, _emailPattern);
+        !string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress, _settings.EmailPattern);
 
     public bool IsValidNameAsync(string name)
     {
