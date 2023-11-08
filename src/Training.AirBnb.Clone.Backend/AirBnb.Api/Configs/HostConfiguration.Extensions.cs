@@ -16,7 +16,8 @@ using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Application.Notifications.Settings;
 using Backend_Project.Application.Reservations.Settings;
 using Backend_Project.Application.Review.Settings;
-using Backend_Project.Application.Validation;
+using Backend_Project.Application.Validation.Services;
+using Backend_Project.Application.Validation.Settins;
 using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Files.Brokers;
 using Backend_Project.Infrastructure.Files.Service;
@@ -228,6 +229,8 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddNotificationServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
         builder.Services.Configure<EmailSenderSettings>(builder.Configuration.GetSection(nameof(EmailSenderSettings)));
 
         builder.Services

@@ -1,4 +1,4 @@
-using Backend_Project.Application.Validation;
+using Backend_Project.Application.Validation.Services;
 using System.Text.RegularExpressions;
 
 namespace Backend_Project.Infrastructure.Services.ValidationServices;
