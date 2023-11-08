@@ -10,6 +10,7 @@ namespace Backend_Project.Infrastructure.CompositionServices;
 
 public class ListingCategoryDetailsService : IListingCategoryDetailsService
 {
+    private readonly IMapper _mapper;
     private readonly IListingCategoryService _listingCategoryService;
     private readonly IListingFeatureService _listingFeatureService;
     private readonly IListingTypeService _listingTypeService;
@@ -17,7 +18,6 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     private readonly IListingService _listingService;
     private readonly IListingPropertyService _listingPropertyService;
     private readonly IListingPropertyTypeService _listingPropertyTypeService;
-    private readonly IMapper _mapper;
 
     public ListingCategoryDetailsService(
         IListingCategoryService listingCategoryService,
@@ -29,6 +29,7 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         IListingPropertyTypeService listingPropertyTypeService,
         IMapper mapper)
     {
+        _mapper = mapper;
         _listingCategoryService = listingCategoryService;
         _listingFeatureService = listingFeatureService;
         _listingTypeService = listingTypeService;
@@ -36,7 +37,6 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         _listingService = listingService;
         _listingPropertyService = listingPropertyService;
         _listingPropertyTypeService = listingPropertyTypeService;
-        _mapper = mapper;
     }
 
     public async ValueTask<ListingFeatureDto> AddListingFeatureAsync(ListingFeatureDto featureDto, bool saveChanges = true, CancellationToken cancellationToken = default)

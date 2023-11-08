@@ -6,7 +6,7 @@ namespace Backend_Project.Application.Amenities.Services;
 public interface IAmenitiesManagementService
 {
     // Amenitie's methods
-    public ValueTask<AmenityDto> AddAmenity(AmenityDto amenity, bool saveChanges = true, CancellationToken cancellationToken = default);
+    public ValueTask<AmenityDto> AddAmenity(AmenityDto amenityDto, bool saveChanges = true, CancellationToken cancellationToken = default);
 
     public ValueTask<AmenityDto> UpdateAmenityAsycn(AmenityDto amenityDto, bool saveChanges = true, CancellationToken cancellationToken = default);
 
