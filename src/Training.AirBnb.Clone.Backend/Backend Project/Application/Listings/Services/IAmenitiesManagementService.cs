@@ -15,8 +15,8 @@ public interface IAmenitiesManagementService
     // AmenitiesCategorie's methods
     public ValueTask<ICollection<Amenity>> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default);
     
-    public ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
+    public ValueTask<AmenityCategoryDto> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
 
     // ListingAmenitesMethods
-    public ValueTask<ListingAmenities> AddListingAmenitiesAsync(ListingAmenities listingAmenities, bool saveChanges = true, CancellationToken cancellationToken = default);
+    public ValueTask<ListingAmenitiesDto> AddListingAmenitiesAsync(ListingAmenitiesDto listingAmenities, bool saveChanges = true, CancellationToken cancellationToken = default);
 }

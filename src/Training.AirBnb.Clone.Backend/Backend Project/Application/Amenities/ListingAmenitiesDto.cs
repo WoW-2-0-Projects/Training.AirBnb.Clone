@@ -6,5 +6,5 @@ public class ListingAmenitiesDto
 
     public Guid ListingId { get; set; }
 
-    public Guid AmenitiesId { get; set; }
+    public Guid AmenityId { get; set; }
 }
