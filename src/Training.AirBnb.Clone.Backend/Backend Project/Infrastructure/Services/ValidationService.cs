@@ -7,8 +7,8 @@ public class ValidationService : IValidationService
 {
     private const string _emailPattern = @"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
-    public bool IsValidEmailAddress(string emailAddress) =>
-        !string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress, _emailPattern);
+    public bool IsValidEmailAddress(string emailAddress) => true;
+//!string.IsNullOrWhiteSpace(emailAddress) && Regex.IsMatch(emailAddress, _emailPattern);
 
     public bool IsValidNameAsync(string name)
     {

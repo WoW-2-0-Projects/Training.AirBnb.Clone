@@ -1,4 +1,5 @@
 ﻿using Backend_Project.Application.Foundations.AccountServices;
+using Backend_Project.Application.Identity;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;
@@ -9,10 +10,12 @@ namespace Backend_Project.Infrastructure.Services.AccountServices;
 public class UserCredentialsService : IUserCredentialsService
 {
     private readonly IDataContext _appDataContext;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public UserCredentialsService(IDataContext appDataContext)
+    public UserCredentialsService(IDataContext appDataContext, IPasswordHasher passwordHasher)
     {
         _appDataContext = appDataContext;
+        _passwordHasher = passwordHasher;
     }
 
     public async ValueTask<UserCredentials> CreateAsync(UserCredentials userCredentials, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -22,7 +25,7 @@ public class UserCredentialsService : IUserCredentialsService
         if (userCredentials.UserId == default) throw new EntityValidationException<UserCredentials>("User id is not valid");
         if (!IsUnique(userCredentials.UserId)) throw new DuplicateEntityException<UserCredentials>("This user already has credential");
 
-        userCredentials.Password = PasswordHasherService.Hash(userCredentials.Password);
+        userCredentials.Password = _passwordHasher.Hash(userCredentials.Password);
 
         await _appDataContext.UserCredentials.AddAsync(userCredentials, cancellationToken);
 
@@ -53,10 +56,10 @@ public class UserCredentialsService : IUserCredentialsService
         var userCredentals = await GetByIdAsync(newUserCredentials.Id, cancellationToken);
         
         if (!IsStrong) throw new EntityValidationException<UserCredentials>(WarningMessage);
-        if (!PasswordHasherService.Verify(newUserCredentials.Password, userCredentals.Password)) throw new EntityValidationException<UserCredentials>("New password can not be same as old password");
+        if (!_passwordHasher.Verify(newUserCredentials.Password, userCredentals.Password)) throw new EntityValidationException<UserCredentials>("New password can not be same as old password");
 
 
-        userCredentals.Password = PasswordHasherService.Hash(newUserCredentials.Password);
+        userCredentals.Password = _passwordHasher.Hash(newUserCredentials.Password);
         
         await _appDataContext.UserCredentials.UpdateAsync(userCredentals, cancellationToken);
 
