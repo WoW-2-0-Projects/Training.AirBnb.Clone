@@ -34,7 +34,6 @@ public class AccountService : IAccountService
         var userCredentials = new UserCredentials
         {
             UserId = createdUser.Id,
-
             Password = _passwordHasher.Hash(password)
         };
 
@@ -42,6 +41,7 @@ public class AccountService : IAccountService
 
         return createdUser;
     }
+
     public User GetUserByEmailAddress(string emailAddress)
     {
         var user = _userService.Get(self => true).FirstOrDefault(self => self.EmailAddress == emailAddress);

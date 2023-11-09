@@ -20,7 +20,6 @@ namespace Backend_Project.Infrastructure.Services.AccountServices
         {
             var newUser = new User
             {
-                Id = Guid.NewGuid(),
                 FirstName = registrationDetails.FirstName,
                 LastName = registrationDetails.LastName,
                 EmailAddress = registrationDetails.EmailAddress,
@@ -36,7 +35,7 @@ namespace Backend_Project.Infrastructure.Services.AccountServices
             var exsistingUser = _accountService.GetUserByEmailAddress(loginDetails.EmailAddress);
 
             if (exsistingUser == null)
-                throw new EntityNotFoundException("This User does not exsist!!");
+                throw new EntityNotFoundException<User>("This User does not exsist!!");
 
             var accessToken =  _accessTokenGeneratorService.GetToken(exsistingUser);
 
