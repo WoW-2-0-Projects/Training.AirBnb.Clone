@@ -43,7 +43,7 @@ public class CategoryDetailsController : ControllerBase
 
     [HttpPost("categories")]
     public async ValueTask<IActionResult> AddCategory([FromBody] ListingCategoryDto category)
-        => Ok(await _listingCategoryService.CreateAsync(_mapper.Map<ListingCategory>(category)));
+        => Ok(_mapper.Map<ListingCategoryDto>( await _listingCategoryService.CreateAsync(_mapper.Map<ListingCategory>(category))));
 
     [HttpPut("categories")]
     public async ValueTask<IActionResult> UpdateCategory([FromBody] ListingCategoryDto category)
@@ -79,7 +79,10 @@ public class CategoryDetailsController : ControllerBase
     [HttpGet("listingTypesByCategory/{categoryId:guid}")]
     public async ValueTask<IActionResult> GetListingTypesByCategoryId([FromRoute] Guid categoryId)
     {
-        var result = await _listingCategoryDetailsService.GetListingTypesByCategoryIdAsync(categoryId);
+        var resultListingType = await _listingCategoryDetailsService.GetListingTypesByCategoryIdAsync(categoryId);
+
+        var result = resultListingType.Select(lt => _mapper.Map<ListingTypeDto>(lt));
+
         return result.Any() ? Ok(result) : NotFound();
     }
 
@@ -109,18 +112,20 @@ public class CategoryDetailsController : ControllerBase
     [HttpGet("listingFeatures/{listingTypeId:guid}")]
     public IActionResult GetFeaturesByTypeId(Guid listingTypeId)
     {
-        var result =  _listingCategoryDetailsService.GetListingFeaturesByTypeId(listingTypeId);
+        var resultListingFeature = _listingCategoryDetailsService.GetListingFeaturesByTypeId(listingTypeId);
+        var result = resultListingFeature.Select(lf => _mapper.Map<ListingFeatureDto>(lf));
+
         return result.Any() ? Ok(result) : NotFound();
     }
 
     [HttpPost("listingFeatures")]
     public async ValueTask<IActionResult> AddListingFeature([FromBody] ListingFeatureDto featureDto)
-        => Ok(await _listingCategoryDetailsService.AddListingFeatureAsync(featureDto));
+        => Ok(_mapper.Map<ListingFeatureDto>( await _listingCategoryDetailsService.AddListingFeatureAsync(_mapper.Map<ListingFeature>(featureDto))));
 
     [HttpPut("listingFeatures")]
     public async ValueTask<IActionResult> UpdateListingFeature([FromBody] ListingFeatureDto featureDto)
     {
-        await _listingCategoryDetailsService.UpdateListingFeatureAsync(featureDto);
+        await _listingCategoryDetailsService.UpdateListingFeatureAsync(_mapper.Map<ListingFeature>(featureDto));
         return NoContent();
     }
 
@@ -138,7 +143,7 @@ public class CategoryDetailsController : ControllerBase
 
     [HttpPost("categoryTypes")]
     public async ValueTask<IActionResult> AddCategoryType([FromBody] ListingCategoryTypeDto listingTypeDto)
-        => Ok(await _listingCategoryDetailsService.AddListingCategoryTypeAsync(listingTypeDto));
+        => Ok(_mapper.Map<ListingCategoryTypeDto>(await _listingCategoryDetailsService.AddListingCategoryTypeAsync(_mapper.Map<ListingCategoryType>(listingTypeDto))));
 
     [HttpPost("categoryTypes/{categoryId:guid}/listingTypes")]
     public async ValueTask<IActionResult> AddCategoryFeatureOptions([FromRoute] Guid categoryId, [FromBody] List<Guid> listingTypes)

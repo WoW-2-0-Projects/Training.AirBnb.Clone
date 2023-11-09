@@ -1,6 +1,4 @@
-using AutoMapper;
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.ListingCategoryDetails.Dtos;
 using Backend_Project.Application.ListingCategoryDetails.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
@@ -10,7 +8,6 @@ namespace Backend_Project.Infrastructure.CompositionServices;
 
 public class ListingCategoryDetailsService : IListingCategoryDetailsService
 {
-    private readonly IMapper _mapper;
     private readonly IListingCategoryService _listingCategoryService;
     private readonly IListingFeatureService _listingFeatureService;
     private readonly IListingTypeService _listingTypeService;
@@ -19,9 +16,8 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
     private readonly IListingPropertyService _listingPropertyService;
     private readonly IListingPropertyTypeService _listingPropertyTypeService;
 
-    public ListingCategoryDetailsService(IListingCategoryService listingCategoryService, IListingFeatureService listingFeatureService, IListingTypeService listingTypeService, IListingCategoryTypeService listingCategoryTypeService, IListingService listingService, IListingPropertyService listingPropertyService, IListingPropertyTypeService listingPropertyTypeService, IMapper mapper)
+    public ListingCategoryDetailsService(IListingCategoryService listingCategoryService, IListingFeatureService listingFeatureService, IListingTypeService listingTypeService, IListingCategoryTypeService listingCategoryTypeService, IListingService listingService, IListingPropertyService listingPropertyService, IListingPropertyTypeService listingPropertyTypeService)
     {
-        _mapper = mapper;
         _listingCategoryService = listingCategoryService;
         _listingFeatureService = listingFeatureService;
         _listingTypeService = listingTypeService;
@@ -31,34 +27,33 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         _listingPropertyTypeService = listingPropertyTypeService;
     }
 
-    public async ValueTask<ListingFeatureDto> AddListingFeatureAsync(ListingFeatureDto featureDto, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingFeature> AddListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        await _listingTypeService.GetByIdAsync(featureDto.ListingTypeId, cancellationToken);
+        await _listingTypeService.GetByIdAsync(feature.ListingTypeId, cancellationToken);
 
-        return _mapper.Map<ListingFeatureDto>(await _listingFeatureService.CreateAsync(_mapper.Map<ListingFeature>(featureDto), saveChanges, cancellationToken));
+        return await _listingFeatureService.CreateAsync(feature, saveChanges, cancellationToken);
     }
 
-    public async ValueTask<ListingFeatureDto> UpdateListingFeatureAsync(ListingFeatureDto featureDto, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingFeature> UpdateListingFeatureAsync(ListingFeature feature, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var listingProperties = await GetListingPropertiesByTypeId(featureDto.ListingTypeId);
+        var listingProperties = await GetListingPropertiesByTypeId(feature.ListingTypeId);
 
         var min = listingProperties.MinBy(self => self.PropertyCount)?.PropertyCount;
         var max = listingProperties.MaxBy(self => self.PropertyCount)?.PropertyCount;
 
-        if (min is not null && min < featureDto.MinValue)
-            throw new EntityNotUpdatableException<ListingFeature>($"Not possible to update {nameof(featureDto.MinValue)} of the listing feature. It is exceeding the limits of the current listing properties in use.");
+        if (min is not null && min < feature.MinValue)
+            throw new EntityNotUpdatableException<ListingFeature>($"Not possible to update {nameof(feature.MinValue)} of the listing feature. It is exceeding the limits of the current listing properties in use.");
 
-        if (max is not null && max < featureDto.MaxValue)
-            throw new EntityNotUpdatableException<ListingFeature>($"Not possible to update {nameof(featureDto.MaxValue)} of the listing feature. It is exceeding the limits of the current listing properties in use.");
+        if (max is not null && max < feature.MaxValue)
+            throw new EntityNotUpdatableException<ListingFeature>($"Not possible to update {nameof(feature.MaxValue)} of the listing feature. It is exceeding the limits of the current listing properties in use.");
 
-        return _mapper.Map<ListingFeatureDto>(await _listingFeatureService.UpdateAsync(_mapper.Map<ListingFeature>(featureDto), saveChanges, cancellationToken));
+        return await _listingFeatureService.UpdateAsync(feature, saveChanges, cancellationToken);
     }
 
-    public ICollection<ListingFeatureDto> GetListingFeaturesByTypeId(Guid listingTypeId)
-       => _listingFeatureService.Get(feature => feature.ListingTypeId == listingTypeId)
-        .Select(lf => _mapper.Map<ListingFeatureDto>(lf)).ToList();
+    public ICollection<ListingFeature> GetListingFeaturesByTypeId(Guid listingTypeId)
+       => _listingFeatureService.Get(feature => feature.ListingTypeId == listingTypeId).ToList();
 
-    public async ValueTask<ListingFeatureDto> DeleteListingFeatureAsync(Guid featureId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingFeature> DeleteListingFeatureAsync(Guid featureId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         var feature = await _listingFeatureService.GetByIdAsync(featureId, cancellationToken);
 
@@ -67,10 +62,10 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
         if (listingProperties.Any(self => self.PropertyName == feature.Name))
             throw new EntityNotDeletableException<ListingFeature>("You can't delete this listing feature. There are active listings which have this listing feature.");
 
-        return _mapper.Map<ListingFeatureDto>( await _listingFeatureService.DeleteAsync(_mapper.Map<ListingFeature>( featureId), saveChanges, cancellationToken));
+        return await _listingFeatureService.DeleteAsync(feature, saveChanges, cancellationToken);
     }
 
-    public async ValueTask<ListingCategoryDto> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingCategory> DeleteCategoryAsync(Guid categoryId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.CategoryId == categoryId).Any())
             throw new EntityNotDeletableException<ListingCategory>("There are active listings which are in this category.");
@@ -79,10 +74,10 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         await DeleteCategoryRelations(categoryId, saveChanges, cancellationToken);
 
-        return _mapper.Map<ListingCategoryDto>(deletedCategory);
+        return deletedCategory;
     }
 
-    public ValueTask<ICollection<ListingTypeDto>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    public ValueTask<ICollection<ListingType>> GetListingTypesByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var relations = _listingCategoryTypeService
             .Get(relation => relation.ListingCategoryId == categoryId);
@@ -93,10 +88,10 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
                     join type in listingTypes on categoryType.ListingTypeId equals type.Id
                     select type;
 
-        return new(query.Select(lt => _mapper.Map<ListingTypeDto>(lt)).ToList());
+        return new(query.ToList());
     }
 
-    public async ValueTask<ListingTypeDto> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingType> DeleteListingTypeAsync(Guid typeId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         if (_listingPropertyTypeService.Get(property => property.TypeId == typeId).Any())
             throw new EntityNotDeletableException<ListingType>("There are active listings of this type.");
@@ -105,15 +100,15 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
 
         await DeleteListingTypesRelations(typeId, saveChanges, cancellationToken);
 
-        return _mapper.Map<ListingTypeDto>(deletedFeatureOption);
+        return deletedFeatureOption;
     }
 
-    public async ValueTask<ListingCategoryTypeDto> AddListingCategoryTypeAsync(ListingCategoryTypeDto relation, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<ListingCategoryType> AddListingCategoryTypeAsync(ListingCategoryType relation, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         await _listingCategoryService.GetByIdAsync(relation.ListingCategoryId, cancellationToken);
         await _listingTypeService.GetByIdAsync(relation.ListingTypeId, cancellationToken);
 
-        return _mapper.Map<ListingCategoryTypeDto>(await _listingCategoryTypeService.CreateAsync(_mapper.Map<ListingCategoryType>(relation), saveChanges, cancellationToken));
+        return await _listingCategoryTypeService.CreateAsync(relation, saveChanges, cancellationToken);
     }
 
     public async ValueTask<bool> AddListingCategoryTypesAsync(Guid categoryId, List<Guid> listingTypes, bool saveChanges = true, CancellationToken cancellationToken = default)
@@ -201,6 +196,6 @@ public class ListingCategoryDetailsService : IListingCategoryDetailsService
                          join property in listingProperties on listing.Id equals property.ListingId
                          select property;
 
-        return new ValueTask<ICollection<ListingProperty>>(properties.ToList());
+        return new(properties.ToList());
     }
 }
