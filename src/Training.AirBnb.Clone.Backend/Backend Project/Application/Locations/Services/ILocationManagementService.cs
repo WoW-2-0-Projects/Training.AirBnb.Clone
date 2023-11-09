@@ -1,5 +1,4 @@
 ﻿using Backend_Project.Domain.Entities;
-using System.Collections;
 
 namespace Backend_Project.Application.Locations.Services;
 
@@ -19,9 +18,7 @@ public interface ILocationManagementService
 
     ValueTask<ScenicView> DeleteScenicView(Guid ScenicViewId);
   
-    bool AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId);
-    // check Locationexist and scenicview and create lscenicviews
-    // location id bo'yicha scenic view bo'lsa exception;
-    bool UpdateLocationScenicViews(IEnumerable<Guid> scenicViews, Guid locationId);
-    // 
+    ValueTask<bool> AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId);
+    
+    ValueTask<bool> UpdateLocationScenicViews(IEnumerable<Guid> scenicViews, Guid locationId);   
 }

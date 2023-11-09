@@ -2,6 +2,7 @@
 using Backend_Project.Application.Locations.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
+using Backend_Project.Domain.Extensions;
 
 namespace Backend_Project.Infrastructure.CompositionServices;
 
@@ -33,7 +34,7 @@ public class LocationManagementService : ILocationManagementService
 
     public async ValueTask<Location> UpdateLocation(Location location)
     {
-        _ = _addressService.GetByIdAsync(location.AddressId);
+        await _addressService.GetByIdAsync(location.AddressId);
 
         var updatedLocation = await _locationService.UpdateAsync(location);
 
@@ -105,15 +106,40 @@ public class LocationManagementService : ILocationManagementService
         return await _scenicViewService.UpdateAsync(scenicView);
     }
 
-    public bool AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId)
+    public async ValueTask<bool> AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId)
     {
-        throw new NotImplementedException();
-        //
+        var location = _locationService.GetByIdAsync(locationId);
+
+        var locationScenicViews = _locationScenicViewsService
+            .Get(self => true)
+            .Where(ls => ls.LocationId.Equals(locationId)).ToList();
+
+        if (locationScenicViews is not null)
+            throw new DuplicateEntityException<LocationScenicViews>("this location already exists");
+
+        _ = await _locationService.GetByIdAsync(locationId);
+        await AddLocationScenicViews(scenicViewsIds, locationId);
+
+        return true;
     }
 
-    public bool UpdateLocationScenicViews(IEnumerable<Guid> scenicViewsIds, Guid locationId)
+    public async ValueTask<bool> UpdateLocationScenicViews(IEnumerable<Guid> scenicViewsIds, Guid locationId)
     {
-        throw new NotImplementedException();
+        await CheckScenicViewsAsync(scenicViewsIds);
+
+        var location = _locationService.GetByIdAsync(locationId);
+
+        var oldLocationScenicViews = _locationScenicViewsService
+            .Get(self => self.LocationId == locationId)
+            .Select(locationscenic => locationscenic.ScenicViewId)
+            .ToList();
+
+        var (addedItems, removedItems) = oldLocationScenicViews.GetAddedAndRemovedItems(scenicViewsIds);
+
+        await RemoveLocatinScenicViews(removedItems);
+        await AddLocationScenicViews(addedItems, locationId);
+
+        return true;
     }
 
     private async ValueTask DeleteLocationScenicViewsList(List<LocationScenicViews> scenicViewsList)
@@ -126,5 +152,31 @@ public class LocationManagementService : ILocationManagementService
     {
         foreach (var item in addresses)
             await _addressService.DeleteAsync(item);
+    }
+
+    private async ValueTask AddLocationScenicViews(IEnumerable<Guid> scenicViewsIds, Guid locationId)
+    {
+        foreach (var item in scenicViewsIds)
+        {
+            var scenicView = await _scenicViewService.GetByIdAsync(item);
+
+            await _locationScenicViewsService.CreateAsync(new LocationScenicViews
+            {
+                LocationId = locationId,
+                ScenicViewId = scenicView.Id
+            });
+        }
+    }
+
+    private async ValueTask RemoveLocatinScenicViews(IEnumerable<Guid> scenicViewsIds)
+    {
+        foreach (var item in scenicViewsIds)
+            await _locationScenicViewsService.DeleteAsync(item);
+    }
+
+    private async ValueTask CheckScenicViewsAsync(IEnumerable<Guid> scenicViewsIds)
+    {
+        foreach (var item in scenicViewsIds)
+            await _scenicViewService.GetByIdAsync(item);
     }
 }
