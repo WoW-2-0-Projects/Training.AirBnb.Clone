@@ -2,7 +2,6 @@
 using Backend_Project.Application.Identity.Service;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
-using Backend_Project.Persistence.DataContexts;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices
 {
@@ -10,16 +9,14 @@ namespace Backend_Project.Infrastructure.Services.AccountServices
     {
         private readonly IAccountService _accountService;
         private readonly IAccessTokenGeneratorService _accessTokenGeneratorService;
-        private readonly IDataContext _dataContext;
 
-        public AuthService(IAccountService accountService, IAccessTokenGeneratorService accessTokenGeneratorService, IDataContext dataContext)
+        public AuthService(IAccountService accountService, IAccessTokenGeneratorService accessTokenGeneratorService)
         {
             _accountService = accountService;
             _accessTokenGeneratorService = accessTokenGeneratorService;
-            _dataContext = dataContext;
         }
 
-        public async ValueTask<bool> RegisterAsync(RegistrationDetails registrationDetails, string password)
+        public async ValueTask<bool> RegisterAsync(RegistrationDetails registrationDetails)
         {
             var newUser = new User
             {
@@ -29,14 +26,14 @@ namespace Backend_Project.Infrastructure.Services.AccountServices
                 EmailAddress = registrationDetails.EmailAddress,
             };
 
-            await _accountService.CreateUserAsync(newUser, password);
+            await _accountService.CreateUserAsync(newUser, registrationDetails.Password);
 
             return true;
         }
 
         public ValueTask<string> LoginAsync(LoginDetails loginDetails)
         {
-            var exsistingUser = _dataContext.Users.FirstOrDefault(user => user.EmailAddress == loginDetails.EmailAddress);
+            var exsistingUser = _accountService.GetUserByEmailAddress(loginDetails.EmailAddress);
 
             if (exsistingUser == null)
                 throw new EntityNotFoundException("This User does not exsist!!");

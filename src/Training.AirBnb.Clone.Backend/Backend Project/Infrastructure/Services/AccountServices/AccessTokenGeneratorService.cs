@@ -47,7 +47,8 @@ namespace Backend_Project.Infrastructure.Services.AccountServices
             return new List<Claim>()
             {
                 new (ClaimTypes.Email, user.EmailAddress),
-                new (ClaimConstant.UserId, user.Id.ToString())
+                new (ClaimConstant.UserId, user.Id.ToString()),
+                new (ClaimTypes.Role, user.UserRole.ToString())
             };
         }
     }
