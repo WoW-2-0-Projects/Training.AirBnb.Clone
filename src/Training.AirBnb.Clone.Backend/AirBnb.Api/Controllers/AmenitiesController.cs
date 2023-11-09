@@ -41,14 +41,16 @@ namespace AirBnb.Api.Controllers
         #region GetByIdAmenty
         [HttpGet("amenities/{amenityId:guid}")]
         public async ValueTask<IActionResult> GetAmentiesById(Guid amenityId, CancellationToken cancellationToken = default)
-            => Ok(await _amenityService.GetByIdAsync(amenityId, cancellationToken));
+            => Ok(_mapper.Map<AmenityDto>(await _amenityService.GetByIdAsync(amenityId, cancellationToken)));
         #endregion
 
         #region GetAmenityByCategoryId
         [HttpGet("amenitiesByCategoryId/{amenityCategoryId:guid}")]
         public async ValueTask<IActionResult> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default)
         {
-            var result = await _amenitiesManagementService.GetAmenitiesByCategoryId(amenityCategoryId, cancellationToken);
+            var resultAmenities = await _amenitiesManagementService.GetAmenitiesByCategoryId(amenityCategoryId, cancellationToken);
+
+            var result = resultAmenities.Select(result => _mapper.Map<AmenityDto>(result));
 
             return result.Any() ? Ok(result) : NotFound();
         }
@@ -58,15 +60,15 @@ namespace AirBnb.Api.Controllers
         [HttpPost("amenities")]
         public async Task<IActionResult> AddAmenityAsync([FromBody] AmenityDto amenityDto, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            return Ok(await _amenitiesManagementService.AddAmenity(amenityDto, saveChanges, cancellationToken));
+            return Ok(await _amenitiesManagementService.AddAmenity(_mapper.Map<Amenity>(amenityDto), saveChanges, cancellationToken));
         }
-        #endregion
+        #endregion.
 
         #region UpdateAmenity
         [HttpPut("amenities/update")]
         public async Task<IActionResult> UpdateAmenityAsync(AmenityDto amenityDto, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            return Ok(await _amenitiesManagementService.UpdateAmenityAsycn(amenityDto, saveChanges, cancellationToken));
+            return Ok(await _amenitiesManagementService.UpdateAmenityAsycn(_mapper.Map<Amenity>(amenityDto), saveChanges, cancellationToken));
         }
 
         #endregion
@@ -87,7 +89,7 @@ namespace AirBnb.Api.Controllers
         {
             var result = _amenityCategoryService.Get(amenityCategory => true)
                 .Select(ac => _mapper.Map<AmenityCategoryDto>(ac)).ToList();
-                
+
             return result.Any() ? Ok(result) : NoContent();
         }
 
@@ -120,7 +122,7 @@ namespace AirBnb.Api.Controllers
         [HttpDelete("amenitiesCategory/{Id:guid}")]
         public async Task<IActionResult> DeleteAmenitiesCategory([FromRoute] Guid Id)
         {
-            await _amenitiesManagementService.DeleteAmenitiesCategory(Id);
+            _ = _mapper.Map<AmenityCategoryDto>(await _amenitiesManagementService.DeleteAmenitiesCategory(Id));
 
             return NoContent();
         }
@@ -130,7 +132,7 @@ namespace AirBnb.Api.Controllers
         [HttpPost("listingAmenities")]
         public async Task<IActionResult> AddListingAmenitiesAsync(ListingAmenitiesDto listingAmenities)
         {
-            return Ok(await _amenitiesManagementService.AddListingAmenitiesAsync(listingAmenities));
+            return Ok(await _amenitiesManagementService.AddListingAmenitiesAsync(_mapper.Map<ListingAmenities>( listingAmenities)));
         }
         #endregion
 
