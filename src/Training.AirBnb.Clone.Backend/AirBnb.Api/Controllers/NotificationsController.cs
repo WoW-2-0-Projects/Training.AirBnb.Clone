@@ -46,21 +46,21 @@ namespace AirBnb.Api.Controllers
         
         #region GetByTemplateId
         [HttpGet("emailTemlates/emailTemplateId:guid")]
-        public async Task<IActionResult> GetByTemplateId(Guid templateId, CancellationToken cancellationToken)
-            => Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.GetByIdAsync(templateId, cancellationToken)));
+        public async Task<IActionResult> GetByTemplateId(Guid templateId)
+            => Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.GetByIdAsync(templateId)));
         #endregion
         
         #region AddTemplate
         [HttpPost("emailTemplates")]
-        public async Task<IActionResult> AddTemplate([FromBody] EmailTemplateDto emailTemplate, bool saveChance, CancellationToken cancellationToken)
-           =>  Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.CreateAsync(_mapper.Map<EmailTemplate>(emailTemplate), saveChance, cancellationToken)));
+        public async Task<IActionResult> AddTemplate([FromBody] EmailTemplateDto emailTemplate)
+           =>  Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.CreateAsync(_mapper.Map<EmailTemplate>(emailTemplate))));
         #endregion
         
         #region UpdataTemplate
         [HttpPut("emailTemplates")]
-        public async Task<IActionResult> UpdateTemplate([FromBody] EmailTemplateDto emailTemplate, bool saveChance, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateTemplate([FromBody] EmailTemplateDto emailTemplate)
         {
-            Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.UpdateAsync(_mapper.Map<EmailTemplate>(emailTemplate), saveChance, cancellationToken)));
+            Ok(_mapper.Map<EmailTemplateDto>(await _emailTemplateService.UpdateAsync(_mapper.Map<EmailTemplate>(emailTemplate))));
             return NoContent();
         }
         #endregion
@@ -87,14 +87,14 @@ namespace AirBnb.Api.Controllers
         
         #region GetEmailById
         [HttpGet("emails/{emailId:guid}")]
-        public async ValueTask<IActionResult> GetEmailById(Guid emailId, CancellationToken cancellationToken)
-            => Ok(_mapper.Map<EmailDto>(await _emailService.GetByIdAsync(emailId, cancellationToken)));
+        public async ValueTask<IActionResult> GetEmailById(Guid emailId)
+            => Ok(_mapper.Map<EmailDto>(await _emailService.GetByIdAsync(emailId)));
         #endregion
 
         #region  AddEmail
         [HttpPost("emails")]
-        public async ValueTask<IActionResult> AddEmails([FromBody] EmailDto email, bool saveChange, CancellationToken cancellationToken)
-            => Ok(_mapper.Map<EmailDto>(await _emailService.CreateAsync(_mapper.Map<Email>(email), saveChange, cancellationToken)));        
+        public async ValueTask<IActionResult> AddEmails([FromBody] EmailDto email)
+            => Ok(_mapper.Map<EmailDto>(await _emailService.CreateAsync(_mapper.Map<Email>(email))));        
         #endregion
     }
 }
