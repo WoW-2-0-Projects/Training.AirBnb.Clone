@@ -24,15 +24,15 @@ public class AccountService : IAccountService
 
         var createdUser = await _userService.CreateAsync(user);
 
-        var userCredintials = new UserCredentials
+        var userCredentials = new UserCredentials
         {
             UserId = createdUser.Id,
             Password = password
         };
 
-        userCredintials.Password = _passwordHasher.Hash(password);
+        userCredentials.Password = _passwordHasher.Hash(password);
 
-        await _userCredentialsService.CreateAsync(userCredintials);
+        await _userCredentialsService.CreateAsync(userCredentials);
 
         return createdUser;
     }
