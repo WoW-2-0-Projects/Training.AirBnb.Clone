@@ -8,7 +8,8 @@ using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Application.Foundations.ReviewServices;
-using Backend_Project.Application.Identity;
+using Backend_Project.Application.Identity.Service;
+using Backend_Project.Application.Identity.Settings;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
@@ -94,6 +95,15 @@ public static partial class HostConfiguration
             .AddNotificationServices()
             .AddFilesInfrastructure();
 
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+
+        builder.Services.AddScoped<IAuthService, AuthService>()
+            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>();
         return builder;
     }
 

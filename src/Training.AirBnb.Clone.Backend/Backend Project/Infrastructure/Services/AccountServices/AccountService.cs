@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Application.Foundations.AccountServices;
-using Backend_Project.Application.Identity;
+using Backend_Project.Application.Identity.Service;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 
