@@ -6,7 +6,7 @@ namespace Backend_Project.Persistence.SeedData;
 
 public static class ListingDescriptionSeedData
 {
-    public static async ValueTask InitializeListsingDescriptionSeedData(this IDataContext context)
+    public static async ValueTask InitializeListingDescriptionSeedData(this IDataContext context)
     {
         if (!context.Descriptions.Any())
             await context.AddListingDescriptionSeedData(1000);
