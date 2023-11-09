@@ -1,5 +1,5 @@
+using Backend_Project.Application.Amenities.Services;
 using Backend_Project.Application.Foundations.ListingServices;
-using Backend_Project.Application.Listings.Services;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 
@@ -20,8 +20,8 @@ namespace Backend_Project.Infrastructure.CompositionServices
             _listingAmenitiesService = listingAmenitiesService;
         }
 
-#region Amenitie's methods
-        public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true, 
+        #region Amenitie's methods
+        public async ValueTask<Amenity> AddAmenity(Amenity amenity, bool saveChanges = true,
             CancellationToken cancellationToken = default)
         {
             await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
@@ -33,15 +33,15 @@ namespace Backend_Project.Infrastructure.CompositionServices
             CancellationToken cancellationToken = default)
         {
             await _amenityCategoryService.GetByIdAsync(amenity.CategoryId, cancellationToken);
-            
+
             return await _amenityService.UpdateAsync(amenity, saveChanges, cancellationToken);
         }
-        
+
         public async ValueTask<Amenity> DeleteAmenityAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var amenity = await _amenityService.GetByIdAsync(id, cancellationToken);
 
-            var listingAmenities =  _listingAmenitiesService
+            var listingAmenities = _listingAmenitiesService
                 .Get(la => la.AmenityId.Equals(id));
 
             if (listingAmenities.Any())
@@ -53,20 +53,20 @@ namespace Backend_Project.Infrastructure.CompositionServices
         #endregion
 
         // AmenitiesCategorie's methods
-        public ValueTask<ICollection<Amenity>> GetAmenitiesByCategoryId( Guid amenityCategoryId, CancellationToken cancellationToken = default)
-                =>  new (
+        public ValueTask<ICollection<Amenity>> GetAmenitiesByCategoryId(Guid amenityCategoryId, CancellationToken cancellationToken = default)
+                => new(
                  _amenityService.Get(ac => ac.CategoryId.Equals(amenityCategoryId)).ToList());
 
         public async ValueTask<AmenityCategory> DeleteAmenitiesCategory(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var amenitiesCategory = await _amenityCategoryService.GetByIdAsync(id, cancellationToken);
+            var amenitiesCategoryDto = await _amenityCategoryService.GetByIdAsync(id, cancellationToken);
 
-            var amenities = _amenityService.Get(a => a.CategoryId.Equals(amenitiesCategory.Id));
+            var amenities = _amenityService.Get(a => a.CategoryId.Equals(amenitiesCategoryDto.Id));
 
             if (amenities.Any())
                 throw new EntityNotDeletableException<AmenityCategory>("This Category not Deletable");
 
-            return await _amenityCategoryService.DeleteAsync(amenitiesCategory, saveChanges, cancellationToken);
+            return await _amenityCategoryService.DeleteAsync(amenitiesCategoryDto, saveChanges, cancellationToken);
         }
 
 

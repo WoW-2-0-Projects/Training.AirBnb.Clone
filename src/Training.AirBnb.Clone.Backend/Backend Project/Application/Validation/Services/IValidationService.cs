@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Application.Validation;
+﻿namespace Backend_Project.Application.Validation.Services;
 
 public interface IValidationService
 {
