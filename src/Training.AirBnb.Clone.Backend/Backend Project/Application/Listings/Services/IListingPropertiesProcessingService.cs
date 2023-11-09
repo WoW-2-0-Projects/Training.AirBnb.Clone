@@ -10,9 +10,7 @@ public interface IListingPropertiesProcessingService
 
     ValueTask<ListingPropertyType> DeleteListingPropertyTypeAsync(ListingPropertyType propertyType);
 
-    ListingProperty CreateListingProperty(ListingProperty property);
+    ValueTask<bool> AddListingProperties(ICollection<ListingProperty> properties);
 
-    ListingProperty UpdateListingProperty(ListingProperty property);
-
-    ListingProperty DeleteListingProperty(ListingProperty property);
+    ValueTask<bool> UpdateListingProperty(ICollection<ListingProperty> properties);
 }
