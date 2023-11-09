@@ -50,13 +50,13 @@ public class LocationManagementService : ILocationManagementService
             .Where(locViews => locViews.LocationId == locationId)
             .ToList();
 
-        var addresses = _addressService
+        var address = _addressService
             .Get(self => true)
-            .Where(address => address.Id.Equals(deletedLocation.AddressId))
-            .ToList();
+            .FirstOrDefault(address => address.Id.Equals(deletedLocation.AddressId))
+                ?? throw new EntityNotFoundException<Address>("Address not found!");
 
         await DeleteLocationScenicViewsList(locationScenicViews);
-        await DeleteAdressList(addresses);
+        await _addressService.DeleteAsync(address);
 
         return await _locationService.DeleteAsync(deletedLocation);
     }
@@ -85,7 +85,7 @@ public class LocationManagementService : ILocationManagementService
             .Get(self => true)
             .Where(ls => ls.ScenicViewId.Equals(scenicView.Id)).ToList();
 
-        if (locationScenicViews is not null)
+        if (locationScenicViews.Any())
             throw new EntityNotUpdatableException<ScenicView>("this scenic view not updatable");
 
         return await _scenicViewService.UpdateAsync(scenicView);
@@ -100,7 +100,7 @@ public class LocationManagementService : ILocationManagementService
             .Where(ls => ls.ScenicViewId.Equals(scenicView.Id))
             .ToList();
 
-        if (locationScenicViews is not null)
+        if (locationScenicViews.Any())
             throw new EntityNotDeletableException<ScenicView>("this scenicview not deletable");
 
         return await _scenicViewService.UpdateAsync(scenicView);
@@ -114,7 +114,7 @@ public class LocationManagementService : ILocationManagementService
             .Get(self => true)
             .Where(ls => ls.LocationId.Equals(locationId)).ToList();
 
-        if (locationScenicViews is not null)
+        if (locationScenicViews.Any())
             throw new DuplicateEntityException<LocationScenicViews>("this location already exists");
 
         _ = await _locationService.GetByIdAsync(locationId);
@@ -146,12 +146,6 @@ public class LocationManagementService : ILocationManagementService
     {
         foreach (var item in scenicViewsList)
             await _locationScenicViewsService.DeleteAsync(item);
-    }
-
-    private async ValueTask DeleteAdressList(List<Address> addresses)
-    {
-        foreach (var item in addresses)
-            await _addressService.DeleteAsync(item);
     }
 
     private async ValueTask AddLocationScenicViews(IEnumerable<Guid> scenicViewsIds, Guid locationId)
