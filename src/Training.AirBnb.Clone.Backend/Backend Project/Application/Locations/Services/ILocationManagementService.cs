@@ -11,19 +11,14 @@ public interface ILocationManagementService
 
     ValueTask<Location> DeleteLocationById(Guid locationId);
 
-    Address CreateAddress(Address address);
-    // validate city
+    ValueTask<Address> CreateAddress(Address address);
 
-    Address UpdateAddress(Address address);
-    // validete city
+    ValueTask<Address> UpdateAddress(Address address);
 
-    // Address GetAddressByListingId(Guid listingId);
+    ValueTask<ScenicView> UpdateScenicView(ScenicView scenicView);
 
-    ScenicView UpdateScenicView(ScenicView scenicView);
-    // scenicview check LScenic view exists
-
-    ScenicView DeleteScenicView(Guid ScenicViewId);
-    // the same update
+    ValueTask<ScenicView> DeleteScenicView(Guid ScenicViewId);
+  
     bool AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId);
     // check Locationexist and scenicview and create lscenicviews
     // location id bo'yicha scenic view bo'lsa exception;

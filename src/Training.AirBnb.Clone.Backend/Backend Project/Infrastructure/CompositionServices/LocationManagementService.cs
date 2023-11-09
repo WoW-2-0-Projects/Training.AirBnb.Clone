@@ -1,6 +1,7 @@
 ﻿using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Locations.Services;
 using Backend_Project.Domain.Entities;
+using Backend_Project.Domain.Exceptions.EntityExceptions;
 
 namespace Backend_Project.Infrastructure.CompositionServices;
 
@@ -10,13 +11,15 @@ public class LocationManagementService : ILocationManagementService
     private readonly ILocationService _locationService;
     private readonly IScenicViewService _scenicViewService;
     private readonly ILocationScenicViewsService _locationScenicViewsService;
+    private readonly ICityService _cityService;
 
-    public LocationManagementService(IAddressService addressService, ILocationService locationService, IScenicViewService scenicViewService, ILocationScenicViewsService locationScenicViewsService)
+    public LocationManagementService(IAddressService addressService, ILocationService locationService, IScenicViewService scenicViewService, ILocationScenicViewsService locationScenicViewsService, ICityService cityService)
     {
         _addressService = addressService;
         _locationService = locationService;
         _scenicViewService = scenicViewService;
         _locationScenicViewsService = locationScenicViewsService;
+        _cityService = cityService;
     }
 
     public async ValueTask<Location> CreateLocationByAddressId(Guid addressId)
@@ -57,34 +60,58 @@ public class LocationManagementService : ILocationManagementService
         return await _locationService.DeleteAsync(deletedLocation);
     }
 
+    public async ValueTask<Address> CreateAddress(Address address)
+    {
+        _ = await _cityService.GetByIdAsync(address.CityId);
+
+        var createdAdress = await _addressService.CreateAsync(address);
+
+        return createdAdress;
+    }
+
+    public async ValueTask<Address> UpdateAddress(Address address)
+    {
+        _ = await _cityService.GetByIdAsync(address.CityId);
+
+        var updatedAdress = await _addressService.UpdateAsync(address);
+
+        return updatedAdress;
+    }
+
+    public async ValueTask<ScenicView> UpdateScenicView(ScenicView scenicView)
+    {
+        var locationScenicViews = _locationScenicViewsService
+            .Get(self => true)
+            .Where(ls => ls.ScenicViewId.Equals(scenicView.Id)).ToList();
+
+        if (locationScenicViews is not null)
+            throw new EntityNotUpdatableException<ScenicView>("this scenic view not updatable");
+
+        return await _scenicViewService.UpdateAsync(scenicView);
+    }
+
+    public async ValueTask<ScenicView> DeleteScenicView(Guid ScenicViewId)
+    {
+        var scenicView = await _scenicViewService.GetByIdAsync(ScenicViewId);
+
+        var locationScenicViews = _locationScenicViewsService
+            .Get(self => true)
+            .Where(ls => ls.ScenicViewId.Equals(scenicView.Id))
+            .ToList();
+
+        if (locationScenicViews is not null)
+            throw new EntityNotDeletableException<ScenicView>("this scenicview not deletable");
+
+        return await _scenicViewService.UpdateAsync(scenicView);
+    }
+
     public bool AddScenicViewsToLocation(IEnumerable<Guid> scenicViewsIds, Guid locationId)
     {
         throw new NotImplementedException();
         //
     }
 
-    public Address CreateAddress(Address address)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ScenicView DeleteScenicView(Guid ScenicViewId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Address UpdateAddress(Address address)
-    {
-        throw new NotImplementedException();
-    }
-
-
     public bool UpdateLocationScenicViews(IEnumerable<Guid> scenicViewsIds, Guid locationId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ScenicView UpdateScenicView(ScenicView scenicView)
     {
         throw new NotImplementedException();
     }
