@@ -8,6 +8,7 @@ using Backend_Project.Application.Foundations.LocationServices;
 using Backend_Project.Application.Foundations.NotificationServices;
 using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Application.Foundations.ReviewServices;
+using Backend_Project.Application.Identity;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
@@ -132,7 +133,9 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IUserService, UserService>()
             .AddScoped<IUserCredentialsService, UserCredentialsService>()
-            .AddScoped<IPhoneNumberService, PhoneNumberService>();
+            .AddScoped<IPhoneNumberService, PhoneNumberService>()
+            .AddScoped<IPasswordHasher, PasswordHasherService>()
+            .AddScoped<IAccountService, AccountService>();
 
         return builder;
     }
