@@ -2,7 +2,8 @@
 
 public static class LinqExtensions
 {
-    public static (IEnumerable<TSource> addedItems, IEnumerable<TSource> removedItems) GetAddedAndRemovedItems<TSource>(this IEnumerable<TSource> oldCollection, IEnumerable<TSource> updatedCollection) where TSource : notnull
+    public static (IEnumerable<TSource> addedItems, IEnumerable<TSource> removedItems) GetAddedAndRemovedItems<TSource>
+        (this IEnumerable<TSource> oldCollection, IEnumerable<TSource> updatedCollection) where TSource : notnull
     {
         var addedItems = updatedCollection.Except(oldCollection);
         var removedItems = oldCollection.Except(updatedCollection);
@@ -10,7 +11,8 @@ public static class LinqExtensions
         return (addedItems, removedItems);
     }
 
-    public static (IEnumerable<TSource> addedItems, IEnumerable<TSource> removedItems) GetAddedAndRemovedItemsBy<TSource, TKey>(this IEnumerable<TSource> oldCollection, IEnumerable<TSource> updatedCollection, Func<TSource, TKey> keySelector) where TSource : notnull
+    public static (IEnumerable<TSource> addedItems, IEnumerable<TSource> removedItems) GetAddedAndRemovedItemsBy<TSource, TKey>
+        (this IEnumerable<TSource> oldCollection, IEnumerable<TSource> updatedCollection, Func<TSource, TKey> keySelector) where TSource : notnull
     {
         var updatedSet = new HashSet<TKey>(updatedCollection.Select(keySelector));
         var removedItems = oldCollection.Where(item => !updatedSet.Contains(keySelector(item)));
