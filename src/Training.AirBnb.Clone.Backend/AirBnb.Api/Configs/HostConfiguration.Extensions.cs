@@ -1,4 +1,5 @@
 using AirBnb.Api.Filters;
+using Backend_Project.Application.Amenities.Services;
 using Backend_Project.Application.Files.Brokers;
 using Backend_Project.Application.Files.Services;
 using Backend_Project.Application.Files.Settings;
@@ -10,23 +11,26 @@ using Backend_Project.Application.Foundations.ReservationServices;
 using Backend_Project.Application.Foundations.ReviewServices;
 using Backend_Project.Application.Identity.Service;
 using Backend_Project.Application.Identity.Settings;
+using Backend_Project.Application.ListingCategoryDetails.Services;
+using Backend_Project.Application.Identity;
 using Backend_Project.Application.Listings.Services;
 using Backend_Project.Application.Listings.Settings;
 using Backend_Project.Application.Notifications.Services;
 using Backend_Project.Application.Notifications.Settings;
-using Backend_Project.Application.Reservations;
+using Backend_Project.Application.Reservations.Settings;
 using Backend_Project.Application.Review.Settings;
-using Backend_Project.Application.Validation;
+using Backend_Project.Application.Validation.Services;
+using Backend_Project.Application.Validation.Settins;
 using Backend_Project.Infrastructure.CompositionServices;
 using Backend_Project.Infrastructure.Files.Brokers;
 using Backend_Project.Infrastructure.Files.Service;
-using Backend_Project.Infrastructure.Services;
 using Backend_Project.Infrastructure.Services.AccountServices;
 using Backend_Project.Infrastructure.Services.ListingServices;
 using Backend_Project.Infrastructure.Services.LocationServices;
 using Backend_Project.Infrastructure.Services.NotificationsServices;
 using Backend_Project.Infrastructure.Services.ReservationServices;
 using Backend_Project.Infrastructure.Services.ReviewServices;
+using Backend_Project.Infrastructure.Services.ValidationServices;
 using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
 using FileBaseContext.Context.Models.Configurations;
@@ -240,6 +244,8 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddNotificationServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
         builder.Services.Configure<EmailSenderSettings>(builder.Configuration.GetSection(nameof(EmailSenderSettings)));
 
         builder.Services

@@ -1,5 +1,5 @@
 ﻿using Backend_Project.Application.Foundations.ReservationServices;
-using Backend_Project.Application.Reservations;
+using Backend_Project.Application.Reservations.Settings;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
 using Backend_Project.Persistence.DataContexts;

@@ -1,4 +1,4 @@
-﻿namespace Backend_Project.Application.Reservations;
+﻿namespace Backend_Project.Application.Reservations.Settings;
 
 public class ReservationOccupancySettings
 {
@@ -10,13 +10,13 @@ public class ReservationOccupancySettings
 
     public int MaxChildren { get; set; }
 
-    public int MaxInfants { get; set;}
+    public int MaxInfants { get; set; }
 
     public int MinInfants { get; set; }
 
     public int MinPets { get; set; }
 
-    public int MaxPets { get; set;}
+    public int MaxPets { get; set; }
 
     public int MinReservationTotalPrice { get; set; }
 }
