@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Configs\" />
+    <Compile Remove="Application\Configs\**" />
+    <EmbeddedResource Remove="Application\Configs\**" />
+    <None Remove="Application\Configs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Infrastructure\Configs\" />
     <Folder Include="Persistence\DataContexts\" />
   </ItemGroup>
