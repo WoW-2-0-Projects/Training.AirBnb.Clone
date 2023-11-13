@@ -1,4 +1,4 @@
-﻿using Backend_Project.Application.Identity;
+﻿using Backend_Project.Application.Identity.Service;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
 

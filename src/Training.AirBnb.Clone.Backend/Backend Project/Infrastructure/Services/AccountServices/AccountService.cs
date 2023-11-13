@@ -1,7 +1,8 @@
 ﻿using Backend_Project.Application.Foundations.AccountServices;
-using Backend_Project.Application.Identity;
+using Backend_Project.Application.Identity.Service;
 using Backend_Project.Domain.Entities;
 using Backend_Project.Domain.Exceptions.EntityExceptions;
+using System.Linq.Expressions;
 
 namespace Backend_Project.Infrastructure.Services.AccountServices;
 
@@ -41,6 +42,17 @@ public class AccountService : IAccountService
         return createdUser;
     }
 
+    public User GetUserByEmailAddress(string emailAddress)
+    {
+        var user = _userService.Get(self => true).FirstOrDefault(self => self.EmailAddress == emailAddress);
+
+        if (user == null)
+            throw new EntityNotFoundException<User>("User not found!");
+
+        return user;
+    }
+
+
     private static (bool IsStrong, string WarningMessage) IsStrongPassword(string password)
     {
         if (password.Length < 8) return (false, "Password can not be less than 8 character");
@@ -50,4 +62,5 @@ public class AccountService : IAccountService
         if (!password.Any(char.IsPunctuation)) return (false, $"Password should contain at least one symbol like {"!@#$%^&?"}!");
         return (true, "");
     }
+
 }
