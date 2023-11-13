@@ -35,6 +35,7 @@ using Backend_Project.Persistence.DataContexts;
 using Backend_Project.Persistence.SeedData;
 using FileBaseContext.Context.Models.Configurations;
 using System.Reflection;
+using Backend_Project.Application.Availabilities.Services;
 
 namespace AirBnb.Api.Configs;
 
@@ -226,6 +227,7 @@ public static partial class HostConfiguration
             .AddScoped<IReservationService, ReservationService>()
             .AddScoped<IReservationOccupancyService, ReservationOccupancyService>()
             .AddScoped<IAvailabilityService, AvailabilityService>()
+            .AddScoped<IAvailabilityProcessingService, AvailabilityProcessingService>()
             .AddScoped<IBlockedNightService, BlockedNightService>();
 
         return builder;

@@ -85,7 +85,7 @@ public class AvailabilityService : IAvailabilityService
 
         if (availability.PreparationDays is not null && (availability.PreparationDays > _availabilitySettings.PreparationMaxDays
             || availability.PreparationDays < _availabilitySettings.PreparationMinDays))
-            throw new EntityValidationException<Availability>("Availability Propertiondays isn't valid!");
+            throw new EntityValidationException<Availability>("Availability Preparationdays isn't valid!");
 
         if (availability.AvailabilityWindow < _availabilitySettings.AvailabilityWindowMinValue
             || availability.AvailabilityWindow > _availabilitySettings.AvailabilityWindowMaxValue)

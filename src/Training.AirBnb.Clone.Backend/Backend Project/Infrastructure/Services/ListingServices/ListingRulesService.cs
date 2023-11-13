@@ -94,7 +94,7 @@ public class ListingRulesService : IListingRulesService
 
     private void Validate(ListingRules listingRules)
     {
-        if (listingRules.Guests < _rulesSettings.GuestsMinCount)
+        if (listingRules.Guests < _rulesSettings.GuestsMinCount || listingRules.Guests > _rulesSettings.GuestsMaxCount)
         {
             throw new EntityValidationException<ListingRules>("Guests count isn't valid!");
         }
