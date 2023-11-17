@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Application", "AirBnB.Application\AirBnB.Application.csproj", "{213C2EFC-9347-41CA-B407-C75E7024562A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBnB.Application", "AirBnB.Application\AirBnB.Application.csproj", "{213C2EFC-9347-41CA-B407-C75E7024562A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Infrastructure", "AirBnB.Infrastructure\AirBnB.Infrastructure.csproj", "{61B8F99C-33D8-49C4-83D1-13EE38BD8EE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBnB.Infrastructure", "AirBnB.Infrastructure\AirBnB.Infrastructure.csproj", "{61B8F99C-33D8-49C4-83D1-13EE38BD8EE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Domain", "AirBnB.Domain\AirBnB.Domain.csproj", "{0B9F3E3A-70C0-4FF3-A7B8-17B87088BC25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBnB.Persistence", "AirBnB.Persistence\AirBnB.Persistence.csproj", "{916BECC7-2377-414F-A9B0-738FF0A1EF9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Persistence", "AirBnB.Persistence\AirBnB.Persistence.csproj", "{916BECC7-2377-414F-A9B0-738FF0A1EF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirBnB.Api", "AirBnB.Api\AirBnB.Api.csproj", "{F89103A0-1499-4985-BD01-29F6073D9EC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Api", "AirBnB.Api\AirBnB.Api.csproj", "{F89103A0-1499-4985-BD01-29F6073D9EC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirBnB.Domain", "AirBnB.Domain\AirBnB.Domain.csproj", "{BE93059C-7648-4D16-8BEC-0A16B0AFEE40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		{61B8F99C-33D8-49C4-83D1-13EE38BD8EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B8F99C-33D8-49C4-83D1-13EE38BD8EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B8F99C-33D8-49C4-83D1-13EE38BD8EE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B9F3E3A-70C0-4FF3-A7B8-17B87088BC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B9F3E3A-70C0-4FF3-A7B8-17B87088BC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B9F3E3A-70C0-4FF3-A7B8-17B87088BC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B9F3E3A-70C0-4FF3-A7B8-17B87088BC25}.Release|Any CPU.Build.0 = Release|Any CPU
 		{916BECC7-2377-414F-A9B0-738FF0A1EF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{916BECC7-2377-414F-A9B0-738FF0A1EF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{916BECC7-2377-414F-A9B0-738FF0A1EF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{F89103A0-1499-4985-BD01-29F6073D9EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F89103A0-1499-4985-BD01-29F6073D9EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F89103A0-1499-4985-BD01-29F6073D9EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE93059C-7648-4D16-8BEC-0A16B0AFEE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE93059C-7648-4D16-8BEC-0A16B0AFEE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE93059C-7648-4D16-8BEC-0A16B0AFEE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE93059C-7648-4D16-8BEC-0A16B0AFEE40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
