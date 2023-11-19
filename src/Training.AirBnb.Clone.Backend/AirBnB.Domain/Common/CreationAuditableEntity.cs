@@ -1,6 +1,6 @@
 namespace AirBnB.Domain.Common;
 
-public class CreationAuditableEntity
+public class CreationAuditableEntity : ICreationAuditableEntity
 {
     
 }
