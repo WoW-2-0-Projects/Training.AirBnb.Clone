@@ -58,7 +58,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
 
     protected async ValueTask<TEntity> CreateAsync(
                     TEntity entity,
-                    bool saveChanges,
+                    bool saveChanges = true,
                     CancellationToken cancellationToken = default
     )
     {
