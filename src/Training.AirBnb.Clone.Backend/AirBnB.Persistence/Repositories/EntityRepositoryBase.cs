@@ -42,13 +42,13 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return await initialQuery.SingleOrDefaultAsync(entity => entity.Id == id, cancellationToken);
     }
 
-    protected async ValueTask<IList<TEntity>> GetByIdAsync(
+    protected async ValueTask<IList<TEntity>> GetByIdsAsync(
                     IEnumerable<Guid> ids,
                     bool asNoTracking = false,
                     CancellationToken cancellationToken = default
     )
     {
-        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => ids.Contains(entity.Id));
         
         if (asNoTracking)
             initialQuery = initialQuery.AsNoTracking();
