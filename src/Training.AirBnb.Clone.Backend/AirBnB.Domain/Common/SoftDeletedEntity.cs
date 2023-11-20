@@ -1,9 +1,7 @@
 namespace AirBnB.Domain.Common;
 
-public class SoftDeletedEntity : ISoftDeletedEntity
+public abstract class SoftDeletedEntity :AuditableEntity, ISoftDeletedEntity
 {
-    public Guid Id { get; set; }
-    
     public bool IsDeleted { get; set; }
     
     public DateTimeOffset? DeletedTime { get; set; }
