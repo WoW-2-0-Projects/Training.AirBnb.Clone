@@ -66,6 +66,9 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
 
         await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
         
+        if (saveChanges)
+            await DbContext.SaveChangesAsync(cancellationToken);
+        
         return entity;
     }
 
