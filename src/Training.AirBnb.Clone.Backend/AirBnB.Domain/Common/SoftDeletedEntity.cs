@@ -1,6 +1,6 @@
 namespace AirBnB.Domain.Common;
 
-public abstract class SoftDeletedEntity :AuditableEntity, ISoftDeletedEntity
+public abstract class SoftDeletedEntity : Entity, ISoftDeletedEntity
 {
     public bool IsDeleted { get; set; }
     
