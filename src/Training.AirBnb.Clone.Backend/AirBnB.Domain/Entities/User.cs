@@ -11,6 +11,8 @@ public sealed class User : SoftDeletedEntity
 
     public string EmailAddress { get; set; } = default!;
 
+    public string Password { get; set; } = default!;
+    
     public UserRole UserRole { get; set; } = default!;
     
     public bool IsActive { get; set; }
