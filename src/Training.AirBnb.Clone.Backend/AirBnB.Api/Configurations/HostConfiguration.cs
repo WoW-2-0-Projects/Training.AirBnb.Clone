@@ -11,6 +11,7 @@ public static partial class HostConfiguration
     {
         builder
             .AddDevTools()
+            .AddNotificationInfrastructure()
             .AddExposers();
 
         return new(builder);

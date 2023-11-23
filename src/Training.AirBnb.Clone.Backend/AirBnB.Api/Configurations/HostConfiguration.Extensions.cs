@@ -1,4 +1,7 @@
-﻿namespace AirBnB.Api.Configurations;
+﻿using AirBnB.Persistence.DataContexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace AirBnB.Api.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -27,6 +30,14 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    // todo: AddNotificationsInfrastructure add service
+    // todo: register NotificationsDb 
+    private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<NotificationDbContext>(options =>
+                        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+        return builder;
+    }
 
     /// <summary>
     /// Add Controller middleWhere
@@ -52,4 +63,6 @@ public static partial class HostConfiguration
 
         return app;
     }
+    
+
 }
