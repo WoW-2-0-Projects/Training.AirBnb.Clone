@@ -100,7 +100,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return entity;
     }
 
-    protected async Task<TEntity> DeleteByIdAsync(
+    protected async ValueTask<TEntity?> DeleteByIdAsync(
                     Guid id,
                     bool saveChanges = true,
                     CancellationToken cancellationToken = default
