@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AirBnB.Infrastructure\AirBnB.Infrastructure.csproj" />
   </ItemGroup>
 

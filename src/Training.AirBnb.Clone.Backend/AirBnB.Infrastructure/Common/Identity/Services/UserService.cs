@@ -3,7 +3,6 @@ using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
-using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 
@@ -12,12 +11,11 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 public class UserService(IUserRepository userRepository, UserValidator userValidator) : IUserService
 {
     public IQueryable<User> Get(
-        Expression<Func<User, bool>>? predicate,
+        Expression<Func<User, bool>>? predicate = default,
         bool asNoTracking = false
     ) =>
         userRepository.Get(predicate, asNoTracking);
-
-
+    
     public ValueTask<User?> GetByIdAsync(
         Guid userId,
         bool asNoTracking = false,
@@ -34,7 +32,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
 
     public ValueTask<User> CreateAsync(
         User user,
-        bool saveChanges = false,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
         var validationResult = userValidator
@@ -50,24 +48,22 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
 
     public ValueTask<User> UpdateAsync(
         User user,
-        bool saveChanges = false,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default
     ) =>
         userRepository.UpdateAsync(user, saveChanges, cancellationToken);
-
-
+    
     public ValueTask<User?> DeleteByIdAsync(
         Guid userId,
-        bool saveChanges = false,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default
     )
         =>
             userRepository.DeleteByIdAsync(userId, saveChanges, cancellationToken);
-
-
+    
     public ValueTask<User?> DeleteAsync(
         User user,
-        bool saveChanges = false,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default
     ) =>
         userRepository.DeleteAsync(user, saveChanges, cancellationToken);

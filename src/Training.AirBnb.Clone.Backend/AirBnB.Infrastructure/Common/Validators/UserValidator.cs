@@ -32,7 +32,7 @@ public class UserValidator : AbstractValidator<User>
                     .Matches(validationSettingsValue.NameRegexPattern)
                     .WithMessage("First name is not valid");
 
-                RuleFor(user => user.FirstName)
+                RuleFor(user => user.LastName)
                     .NotEmpty()
                     .MinimumLength(3)
                     .MaximumLength(64)
