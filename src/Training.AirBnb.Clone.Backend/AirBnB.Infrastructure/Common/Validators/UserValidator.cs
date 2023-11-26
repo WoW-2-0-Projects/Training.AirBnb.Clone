@@ -7,8 +7,15 @@ using Microsoft.Extensions.Options;
 
 namespace AirBnB.Infrastructure.Common.Validators;
 
+/// <summary>
+/// Validator class for validating user data using FluentValidation.
+/// </summary>
 public class UserValidator : AbstractValidator<User>
 {
+    /// <summary>
+    /// The validation settings used for user data validation.
+    /// </summary>
+    /// <param name="validationSettings"></param>
     public UserValidator(IOptions<ValidationSettings> validationSettings)
     {
         var validationSettingsValue = validationSettings.Value;

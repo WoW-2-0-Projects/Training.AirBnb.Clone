@@ -14,13 +14,18 @@ namespace AirBnB.Api.Configurations;
 public static partial class HostConfiguration
 {
     private static readonly ICollection<Assembly> Assemblies;
-    
+
     static HostConfiguration()
     {
         Assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load).ToList();
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
-    
+
+    /// <summary>
+    /// Registers NotificationDbContext in DI 
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<NotificationDbContext>(options =>
@@ -31,6 +36,11 @@ public static partial class HostConfiguration
         return builder;
     }
 
+    /// <summary>
+    /// Configures IdentityInfrastructure including controllers
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<IdentityDbContext>(options =>
@@ -47,19 +57,29 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
+    /// <summary>
+    /// Configures the Dependency Injection container to include validators from referenced assemblies.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddValidators(this WebApplicationBuilder builder)
     {
         builder.Services.AddValidatorsFromAssemblies(Assemblies);
         return builder;
     }
 
+    /// <summary>
+    /// Configures AutoMapper for object-to-object mapping using the specified profile.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
     {
         builder.Services.AddAutoMapper(Assemblies);
         return builder;
     }
-    
+
     /// <summary>
     /// Configures exposers including controllers
     /// </summary>
