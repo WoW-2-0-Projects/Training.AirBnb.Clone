@@ -12,7 +12,7 @@ public class UserValidator : AbstractValidator<User>
     public UserValidator(IOptions<ValidationSettings> validationSettings)
     {
         var validationSettingsValue = validationSettings.Value;
-        
+
         RuleSet(
             EntityEvent.OnCreate.ToString(),
             () =>
@@ -38,13 +38,13 @@ public class UserValidator : AbstractValidator<User>
                     .MaximumLength(64)
                     .Matches(validationSettingsValue.NameRegexPattern)
                     .WithMessage("Last name is not valid");
-                
+
                 RuleFor(user => user.Password)
                     .NotEmpty()
                     .MinimumLength(8)
                     .MaximumLength(64)
                     .Matches(validationSettingsValue.PasswordRegexPattern);
             }
-            );
+        );
     }
 }

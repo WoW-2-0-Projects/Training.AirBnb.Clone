@@ -11,11 +11,11 @@ public interface IUserRepository
 
     ValueTask<IList<User>> GetByIdsAsync(IEnumerable<Guid> ids, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
-    ValueTask<User> CreateUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
-    ValueTask<User> UpdateUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
-    ValueTask<User> DeleteUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<User?> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
     ValueTask<User?> DeleteByIdAsync(Guid userId, bool saveChanges = true, CancellationToken cancellationToken = default);
 }

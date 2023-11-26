@@ -26,17 +26,17 @@ public class UserRepository : EntityRepositoryBase<User, NotificationDbContext>,
         return base.GetByIdsAsync(ids, asNoTracking, cancellationToken);
     }
 
-    public ValueTask<User> CreateUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         return base.CreateAsync(user, saveChanges, cancellationToken);
     }
 
-    public ValueTask<User> UpdateUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         return base.UpdateAsync(user, saveChanges, cancellationToken);
     }
 
-    public ValueTask<User> DeleteUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public ValueTask<User?> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         return base.DeleteAsync(user, saveChanges, cancellationToken);
     }
