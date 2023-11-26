@@ -1,5 +1,6 @@
 ﻿using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirBnB.Api.Configurations;
 
@@ -30,12 +31,27 @@ public static partial class HostConfiguration
 
         return builder;
     }
+
     // todo: AddNotificationsInfrastructure add service
     // todo: register NotificationsDb 
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<NotificationDbContext>(options =>
-                        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                o => o.MigrationsHistoryTable(
+                    tableName: HistoryRepository.DefaultTableName,
+                    schema: "notification")));
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<IdentityDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                o => o.MigrationsHistoryTable(
+                    tableName: HistoryRepository.DefaultTableName,
+                    schema: "identity")));
+
         return builder;
     }
 
@@ -63,6 +79,4 @@ public static partial class HostConfiguration
 
         return app;
     }
-    
-
 }

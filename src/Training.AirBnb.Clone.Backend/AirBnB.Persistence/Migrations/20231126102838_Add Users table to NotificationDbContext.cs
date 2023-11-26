@@ -6,13 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Adduser : Migration
+    public partial class AddUserstabletoNotificationDbContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "notification");
+
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "notification",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -20,7 +24,6 @@ namespace AirBnB.Persistence.Migrations
                     LastName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     EmailAddress = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Password = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    UserRole = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     PhoneNumberId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
@@ -33,6 +36,7 @@ namespace AirBnB.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_EmailAddress",
+                schema: "notification",
                 table: "Users",
                 column: "EmailAddress",
                 unique: true);
@@ -42,7 +46,8 @@ namespace AirBnB.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Users",
+                schema: "notification");
         }
     }
 }
