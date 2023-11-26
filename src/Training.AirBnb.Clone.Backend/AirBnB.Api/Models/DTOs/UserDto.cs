@@ -2,7 +2,7 @@
 
 public class UserDto
 {
-    public Guid Id { get; set; } = default!;
+    public Guid Id { get; set; } 
     
     public string FirstName { get; set; } = default!;
 
