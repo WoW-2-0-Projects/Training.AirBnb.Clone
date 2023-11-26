@@ -1,6 +1,4 @@
 ﻿using AirBnB.Domain.Common;
-using AirBnB.Domain.Enums;
-
 namespace AirBnB.Domain.Entities;
 
 public sealed class User : SoftDeletedEntity
@@ -13,7 +11,7 @@ public sealed class User : SoftDeletedEntity
 
     public string Password { get; set; } = default!;
     
-    public UserRole UserRole { get; set; } = default!;
+    //TODO: Add User Role for Identity 
     
     public bool IsActive { get; set; }
 
