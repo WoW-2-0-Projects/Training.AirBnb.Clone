@@ -5,9 +5,9 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class UserRepository : EntityRepositoryBase<User, NotificationDbContext>, IUserRepository
+public class UserRepository : EntityRepositoryBase<User, IdentityDbContext>, IUserRepository
 {
-    public UserRepository(NotificationDbContext dbContext) : base(dbContext)
+    public UserRepository(IdentityDbContext dbContext) : base(dbContext)
     {
     }
 
