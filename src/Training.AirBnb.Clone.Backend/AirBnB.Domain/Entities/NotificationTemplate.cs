@@ -12,5 +12,5 @@ public abstract class NotificationTemplate : AuditableEntity
     public NotificationTemplateType TemplateType { get; set; }
 
     //public IList<NotificationHistory> Histories { get; set; } = new List<NotificationHistory>();
-
+ 
 }
