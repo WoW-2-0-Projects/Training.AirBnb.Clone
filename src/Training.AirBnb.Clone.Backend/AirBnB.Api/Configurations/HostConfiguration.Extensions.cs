@@ -34,7 +34,7 @@ public static partial class HostConfiguration
     // todo: register NotificationsDb 
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<NotificationDbContext>(options =>
+        builder.Services.AddDbContext<NotificationsDbContext>(options =>
                         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
         return builder;
     }

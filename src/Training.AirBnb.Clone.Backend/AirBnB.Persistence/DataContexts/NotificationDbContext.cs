@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Persistence.DataContexts;
 
-public class NotificationDbContext(DbContextOptions<NotificationDbContext> options) : DbContext(options)
+public class NotificationsDbContext(DbContextOptions<NotificationsDbContext> options) : DbContext(options)
 {
     public DbSet<EmailTemplate> EmailTemplates => Set<EmailTemplate>();
 
@@ -11,6 +11,6 @@ public class NotificationDbContext(DbContextOptions<NotificationDbContext> optio
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(NotificationDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(NotificationsDbContext).Assembly);
     }
 }
