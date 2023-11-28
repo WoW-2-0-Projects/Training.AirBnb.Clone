@@ -1,13 +1,13 @@
+using AirBnB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Persistence.DataContexts;
 
-public class NotificationDbContext : DbContext
+public class NotificationDbContext(DbContextOptions<NotificationDbContext> options) : DbContext(options)
 {
-    public NotificationDbContext(DbContextOptions<NotificationDbContext> options) : base(options)
-    {
-        
-    }
+    public DbSet<EmailTemplate> EmailTemplates => Set<EmailTemplate>();
+
+    public DbSet<SmsTemplate> SmsTemplates => Set<SmsTemplate>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
