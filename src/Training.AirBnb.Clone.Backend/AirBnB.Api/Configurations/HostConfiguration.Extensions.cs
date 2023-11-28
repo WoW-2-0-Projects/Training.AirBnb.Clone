@@ -63,6 +63,4 @@ public static partial class HostConfiguration
 
         return app;
     }
-    
-
 }
