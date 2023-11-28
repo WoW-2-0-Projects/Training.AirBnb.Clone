@@ -10,16 +10,10 @@ public class NotificationsController(IEmailTemplateService emailTemplateService,
     ISmsTemplateService smsTemplateService) : ControllerBase
 {
     [HttpGet("templates/sms")]
-    public async ValueTask<IActionResult> GetSmsTemplates([FromQuery] FilterPagination pagination)
-    {
-        var result = await smsTemplateService.GetByFilterAsync(pagination);
-        return Ok(result);
-    }
+    public async ValueTask<IActionResult> GetSmsTemplates([FromQuery] FilterPagination pagination) =>
+        Ok(await smsTemplateService.GetByFilterAsync(pagination));
 
     [HttpGet("templates/email")]
-    public async ValueTask<IActionResult> GetEmailTemplates([FromQuery] FilterPagination pagination)
-    {
-        var result = await emailTemplateService.GetByFilterAsync(pagination);
-        return Ok(result);
-    }
+    public async ValueTask<IActionResult> GetEmailTemplates([FromQuery] FilterPagination pagination) =>
+        Ok(await emailTemplateService.GetByFilterAsync(pagination));
 }
