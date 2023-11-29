@@ -5,12 +5,8 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class UserRepository : EntityRepositoryBase<User, IdentityDbContext>, IUserRepository
+public class UserRepository(IdentityDbContext dbContext) : EntityRepositoryBase<User, IdentityDbContext>(dbContext), IUserRepository
 {
-    public UserRepository(IdentityDbContext dbContext) : base(dbContext)
-    {
-    }
-
     public IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false)
     {
         return base.Get(predicate, asNoTracking);

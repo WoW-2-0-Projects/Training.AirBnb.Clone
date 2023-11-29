@@ -14,7 +14,7 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
     [HttpGet]
     public async ValueTask<IActionResult> Get()
     {
-        var users = await userService.Get(user => true, true).ToListAsync();
+        var users = await userService.Get(asNoTracking: true).ToListAsync();
         var result = mapper.Map<IEnumerable<UserDto>>(users);
         return result.Any() ? Ok(result) : NoContent();
     }
@@ -34,7 +34,7 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
         CancellationToken cancellationToken)
     {
         var user = mapper.Map<User>(userDto);
-        var result = await userService.CreateAsync(user, true, cancellationToken);
+        var result = await userService.CreateAsync(user, cancellationToken: cancellationToken);
 
         return Ok(mapper.Map<UserDto>(result));
     }
@@ -45,22 +45,11 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
         CancellationToken cancellationToken)
     {
         var user = mapper.Map<User>(userDto);
-        var result =await userService.UpdateAsync(user, true, cancellationToken);
+        var result =await userService.UpdateAsync(user, cancellationToken: cancellationToken);
 
         return Ok(mapper.Map<UserDto>(result));
     }
-
-    [HttpDelete]
-    public async ValueTask<IActionResult> Delete(
-        [FromBody] UserDto userDto,
-        CancellationToken cancellationToken)
-    {
-        var user = mapper.Map<User>(userDto);
-        var result = await userService.DeleteAsync(user, true, cancellationToken);
-
-        return Ok(mapper.Map<UserDto>(result));
-    }
-
+    
     [HttpDelete("{userId:guid}")]
     public async ValueTask<IActionResult> DeleteByIdAsync(
         [FromRoute] Guid userId, 

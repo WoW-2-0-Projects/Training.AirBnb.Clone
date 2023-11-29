@@ -8,6 +8,9 @@ using FluentValidation;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
+/// <summary>
+/// Service for managing user-related operations.
+/// </summary>
 public class UserService(IUserRepository userRepository, UserValidator userValidator) : IUserService
 {
     public IQueryable<User> Get(

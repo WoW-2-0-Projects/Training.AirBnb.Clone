@@ -22,6 +22,28 @@ public static partial class HostConfiguration
     }
 
     /// <summary>
+    /// Configures the Dependency Injection container to include validators from referenced assemblies.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddValidators(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddValidatorsFromAssemblies(Assemblies);
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures AutoMapper for object-to-object mapping using the specified profile.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAutoMapper(Assemblies);
+        return builder;
+    }
+    
+    /// <summary>
     /// Registers NotificationDbContext in DI 
     /// </summary>
     /// <param name="builder"></param>
@@ -57,29 +79,7 @@ public static partial class HostConfiguration
 
         return builder;
     }
-
-    /// <summary>
-    /// Configures the Dependency Injection container to include validators from referenced assemblies.
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    private static WebApplicationBuilder AddValidators(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddValidatorsFromAssemblies(Assemblies);
-        return builder;
-    }
-
-    /// <summary>
-    /// Configures AutoMapper for object-to-object mapping using the specified profile.
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddAutoMapper(Assemblies);
-        return builder;
-    }
-
+    
     /// <summary>
     /// Configures exposers including controllers
     /// </summary>

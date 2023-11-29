@@ -34,7 +34,7 @@ public sealed class User : SoftDeletedEntity
     public bool IsActive { get; set; }
     
     /// <summary>
-    ///Gets or sets unique identifier of user's phone number 
+    ///Gets or sets user's phone number 
     /// </summary>
-    public Guid PhoneNumberId { get; set; } = default!;
+    public string PhoneNumber { get; set; } = default!;
 }

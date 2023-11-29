@@ -8,12 +8,12 @@ namespace AirBnB.Api.Mappers;
 /// <summary>
 /// AutoMapper profile for mapping between the User and UserDto classes.
 /// </summary>
-public class UserProfile : Profile
+public class UserMapper : Profile
 {
     /// <summary>
-    /// Initializes a new instance of the UserProfile
+    /// Initializes a new instance of the UserMapper
     /// </summary>
-    public UserProfile()
+    public UserMapper()
     {
         CreateMap<User, UserDto>().ReverseMap();
     }
