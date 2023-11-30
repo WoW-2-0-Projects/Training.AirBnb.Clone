@@ -6,7 +6,7 @@ namespace AirBnB.Persistence.Repositories.Interfaces;
 public interface IEmailTemplateRepository
 {
     /// <summary>
-    /// Get all templates which IQuerable
+    /// Returns queryable of email templates
     /// </summary>
     /// <param name="predicate"></param>
     /// <param name="asNoTracking"></param>
@@ -16,7 +16,7 @@ public interface IEmailTemplateRepository
         bool asNoTracking = false);
 
     /// <summary>
-    /// Create EmailTemplate async
+    /// Create EmailTemplate
     /// </summary>  
     /// <param name="saveChanges"></param>
     /// <returns>ValueTask<EmailTemplate</returns>

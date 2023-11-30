@@ -11,7 +11,7 @@ public class EmailTemplateValidator : AbstractValidator<EmailTemplate>
         RuleFor(template => template.Content)
             .NotEmpty()
             .MinimumLength(10)
-            .MaximumLength(256);
+            .MaximumLength(129_536);
 
         RuleFor(template => template.Type)
             .Equal(NotificationType.Email);
@@ -19,6 +19,6 @@ public class EmailTemplateValidator : AbstractValidator<EmailTemplate>
         RuleFor(emailTemplate => emailTemplate.Subject)
             .NotEmpty()
             .MinimumLength(10)
-            .MaximumLength(256);
+            .MaximumLength(129_536);
     }
 }
