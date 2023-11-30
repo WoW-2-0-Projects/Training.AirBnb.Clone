@@ -15,4 +15,8 @@
     <ProjectReference Include="..\AirBnB.Persistence\AirBnB.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.8.1" />
+  </ItemGroup>
+
 </Project>
