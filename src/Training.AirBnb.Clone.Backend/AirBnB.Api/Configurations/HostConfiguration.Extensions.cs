@@ -1,5 +1,4 @@
-
-﻿using AirBnB.Persistence.DataContexts;
+using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
 using AirBnB.Persistence.Repositories;
 using FluentValidation;
@@ -7,15 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Notifications.Services;
-﻿using System.Reflection;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Infrastructure.Common.Identity.Services;
-using AirBnB.Persistence.DataContexts;
-using AirBnB.Persistence.Repositories;
-using AirBnB.Persistence.Repositories.Interfaces;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirBnB.Api.Configurations;
