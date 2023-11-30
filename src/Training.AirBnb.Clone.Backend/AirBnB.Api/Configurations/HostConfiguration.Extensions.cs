@@ -59,7 +59,19 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<NotificationDbContext>(options =>
+        builder.Services.AddDbContext<NotificationsDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("AirBnBNotificationsDatabaseConnection")));
+
+        builder.Services.AddValidatorsFromAssemblies(Assemblies);
+        builder.Services
+            .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
+            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
+
+        builder.Services
+            .AddScoped<ISmsTemplateService, SmsTemplateService>()
+            .AddScoped<IEmailTemplateService, EmailTemplateService>();
+
+        builder.Services.AddDbContext<NotificationsDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
@@ -119,22 +131,22 @@ public static partial class HostConfiguration
     // todo: AddNotificationsInfrastructure add service
     // todo: register NotificationsDb 
 
-    private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddDbContext<NotificationsDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("AirBnBNotificationsDatabaseConnection")));
-
-        builder.Services.AddValidatorsFromAssemblies(Assemblies);
-        builder.Services
-            .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
-            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
-
-        builder.Services
-            .AddScoped<ISmsTemplateService, SmsTemplateService>()
-            .AddScoped<IEmailTemplateService, EmailTemplateService>();
-
-        return builder;
-    }
+    // private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
+    // {
+    //     builder.Services.AddDbContext<NotificationsDbContext>(options =>
+    //         options.UseNpgsql(builder.Configuration.GetConnectionString("AirBnBNotificationsDatabaseConnection")));
+    //
+    //     builder.Services.AddValidatorsFromAssemblies(Assemblies);
+    //     builder.Services
+    //         .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
+    //         .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
+    //
+    //     builder.Services
+    //         .AddScoped<ISmsTemplateService, SmsTemplateService>()
+    //         .AddScoped<IEmailTemplateService, EmailTemplateService>();
+    //
+    //     return builder;
+    // }
 
     /// <summary>
     /// Add Controller middleWhere
