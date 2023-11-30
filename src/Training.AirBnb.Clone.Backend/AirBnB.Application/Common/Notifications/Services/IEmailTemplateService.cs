@@ -7,7 +7,7 @@ namespace AirBnB.Application.Common.Notifications.Services;
 public interface IEmailTemplateService
 {
     /// <summary>
-    /// it takes emailTemplate by filtering
+    /// Retrieves Email templates by filter
     /// </summary>
     /// <param name="pagination"></param>
     /// <param name="asNoTracking"></param>
@@ -19,7 +19,7 @@ public interface IEmailTemplateService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// it takes emailTemplate By type
+    /// Retrieves Email template by type
     /// </summary>
     /// <param name="templateType"></param>
     /// <param name="asNoTracking"></param>
@@ -31,7 +31,7 @@ public interface IEmailTemplateService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// it creates by emailTemplate
+    /// Creates Emil template
     /// </summary>
     /// <param name="template"></param>
     /// <param name="saveChanges"></param>

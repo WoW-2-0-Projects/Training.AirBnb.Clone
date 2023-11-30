@@ -1,8 +1,8 @@
 ﻿using AirBnB.Domain.Enums;
 
-namespace AirBnB.Api.Models.DTOs;
+namespace AirBnB.Api.Models.Dtos;
 
-public class SmsTemplateDTO
+public class SmsTemplateDto
 {
     public Guid Id { get; set; }
 

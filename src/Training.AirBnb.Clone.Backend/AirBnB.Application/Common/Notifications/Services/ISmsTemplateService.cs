@@ -7,7 +7,7 @@ namespace AirBnB.Application.Common.Notifications.Services;
 public interface ISmsTemplateService
 {
     /// <summary>
-    /// it takes smsTemplate by filtering
+    /// Retrieves SMS templates by filter
     /// </summary>
     /// <param name="pagination"></param>
     /// <param name="asNoTracking"></param>
@@ -19,7 +19,7 @@ public interface ISmsTemplateService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// it takes smsTemplate By type
+    /// Retrieves SMS template by type
     /// </summary>
     /// <param name="templateType"></param>
     /// <param name="asNoTracking"></param>
@@ -31,7 +31,7 @@ public interface ISmsTemplateService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// it creates by emailTemplate
+    /// Creates SMS template
     /// </summary>
     /// <param name="smsTemplate"></param>
     /// <param name="saveChanges"></param>
