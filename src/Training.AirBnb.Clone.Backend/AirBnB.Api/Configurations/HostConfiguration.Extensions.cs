@@ -71,7 +71,7 @@ public static partial class HostConfiguration
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
 
-        builder.Services
+        builder.Services.AddScoped<IAccountService, AccountService>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>();
 
