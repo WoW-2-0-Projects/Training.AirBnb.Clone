@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
 namespace AirBnB.Persistence.Repositories.Interfaces;
@@ -15,7 +16,17 @@ public interface IUserRepository
     /// <param name="asNoTracking"></param>
     /// <returns>An IQueryable collection of User objects.</returns>
     IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false);
-
+    
+    /// <summary>
+    /// /// Retrieves a collection of users based on the specified predicate. 
+    /// </summary>
+    /// <param name="querySpecification"></param>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification, bool asNoTracking = false,
+        CancellationToken cancellationToken = default);
+    
     /// <summary>
     /// Retrieves a user by their unique identifier 
     /// </summary>
