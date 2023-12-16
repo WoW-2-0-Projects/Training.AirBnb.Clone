@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Settings;
+using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
+using AirBnB.Infrastructure.Common.Settings;
+using AirBnB.Persistence.Caching;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -21,6 +24,22 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
+    private static WebApplicationBuilder AddCaching(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection(nameof(CacheSettings)));
+
+        builder.Services.AddStackExchangeRedisCache(
+            options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("RedisConnectionString");
+                options.InstanceName = "CachingExample";
+            });
+
+        builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
+
+        return builder;
+    }
+    
     /// <summary>
     /// Configures the Dependency Injection container to include validators from referenced assemblies.
     /// </summary>
