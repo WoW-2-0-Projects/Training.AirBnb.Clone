@@ -1,15 +1,21 @@
 ﻿using AirBnB.Domain.Common;
 using AirBnB.Domain.Common.Query;
+using Microsoft.EntityFrameworkCore;
 
-namespace AirBnB.Domain.Extensions;
+
+namespace AirBnB.Persistence.Extensions;
 
 public static class LinqExtensions
 {
     
     public static IQueryable<TSource> ApplySpecification<TSource>(this IQueryable<TSource> source, QuerySpecification<TSource> querySpecification)
-        where TSource : IEntity
+        where TSource : class, IEntity
     {
-        source = source.ApplyPagination(querySpecification).ApplyPredicates(querySpecification).ApplyOrdering(querySpecification);
+        source = source
+            .ApplyPagination(querySpecification)
+            .ApplyPredicates(querySpecification)
+            .ApplyOrdering(querySpecification)
+            .ApplyIncluding(querySpecification);
 
         return source;
     }
@@ -17,7 +23,10 @@ public static class LinqExtensions
     public static IEnumerable<TSource> ApplySpecification<TSource>(this IEnumerable<TSource> source, QuerySpecification<TSource> querySpecification)
         where TSource : IEntity
     {
-        source = source.ApplyPagination(querySpecification).ApplyPredicates(querySpecification).ApplyOrdering(querySpecification);
+        source = source
+            .ApplyPagination(querySpecification)
+            .ApplyPredicates(querySpecification)
+            .ApplyOrdering(querySpecification);
 
         return source;
     }
@@ -50,12 +59,20 @@ public static class LinqExtensions
 
         return source;
     }
+
+    public static IQueryable<TSource> ApplyIncluding<TSource>(this IQueryable<TSource> source, QuerySpecification<TSource> querySpecification)
+        where TSource : class, IEntity
+    {
+        querySpecification.IncludingOptions.ForEach(includeOption => source = source.Include(includeOption));
+        
+        return source;
+    }
     
     public static IEnumerable<TSource> ApplyOrdering<TSource>(this IEnumerable<TSource> source, QuerySpecification<TSource> querySpecification)
         where TSource : IEntity
     {
-        if (!querySpecification.OrderingOptions.Any())
-            source.OrderBy(entity => entity.Id);
+        if (querySpecification.OrderingOptions.Count == 0)
+            return source.OrderBy(entity => entity.Id);
 
         querySpecification.OrderingOptions.ForEach(
             orderExpression => source = orderExpression.IsAscending
