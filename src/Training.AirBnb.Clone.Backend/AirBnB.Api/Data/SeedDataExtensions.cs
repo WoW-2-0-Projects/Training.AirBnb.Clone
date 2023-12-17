@@ -5,8 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Api.Data;
 
+/// <summary>
+/// Extension methods for initializing seed data in the application.
+/// </summary>
 public static class SeedDataExtensions
 {
+    /// <summary>
+    /// Initializes seed data in the IdentityDbContext by checking for existing users and seeding them if necessary.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider to resolve dependencies.</param>
+    /// <returns>An asynchronous task representing the initialization process.</returns>
     public static async ValueTask InitializeSeedAsync(this IServiceProvider serviceProvider)
     {
         var identityDbContext = serviceProvider.GetRequiredService<IdentityDbContext>();
@@ -15,6 +23,11 @@ public static class SeedDataExtensions
             await identityDbContext.SeedUsersAsync();
     }
 
+    /// <summary>
+    /// Seeds user data into the IdentityDbContext using Bogus library.
+    /// </summary>
+    /// <param name="dbContext">The IdentityDbContext instance to seed data into.</param>
+    /// <returns>An asynchronous task representing the seeding process.</returns>
     private static async ValueTask SeedUsersAsync(this IdentityDbContext dbContext)
     {
         var userFaker = new Faker<User>()

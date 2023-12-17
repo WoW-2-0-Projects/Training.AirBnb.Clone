@@ -5,7 +5,7 @@ using AirBnB.Application.Common.Settings;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Infrastructure.Common.Settings;
-using AirBnB.Persistence.Caching;
+using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -25,10 +25,17 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
+    /// <summary>
+    /// Adds caching services to the web application builder.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddCaching(this WebApplicationBuilder builder)
     {
+        // Configure CacheSettings from the app settings.
         builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection(nameof(CacheSettings)));
 
+        // Configure Redis caching with options from the app settings.
         builder.Services.AddStackExchangeRedisCache(
             options =>
             {
@@ -36,6 +43,7 @@ public static partial class HostConfiguration
                 options.InstanceName = "AirBnb.CacheMemory";
             });
 
+        // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
 
         return builder;
@@ -100,6 +108,11 @@ public static partial class HostConfiguration
         return builder;
     }
 
+    /// <summary>
+    /// Seeds data into the application's database by creating a service scope and initializing the seed operation.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
     private static async ValueTask<WebApplication> SeedDataAsync(this WebApplication app)
     {
         var serviceScope = app.Services.CreateScope();

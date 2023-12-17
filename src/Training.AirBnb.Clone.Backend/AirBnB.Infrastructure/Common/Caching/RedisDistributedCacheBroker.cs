@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using AirBnB.Domain.Common.Caching;
 using AirBnB.Infrastructure.Common.Settings;
-using AirBnB.Persistence.Caching;
+using AirBnB.Persistence.Caching.Brokers;
+using AirBnB.Persistence.Caching.Models;
 using Force.DeepCloner;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
@@ -9,6 +9,11 @@ using Newtonsoft.Json;
 
 namespace AirBnB.Infrastructure.Common.Caching;
 
+/// <summary>
+/// /// Represents a cache broker implementation for interacting with a Redis-based distributed cache.
+/// </summary>
+/// <param name="cacheSettings"></param>
+/// <param name="distributedCache"></param>
 public class RedisDistributedCacheBroker(IOptions<CacheSettings> cacheSettings, IDistributedCache distributedCache) : ICacheBroker
 {
     private readonly DistributedCacheEntryOptions _entryOptions = new()
@@ -63,6 +68,11 @@ public class RedisDistributedCacheBroker(IOptions<CacheSettings> cacheSettings, 
     }
 
 
+    /// <summary>
+    /// Gets the cache entry options based on given entry options or default options.
+    /// </summary>
+    /// <param name="entryOptions">Given cache entry options.</param>
+    /// <returns>The distributed cache entry options.</returns>
     private DistributedCacheEntryOptions GetCacheEntryOptions(CacheEntryOptions? entryOptions)
     {
         if (entryOptions == default || (!entryOptions.AbsoluteExpirationRelativeToNow.HasValue && !entryOptions.SlidingExpiration.HasValue))

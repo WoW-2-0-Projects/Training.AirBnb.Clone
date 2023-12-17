@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using AirBnB.Domain.Common.Caching;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
-using AirBnB.Persistence.Caching;
+using AirBnB.Persistence.Caching.Brokers;
+using AirBnB.Persistence.Caching.Models;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
 
