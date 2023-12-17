@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
@@ -18,7 +19,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         bool asNoTracking = false
     ) =>
         userRepository.Get(predicate, asNoTracking);
-    
+
     public ValueTask<User?> GetByIdAsync(
         Guid userId,
         bool asNoTracking = false,
@@ -26,6 +27,11 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
     ) =>
         userRepository.GetByIdAsync(userId, asNoTracking, cancellationToken);
 
+    public  ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification, bool asNoTracking = false,
+        CancellationToken cancellationToken = default
+    ) => 
+         userRepository.GetAsync(querySpecification, asNoTracking, cancellationToken);
+    
     public ValueTask<IList<User>> GetByIdsAsync(
         IEnumerable<Guid> ids,
         bool asNoTracking = false,
@@ -42,7 +48,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
             .Validate(user,
                 options =>
                     options.IncludeRuleSets(EntityEvent.OnCreate.ToString()));
-        
+
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
@@ -55,7 +61,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         CancellationToken cancellationToken = default
     ) =>
         userRepository.UpdateAsync(user, saveChanges, cancellationToken);
-    
+
     public ValueTask<User?> DeleteByIdAsync(
         Guid userId,
         bool saveChanges = true,
@@ -63,7 +69,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
     )
         =>
             userRepository.DeleteByIdAsync(userId, saveChanges, cancellationToken);
-    
+
     public ValueTask<User?> DeleteAsync(
         User user,
         bool saveChanges = true,
