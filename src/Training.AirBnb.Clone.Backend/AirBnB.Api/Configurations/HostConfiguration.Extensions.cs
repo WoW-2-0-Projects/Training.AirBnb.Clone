@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Infrastructure.Common.Caching;
@@ -32,7 +33,7 @@ public static partial class HostConfiguration
             options =>
             {
                 options.Configuration = builder.Configuration.GetConnectionString("RedisConnectionString");
-                options.InstanceName = "CachingExample";
+                options.InstanceName = "AirBnb.CacheMemory";
             });
 
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
@@ -98,6 +99,15 @@ public static partial class HostConfiguration
 
         return builder;
     }
+
+    private static async ValueTask<WebApplication> SeedDataAsync(this WebApplication app)
+    {
+        var serviceScope = app.Services.CreateScope();
+        await serviceScope.ServiceProvider.InitializeSeedAsync();
+        
+        return app;
+    }
+
     
     /// <summary>
     /// Configures exposers including controllers
