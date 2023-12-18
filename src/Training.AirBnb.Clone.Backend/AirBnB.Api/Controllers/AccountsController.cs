@@ -14,10 +14,10 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
 {
     
     [HttpGet]
-    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination)
+    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
         var specification = new QuerySpecification<User>(filterPagination.PageSize, filterPagination.PageToken, true);
-        var result = await userService.GetAsync(specification);
+        var result = await userService.GetAsync(specification, cancellationToken);
 
         return result.Any() ? Ok(result) : NotFound();
     }

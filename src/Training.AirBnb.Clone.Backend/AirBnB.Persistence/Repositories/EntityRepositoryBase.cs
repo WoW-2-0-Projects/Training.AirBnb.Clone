@@ -22,7 +22,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
     CacheEntryOptions? cacheEntryOptions = default)
     where TEntity : class, IEntity where TContext : DbContext
 {
-    private TContext DbContext => dbContext;
+    protected TContext DbContext => dbContext;
 
     /// <summary>
     /// Retrieves entities from the repository based on optional filtering conditions and tracking preferences.
@@ -50,7 +50,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
     /// <param name="asNoTracking"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    protected async ValueTask<IList<TEntity>> GetAsync(QuerySpecification<TEntity> querySpecification, bool asNoTracking = false,
+    protected async ValueTask<IList<TEntity>> GetAsync(QuerySpecification<TEntity> querySpecification,
         CancellationToken cancellationToken = default)
     {
         var foundEntities = new List<TEntity>();
@@ -61,7 +61,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         {
             var initialQuery = DbContext.Set<TEntity>().AsQueryable();
 
-            if (asNoTracking)
+            if (querySpecification.AsNoTracking)
                 initialQuery = initialQuery.AsNoTracking();
 
             initialQuery = initialQuery.ApplySpecification(querySpecification);
@@ -72,9 +72,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
                 await cacheBroker.SetAsync(cacheKey, foundEntities, cacheEntryOptions);
         }
         else
-        {
             foundEntities = cachedEntity;
-        }
 
         return foundEntities;
     }
@@ -107,9 +105,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
                 await cacheBroker.SetAsync(foundEntity.Id.ToString(), foundEntity, cacheEntryOptions);
         }
         else
-        {
             foundEntity = cachedEntity;
-        }
 
         return foundEntity;
     }

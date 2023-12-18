@@ -18,9 +18,9 @@ public class UserRepository(IdentityDbContext dbContext, ICacheBroker cacheBroke
     public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
 
-    public new ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification, bool asNoTracking = false,
+    public new ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
         CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, asNoTracking, cancellationToken);
+        => base.GetAsync(querySpecification, cancellationToken);
 
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)

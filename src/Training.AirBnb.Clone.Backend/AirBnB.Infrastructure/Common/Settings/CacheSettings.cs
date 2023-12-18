@@ -8,10 +8,10 @@ public class CacheSettings
     /// <summary>
     /// Gets or sets the absolute expiration time for cached items, measured in seconds.
     /// </summary>
-    public int AbsoluteExpirationInSeconds { get; set; }
+    public uint AbsoluteExpirationInSeconds { get; set; }
 
     /// <summary>
     ///Gets or sets the sliding expiration time for cached items, measured in seconds. 
     /// </summary>
-    public int SlidingExpirationInSeconds { get; set; }
+    public uint SlidingExpirationInSeconds { get; set; }
 }

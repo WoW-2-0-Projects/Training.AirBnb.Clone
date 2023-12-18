@@ -33,7 +33,7 @@ public interface IUserService
     /// <param name="asNoTracking"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification, bool asNoTracking = false,
+    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
         CancellationToken cancellationToken = default);
     
     /// <summary>
