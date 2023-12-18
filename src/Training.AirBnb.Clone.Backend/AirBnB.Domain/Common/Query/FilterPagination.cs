@@ -26,6 +26,9 @@ public class FilterPagination : IQueryConvertible
         PageToken = pageToken;
     }
 
+    public FilterPagination()
+    {
+    }
     /// <summary>
     /// Gets the hash code for the current <see cref="FilterPagination"/> instance.
     /// </summary>
