@@ -10,10 +10,10 @@ namespace AirBnB.Persistence.Repositories;
 
 public class UserRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker)
     : EntityRepositoryBase<User, IdentityDbContext>(
-        dbContext, 
+        dbContext,
         cacheBroker,
         new CacheEntryOptions()
-        ), IUserRepository
+    ), IUserRepository
 {
     public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
@@ -21,6 +21,10 @@ public class UserRepository(IdentityDbContext dbContext, ICacheBroker cacheBroke
     public new ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
         CancellationToken cancellationToken = default)
         => base.GetAsync(querySpecification, cancellationToken);
+
+    public new ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
+        =>
+            base.GetAsync(querySpecification, cancellationToken);
 
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
@@ -46,4 +50,3 @@ public class UserRepository(IdentityDbContext dbContext, ICacheBroker cacheBroke
     public new ValueTask<User?> DeleteByIdAsync(Guid userId, bool saveChanges = true, CancellationToken cancellationToken = default)
         => base.DeleteByIdAsync(userId, saveChanges, cancellationToken);
 }
-

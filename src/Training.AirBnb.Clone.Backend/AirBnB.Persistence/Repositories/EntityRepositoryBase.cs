@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using AirBnB.Domain.Common;
+using AirBnB.Domain.Common.Caching;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.Caching.Models;
@@ -77,6 +78,33 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         return foundEntities;
     }
 
+    protected async ValueTask<IList<TEntity>> GetAsync(QuerySpecification querySpecification,
+        CancellationToken cancellationToken = default)
+    {
+        var foundEntities = new List<TEntity>();
+
+        var cacheKey = querySpecification.CacheKey;
+
+        if (cacheEntryOptions is null || !await cacheBroker.TryGetAsync<List<TEntity>>(cacheKey, out var cachedEntity))
+        {
+            var initialQuery = DbContext.Set<TEntity>().AsQueryable();
+
+            if (querySpecification.AsNoTracking)
+                initialQuery = initialQuery.AsNoTracking();
+
+            initialQuery = initialQuery.ApplySpecification(querySpecification);
+
+            foundEntities = await initialQuery.ToListAsync(cancellationToken);
+
+            if (cacheEntryOptions is not null)
+                await cacheBroker.SetAsync(cacheKey, foundEntities, cacheEntryOptions);
+        }
+        else
+            foundEntities = cachedEntity;
+
+        return foundEntities;
+    }
+    
     /// <summary>
     /// Asynchronously retrieves an entity from the repository by its ID, optionally applying caching.
     /// </summary>
@@ -229,5 +257,10 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
             await DbContext.SaveChangesAsync(cancellationToken);
 
         return entity;
+    }
+
+    private string AddTypePrefix(CacheModel model)
+    {
+        return $"{typeof(TEntity).Name}_{model.CacheKey}";
     }
 }

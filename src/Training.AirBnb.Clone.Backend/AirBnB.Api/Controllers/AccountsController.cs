@@ -12,12 +12,11 @@ namespace AirBnB.Api.Controllers;
 [Route("api/[controller]")]
 public class AccountsController(IUserService userService, IMapper mapper) : ControllerBase
 {
-    
     [HttpGet]
     public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
         var specification = new QuerySpecification<User>(filterPagination.PageSize, filterPagination.PageToken, true);
-        var result = await userService.GetAsync(specification, cancellationToken);
+        var result = await userService.GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(), cancellationToken);
 
         return result.Any() ? Ok(result) : NotFound();
     }

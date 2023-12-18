@@ -12,7 +12,9 @@ namespace AirBnB.Domain.Common.Query;
 /// <param name="pageToken"></param>
 /// <param name="asNoTracking"></param>
 /// <typeparam name="TEntity"></typeparam>
-public class QuerySpecification<TEntity>(uint pageSize, uint pageToken, bool asNoTracking) : CacheModel where TEntity : IEntity
+public class QuerySpecification<TEntity>(uint pageSize, uint pageToken, bool asNoTracking)
+    : QuerySpecification(pageSize, pageToken, asNoTracking) where TEntity :
+    IEntity
 {
     /// <summary>
     /// Gets filtering options collection for query.
@@ -27,15 +29,8 @@ public class QuerySpecification<TEntity>(uint pageSize, uint pageToken, bool asN
     /// <summary>
     /// /// Gets including options collection for query.
     /// </summary>
-    public List<Expression<Func<TEntity, object>>> IncludingOptions { get; }= [];
-    
-    /// <summary>
-    /// /// Gets pagination options for query.
-    /// </summary>
-    public FilterPagination PaginationOptions { get; set; } = new(pageSize, pageToken);
+    public List<Expression<Func<TEntity, object>>> IncludingOptions { get; } = [];
 
-    public bool AsNoTracking { get; } = asNoTracking;
-    
     public override int GetHashCode()
     {
         var hashCode = new HashCode();
@@ -46,7 +41,7 @@ public class QuerySpecification<TEntity>(uint pageSize, uint pageToken, bool asN
 
         foreach (var filter in OrderingOptions)
             hashCode.Add(expressionEqualityComparer.GetHashCode(filter.KeySelector));
-        
+
         hashCode.Add(PaginationOptions);
 
         return hashCode.ToHashCode();
@@ -56,6 +51,42 @@ public class QuerySpecification<TEntity>(uint pageSize, uint pageToken, bool asN
     {
         return obj is QuerySpecification<TEntity> querySpecification && querySpecification.GetHashCode() == GetHashCode();
     }
+}
 
-    public override string CacheKey => $"{typeof(TEntity).Name}_{GetHashCode()}";
+public class QuerySpecification : CacheModel
+{
+    /// <summary>
+    /// /// Gets pagination options for query.
+    /// </summary>
+    public FilterPagination PaginationOptions { get; set; }
+
+    public bool AsNoTracking { get; }
+
+    public QuerySpecification(uint pageSize, uint pageToken, bool asNoTracking)
+    {
+        PaginationOptions = new FilterPagination(pageSize, pageToken);
+        AsNoTracking = asNoTracking;
+    }
+
+    public QuerySpecification(FilterPagination filterPagination, bool asNoTracking)
+    {
+        PaginationOptions = filterPagination;
+        AsNoTracking = asNoTracking;
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = new HashCode();
+
+        hashCode.Add(PaginationOptions);
+
+        return hashCode.ToHashCode();
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is QuerySpecification querySpecification && querySpecification.GetHashCode() == GetHashCode();
+    }
+
+    public override string CacheKey => GetHashCode().ToString();
 }
