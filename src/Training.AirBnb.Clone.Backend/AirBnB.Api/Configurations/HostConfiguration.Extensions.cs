@@ -73,7 +73,9 @@ public static partial class HostConfiguration
 
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IListingRepository, ListingRepository>()
+            .AddScoped<IListingService, ListingService>();
 
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
