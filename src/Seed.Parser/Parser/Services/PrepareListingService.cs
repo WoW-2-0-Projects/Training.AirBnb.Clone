@@ -106,6 +106,8 @@ public static class PrepareListingService
         {
             BaseAddress = new Uri("https://a0.muscache.com/im/pictures/")
         };
+        
+        httpClient.Timeout = TimeSpan.FromMinutes(20);
 
         var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
 
