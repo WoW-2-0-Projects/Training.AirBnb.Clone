@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
 namespace AirBnB.Application.Common.Identity.Services;
@@ -25,6 +26,25 @@ public interface IUserService
     /// <returns>Returning the User object.</returns>
     ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Retrieves a collection of users based on the specified predicate.
+    /// </summary>
+    /// <param name="querySpecification"></param>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
+        CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Retrieves a collection of users based on the specified predicate.
+    /// </summary>
+    /// <param name="querySpecification"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification,
+        CancellationToken cancellationToken = default);
+    
     /// <summary>
     /// Retrieves a list of users based on a collection of user IDs.
     /// </summary>

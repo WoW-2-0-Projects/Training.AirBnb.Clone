@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
 namespace AirBnB.Persistence.Repositories.Interfaces;
@@ -17,6 +18,26 @@ public interface IUserRepository
     IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false);
 
     /// <summary>
+    /// /// Retrieves a collection of users based on the specified predicate. 
+    /// </summary>
+    /// <param name="querySpecification"></param>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// /// Retrieves a collection of users based on the specified predicate. 
+    /// </summary>
+    /// <param name="querySpecification"></param>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification,
+        CancellationToken cancellationToken = default);
+    
+    /// <summary>
     /// Retrieves a user by their unique identifier 
     /// </summary>
     /// <param name="userId"></param>
@@ -25,7 +46,7 @@ public interface IUserRepository
     /// <returns>Returning the User object if found, or null if not found.</returns>
     ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
-    
+
     /// <summary>
     /// Retrieves a list of user based on a collection of user IDs.
     /// </summary>
@@ -53,7 +74,7 @@ public interface IUserRepository
     /// <returns>Returning the created User object.</returns>
     ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
-    
+
     /// <summary>
     /// Deletes a user.
     /// </summary>
@@ -63,7 +84,7 @@ public interface IUserRepository
     /// <returns>Returning the deleted User object.</returns>
     ValueTask<User?> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
-    
+
     /// <summary>
     /// Deletes a user by their unique identifier.
     /// </summary>
