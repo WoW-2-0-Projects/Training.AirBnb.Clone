@@ -9,6 +9,11 @@ public static class PrepareListingService
     {
         var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
 
+        var enabledCategories = new List<Guid>
+        {
+            Guid.Parse("62566124-fa07-4190-8027-eaa0f09b5962")
+        };
+
         // Retrieve listing categories
         var listingCategoriesFileName = Path.Combine(workingDirectory, "Data", "SeedData", "ListingCategories.json");
         var listingCategories = JsonConvert.DeserializeObject<List<dynamic>>(await File.ReadAllTextAsync(listingCategoriesFileName))!;
@@ -30,6 +35,7 @@ public static class PrepareListingService
                         ), Files: Directory.GetFiles(directory.FullName, "*.json").ToList());
                 }
             )
+            .Where(directory => enabledCategories.Contains(directory.CategoryId))
             .ToList();
 
         // Read all listing files and deserialize to listing
@@ -95,7 +101,9 @@ public static class PrepareListingService
 
         var listingsFileName = Path.Combine(workingDirectory, "Data", "SeedData", "Listings.json");
 
-        await File.WriteAllTextAsync(listingsFileName, JsonConvert.SerializeObject(listingsResult, Formatting.Indented));
+        var fileStream = File.Open(listingsFileName, FileMode.Append, FileAccess.Write);
+        var streamWriter = new StreamWriter(fileStream);
+        await streamWriter.WriteAsync(JsonConvert.SerializeObject(listingsResult, Formatting.Indented));
     }
 
     private static async ValueTask<List<dynamic>> ExecuteAsync(IEnumerable<dynamic> listings)
