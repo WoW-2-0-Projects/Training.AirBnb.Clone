@@ -484,4 +484,5 @@ $RECYCLE.BIN/
 *.swp
 
 # Ignore seed data folder
-SeedData/
+**/SeedData/Images/Listings/*
+**/SeedData/Prepare/*
