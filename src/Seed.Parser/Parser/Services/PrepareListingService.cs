@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Parser.Services;
@@ -68,13 +68,7 @@ public static class PrepareListingService
                                         price = new
                                         {
                                             currency = Currency.Usd,
-                                            amount = decimal.Parse(
-                                                result["pricingQuote"]!["structuredStayDisplayPrice"]!["primaryLine"]!["price"]!.Value<string>()!
-                                                    .Replace(
-                                                        "$",
-                                                        ""
-                                                    )
-                                            )
+                                            amount = result["pricingQuote"]!["rate"]!["amount"]!.Value<decimal>()
                                         }
                                     };
                                 }
