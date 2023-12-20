@@ -51,7 +51,7 @@ public static class PrepareListingService
                                         categoryId = listingFile.CategoryId,
                                         imagesStorageFile = ((JArray)result["listing"]!["contextualPictures"]!)
                                             .Select(image => image["picture"]!.Value<string>()!)
-                                            .Take(10)
+                                            .Take(5)
                                             .ToList(),
                                         location = new
                                         {
