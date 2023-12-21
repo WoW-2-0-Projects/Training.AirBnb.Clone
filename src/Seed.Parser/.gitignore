@@ -485,4 +485,3 @@ $RECYCLE.BIN/
 
 # Ignore seed data folder
 **/SeedData/Images/Listings/*
-**/SeedData/Prepare/*

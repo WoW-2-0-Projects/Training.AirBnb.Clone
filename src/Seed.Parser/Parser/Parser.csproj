@@ -16,4 +16,65 @@
         <None Include="\Data\SeedData\Prepare" Visible="true" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\SeedData\Images\Listings\" />
+      <Folder Include="Data\SeedData\Prepare\A-frames\" />
+      <Folder Include="Data\SeedData\Prepare\Adapted\" />
+      <Folder Include="Data\SeedData\Prepare\Amazing pools\" />
+      <Folder Include="Data\SeedData\Prepare\Amazing views\" />
+      <Folder Include="Data\SeedData\Prepare\Arctic\" />
+      <Folder Include="Data\SeedData\Prepare\Barns\" />
+      <Folder Include="Data\SeedData\Prepare\Beachfront\" />
+      <Folder Include="Data\SeedData\Prepare\Beach\" />
+      <Folder Include="Data\SeedData\Prepare\Boats\" />
+      <Folder Include="Data\SeedData\Prepare\Cabins\" />
+      <Folder Include="Data\SeedData\Prepare\Campers\" />
+      <Folder Include="Data\SeedData\Prepare\Camping\" />
+      <Folder Include="Data\SeedData\Prepare\Casas\" />
+      <Folder Include="Data\SeedData\Prepare\Caves\" />
+      <Folder Include="Data\SeedData\Prepare\Containers\" />
+      <Folder Include="Data\SeedData\Prepare\Countryside\" />
+      <Folder Include="Data\SeedData\Prepare\Cycladic\" />
+      <Folder Include="Data\SeedData\Prepare\Dammusi\" />
+      <Folder Include="Data\SeedData\Prepare\Desert\" />
+      <Folder Include="Data\SeedData\Prepare\Design\" />
+      <Folder Include="Data\SeedData\Prepare\Domes\" />
+      <Folder Include="Data\SeedData\Prepare\Earth\" />
+      <Folder Include="Data\SeedData\Prepare\Farms\" />
+      <Folder Include="Data\SeedData\Prepare\Golfing\" />
+      <Folder Include="Data\SeedData\Prepare\Grand\" />
+      <Folder Include="Data\SeedData\Prepare\Hanoks\" />
+      <Folder Include="Data\SeedData\Prepare\Historical\" />
+      <Folder Include="Data\SeedData\Prepare\Houseboats\" />
+      <Folder Include="Data\SeedData\Prepare\Iconic\" />
+      <Folder Include="Data\SeedData\Prepare\Islands\" />
+      <Folder Include="Data\SeedData\Prepare\Lakefront\" />
+      <Folder Include="Data\SeedData\Prepare\Lake\" />
+      <Folder Include="Data\SeedData\Prepare\Luxe\" />
+      <Folder Include="Data\SeedData\Prepare\Bed\" />
+      <Folder Include="Data\SeedData\Prepare\Mansions\" />
+      <Folder Include="Data\SeedData\Prepare\Minsus\" />
+      <Folder Include="Data\SeedData\Prepare\National\" />
+      <Folder Include="Data\SeedData\Prepare\Chef\" />
+      <Folder Include="Data\SeedData\Prepare\New\" />
+      <Folder Include="Data\SeedData\Prepare\Off\" />
+      <Folder Include="Data\SeedData\Prepare\OMG\" />
+      <Folder Include="Data\SeedData\Prepare\Play\" />
+      <Folder Include="Data\SeedData\Prepare\Riads\" />
+      <Folder Include="Data\SeedData\Prepare\Rooms\" />
+      <Folder Include="Data\SeedData\Prepare\Ryokans\" />
+      <Folder Include="Data\SeedData\Prepare\Shepherd\" />
+      <Folder Include="Data\SeedData\Prepare\Skiing\" />
+      <Folder Include="Data\SeedData\Prepare\Surfing\" />
+      <Folder Include="Data\SeedData\Prepare\Tiny\" />
+      <Folder Include="Data\SeedData\Prepare\Top\" />
+      <Folder Include="Data\SeedData\Prepare\Towers\" />
+      <Folder Include="Data\SeedData\Prepare\Treehouses\" />
+      <Folder Include="Data\SeedData\Prepare\Trending\" />
+      <Folder Include="Data\SeedData\Prepare\Trulli\" />
+      <Folder Include="Data\SeedData\Prepare\Vineyards\" />
+      <Folder Include="Data\SeedData\Prepare\Windmills\" />
+      <Folder Include="Data\SeedData\Prepare\Yurts\" />
+    </ItemGroup>
+
 </Project>

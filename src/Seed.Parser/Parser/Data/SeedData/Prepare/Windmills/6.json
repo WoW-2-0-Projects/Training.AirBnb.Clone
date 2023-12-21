@@ -1,0 +1,2746 @@
+{
+  "data": {
+      "presentation": {
+          "__typename": "RootPresentationContainer",
+          "staysSearch": {
+              "__typename": "StaysSearchPresentation",
+              "results": {
+                  "__typename": "StaysSearchResponse",
+                  "searchResults": [
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.85 out of 5 average rating",
+                              "avgRatingLocalized": "4.85",
+                              "city": "Lampiri",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201519",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/1f1fbecc-bc38-409b-a17f-04e4e1dacb75.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201488",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/45d39c23-ed88-4b35-9c25-f101ad8865d2.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "3 beds",
+                                              "1 bedroom"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201498",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/a6e28207-c80c-4937-ad9b-b2908c889a98.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201500",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/69ad04ca-c485-4d9a-bb50-4351324f01d0.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "1 bunk bed"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201502",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/29dd8b16-2ae7-45d3-be11-a309164ec86e.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.9 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "693201503",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/9f9161e4-7bfe-4ba5-ac50-c86d64168a78.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 30,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 38.32025,
+                                  "longitude": 21.97074
+                              },
+                              "formattedBadges": [],
+                              "id": "32810006",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Lampiri",
+                              "name": "Separate stay in a windmill #2",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "3,956 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Lampiri, Greece",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-21",
+                              "checkout": "2023-12-26",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "693201519",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 104.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$104 per night",
+                                      "price": "$104",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.6 out of 5 average rating",
+                              "avgRatingLocalized": "4.6",
+                              "city": "Castro Verde",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639243968",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/b977eecf-c95c-4004-b122-b41afbcd6adb.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "3 beds",
+                                              "2 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639259321",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/5b8f5132-472d-4828-8655-43b1e1276a4c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639262381",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/eef2b91d-7ca9-4ae5-b85d-c893c8fdc33e.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "2 single beds"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639244537",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/47a7af16-67a2-4cca-b89e-67b26474c855.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.6 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639262296",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/01ec8e4c-f601-425d-b354-32434bfe8bfa.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1639243835",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/07215f9c-289b-4019-8876-485559958c40.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 26,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 37.654679747694466,
+                                  "longitude": -8.011930367556717
+                              },
+                              "formattedBadges": [],
+                              "id": "872346833944451445",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Castro Verde",
+                              "name": "Moinho do Monte Branco",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Feb 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "6,402 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Feb 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Castro Verde, Portugal",
+                              "titleLocale": "pt",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2024-02-01",
+                              "checkout": "2024-02-06",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "1639243968",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 100.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$100 per night",
+                                      "price": "$100",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.6 out of 5 average rating",
+                              "avgRatingLocalized": "4.6",
+                              "city": "Artemonas",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940241",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23138910/41510d09_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 beds",
+                                              "2 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940242",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23139073/1653d3a6_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940243",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23138778/43139ffd_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 double beds"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940244",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23138663/9df87207_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.8 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940245",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23139284/0818feac_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "14940246",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/23088759/91ef2d3d_original.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 22,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 36.98002,
+                                  "longitude": 24.73405
+                              },
+                              "formattedBadges": [],
+                              "id": "1590735",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Artemonas",
+                              "name": "Bella Vista Windmill Apartment",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "May 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "3,772 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "May 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Artemonas, Greece",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2024-05-01",
+                              "checkout": "2024-05-06",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "14940241",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 482.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$482 per night",
+                                      "price": "$482",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.17 out of 5 average rating",
+                              "avgRatingLocalized": "4.17",
+                              "city": "Sauzon",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "291650937",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c20d9fbf-6b60-4cb0-b4e6-50a94e557301.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "291639239",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/3a7a4756-3aec-424a-a11a-129dd6a0ecdf.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "5 beds",
+                                              "3 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "291639815",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/7fcfb02d-82fa-485e-a7f6-fab760650849.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "3 single beds",
+                                              "more"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "291653428",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/b1a51d7d-b62e-4df4-a5b6-4e033e521a61.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "500502320",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/be89b453-eaa3-4fca-ade6-cedad05da33c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "500505207",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/8848485b-d6a6-4a28-8529-f2e7eb00cec8.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 8,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 47.36585,
+                                  "longitude": -3.23051
+                              },
+                              "formattedBadges": [],
+                              "id": "13594161",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Sauzon",
+                              "name": "Moulin de Logonet  Sauzon",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 28",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "5,603 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 28",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Sauzon, France",
+                              "titleLocale": "lt",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-21",
+                              "checkout": "2023-12-28",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "291650937",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 176.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$176 per night",
+                                      "price": "$176",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.2 out of 5 average rating",
+                              "avgRatingLocalized": "4.2",
+                              "city": "Απολλωνία",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "543455304",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/913437c3-e883-4515-b704-7765b0af4da5.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "337705472",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c4c5858e-6c69-46f2-bf43-6cc4e026ab36.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bed",
+                                              "1 bedroom"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "442653328",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/e4e4d3c0-9a06-495a-89c2-5f2000fdb348.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "442646511",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/4e7ff60b-f1c2-42aa-9424-35bd0c81ea7d.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "337705139",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/fb99ee7a-b214-4da0-8cf2-f69097eace8c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.6 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "334912527",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c0b82bc6-4ab1-474d-9346-abd93d14d5a1.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 25,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 36.96918,
+                                  "longitude": 24.7274
+                              },
+                              "formattedBadges": [],
+                              "id": "19196908",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Απολλωνία",
+                              "name": "Windmill Arades suite",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jul 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "3,773 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jul 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Απολλωνία, Greece",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2024-07-01",
+                              "checkout": "2024-07-06",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "543455304",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 274.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$274 per night",
+                                      "price": "$274",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.79 out of 5 average rating",
+                              "avgRatingLocalized": "4.79",
+                              "city": "Murcia",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "500723769",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c4ba3d94-e03b-434c-95a3-4ba5c97a583c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "495902401",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/99f0b4ad-fc31-49f2-971b-44c9aa347087.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 beds",
+                                              "2 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "577592715",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/3db98ab9-e718-4147-8ea7-b7add74c7fb0.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 baths"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "940528683",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/928d1973-954c-4b3d-b4c2-814d3d48440d.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 double beds"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "510266896",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/e07d7b91-521e-41f0-967e-d58211d26712.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.8 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "769987372",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/6a701af8-832a-441d-96ad-9b15ede60266.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 16,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 38.01438,
+                                  "longitude": -1.07575
+                              },
+                              "formattedBadges": [
+                                  {
+                                      "__typename": "ExploreFormattedBadge",
+                                      "loggingContext": {
+                                          "__typename": "ExploreFormattedBadgeLoggingContext",
+                                          "badgeType": "GUEST_FAVORITE"
+                                      },
+                                      "style": "LOUD_ROUNDED_PILL",
+                                      "text": "Guest favorite",
+                                      "textColor": "#000000"
+                                  }
+                              ],
+                              "id": "20328525",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Murcia",
+                              "name": "Wooden Windmill Windmill, Garden",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jul 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "5,840 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jul 1 – 6",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Murcia, Spain",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2024-07-01",
+                              "checkout": "2024-07-06",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "500723769",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 69.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$69 per night",
+                                      "price": "$69",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.68 out of 5 average rating",
+                              "avgRatingLocalized": "4.68",
+                              "city": "Cherrueix",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1209613966",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/miso/Hosting-45111877/original/504d0171-c360-4373-87e8-7c2db9c19284.jpeg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1392838234",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/b0158435-0d77-4a4e-8244-2a6ab4478d6c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1209611258",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/miso/Hosting-45111877/original/cd195f01-5c9a-4f22-a9c9-c3d2a37c9db8.jpeg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "3 single beds"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1172011020",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/miso/Hosting-45111877/original/230c0403-a210-41d6-9db6-67fec191d685.jpeg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.3 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "1172149805",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/miso/Hosting-45111877/original/b4bdf95a-78b9-464d-929e-98418a1a5cdd.jpeg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1392841578",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/abb8027a-8a1e-471b-999f-da9a004d7f36.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 20,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 48.61058,
+                                  "longitude": -1.67413
+                              },
+                              "formattedBadges": [],
+                              "id": "45111877",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Cherrueix",
+                              "name": "Beachfront. Mill in the Bay of Mont St Michel",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jan 2 – 7",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "5,448 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Jan 2 – 7",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Cherrueix, France",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2024-01-02",
+                              "checkout": "2024-01-07",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "1209613966",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 128.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$128 per night",
+                                      "price": "$128",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.66 out of 5 average rating",
+                              "avgRatingLocalized": "4.66",
+                              "city": "Llangefni",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "788042581",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/9354d0a4-5448-4f7e-9654-eff3e32cfc14.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 beds",
+                                              "2 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "788013662",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/53b94272-73ae-4f0e-95b5-732ac000dc36.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "788011851",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/31f4eae2-134b-4289-81e4-51edde560b08.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 queen bed",
+                                              "1 double bed",
+                                              "more"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "788012680",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/e5bfd670-491d-40fb-856a-71fcc30198d8.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.7 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "788012896",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/db3ade6f-d135-4b84-92c7-e8dcfe8c2b94.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "1525755539",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/miso/Hosting-35950561/original/8ed05b0f-da07-4f1a-b4bc-41ade894f16e.jpeg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 8,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 53.26903,
+                                  "longitude": -4.36056
+                              },
+                              "formattedBadges": [],
+                              "id": "35950561",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Llangefni",
+                              "name": "The Old Windmill",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 24 – 29",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "5,480 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 24 – 29",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Llangefni, UK",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-24",
+                              "checkout": "2023-12-29",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "788042581",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 285.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$285 per night",
+                                      "price": "$285",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.76 out of 5 average rating",
+                              "avgRatingLocalized": "4.76",
+                              "city": "Rochefort-du-Gard",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "692513713",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/eb68609f-e386-4871-92e2-5e282ad66543.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "575928270",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/721df2df-3c04-407f-80cd-8bc45ff56bfb.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 beds",
+                                              "1 bedroom"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "575928495",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/99fee16e-7eba-4dd2-ba36-b8829ef3fcfe.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 bath"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "692506375",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/7e3b10fe-8df3-4da7-a395-f8cb8856f0b8.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "1 sofa bed"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "692512238",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/4f98c2c8-f59d-41e0-bd26-ae1415fc5ff3.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.1 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "692512442",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/0352550f-2881-4330-b003-bbc53e88e80e.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 9,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 43.97254,
+                                  "longitude": 4.68855
+                              },
+                              "formattedBadges": [],
+                              "id": "28404146",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Rochefort-du-Gard",
+                              "name": "Unusual Windmill",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 23 – 28",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "5,143 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 23 – 28",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Rochefort-du-Gard, France",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-23",
+                              "checkout": "2023-12-28",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "692513713",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 82.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$82 per night",
+                                      "price": "$82",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.82 out of 5 average rating",
+                              "avgRatingLocalized": "4.82",
+                              "city": "Carvoeira",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "533802759",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/63f2aac1-d050-4b4a-86dc-46948a0e1a04.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "474728979",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/ccecf1e2-611d-497e-9168-a760e6539e0c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1.5 baths"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "299389709",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/7b766030-9944-40ba-86e4-0bd0dfcb954c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "2 single beds",
+                                              "more"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "299387304",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c881b692-ec33-41fe-8ca4-c7d5b002a483.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "Rated 4.8 out of 5 for cleanliness"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "299389743",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/2ad6065b-e6b9-48b6-81e8-c5493fe3166c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "299376376",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/02789105-862b-40b3-be1b-286fa22c7277.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 30,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 38.93157,
+                                  "longitude": -9.40493
+                              },
+                              "formattedBadges": [],
+                              "id": "18384290",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Carvoeira",
+                              "name": "Romantic mill with a view to the Atlantic Ocean",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "6,442 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Carvoeira, Portugal",
+                              "titleLocale": "en",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-21",
+                              "checkout": "2023-12-26",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "533802759",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 134.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$134 per night",
+                                      "price": "$134",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      },
+                      {
+                          "__typename": "StaySearchResult",
+                          "listing": {
+                              "__typename": "StaySearchResultListing",
+                              "avgRatingA11yLabel": "4.68 out of 5 average rating",
+                              "avgRatingLocalized": "4.68",
+                              "city": "Galaxidi",
+                              "contextualPictures": [
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "617097210",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/a92d2d19-a370-40e6-a343-cdb835304d2f.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "532924106",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/999ebd16-d1fc-4628-821e-e6d69bce86c8.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "4 beds",
+                                              "2 bedrooms"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "617094378",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/d556aefc-62ab-4cb7-8c6e-a5d0ccaea75c.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "2 baths"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "617095396",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/d50e3227-e55a-4a06-959e-f404d9ece303.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": {
+                                          "__typename": "ExploreKickerContent",
+                                          "formattedMessages": null,
+                                          "kickerBadge": null,
+                                          "messages": [
+                                              "1 double bed",
+                                              "3 single beds"
+                                          ],
+                                          "textColor": null
+                                      },
+                                      "dominantSaturatedColor": null,
+                                      "id": "617095870",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/c9ff78bb-1e9b-48ae-ad13-8050ea2c0579.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  },
+                                  {
+                                      "__typename": "ExplorePicture",
+                                      "caption": null,
+                                      "dominantSaturatedColor": null,
+                                      "id": "617097552",
+                                      "largeRo": null,
+                                      "originalPicture": null,
+                                      "picture": "https://a0.muscache.com/im/pictures/16222d9e-2ffa-4a4e-bea2-2c975ef57148.jpg?im_w=720",
+                                      "previewEncodedPng": null,
+                                      "saturatedA11yDarkColor": null,
+                                      "scrimColor": null,
+                                      "xlPicture": null
+                                  }
+                              ],
+                              "contextualPicturesCount": 30,
+                              "contextualPicturesPageInfo": {
+                                  "__typename": "PageInfo",
+                                  "endCursor": "NQ==",
+                                  "hasNextPage": true,
+                                  "hasPreviousPage": false,
+                                  "startCursor": null
+                              },
+                              "coordinate": {
+                                  "__typename": "Coordinate",
+                                  "latitude": 38.37633,
+                                  "longitude": 22.39268
+                              },
+                              "formattedBadges": [],
+                              "id": "19989456",
+                              "listingObjType": "REGULAR",
+                              "localizedCityName": "Galaxidi",
+                              "name": "MYLOS GALAXIDI",
+                              "pdpUrlType": "ROOMS",
+                              "roomTypeCategory": "entire_home",
+                              "roomTypeId": null,
+                              "structuredContent": {
+                                  "__typename": "ExploreStructuredContent",
+                                  "distance": null,
+                                  "mapCategoryInfo": [],
+                                  "mapPrimaryLine": null,
+                                  "mapSecondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "primaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "3,919 kilometers away",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ],
+                                  "secondaryLine": [
+                                      {
+                                          "__typename": "MainSectionMessage",
+                                          "body": "Dec 21 – 26",
+                                          "bodyA11yLabel": null,
+                                          "bodyType": null,
+                                          "fontWeight": null,
+                                          "headline": null,
+                                          "type": null
+                                      }
+                                  ]
+                              },
+                              "tierId": 0,
+                              "title": "Galaxidi, Greece",
+                              "titleLocale": "sk",
+                              "primaryHostPassport": null
+                          },
+                          "listingParamOverrides": {
+                              "__typename": "ExploreListingParamOverrides",
+                              "adults": 1,
+                              "categoryTag": "Tag:8043",
+                              "causeId": null,
+                              "checkin": "2023-12-21",
+                              "checkout": "2023-12-26",
+                              "children": 0,
+                              "distanceInKm": null,
+                              "enableM3PrivateRoom": true,
+                              "highlightType": null,
+                              "infants": 0,
+                              "pets": 0,
+                              "photoId": "617097210",
+                              "relaxedAmenityIds": null,
+                              "splitStaysLocationPrecisions": null,
+                              "splitStaysLocationsAcpIds": null,
+                              "splitStaysUuid": null
+                          },
+                          "pricingQuote": {
+                              "__typename": "ExplorePricingQuote",
+                              "applicableDiscounts": null,
+                              "barDisplayPriceWithoutDiscount": null,
+                              "canInstantBook": false,
+                              "displayRateDisplayStrategy": null,
+                              "monthlyPriceFactor": null,
+                              "price": null,
+                              "priceDropDisclaimer": null,
+                              "priceString": null,
+                              "rate": {
+                                  "__typename": "ExploreCurrencyAmount",
+                                  "amount": 275.0,
+                                  "amountFormatted": null,
+                                  "currency": null,
+                                  "isMicrosAccuracy": null
+                              },
+                              "rateType": null,
+                              "rateWithoutDiscount": null,
+                              "rateWithServiceFee": null,
+                              "secondaryPriceString": null,
+                              "shouldShowFromLabel": false,
+                              "structuredStayDisplayPrice": {
+                                  "__typename": "StructuredDisplayPrice",
+                                  "primaryLine": {
+                                      "__typename": "QualifiedDisplayPriceLine",
+                                      "displayComponentType": "QUALIFIED_DISPLAY_PRICE_LINE",
+                                      "accessibilityLabel": "$275 per night",
+                                      "price": "$275",
+                                      "qualifier": "night",
+                                      "shortQualifier": "night",
+                                      "concatQualifierLeft": false,
+                                      "trailingContent": null
+                                  },
+                                  "secondaryLine": null,
+                                  "explanationData": null,
+                                  "explanationDataDisplayPosition": "SECONDARY_LINE",
+                                  "explanationDataDisplayPriceTriggerType": null,
+                                  "layout": "ROW_WITH_SEPARATOR"
+                              },
+                              "totalPriceDisclaimer": null,
+                              "totalPriceWithoutDiscount": null,
+                              "weeklyPriceFactor": null
+                          }
+                      }
+                  ],
+                  "loggingMetadata": {
+                      "__typename": "StaysSearchLoggingMetadata",
+                      "legacyLoggingSectionId": "8fc21619-acb1-4c59-9512-21adfe5f162e"
+                  },
+                  "paginationInfo": {
+                      "__typename": "StaysSearchPaginationInfo",
+                      "loadMoreButtonTitle": "Continue exploring windmills",
+                      "nextPageCursor": null
+                  }
+              }
+          }
+      }
+  },
+  "extensions": {
+      "traceId": "xot0479g-eQtuZwxyuWygw=="
+  }
+}
