@@ -24,7 +24,7 @@ public interface IAccountService
     /// <param name="asNoTracking"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<User> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
+    ValueTask<User?> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// verifies a user by their verification token.
