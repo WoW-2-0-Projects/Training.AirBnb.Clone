@@ -9,23 +9,27 @@ public static class PrepareListingService
     {
         var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
 
-        var enabledCategories = new List<Guid>
-        {
-            Guid.Parse("3d7ee634-bbfe-461b-a2d5-21e7e428fc3e"),
-            Guid.Parse("0b8898ba-9f0e-49f3-b4e2-d07fade4ae4e"),
-            Guid.Parse("5bdab5b8-a91d-46bf-b3d2-d9390292c0f0"),
-            Guid.Parse("81cec3a8-a16f-483d-9732-0e151bfd0de4"),
-            Guid.Parse("81cec3a8-a16f-483d-9732-0e151bfd0de4"),
-            Guid.Parse("79912f1b-f762-420b-9eaa-e72eda426e69"),
-            Guid.Parse("9a9dc655-5e86-44ed-bab6-025cbfa22c39"),
-            Guid.Parse("6768b598-4187-4386-a778-6ed3bcbc8900"),
-            Guid.Parse("f5255134-9aea-42f0-b6c4-eb3668111273"),
-            Guid.Parse("da5fe355-2b2c-4c53-a691-60c886712eb6"),
-        };
+        // var enabledCategories = new List<Guid>
+        // {
+        //     Guid.Parse("3d7ee634-bbfe-461b-a2d5-21e7e428fc3e"),
+        //     Guid.Parse("0b8898ba-9f0e-49f3-b4e2-d07fade4ae4e"),
+        //     Guid.Parse("5bdab5b8-a91d-46bf-b3d2-d9390292c0f0"),
+        //     Guid.Parse("81cec3a8-a16f-483d-9732-0e151bfd0de4"),
+        //     Guid.Parse("81cec3a8-a16f-483d-9732-0e151bfd0de4"),
+        //     Guid.Parse("79912f1b-f762-420b-9eaa-e72eda426e69"),
+        //     Guid.Parse("9a9dc655-5e86-44ed-bab6-025cbfa22c39"),
+        //     Guid.Parse("6768b598-4187-4386-a778-6ed3bcbc8900"),
+        //     Guid.Parse("f5255134-9aea-42f0-b6c4-eb3668111273"),
+        //     Guid.Parse("da5fe355-2b2c-4c53-a691-60c886712eb6"),
+        // };
 
         // Retrieve listing categories
         var listingCategoriesFileName = Path.Combine(workingDirectory, "Data", "SeedData", "ListingCategories.json");
         var listingCategories = JsonConvert.DeserializeObject<List<dynamic>>(await File.ReadAllTextAsync(listingCategoriesFileName))!;
+
+        // Validate listing categories
+        if (listingCategories.DistinctBy(listingCategory => listingCategory.name).Count() < listingCategories.Count)
+            throw new Exception("Duplicate listing category name");
 
         // Get all listing folders
         var directories = Directory.GetDirectories(Path.Combine(workingDirectory, "Data", "SeedData", "Prepare"))
@@ -35,16 +39,17 @@ public static class PrepareListingService
         var listingFiles = directories.Select(
                 directory =>
                 {
-                    return (
-                        CategoryId: Guid.Parse(
-                            listingCategories.First(
-                                    category => category.name.ToString().Contains(directory.Name, StringComparison.InvariantCultureIgnoreCase)
-                                )
-                                .id.ToString()
-                        ), Files: Directory.GetFiles(directory.FullName, "*.json").ToList());
+                    var category = listingCategories.FirstOrDefault(
+                        category => category.name.ToString().Equals(directory.Name, StringComparison.InvariantCultureIgnoreCase)
+                    );
+
+                    if (category is null)
+                        throw new Exception("Category not found - " + directory.Name);
+                    
+                    return (CategoryId: Guid.Parse(category.id.ToString()), Files: Directory.GetFiles(directory.FullName, "*.json").ToList());
                 }
             )
-            .Where(directory => enabledCategories.Contains(directory.CategoryId))
+            // .Where(directory => enabledCategories.Contains(directory.CategoryId))
             .ToList();
 
         // Read all listing files and deserialize to listing
@@ -94,7 +99,9 @@ public static class PrepareListingService
                         throw new Exception("Less than 100 listings for category - " + listings.First().categoryId);
 
                     if (listings.Any(listing => listing.imagesStorageFile.Count < 5))
-                        throw new Exception("Less than 5 images for listing - " + listings.First(listing => listing.imagesStorageFile.Count < 5).name);
+                        throw new Exception(
+                            "Less than 5 images for listing - " + listings.First(listing => listing.imagesStorageFile.Count < 5).name
+                        );
 
                     return listings.Take(100).ToList();
                 }
@@ -114,8 +121,12 @@ public static class PrepareListingService
         // await streamWriter.WriteAsync(JsonConvert.SerializeObject(listingsResult, Formatting.Indented));
     }
 
-    private static async ValueTask<List<dynamic>> ExecuteAsync(IEnumerable<dynamic> listings)
+    private static async ValueTask<List<dynamic>> ExecuteAsync(ICollection<dynamic> listings)
     {
+        // Validate listings are unique
+        if (listings.DistinctBy(listing => listing.name).Count() < listings.Count)
+            throw new Exception("Duplicate listing name");
+
         var httpClient = new HttpClient
         {
             BaseAddress = new Uri("https://a0.muscache.com/im/pictures/")
