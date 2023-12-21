@@ -271,7 +271,7 @@
   },
   {
     "id": "3aafebfa-d1b7-44bf-bc18-143aed7717ce",
-    "name": "Ski-in/out",
+    "name": "Ski-in-out",
     "imageStorageFileId": "9250ea25-cd22-45e0-9d7f-c259929b0e7a"
   },
   {
@@ -293,11 +293,6 @@
     "id": "307ee823-de8e-4a42-8b4c-7febaf35a354",
     "name": "Containers",
     "imageStorageFileId": "69be8405-8ab9-4ade-9702-9743cc02ecd2"
-  },
-  {
-    "id": "d8faaed3-3e19-4245-b907-7cd2ba2e1e19",
-    "name": "Grand pianos",
-    "imageStorageFileId": "cb032ba7-ecb3-418d-8a4a-c0dbc0a5db1d"
   },
   {
     "id": "62566124-fa07-4190-8027-eaa0f09b5962",

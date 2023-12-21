@@ -42,7 +42,6 @@
       <Folder Include="Data\SeedData\Prepare\Earth homes\" />
       <Folder Include="Data\SeedData\Prepare\Farms\" />
       <Folder Include="Data\SeedData\Prepare\Golfing\" />
-      <Folder Include="Data\SeedData\Prepare\Grand pianos\" />
       <Folder Include="Data\SeedData\Prepare\Hanoks\" />
       <Folder Include="Data\SeedData\Prepare\Historical homes\" />
       <Folder Include="Data\SeedData\Prepare\Houseboats\" />
@@ -58,7 +57,7 @@
       <Folder Include="Data\SeedData\Prepare\Chef's kitchens\" />
       <Folder Include="Data\SeedData\Prepare\New\" />
       <Folder Include="Data\SeedData\Prepare\Off-the-grid\" />
-      <Folder Include="Data\SeedData\Prepare\OMG\" />
+      <Folder Include="Data\SeedData\Prepare\OMG!\" />
       <Folder Include="Data\SeedData\Prepare\Play\" />
       <Folder Include="Data\SeedData\Prepare\Riads\" />
       <Folder Include="Data\SeedData\Prepare\Rooms\" />
