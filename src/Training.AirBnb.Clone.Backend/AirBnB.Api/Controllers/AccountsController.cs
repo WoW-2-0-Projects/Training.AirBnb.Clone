@@ -1,5 +1,6 @@
 ﻿using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,14 @@ namespace AirBnB.Api.Controllers;
 public class AccountsController(IUserService userService, IMapper mapper) : ControllerBase
 {
     [HttpGet]
-    public async ValueTask<IActionResult> Get()
+    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
-        var users = await userService.Get(asNoTracking: true).ToListAsync();
-        var result = mapper.Map<IEnumerable<UserDto>>(users);
-        return result.Any() ? Ok(result) : NoContent();
-    }
+        var specification = new QuerySpecification<User>(filterPagination.PageSize, filterPagination.PageToken, true);
+        var result = await userService.GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(), cancellationToken);
 
+        return result.Any() ? Ok(result) : NotFound();
+    }
+    
     [HttpGet("{userId:guid}")]
     public async ValueTask<IActionResult> GetUserById(
         [FromRoute] Guid userId, 
