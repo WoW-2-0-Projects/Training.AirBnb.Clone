@@ -16,19 +16,15 @@ namespace AirBnB.Infrastructure.Common.Notifications.Services;
 public class EmailTemplateService(IEmailTemplateRepository emailTemplateRepository, 
     IValidator<EmailTemplate> emailTemplateValidator) : IEmailTemplateService
 {
-    public async ValueTask<IList<EmailTemplate>> GetByFilterAsync(
-        FilterPagination pagination, 
-        bool asNoTracking = false, 
-        CancellationToken cancellationToken = default) => 
-            await emailTemplateRepository.Get(asNoTracking:  asNoTracking)
+    public async ValueTask<IList<EmailTemplate>> GetByFilterAsync(FilterPagination pagination, bool asNoTracking = false, 
+        CancellationToken cancellationToken = default)
+        => await emailTemplateRepository.Get(asNoTracking:  asNoTracking)
             .ApplyPagination(pagination)
             .ToListAsync(cancellationToken);
 
-    public async ValueTask<EmailTemplate?> GetByTypeAsync(
-        NotificationTemplateType templateType,
-        bool asNoTracking = false, 
-        CancellationToken cancellationToken = default) => 
-            await emailTemplateRepository.Get(template => template.TemplateType == templateType, asNoTracking)
+    public async ValueTask<EmailTemplate?> GetByTypeAsync(NotificationTemplateType templateType, bool asNoTracking = false, 
+        CancellationToken cancellationToken = default)
+        => await emailTemplateRepository.Get(template => template.TemplateType == templateType, asNoTracking)
             .SingleOrDefaultAsync(cancellationToken);
 
     public ValueTask<EmailTemplate> CreateAsync(

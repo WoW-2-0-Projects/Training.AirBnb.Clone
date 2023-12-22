@@ -1,8 +1,8 @@
-﻿using AirBnB.Api.Models.Dtos;
+﻿using AirBnB.Api.Models.DTOs;
 using AirBnB.Domain.Entities;
 using AutoMapper;
 
-namespace AirBnB.Api.Profiles;
+namespace AirBnB.Api.Mappers;
 
 /// <summary>
 /// AutoMapper profile for mapping between the EmailTemplate and EmailTemplateDto classes.

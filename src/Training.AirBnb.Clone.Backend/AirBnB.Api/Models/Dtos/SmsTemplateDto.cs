@@ -1,6 +1,6 @@
 ﻿using AirBnB.Domain.Enums;
 
-namespace AirBnB.Api.Models.Dtos;
+namespace AirBnB.Api.Models.DTOs;
 
 public class SmsTemplateDto
 {

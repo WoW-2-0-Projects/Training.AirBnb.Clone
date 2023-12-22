@@ -15,17 +15,12 @@ namespace AirBnB.Infrastructure.Common.Notifications.Services;
 public class SmsTemplateService(ISmsTemplateRepository smsTemplateRepository,
         IValidator<SmsTemplate> smsTemplateValidator) : ISmsTemplateService
 {
-    public async ValueTask<IList<SmsTemplate>> GetByFilterAsync(
-        FilterPagination pagination, 
-        bool asNoTracking = false,
-        CancellationToken cancellationToken = default) =>
-        await smsTemplateRepository.Get(asNoTracking: asNoTracking)
+    public async ValueTask<IList<SmsTemplate>> GetByFilterAsync(FilterPagination pagination, bool asNoTracking = false,
+        CancellationToken cancellationToken = default) => await smsTemplateRepository.Get(asNoTracking: asNoTracking)
             .ApplyPagination(pagination)
             .ToListAsync(cancellationToken);
 
-    public async ValueTask<SmsTemplate?> GetByTypeAsync(
-        NotificationTemplateType templateType,
-        bool asNoTracking = false,
+    public async ValueTask<SmsTemplate?> GetByTypeAsync(NotificationTemplateType templateType, bool asNoTracking = false,
         CancellationToken cancellationToken = default) =>
             await smsTemplateRepository.Get(template => template.TemplateType == templateType, asNoTracking)
                 .SingleOrDefaultAsync(cancellationToken);
