@@ -7,6 +7,8 @@ public class IdentityDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
 
+    public DbSet<UserSettings> UserSettings => Set<UserSettings>();
+
     public IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOptions) : base(dbContextOptions)
     {
         
