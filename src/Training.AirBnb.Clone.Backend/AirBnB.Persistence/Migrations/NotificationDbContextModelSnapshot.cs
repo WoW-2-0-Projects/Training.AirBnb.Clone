@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AirBnB.Persistence.Migrations
 {
-    [DbContext(typeof(NotificationDbContext))]
+    [DbContext(typeof(NotificationsDbContext))]
     partial class NotificationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -1,12 +1,14 @@
 ﻿using AirBnB.Domain.Entities;
+using AirBnB.Persistence.Caching.Brokers;
+using AirBnB.Persistence.Caching.Models;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class EmailTemplateRepository(NotificationsDbContext dbContext) : 
-    EntityRepositoryBase<EmailTemplate, NotificationsDbContext>(dbContext),
+public class EmailTemplateRepository(NotificationsDbContext dbContext, ICacheBroker cacheBroker) : 
+    EntityRepositoryBase<EmailTemplate, NotificationsDbContext>(dbContext, cacheBroker, new CacheEntryOptions()),
     IEmailTemplateRepository
 {
     public new async ValueTask<EmailTemplate> CreateAsync(
