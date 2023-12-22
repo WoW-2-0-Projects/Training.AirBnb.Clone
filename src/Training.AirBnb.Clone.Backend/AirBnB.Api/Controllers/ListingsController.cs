@@ -16,11 +16,10 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
     public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination,
         CancellationToken cancellationToken)
     {
-        var specification =
-            new QuerySpecification<Listing>(filterPagination.PageSize, filterPagination.PageToken, true);
+        var specification = filterPagination.ToQueryPagination(true).ToQuerySpecification();
+    
         var result = await listingService
-            .GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(), 
-                cancellationToken);
+            .GetAsync(specification, cancellationToken);
 
         return result.Any() ? Ok(result) : NoContent();
     }

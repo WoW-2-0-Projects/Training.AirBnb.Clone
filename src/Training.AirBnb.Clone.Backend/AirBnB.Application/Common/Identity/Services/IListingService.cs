@@ -26,9 +26,9 @@ public interface IListingService
     /// A <see cref="ValueTask{TResult}"/> representing the asynchronous operation.
     /// The result contains a list of <see cref="Listing"/> objects that match the specified query.
     /// </returns>
-    ValueTask<IList<Listing>> GetAsync(QuerySpecification<Listing> querySpecification,
+    ValueTask<IList<Listing>> GetAsync(QuerySpecification querySpecification,
         CancellationToken cancellationToken = default);
-
+    
     /// <summary>
     /// Asynchronously retrieves a list of listings based on the specified query specification.
     /// </summary>
@@ -38,7 +38,7 @@ public interface IListingService
     /// A <see cref="ValueTask{TResult}"/> representing the asynchronous operation.
     /// The result contains a list of <see cref="Listing"/> objects that match the specified query.
     /// </returns>
-    ValueTask<IList<Listing>> GetAsync(QuerySpecification querySpecification,
+    ValueTask<IList<Listing>> GetAsync(QuerySpecification<Listing> querySpecification,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -82,16 +82,6 @@ public interface IListingService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Deletes an existing listing asynchronously.
-    /// </summary>
-    /// <param name="listing"></param>
-    /// <param name="saveChanges"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<Listing?> DeleteAsync(Listing listing, bool saveChanges = true,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Deletes a listing by its unique identifier asynchronously.
     /// </summary>
     /// <param name="listingId"></param>
@@ -99,5 +89,15 @@ public interface IListingService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     ValueTask<Listing?> DeleteByIdAsync(Guid listingId, bool saveChanges = true,
+        CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Deletes an existing listing asynchronously.
+    /// </summary>
+    /// <param name="listing"></param>
+    /// <param name="saveChanges"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<Listing?> DeleteAsync(Listing listing, bool saveChanges = true,
         CancellationToken cancellationToken = default);
 }
