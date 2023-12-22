@@ -1,5 +1,5 @@
 ﻿using AirBnB.Domain.Common;
-namespace AirBnB.Domain.Entities;
+namespace AirBnB.Domain.Entities.Identity;
 
 /// <summary>
 /// Represents a user entity
@@ -25,14 +25,14 @@ public sealed class User : SoftDeletedEntity
     ///Gets or sets the password of the user 
     /// </summary>
     public string Password { get; set; } = default!;
-    
+
     //TODO: Add User Role for Identity 
-    
+
     /// <summary>
     /// Gets or sets user activation
     /// </summary>
     public bool IsActive { get; set; }
-    
+
     /// <summary>
     ///Gets or sets user's phone number 
     /// </summary>

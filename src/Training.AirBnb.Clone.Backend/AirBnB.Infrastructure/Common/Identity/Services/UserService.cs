@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.Identity;
 using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
 using AirBnB.Persistence.Repositories.Interfaces;

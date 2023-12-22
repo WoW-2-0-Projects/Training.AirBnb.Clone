@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Persistence.DataContexts;

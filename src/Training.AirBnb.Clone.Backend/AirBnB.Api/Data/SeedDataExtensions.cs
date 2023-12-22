@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Entities.Identity;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
