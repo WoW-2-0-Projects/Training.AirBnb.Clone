@@ -1,5 +1,6 @@
 ﻿using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,19 @@ namespace AirBnB.Api.Controllers;
 public class ListingsController(IListingService listingService, IMapper mapper) : ControllerBase
 {
     [HttpGet]
-    public async ValueTask<IActionResult> Get()
+    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination,
+        CancellationToken cancellationToken)
     {
-        var listings = await listingService.Get(asNoTracking: true).ToListAsync();
-        var result = mapper.Map<IEnumerable<ListingDto>>(listings);
+        var specification =
+            new QuerySpecification<Listing>(filterPagination.PageSize, filterPagination.PageToken, true);
+        var result = await listingService
+            .GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(), 
+                cancellationToken);
 
         return result.Any() ? Ok(result) : NoContent();
     }
     
-    [HttpGet("{listingId}:guid")]
+    [HttpGet("{listingId:guid}")]
     public async ValueTask<IActionResult> GetListingById([FromRoute]Guid listingId, bool asNoTracking = false,
         CancellationToken cancellationToken = default)
     {
@@ -30,7 +35,8 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
     }
 
     [HttpPost]
-    public async ValueTask<IActionResult> CreateAsync([FromBody] ListingDto listingDto, CancellationToken cancellationToken)
+    public async ValueTask<IActionResult> CreateAsync([FromBody] ListingDto listingDto,
+        CancellationToken cancellationToken)
     {
         var listing = mapper.Map<Listing>(listingDto);
         var result = await listingService.CreateAsync(listing, true, cancellationToken);
@@ -39,7 +45,8 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
     }
 
     [HttpPut]
-    public async ValueTask<IActionResult> UpdateAsync([FromBody] ListingDto listingDto, CancellationToken cancellationToken)
+    public async ValueTask<IActionResult> UpdateAsync([FromBody] ListingDto listingDto, 
+        CancellationToken cancellationToken)
     {
         var listing = mapper.Map<Listing>(listingDto);
         var result = await listingService.UpdateAsync(listing, true, cancellationToken);
@@ -47,8 +54,9 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
         return Ok(mapper.Map<ListingDto>(result));
     }
 
-    [HttpDelete("{listingId}:guid")]
-    public async ValueTask<IActionResult> DeleteListingById([FromRoute]Guid listingId, CancellationToken cancellationToken)
+    [HttpDelete("{listingId:guid}")]
+    public async ValueTask<IActionResult> DeleteListingById([FromRoute]Guid listingId,
+        CancellationToken cancellationToken)
     {
         var listing = await listingService.DeleteByIdAsync(listingId, true, cancellationToken);
 

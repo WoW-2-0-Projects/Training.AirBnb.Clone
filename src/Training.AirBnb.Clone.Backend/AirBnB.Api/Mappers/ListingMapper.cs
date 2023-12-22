@@ -14,6 +14,6 @@ public class ListingMapper : Profile
     /// </summary>
     public ListingMapper()
     {
-        CreateMap<ListingDto, Listing>().ReverseMap();
+        CreateMap<Listing, ListingDto>().ReverseMap();
     }
 }
