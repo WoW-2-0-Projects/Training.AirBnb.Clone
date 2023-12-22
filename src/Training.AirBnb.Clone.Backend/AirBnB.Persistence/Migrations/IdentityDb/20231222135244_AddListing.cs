@@ -11,19 +11,6 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PhoneNumberId",
-                schema: "identity",
-                table: "Users");
-
-            migrationBuilder.AddColumn<string>(
-                name: "PhoneNumber",
-                schema: "identity",
-                table: "Users",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "Listings",
                 schema: "identity",
@@ -52,7 +39,7 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                 schema: "identity",
                 table: "Listings",
                 columns: new[] { "Id", "AvailabilityId", "DeletedTime", "DescriptionId", "HostId", "InstantBook", "IsDeleted", "LocationId", "Price", "PropertyTypeId", "RulesId", "Status", "Title" },
-                values: new object[] { new Guid("ac1645ba-d1a8-4449-a4c3-eea260ca1fde"), new Guid("f0ca3288-d1c8-40e0-9fc6-43c57a11acac"), null, new Guid("509c4df8-549d-4ad6-a3fb-58c96f40fc9f"), new Guid("4a9c647e-dc43-47fe-a7ee-7d16e4077db6"), true, false, new Guid("4391e832-5f7a-42c9-8ed0-fa8c092577b6"), 99.333m, new Guid("a152ab83-27d1-4809-9f42-d1b267b631ee"), new Guid("1857ea6b-2431-4595-afa8-23e149567622"), 2, "FirstSeedData" });
+                values: new object[] { new Guid("ce8135be-0823-43db-a0f6-285712ec64eb"), new Guid("d5e64519-3dff-44d5-a78c-454598c14402"), null, new Guid("79cb833b-225b-4592-b771-7d6c81aef4cf"), new Guid("72fa997b-ad98-4aa4-802a-e8701437c7ad"), true, false, new Guid("15bef96f-5363-4b26-ada9-12c2d709a0ee"), 99.333m, new Guid("57287cf5-7c5e-40f5-91f7-a3c9108d860a"), new Guid("343e57de-00a8-4ea6-954b-0d68fc7a7097"), 2, "FirstSeedData" });
         }
 
         /// <inheritdoc />
@@ -61,19 +48,6 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
             migrationBuilder.DropTable(
                 name: "Listings",
                 schema: "identity");
-
-            migrationBuilder.DropColumn(
-                name: "PhoneNumber",
-                schema: "identity",
-                table: "Users");
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "PhoneNumberId",
-                schema: "identity",
-                table: "Users",
-                type: "uuid",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
         }
     }
 }

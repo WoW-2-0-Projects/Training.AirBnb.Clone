@@ -74,16 +74,16 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ac1645ba-d1a8-4449-a4c3-eea260ca1fde"),
-                            AvailabilityId = new Guid("f0ca3288-d1c8-40e0-9fc6-43c57a11acac"),
-                            DescriptionId = new Guid("509c4df8-549d-4ad6-a3fb-58c96f40fc9f"),
-                            HostId = new Guid("4a9c647e-dc43-47fe-a7ee-7d16e4077db6"),
+                            Id = new Guid("ce8135be-0823-43db-a0f6-285712ec64eb"),
+                            AvailabilityId = new Guid("d5e64519-3dff-44d5-a78c-454598c14402"),
+                            DescriptionId = new Guid("79cb833b-225b-4592-b771-7d6c81aef4cf"),
+                            HostId = new Guid("72fa997b-ad98-4aa4-802a-e8701437c7ad"),
                             InstantBook = true,
                             IsDeleted = false,
-                            LocationId = new Guid("4391e832-5f7a-42c9-8ed0-fa8c092577b6"),
+                            LocationId = new Guid("15bef96f-5363-4b26-ada9-12c2d709a0ee"),
                             Price = 99.333m,
-                            PropertyTypeId = new Guid("a152ab83-27d1-4809-9f42-d1b267b631ee"),
-                            RulesId = new Guid("1857ea6b-2431-4595-afa8-23e149567622"),
+                            PropertyTypeId = new Guid("57287cf5-7c5e-40f5-91f7-a3c9108d860a"),
+                            RulesId = new Guid("343e57de-00a8-4ea6-954b-0d68fc7a7097"),
                             Status = 2,
                             Title = "FirstSeedData"
                         });
