@@ -7,6 +7,8 @@ public class IdentityDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
 
+    public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes => Set<UserInfoVerificationCode>();
+    
     public IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOptions) : base(dbContextOptions)
     {
         
