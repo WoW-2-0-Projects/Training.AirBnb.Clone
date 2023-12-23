@@ -8,53 +8,11 @@ namespace AirBnB.Domain.Entities;
 /// </summary>
 public class Listing : SoftDeletedEntity
 {
-    /// <summary>
-    /// Gets or sets the title of the listing.
-    /// </summary>
-    public string Title { get; set; }
+    public string Name { get; set; } = default!;
     
-    /// <summary>
-    /// Gets or sets the unique identifier for the description associated with the listing.
-    /// </summary>
-    public Guid? DescriptionId { get; set; }
+    public DateOnly BuiltDate { get; set; }
 
-    /// <summary>
-    /// Gets or sets the status of the listing.
-    /// </summary>
-    public ListingStatus Status { get; set; } = ListingStatus.InProgress;
+    public Address Address { get; set; } = default!;
     
-    /// <summary>
-    /// Gets or sets the unique identifier for the type of property.
-    /// </summary>
-    public Guid? PropertyTypeId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the unique identifier for the location of the listing.
-    /// </summary>
-    public Guid? LocationId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the unique identifier for the rules associated with the listing.
-    /// </summary>
-    public Guid? RulesId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the unique identifier for the availability details of the listing.
-    /// </summary>
-    public Guid? AvailabilityId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the unique identifier for the host of the listing.
-    /// </summary>
-    public Guid? HostId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the price of the listing.
-    /// </summary>
-    public decimal? Price { get; set; }
-    
-    /// <summary>
-    /// Gets or sets a value indicating whether instant booking is available for the listing.
-    /// </summary>
-    public bool InstantBook { get; set; }
+    public Money PricePerNight { get; set; } = default!;
 }
