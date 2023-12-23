@@ -24,4 +24,8 @@ public class ValidationSettings
     /// Gets or sets the regular expression pattern for validating Urls.
     /// </summary>
     public string UrlRegexPattern { get; set; } = default!;
+  
+    /// Gets or sets the regular expression pattern for validating file names.
+    /// </summary>
+    public string FileNameRegexPattern { get; set; } = default!;
 }
