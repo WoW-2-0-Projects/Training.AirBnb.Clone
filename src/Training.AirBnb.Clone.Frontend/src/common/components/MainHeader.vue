@@ -1,12 +1,10 @@
 <template>
 
-  <div
-      class="fixed h-20 top-0 z-10 content-padding w-full pr-[40px] pl-[40px] bg-defaultBackground flex justify-between items-center border-b border-borderSecondary text-textPrimary gap-5">
+  <header
+      class="w-full fixed h-20 top-0 z-10 flex justify-between items-center theme-bg-primary content-padding border-b theme-border">
 
     <!-- Logo -->
-    <div class="hidden md:flex">
-      <main-logo/>
-    </div>
+    <main-logo/>
 
     <!-- Header Search -->
     <header-menu/>
@@ -14,7 +12,10 @@
     <!-- Header Home -->
     <header-home/>
 
-  </div>
+    <!-- Bottom border -->
+    <div class="absolute border-b-2 border-borderSecondary"></div>
+
+  </header>
 
 </template>
 

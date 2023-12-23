@@ -1,3 +1,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+
+    .theme-bg-primary {
+        @apply bg-bgColorPrimary dark:bg-bgColorPrimaryDark;
+    }
+
+    .theme-bg-accent {
+        @apply bg-textSecondaryDark dark:bg-borderColorDark;
+    }
+
+    .theme-bg-secondary {
+        @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
+    }
+
+    .theme-border {
+        @apply border border-borderColor dark:border-borderColorDark;
+    }
+
+    .theme-shadow {
+        @apply shadow-shadowColor;
+    }
+
+    .theme-text-primary {
+        @apply text-textPrimary dark:text-textPrimaryDark;
+    }
+
+    .theme-text-secondary {
+        @apply text-textSecondary dark:text-textSecondaryDark;
+    }
+
+    .theme-icon-primary {
+        @apply text-textPrimary dark:text-textPrimaryDark;
+        @apply stroke-textPrimary dark:stroke-textPrimaryDark;
+        @apply fill-textPrimary dark:fill-textPrimaryDark;
+    }
+
+    .theme-icon-secondary {
+        @apply text-textSecondary dark:text-textSecondaryDark;
+        @apply stroke-textSecondary dark:stroke-textSecondaryDark;
+        @apply fill-textSecondary dark:fill-textSecondaryDark;
+    }
+
+    /*.theme-icon {*/
+    /*    @apply text-textPrimary dark dark:text-iconPrimaryDark;*/
+    /*}*/
+    .hover-shadow {
+        @apply shadow-md hover:shadow-lg ;
+    }
+
+    .hover-shadow-zero {
+        @apply shadow-none hover:shadow-md ;
+    }
+
+    .primary-transition {
+        @apply transition duration-200;
+    }
+
+    .select-opacity {
+        @apply hover:opacity-80 focus:opacity-100 active:opacity-100 group-hover:opacity-80 group-focus:opacity-100 group-active:opacity-100;
+    }
+
+    .selected-opacity {
+        @apply opacity-100;
+    }
+
+    .content-padding {
+        @apply px-6 md:px-10 xl:px-20
+    }
+}
+
+@layer utilities {
+    @variants responsive {
+        /* Hide scrollbar for Chrome, Safari, and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge, and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    }
+}

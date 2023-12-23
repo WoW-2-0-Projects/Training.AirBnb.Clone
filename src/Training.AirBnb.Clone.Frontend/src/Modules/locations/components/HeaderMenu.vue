@@ -1,17 +1,17 @@
 <template>
-  <div class="flex-grow gap-5 md:flex-none text-textPrimary bg-defaultBackground pt-[8px] pb-[10px] pl-[20px] pr-[10px] border border-gray-300 shadow-md rounded-full">
-    <div class="h-8 hidden md:flex items-center justify-center gap-5">
+  <div class="flex-grow gap-5 md:flex-none text-textPrimary theme-bg-secondary pt-[8px] pb-[10px] pl-[20px] pr-[10px] theme-border theme-shadow rounded-full  theme-bg-secondary theme-border theme-shadow hover-shadow primary-transition">
+    <div class="h-8 hidden md:flex items-center justify-center gap-5 theme-text-primary">
       <button class="text-sm font-medium line-clamp-1">
         <span class="line-clamp-1">Anywhere</span>
       </button>
 
-      <div class="border-r border-gray-300 h-3/5"></div>
+      <div class="theme-border h-3/5"></div>
 
       <button class="text-sm font-medium">
         <span class="line-clamp-1">Any week</span>
       </button>
 
-      <div class="border-r border-gray-300 h-3/5"></div>
+      <div class="theme-border h-3/5"></div>
 
       <button class="flex items-center justify-center text-textSecondary text-sm gap-3">
         <span class="line-clamp-1">
@@ -31,11 +31,12 @@
       </button>
 
     </div>
+
     <!-- Location menu responsive -->
     <button class="md:hidden flex items-center justify-center gap-3 h-8">
 
       <span class="h-[40px] w-[40px] flex items-center justify-center text-textPrimary">
-          <svg class="w-[20px] h-[20px] stroke-textPrimary stroke-[5px]"
+          <svg class="w-[20px] h-[20px] theme-icon-primary stroke-[5px]"
                width="20px" height="20px"
                xmlns="http://www.w3.org/2000/svg"
                viewBox="0 0 32 32"
@@ -48,10 +49,10 @@
       </span>
 
       <span class="flex flex-col items-start">
-          <span class="text-sm font-medium">
+          <span class="text-sm font-medium theme-text-primary">
               <span>Anywhere</span>
           </span>
-          <span class="text-xs text-textSecondary">
+          <span class="text-xs theme-text-secondary">
               <span>Any week</span>
               <span>•</span>
               <span>Add guests</span>
