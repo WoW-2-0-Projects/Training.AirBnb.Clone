@@ -1,5 +1,5 @@
 <template>
-  <div class="text-textPrimary bg-defaultBackground pt-[8px] pb-[10px] pl-[20px] pr-[10px] border border-gray-300 shadow-md rounded-full">
+  <div class="flex-grow gap-5 md:flex-none text-textPrimary bg-defaultBackground pt-[8px] pb-[10px] pl-[20px] pr-[10px] border border-gray-300 shadow-md rounded-full">
     <div class="h-8 hidden md:flex items-center justify-center gap-5">
       <button class="text-sm font-medium line-clamp-1">
         <span class="line-clamp-1">Anywhere</span>
@@ -32,7 +32,7 @@
 
     </div>
     <!-- Location menu responsive -->
-    <button class="md:hidden flex items-center justify-center gap-3 h-12 pr-[10px]">
+    <button class="md:hidden flex items-center justify-center gap-3 h-8">
 
       <span class="h-[40px] w-[40px] flex items-center justify-center text-textPrimary">
           <svg class="w-[20px] h-[20px] stroke-textPrimary stroke-[5px]"
@@ -48,15 +48,15 @@
       </span>
 
       <span class="flex flex-col items-start">
-                <span class="text-sm font-medium">
-                    <span>Anywhere</span>
-                </span>
-                <span class="text-xs text-textSecondary">
-                    <span>Any week</span>
-                    <span>•</span>
-                    <span>Add guests</span>
-                </span>
-            </span>
+          <span class="text-sm font-medium">
+              <span>Anywhere</span>
+          </span>
+          <span class="text-xs text-textSecondary">
+              <span>Any week</span>
+              <span>•</span>
+              <span>Add guests</span>
+          </span>
+      </span>
 
     </button>
 
