@@ -1,7 +1,7 @@
 ﻿using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
-namespace AirBnB.Application.Common.Identity.StorageFiles;
+namespace AirBnB.Application.Common.StorageFiles;
 
 public interface IStorageFileService
 {

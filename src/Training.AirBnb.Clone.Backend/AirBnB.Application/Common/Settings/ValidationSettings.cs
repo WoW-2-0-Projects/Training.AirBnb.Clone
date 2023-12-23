@@ -19,4 +19,9 @@ public class ValidationSettings
     /// Gets or sets the regular expression pattern for validating passwords.
     /// </summary>
     public string PasswordRegexPattern { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the regular expression pattern for validating file names.
+    /// </summary>
+    public string FileNameRegexPattern { get; set; } = default!;
 }
