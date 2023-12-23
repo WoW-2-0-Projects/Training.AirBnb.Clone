@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="17e216ed-6bf0-4336-a060-2adb57d52cd0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/Modules/locations/components/HeaderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/Modules/locations/components/HeaderMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/modules/locations/components/HeaderHome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/modules/locations/components/HeaderHome.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/modules/locations/components/HeaderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/modules/locations/components/HeaderMenu.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/common/components/MainHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/Training.AirBnb.Clone.Frontend/src/common/components/MainHeader.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

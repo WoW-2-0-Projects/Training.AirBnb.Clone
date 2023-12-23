@@ -22,9 +22,8 @@
 
 import MainLogo from "@/common/components/icons/MainLogo.vue";
 
-import HeaderMenu from "@/Modules/locations/components/HeaderMenu.vue";
+import HeaderMenu from "@/modules/locations/components/HeaderMenu.vue";
 
-import HeaderHome from "@/Modules/locations/components/HeaderHome.vue";
+import HeaderHome from "@/modules/locations/components/HeaderHome.vue";
 
 </script>
-
