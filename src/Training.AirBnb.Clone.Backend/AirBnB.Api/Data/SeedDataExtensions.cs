@@ -1,4 +1,5 @@
 ﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,9 @@ public static class SeedDataExtensions
 
         if (!await identityDbContext.Users.AnyAsync())
             await identityDbContext.SeedUsersAsync();
+
+        if (!await identityDbContext.StorageFiles.AnyAsync())
+            await identityDbContext.SeedStorageFilesAsync();
     }
 
     /// <summary>
@@ -38,6 +42,16 @@ public static class SeedDataExtensions
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(userFaker.Generate(100));
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static async ValueTask SeedStorageFilesAsync(this IdentityDbContext dbContext)
+    {
+        var storageFileFaker = new Faker<StorageFile>()
+            .RuleFor(file => file.FileName, data => data.Random.Word())
+            .RuleFor(file => file.Type, StorageFileType.Image);
+
+        await dbContext.AddRangeAsync(storageFileFaker.Generate(10));
         await dbContext.SaveChangesAsync();
     }
 }
