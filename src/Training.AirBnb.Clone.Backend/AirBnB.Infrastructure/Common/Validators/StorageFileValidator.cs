@@ -6,8 +6,15 @@ using Microsoft.Extensions.Options;
 
 namespace AirBnB.Infrastructure.Common.Validators;
 
+/// <summary>
+/// Validator class for validating storage file data using FluentValidation.
+/// </summary>
 public class StorageFileValidator : AbstractValidator<StorageFile>
 {
+    /// <summary>
+    /// The validation settings used for storage file data validation.
+    /// </summary>
+    /// <param name="validationSettings"></param>
     public StorageFileValidator(IOptions<ValidationSettings> validationSettings)
     {
         var validationSettingsValue = validationSettings.Value;
