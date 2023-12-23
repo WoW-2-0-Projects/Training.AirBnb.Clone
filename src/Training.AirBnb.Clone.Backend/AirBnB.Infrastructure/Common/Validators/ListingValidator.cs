@@ -21,13 +21,13 @@ public class ListingValidator : AbstractValidator<Listing>
                 RuleFor(listing => listing.Id).NotEqual(Guid.Empty);
             
             RuleFor(listing => listing.Name)
-                .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(128).WithMessage("Name cannot exceed 256 characters.");
+                .NotEmpty()
+                .MaximumLength(128);
 
             RuleFor(listing => listing.BuiltDate).LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.UtcNow));
 
             RuleFor(listing => listing.PricePerNight)
-                .NotEmpty().WithMessage("Price is required.");
+                .NotEmpty();
         });
     }
 }
