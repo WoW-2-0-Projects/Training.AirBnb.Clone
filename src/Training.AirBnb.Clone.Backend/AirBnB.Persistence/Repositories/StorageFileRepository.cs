@@ -7,6 +7,9 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
+/// <summary>
+/// Repository for managing storage files, extending the base entity repository for <see cref="StorageFile"/>.
+/// </summary>
 public class StorageFileRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker) : EntityRepositoryBase<StorageFile, IdentityDbContext>(
     dbContext,
     cacheBroker, 
