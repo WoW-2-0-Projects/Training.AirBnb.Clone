@@ -27,6 +27,6 @@ public class NotificationsController(IEmailTemplateService emailTemplateService,
         var result = await emailTemplateService.GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(),
             cancellationToken);
 
-        return result.Any() ? Ok(mapper.Map<SmsTemplateDto>(result)) : NotFound();
+        return result.Any() ? Ok(mapper.Map<EmailTemplateDto>(result)) : NotFound();
     }
 }

@@ -6,7 +6,7 @@ namespace AirBnB.Domain.Entities;
 /// <summary>
 /// Represents an email template for notifications, implementing the IAuditableEntity interface.
 /// </summary>
-public class EmailTemplate : NotificationTemplate, IAuditableEntity
+public class EmailTemplate : NotificationTemplate
 {
     /// <summary>
     /// Gets or sets the subject of the email template.

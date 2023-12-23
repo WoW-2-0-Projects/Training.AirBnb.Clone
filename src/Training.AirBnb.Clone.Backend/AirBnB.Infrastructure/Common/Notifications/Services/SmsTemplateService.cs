@@ -38,5 +38,4 @@ public class SmsTemplateService(ISmsTemplateRepository smsTemplateRepository, IV
 
         return smsTemplateRepository.CreateAsync(smsTemplate, saveChanges, cancellationToken);
     }
-        
 }
