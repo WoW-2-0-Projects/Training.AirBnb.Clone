@@ -98,10 +98,12 @@ public static partial class HostConfiguration
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
-
+        
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserService, UserService>();
+            
+        builder.Services    
             .AddScoped<IListingRepository, ListingRepository>()
             .AddScoped<IListingService, ListingService>();
 
@@ -122,7 +124,6 @@ public static partial class HostConfiguration
         
         return app;
     }
-
     
     /// <summary>
     /// Configures exposers including controllers
