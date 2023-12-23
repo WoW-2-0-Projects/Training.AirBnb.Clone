@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
+using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
@@ -79,10 +81,19 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<NotificationDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationConnection"),
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "notification")));
+
+        builder.Services
+            .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
+            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
+            
+        builder.Services
+            .AddScoped<IEmailTemplateService, EmailTemplateService>()
+            .AddScoped<ISmsTemplateService, SmsTemplateService>();
+        
         return builder;
     }
 
@@ -147,10 +158,6 @@ public static partial class HostConfiguration
 
         return builder;
     }
-
-    // todo: AddNotificationsInfrastructure add service
-    // todo: register NotificationsDb 
-
 
     /// <summary>
     /// Add Controller middleWhere
