@@ -19,23 +19,5 @@ public class IdentityDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema("identity");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
-
-        // Seeds initial data for the Listing entity.
-        modelBuilder.Entity<Listing>().HasData(
-            new Listing
-            {
-                Id = Guid.NewGuid(),
-                Title = "FirstSeedData",
-                DescriptionId = Guid.NewGuid(),
-                Status = ListingStatus.InProgress,
-                PropertyTypeId = Guid.NewGuid(),
-                LocationId = Guid.NewGuid(),
-                RulesId = Guid.NewGuid(),
-                AvailabilityId = Guid.NewGuid(),
-                HostId = Guid.NewGuid(),
-                Price = 99.333m,
-                InstantBook = true
-            }
-        );
     }
 }
