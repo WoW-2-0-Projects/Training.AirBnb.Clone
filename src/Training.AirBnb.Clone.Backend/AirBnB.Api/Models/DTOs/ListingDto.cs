@@ -8,7 +8,7 @@ namespace AirBnB.Api.Models.DTOs;
 public class ListingDto
 {
     /// <summary>
-    /// Gets or sets the unique identifier for the listing
+    /// Gets or sets the unique identifier for the listing.
     /// </summary>
     public Guid Id { get; set; }
 
@@ -16,12 +16,19 @@ public class ListingDto
     /// Gets or sets the title of the listing.
     /// </summary>
     public string Name { get; set; } = default!;
-    
+
+    /// <summary>
+    /// Gets or sets the date when the listing was built.
+    /// </summary>
     public DateOnly BuiltDate { get; set; }
 
-    public Address Address { get; set; } = default!;
     /// <summary>
-    /// Gets or sets the price of the listing.
+    /// Gets or sets the address associated with the listing.
+    /// </summary>
+    public Address Address { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the price per night for the listing.
     /// </summary>
     public Money PricePerNight { get; set; } = default!;
 }

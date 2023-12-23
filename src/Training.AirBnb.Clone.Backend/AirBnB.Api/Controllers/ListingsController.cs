@@ -17,7 +17,6 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
         CancellationToken cancellationToken)
     {
         var specification = filterPagination.ToQueryPagination(true).ToQuerySpecification();
-    
         var result = await listingService
             .GetAsync(specification, cancellationToken);
 
