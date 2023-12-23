@@ -15,10 +15,8 @@ public class StorageFileValidator : AbstractValidator<StorageFile>
     /// The validation settings used for storage file data validation.
     /// </summary>
     /// <param name="validationSettings"></param>
-    public StorageFileValidator(IOptions<ValidationSettings> validationSettings)
+    public StorageFileValidator()
     {
-        var validationSettingsValue = validationSettings.Value;
-        
         RuleSet(
             EntityEvent.OnGet.ToString(),
             () =>
@@ -27,9 +25,7 @@ public class StorageFileValidator : AbstractValidator<StorageFile>
 
                 RuleFor(storageFile => storageFile.FileName)
                     .NotEmpty()
-                    .MaximumLength(64)
-                    .Matches(validationSettingsValue.FileNameRegexPattern)
-                    .WithMessage("File name is not valid!");
+                    .MaximumLength(64);
 
                 RuleFor(storageFile => storageFile.Type)
                     .NotEmpty()
