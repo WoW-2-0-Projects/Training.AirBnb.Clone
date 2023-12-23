@@ -4,7 +4,7 @@ using AirBnB.Domain.Enums;
 namespace AirBnB.Domain.Entities;
 
 /// <summary>
-/// Represents a user entity
+/// Represents a usersettings entity
 /// </summary>
 public class UserSettings : SoftDeletedEntity
 {

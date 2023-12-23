@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
+/// <summary>
+/// Service for managing userSettings-related operations.
+/// </summary>
 public class UserSettingsService(
     IUserSettingsRepository userSettingsRepository,
     IValidator<UserSettings> validator) : IUserSettingsService

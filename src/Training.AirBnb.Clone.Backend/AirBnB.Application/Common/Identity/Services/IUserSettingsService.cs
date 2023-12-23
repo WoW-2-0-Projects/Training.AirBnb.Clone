@@ -4,9 +4,11 @@ using System.Linq.Expressions;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
+///<summary>
+/// Service interface for managing usersettings-related operations.
+/// </summary>
 public interface IUserSettingsService
 {
-
     /// <summary>
     /// Retrieves a collection of user settings based on the specified predicate. 
     /// </summary>
