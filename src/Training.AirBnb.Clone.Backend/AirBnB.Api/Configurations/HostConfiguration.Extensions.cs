@@ -2,9 +2,12 @@
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Settings;
+using AirBnB.Application.Common.StorageFiles;
+using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Infrastructure.Common.Settings;
+using AirBnB.Infrastructure.Common.StorageFiles;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
@@ -102,12 +105,26 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>();
-
+        
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
         return builder;
     }
+    
+    /// <summary>
+    ///  Extension method to add storage file infrastructure services
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddScoped<IStorageFileRepository, StorageFileRepository>()
+            .AddScoped<IStorageFileService, StorageFileService>();
 
+        return builder;
+    }
+    
     /// <summary>
     /// Seeds data into the application's database by creating a service scope and initializing the seed operation.
     /// </summary>

@@ -1,4 +1,5 @@
 ﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ public static class SeedDataExtensions
 
         if (!await identityDbContext.Users.AnyAsync())
             await identityDbContext.SeedUsersAsync();
+        
     }
 
     /// <summary>
