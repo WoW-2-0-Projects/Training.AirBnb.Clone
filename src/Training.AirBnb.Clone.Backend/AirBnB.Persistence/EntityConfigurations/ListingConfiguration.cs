@@ -11,6 +11,11 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 {
     public void Configure(EntityTypeBuilder<Listing> builder)
     {
-        builder.Property(listing => listing.Title).IsRequired().HasMaxLength(128);
+        builder.Property(listing => listing.Name).IsRequired().HasMaxLength(256);
+
+        builder.OwnsOne(listing => listing.Address).Property(address => address.City).IsRequired(false)
+            .HasMaxLength(256);
+
+        builder.OwnsOne(listing => listing.PricePerNight);
     }
 }
