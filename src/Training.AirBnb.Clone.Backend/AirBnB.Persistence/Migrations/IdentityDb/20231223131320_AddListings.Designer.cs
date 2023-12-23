@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations.IdentityDb
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231222135244_AddListing")]
-    partial class AddListing
+    [Migration("20231223131320_AddListings")]
+    partial class AddListings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,64 +32,23 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AvailabilityId")
-                        .HasColumnType("uuid");
+                    b.Property<DateOnly>("BuiltDate")
+                        .HasColumnType("date");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DescriptionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("HostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("InstantBook")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<Guid?>("PropertyTypeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("RulesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Listings", "identity");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ce8135be-0823-43db-a0f6-285712ec64eb"),
-                            AvailabilityId = new Guid("d5e64519-3dff-44d5-a78c-454598c14402"),
-                            DescriptionId = new Guid("79cb833b-225b-4592-b771-7d6c81aef4cf"),
-                            HostId = new Guid("72fa997b-ad98-4aa4-802a-e8701437c7ad"),
-                            InstantBook = true,
-                            IsDeleted = false,
-                            LocationId = new Guid("15bef96f-5363-4b26-ada9-12c2d709a0ee"),
-                            Price = 99.333m,
-                            PropertyTypeId = new Guid("57287cf5-7c5e-40f5-91f7-a3c9108d860a"),
-                            RulesId = new Guid("343e57de-00a8-4ea6-954b-0d68fc7a7097"),
-                            Status = 2,
-                            Title = "FirstSeedData"
-                        });
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -137,6 +96,60 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                         .IsUnique();
 
                     b.ToTable("Users", "identity");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
+                {
+                    b.OwnsOne("AirBnB.Domain.Entities.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("ListingId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .HasMaxLength(256)
+                                .HasColumnType("character varying(256)");
+
+                            b1.Property<Guid?>("CityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("ListingId");
+
+                            b1.ToTable("Listings", "identity");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ListingId");
+                        });
+
+                    b.OwnsOne("AirBnB.Domain.Entities.Money", "PricePerNight", b1 =>
+                        {
+                            b1.Property<Guid>("ListingId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("Currency")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("ListingId");
+
+                            b1.ToTable("Listings", "identity");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ListingId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("PricePerNight")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
