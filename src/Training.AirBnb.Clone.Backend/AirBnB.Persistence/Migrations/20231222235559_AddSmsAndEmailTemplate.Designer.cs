@@ -3,43 +3,68 @@ using System;
 using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Migrations.IdentityDb
+namespace AirBnB.Persistence.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(NotificationDbContext))]
+    [Migration("20231222235559_AddSmsAndEmailTemplate")]
+    partial class AddSmsAndEmailTemplate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("identity")
+                .HasDefaultSchema("notification")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
+            modelBuilder.Entity("AirBnB.Domain.Entities.NotificationTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("FileName")
+                    b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(129536)
+                        .HasColumnType("character varying(129536)");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("DeletedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TemplateType")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<DateTimeOffset?>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
-                    b.ToTable("StorageFiles", "identity");
+                    b.HasIndex("Type", "TemplateType")
+                        .IsUnique();
+
+                    b.ToTable("NotificationTemplates", "notification");
+
+                    b.HasDiscriminator<int>("Type");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -86,7 +111,26 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                     b.HasIndex("EmailAddress")
                         .IsUnique();
 
-                    b.ToTable("Users", "identity");
+                    b.ToTable("User", "notification");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.EmailTemplate", b =>
+                {
+                    b.HasBaseType("AirBnB.Domain.Entities.NotificationTemplate");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.SmsTemplate", b =>
+                {
+                    b.HasBaseType("AirBnB.Domain.Entities.NotificationTemplate");
+
+                    b.HasDiscriminator().HasValue(0);
                 });
 #pragma warning restore 612, 618
         }
