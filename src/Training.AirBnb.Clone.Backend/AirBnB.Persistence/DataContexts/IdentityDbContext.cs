@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +9,10 @@ public class IdentityDbContext : DbContext
     public DbSet<User> Users => Set<User>();
 
     public DbSet<Listing> Listings => Set<Listing>();
+    public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
 
     public IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOptions) : base(dbContextOptions)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
