@@ -1,6 +1,6 @@
 ﻿using AirBnB.Domain.Enums;
 
-namespace AirBnB.Api.Models.DTOs;
+namespace AirBnB.Api.Models.DTOs.Notification;
 
 /// <summary>
 /// Data transfer object (DTO) representing an SMS template.

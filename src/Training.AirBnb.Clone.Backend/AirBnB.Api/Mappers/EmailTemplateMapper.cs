@@ -1,5 +1,5 @@
-﻿using AirBnB.Api.Models.DTOs;
-using AirBnB.Domain.Entities;
+﻿using AirBnB.Api.Models.DTOs.Notification;
+using AirBnB.Domain.Entities.Notification;
 using AutoMapper;
 
 namespace AirBnB.Api.Mappers;

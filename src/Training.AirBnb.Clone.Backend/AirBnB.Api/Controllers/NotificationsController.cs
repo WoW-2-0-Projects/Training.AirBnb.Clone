@@ -1,4 +1,4 @@
-﻿using AirBnB.Api.Models.DTOs;
+﻿using AirBnB.Api.Models.DTOs.Notification;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Common.Query;
 using AutoMapper;

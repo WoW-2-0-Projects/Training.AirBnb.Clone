@@ -1,4 +1,4 @@
-﻿using AirBnB.Api.Models.DTOs;
+﻿using AirBnB.Api.Models.DTOs.Identity;
 using AirBnB.Domain.Entities.Identity;
 using AutoMapper;
 using IConfigurationProvider = AutoMapper.IConfigurationProvider;

@@ -1,4 +1,4 @@
-﻿using AirBnB.Api.Models.DTOs;
+﻿using AirBnB.Api.Models.DTOs.Identity;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities.Identity;
