@@ -1,7 +1,7 @@
 ﻿using Type = AirBnB.Domain.Enums.NotificationType;
 using AirBnB.Domain.Common;
 
-namespace AirBnB.Domain.Entities;
+namespace AirBnB.Domain.Entities.Notification;
 
 /// <summary>
 /// Represents an email template for notifications, implementing the IAuditableEntity interface.

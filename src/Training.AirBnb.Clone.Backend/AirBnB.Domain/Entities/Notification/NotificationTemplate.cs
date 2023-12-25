@@ -1,7 +1,7 @@
 ﻿using AirBnB.Domain.Common;
 using AirBnB.Domain.Enums;
 
-namespace AirBnB.Domain.Entities;
+namespace AirBnB.Domain.Entities.Notification;
 
 /// <summary>
 /// Represents an abstract base class for notification templates, inheriting from AuditableEntity.

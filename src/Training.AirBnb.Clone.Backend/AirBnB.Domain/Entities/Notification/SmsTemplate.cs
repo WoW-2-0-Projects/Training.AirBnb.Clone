@@ -1,5 +1,5 @@
 ﻿using Type = AirBnB.Domain.Enums.NotificationType;
-namespace AirBnB.Domain.Entities;
+namespace AirBnB.Domain.Entities.Notification;
 
 /// <summary>
 /// Represents an SMS template for notifications, inheriting from NotificationTemplate.

@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Entities.StorageFiles;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using AutoMapper;
 using Microsoft.Extensions.Options;

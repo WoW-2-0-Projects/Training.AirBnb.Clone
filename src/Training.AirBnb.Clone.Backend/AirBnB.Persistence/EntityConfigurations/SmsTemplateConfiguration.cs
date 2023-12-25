@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Entities.Notification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

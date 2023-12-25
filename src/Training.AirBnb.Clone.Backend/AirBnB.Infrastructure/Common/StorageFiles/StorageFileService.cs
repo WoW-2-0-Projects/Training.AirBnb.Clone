@@ -1,6 +1,6 @@
 ﻿using AirBnB.Application.Common.StorageFiles;
 using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.StorageFiles;
 using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Infrastructure.Common.StorageFiles;

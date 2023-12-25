@@ -1,5 +1,5 @@
 ﻿using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.StorageFiles;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.Caching.Models;
 using AirBnB.Persistence.DataContexts;

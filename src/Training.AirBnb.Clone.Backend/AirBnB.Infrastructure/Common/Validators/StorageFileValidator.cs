@@ -1,5 +1,5 @@
 ﻿using AirBnB.Application.Common.Settings;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.StorageFiles;
 using AirBnB.Domain.Enums;
 using FluentValidation;
 using Microsoft.Extensions.Options;

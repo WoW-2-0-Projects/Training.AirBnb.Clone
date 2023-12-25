@@ -1,5 +1,5 @@
 ﻿using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.Notification;
 using AirBnB.Domain.Enums;
 
 namespace AirBnB.Application.Common.Notifications.Services;

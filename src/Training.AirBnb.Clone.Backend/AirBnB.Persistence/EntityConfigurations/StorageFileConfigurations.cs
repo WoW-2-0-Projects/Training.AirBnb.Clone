@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Entities.StorageFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

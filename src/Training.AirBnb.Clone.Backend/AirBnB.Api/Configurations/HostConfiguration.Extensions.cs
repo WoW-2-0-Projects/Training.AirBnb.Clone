@@ -1,10 +1,9 @@
-﻿using System.Reflection;
+using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Application.Common.StorageFiles;
-using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Infrastructure.Common.Notifications.Services;

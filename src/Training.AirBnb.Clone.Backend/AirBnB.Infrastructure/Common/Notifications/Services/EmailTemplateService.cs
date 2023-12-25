@@ -1,8 +1,7 @@
 ﻿using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.Notification;
 using AirBnB.Domain.Enums;
-using AirBnB.Persistence.Extensions;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;

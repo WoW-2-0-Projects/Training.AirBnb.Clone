@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.Notification;
 
 namespace AirBnB.Persistence.Repositories.Interfaces;
 

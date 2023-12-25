@@ -1,5 +1,5 @@
 ﻿using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities.StorageFiles;
 
 namespace AirBnB.Application.Common.StorageFiles;
 
