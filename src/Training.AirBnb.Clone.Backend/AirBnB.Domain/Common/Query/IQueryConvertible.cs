@@ -10,7 +10,7 @@ public interface IQueryConvertible<TEntity> where TEntity : IEntity
     /// Converts the current object to a query specification for the specified entity type.
     /// </summary>
     /// <returns></returns>
-    QuerySpecification<TEntity> ToQuerySpecification();
+    QuerySpecification<TEntity> ToQuerySpecification(bool asNoTracking = false);
 }
 
 /// <summary>
@@ -22,5 +22,5 @@ public interface IQueryConvertible
     /// Converts the current object to a query specification for the specified entity type.
     /// </summary>
     /// <returns></returns>
-    QuerySpecification ToQuerySpecification();
+    QuerySpecification ToQuerySpecification(bool asNoTracking = false);
 }
