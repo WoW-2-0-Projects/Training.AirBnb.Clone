@@ -1,17 +1,22 @@
 ﻿namespace AirBnB.Domain.Enums;
 
 /// <summary>
-/// Represents the available themes for the user interface.
+/// Enumerates the different themes that can be used.
 /// </summary>
 public enum Theme
 {
     /// <summary>
-    /// Represents the dark theme for the user interface.
+    /// Represents the system-defined theme, which adapts to the system's default.
     /// </summary>
-    Dark = 0,
+    SystemTheme = 0,
 
     /// <summary>
-    /// Represents the light theme for the user interface.
+    /// Represents the light theme, which typically has a brighter color scheme.
     /// </summary>
-    Light = 1,
+    Light = 2,
+
+    /// <summary>
+    /// Represents the dark theme, which typically has a darker color scheme.
+    /// </summary>
+    Dark = 1,
 }

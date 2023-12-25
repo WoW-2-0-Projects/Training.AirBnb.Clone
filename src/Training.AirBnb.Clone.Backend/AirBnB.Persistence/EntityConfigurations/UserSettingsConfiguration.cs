@@ -11,6 +11,6 @@ public class UserSettingsConfiguration : IEntityTypeConfiguration<UserSettings>
         builder
             .HasOne(userSettings => userSettings.User)
             .WithOne(user => user.UserSettings)
-            .HasForeignKey(typeof(UserSettings), "UserId");
+            .HasForeignKey<UserSettings>(userSettings => userSettings.UserId);
     }
 }

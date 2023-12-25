@@ -2,7 +2,6 @@
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Persistence.Repositories.Interfaces;
-using FluentValidation;
 using System.Linq.Expressions;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
@@ -11,14 +10,10 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// Service for managing userSettings-related operations.
 /// </summary>
 public class UserSettingsService(
-    IUserSettingsRepository userSettingsRepository,
-    IValidator<UserSettings> validator) : IUserSettingsService
+    IUserSettingsRepository userSettingsRepository) : IUserSettingsService
 {
     public ValueTask<UserSettings> CreateAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        Validate(userSettings);
-        return userSettingsRepository.CreateAsync(userSettings, saveChanges, cancellationToken);
-    }
+        => userSettingsRepository.CreateAsync(userSettings, saveChanges, cancellationToken);
 
     public ValueTask<UserSettings?> DeleteAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
         => userSettingsRepository.DeleteAsync(userSettings, saveChanges, cancellationToken);
@@ -42,15 +37,5 @@ public class UserSettingsService(
         => userSettingsRepository.GetByIdsAsync(ids, asNoTracking, cancellationToken);
 
     public ValueTask<UserSettings> UpdateAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        Validate(userSettings);
-        return userSettingsRepository.UpdateAsync(userSettings, saveChanges, cancellationToken);
-    }
-
-    private void Validate(UserSettings userSettings)
-    {
-        var validationResult = validator.Validate(userSettings);
-
-        if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);
-    }
+        => userSettingsRepository.UpdateAsync(userSettings, saveChanges, cancellationToken);
 }
