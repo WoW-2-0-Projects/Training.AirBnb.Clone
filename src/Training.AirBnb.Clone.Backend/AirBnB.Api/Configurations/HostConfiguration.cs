@@ -17,6 +17,7 @@ public static partial class HostConfiguration
             .AddStorageFileInfrastructure()
             .AddIdentityInfrastructure()
             .AddNotificationInfrastructure()
+            .AddListingsInfrastructure()
             .AddExposers();
 
         return new(builder);

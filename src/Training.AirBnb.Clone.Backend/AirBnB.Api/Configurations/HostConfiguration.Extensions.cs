@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -117,6 +117,22 @@ public static partial class HostConfiguration
             .AddScoped<IUserService, UserService>();
         
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Listings Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<ListingsDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            o => o.MigrationsHistoryTable(
+                tableName: HistoryRepository.DefaultTableName,
+                schema: "listings")));
 
         return builder;
     }
