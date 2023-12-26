@@ -1,7 +1,6 @@
 <template>
 
   <!--    <main-logo/>-->
-
   <home-view/>
 
 </template>

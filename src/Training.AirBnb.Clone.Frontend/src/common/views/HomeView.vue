@@ -12,8 +12,6 @@
 import MainHeader from "@/common/components/MainHeader.vue";
 import { AppThemeService } from "@/infrastructure/services/AppThemeService";
 
-// import LocationsContainer from "@/modules/locations/components/ListingsContainer.vue";
-
 const appThemeService = new AppThemeService();
 
 </script>
