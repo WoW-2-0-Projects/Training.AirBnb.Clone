@@ -1,4 +1,5 @@
 ﻿using AirBnB.Domain.Entities.Listings;
+using AirBnB.Domain.Entities.StorageFiles;
 using AirBnB.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ namespace AirBnB.Persistence.DataContexts;
 /// <param name="options"></param>
 public class ListingsDbContext(DbContextOptions<ListingsDbContext> options) : DbContext(options)
 {
+    public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
+
     public DbSet<ListingCategory> ListingCategories => Set<ListingCategory>();
 
     /// <summary>

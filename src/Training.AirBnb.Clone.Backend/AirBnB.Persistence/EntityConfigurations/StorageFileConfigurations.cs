@@ -8,6 +8,7 @@ public class StorageFileConfigurations : IEntityTypeConfiguration<StorageFile>
 {
     public void Configure(EntityTypeBuilder<StorageFile> builder)
     {
-        builder.Property(e => e.FileName).HasMaxLength(255).IsRequired();
+        builder.HasIndex(file => file.Id);
+        builder.Property(file => file.FileName).HasMaxLength(255).IsRequired();
     }
 }

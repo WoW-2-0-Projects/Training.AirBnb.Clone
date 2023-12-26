@@ -9,8 +9,6 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOpti
 {
     public DbSet<User> Users => Set<User>();
 
-    public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("identity");
