@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace AirBnB.Persistence.Migrations.IdentityDb
-{
+namespace AirBnB.Persistence.Migrations.IdentityDb;
     /// <inheritdoc />
     public partial class InitialCreated : Migration
     {
@@ -126,4 +125,3 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                 table: "Users");
         }
     }
-}
