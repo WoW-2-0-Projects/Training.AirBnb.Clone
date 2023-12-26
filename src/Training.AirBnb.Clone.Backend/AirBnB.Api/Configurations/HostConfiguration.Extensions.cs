@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -107,7 +107,7 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<IdentityDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection"),
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
@@ -129,13 +129,14 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<ListingsDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options.UseNpgsql(builder.Configuration.GetConnectionString("ListingsConnection"),
             o => o.MigrationsHistoryTable(
                 tableName: HistoryRepository.DefaultTableName,
                 schema: "listings")));
 
         // register repositories
         builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+
         return builder;
     }
     
