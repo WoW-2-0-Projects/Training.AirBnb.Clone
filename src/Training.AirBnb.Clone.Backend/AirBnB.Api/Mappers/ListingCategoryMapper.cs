@@ -16,6 +16,7 @@ public class ListingCategoryMapper : Profile
     /// </summary>
     public ListingCategoryMapper()
     {
-        CreateMap<ListingCategory, ListingCategoryDto>().ForMember(dest => dest.ImageUrl, opt => opt.ConvertUsing<StorageFileToUrlConverter, StorageFile>(src => src.ImageStorageFile));
+        CreateMap<ListingCategory, ListingCategoryDto>().
+            ForMember(dest => dest.ImageUrl, opt => opt.ConvertUsing<StorageFileToUrlConverter, StorageFile>(src => src.ImageStorageFile));
     }
 }
