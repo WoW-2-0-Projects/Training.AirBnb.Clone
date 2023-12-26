@@ -13,7 +13,7 @@ public class ListingCategoryFilter : FilterPagination, IQueryConvertible<Listing
     /// </summary>
     /// <param name="asNoTracking"></param>
     /// <returns></returns>
-    public new QuerySpecification<ListingCategory> ToQuerySpecification(bool asNoTracking = false)
+    public QuerySpecification<ListingCategory> ToQuerySpecification(bool asNoTracking = false)
     {
         var querySpecification = new QuerySpecification<ListingCategory>(int.MaxValue, 1, true);
 

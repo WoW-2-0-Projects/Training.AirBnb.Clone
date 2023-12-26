@@ -22,5 +22,5 @@ public interface IQueryConvertible
     /// Converts the current object to a query specification for the specified entity type.
     /// </summary>
     /// <returns></returns>
-    QuerySpecification ToQuerySpecification(bool asNoTracking = false);
+    QuerySpecification ToQuerySpecification();
 }

@@ -45,7 +45,7 @@ public class FilterPagination : IQueryConvertible
 
     public QueryPagination ToQueryPagination(bool asNoTracking = false) => new(PageSize, PageToken, asNoTracking);
 
-    public virtual QuerySpecification ToQuerySpecification(bool asNoTracking = false) =>
+    public virtual QuerySpecification ToQuerySpecification() =>
         throw new NotSupportedException($"Filter pagination doesn't support converting to query specification");
 
     /// <summary>
