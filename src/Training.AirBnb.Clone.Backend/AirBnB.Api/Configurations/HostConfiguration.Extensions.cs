@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -112,11 +112,15 @@ public static partial class HostConfiguration
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
-
+        
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>();
-        
+        builder.Services    
+            .AddScoped<IListingRepository, ListingRepository>()
+            
+            .AddScoped<IListingService, ListingService>();
+
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
         return builder;
@@ -148,7 +152,6 @@ public static partial class HostConfiguration
         
         return app;
     }
-
     
     /// <summary>
     /// Configures exposers including controllers
