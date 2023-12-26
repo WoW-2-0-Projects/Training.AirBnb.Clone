@@ -6,13 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AirBnB.Persistence.Migrations.ListingsDb
 {
     /// <inheritdoc />
-    public partial class ListingCategoryMigration : Migration
+    public partial class ListingCategoriesandStorageFilesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "listings");
+
+            migrationBuilder.CreateTable(
+                name: "StorageFiles",
+                schema: "listings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FileName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StorageFiles", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "ListingCategories",
@@ -30,9 +44,9 @@ namespace AirBnB.Persistence.Migrations.ListingsDb
                 {
                     table.PrimaryKey("PK_ListingCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ListingCategories_StorageFile_StorageFileId",
+                        name: "FK_ListingCategories_StorageFiles_StorageFileId",
                         column: x => x.StorageFileId,
-                        principalSchema: "identity",
+                        principalSchema: "listings",
                         principalTable: "StorageFiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -51,6 +65,12 @@ namespace AirBnB.Persistence.Migrations.ListingsDb
                 table: "ListingCategories",
                 column: "StorageFileId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageFiles_Id",
+                schema: "listings",
+                table: "StorageFiles",
+                column: "Id");
         }
 
         /// <inheritdoc />
@@ -58,6 +78,10 @@ namespace AirBnB.Persistence.Migrations.ListingsDb
         {
             migrationBuilder.DropTable(
                 name: "ListingCategories",
+                schema: "listings");
+
+            migrationBuilder.DropTable(
+                name: "StorageFiles",
                 schema: "listings");
         }
     }

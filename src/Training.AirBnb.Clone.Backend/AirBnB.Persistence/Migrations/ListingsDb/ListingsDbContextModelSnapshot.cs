@@ -57,6 +57,27 @@ namespace AirBnB.Persistence.Migrations.ListingsDb
                     b.ToTable("ListingCategories", "listings");
                 });
 
+            modelBuilder.Entity("AirBnB.Domain.Entities.StorageFiles.StorageFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("StorageFiles", "listings");
+                });
+
             modelBuilder.Entity("AirBnB.Domain.Entities.Listings.ListingCategory", b =>
                 {
                     b.HasOne("AirBnB.Domain.Entities.StorageFiles.StorageFile", "ImageStorageFile")

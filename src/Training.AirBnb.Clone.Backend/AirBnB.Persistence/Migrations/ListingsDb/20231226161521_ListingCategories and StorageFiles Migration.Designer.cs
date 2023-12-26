@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations.ListingsDb
 {
     [DbContext(typeof(ListingsDbContext))]
-    [Migration("20231226145510_ListingCategory Migration")]
-    partial class ListingCategoryMigration
+    [Migration("20231226161521_ListingCategories and StorageFiles Migration")]
+    partial class ListingCategoriesandStorageFilesMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,14 +68,17 @@ namespace AirBnB.Persistence.Migrations.ListingsDb
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StorageFile", "listings");
+                    b.HasIndex("Id");
+
+                    b.ToTable("StorageFiles", "listings");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.Listings.ListingCategory", b =>

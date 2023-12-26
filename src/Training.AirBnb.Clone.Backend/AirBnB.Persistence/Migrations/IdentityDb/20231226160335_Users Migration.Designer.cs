@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231226064234_User Migration")]
-    partial class UserMigration
+    [Migration("20231226160335_Users Migration")]
+    partial class UsersMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
