@@ -7,6 +7,7 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Polly;
 
 namespace AirBnB.Infrastructure.Common.Verifications.Services;
 
@@ -54,17 +55,25 @@ public class UserInfoVerificationCodeService(
     public async ValueTask<UserInfoVerificationCode> CreateAsync(VerificationCodeType codeType, Guid userId, CancellationToken cancellationToken = default)
     {
         var verificationCodeValue = default(string);
+        
+        //TODO: code generate process with polly
+        var retryPolicy = Policy
+            .HandleResult<string>(code => string.IsNullOrEmpty(code))
+            .RetryAsync(5, (result, retryCount) =>
+            {
+                Console.WriteLine($"Retry {retryCount}: verification code is empty");
+            });
 
-        do
+        await retryPolicy.ExecuteAsync(async () =>
         {
             var verificationCodes = Generate();
             var existingCodes = await userInfoVerificationCodeRepository
                 .Get(code => verificationCodes.Contains(code.Code)).ToListAsync(cancellationToken);
 
-            verificationCodeValue =
-                verificationCodes.Except(existingCodes.Select(code => code.Code)).FirstOrDefault() ??
-                throw new InvalidOperationException("Verification code generation failed");
-        } while (string.IsNullOrEmpty(verificationCodeValue));
+            verificationCodeValue = verificationCodes.Except(existingCodes.Select(code => code.Code)).FirstOrDefault();
+
+            return verificationCodeValue!;
+        });
 
         var verificationCode = new UserInfoVerificationCode
         {
