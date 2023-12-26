@@ -10,7 +10,7 @@ public class EmailMessage : NotificationMessage
     /// <summary>
     /// Gets or sets email address of sender user
     /// </summary>
-    public string SendEmailAddress { get; set; } = default!;
+    public string SenderEmailAddress { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets email address of receiver user

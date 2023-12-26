@@ -10,7 +10,7 @@ public class SmsMessage : NotificationMessage
     /// <summary>
     /// Gets or sets sms address of sender user
     /// </summary>
-    public string SendEmailAddress { get; set; } = default!;
+    public string SenderEmailAddress { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets sms address of receiver user
