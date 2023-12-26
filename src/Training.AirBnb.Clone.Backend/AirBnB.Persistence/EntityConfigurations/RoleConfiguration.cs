@@ -3,8 +3,7 @@ using AirBnB.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AirBnB.Persistence.EntityConfigurations
-{
+namespace AirBnB.Persistence.EntityConfigurations;
     /// <summary>
     /// Configuration for the 'Role' entity within the AirBnB database context.
     /// </summary>
@@ -42,4 +41,3 @@ namespace AirBnB.Persistence.EntityConfigurations
             );
         }
     }
-}
