@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -134,6 +134,8 @@ public static partial class HostConfiguration
                 tableName: HistoryRepository.DefaultTableName,
                 schema: "listings")));
 
+        // register repositories
+        builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
         return builder;
     }
     
