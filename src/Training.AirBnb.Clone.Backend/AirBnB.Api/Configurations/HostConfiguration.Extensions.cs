@@ -4,11 +4,13 @@ using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Application.Common.StorageFiles;
+using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Infrastructure.Common.StorageFiles;
+using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
@@ -136,6 +138,9 @@ public static partial class HostConfiguration
 
         // register repositories
         builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+
+        // register foundation services
+        builder.Services.AddScoped<IListingCategoryService, ListingCategoryService>();
 
         return builder;
     }
