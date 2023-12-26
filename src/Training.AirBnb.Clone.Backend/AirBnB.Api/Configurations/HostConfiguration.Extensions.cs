@@ -11,6 +11,7 @@ using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Infrastructure.Common.StorageFiles;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.StorageFiles.Settings;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
@@ -152,8 +153,16 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        // configure storage file settings
+        builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)))
+           .Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
+
+        // register repositories
         builder.Services
-            .AddScoped<IStorageFileRepository, StorageFileRepository>()
+            .AddScoped<IStorageFileRepository, StorageFileRepository>();
+
+        // register foundation services
+        builder.Services
             .AddScoped<IStorageFileService, StorageFileService>();
 
         return builder;
