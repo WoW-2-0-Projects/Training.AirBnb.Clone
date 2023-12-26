@@ -1,4 +1,4 @@
-﻿namespace AirBnB.Domain.Enums;
+namespace AirBnB.Domain.Enums;
 
 /// <summary>
 /// Represents the type of notification that can be used in the system.
