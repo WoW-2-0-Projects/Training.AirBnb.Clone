@@ -93,7 +93,7 @@ namespace AirBnB.Persistence.Migrations
                         new
                         {
                             Id = new Guid("29e62346-1bb7-4fd4-833f-8ebd85734570"),
-                            CreatedTime = new DateTime(2023, 12, 25, 17, 53, 37, 305, DateTimeKind.Utc).AddTicks(9564),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4396),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
@@ -101,7 +101,7 @@ namespace AirBnB.Persistence.Migrations
                         new
                         {
                             Id = new Guid("eec07fc2-2a0d-4e63-b084-1975e836793c"),
-                            CreatedTime = new DateTime(2023, 12, 25, 17, 53, 37, 305, DateTimeKind.Utc).AddTicks(9570),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4399),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
@@ -109,7 +109,7 @@ namespace AirBnB.Persistence.Migrations
                         new
                         {
                             Id = new Guid("c93760c5-03ed-4845-b3c9-01c125ef326a"),
-                            CreatedTime = new DateTime(2023, 12, 25, 17, 53, 37, 305, DateTimeKind.Utc).AddTicks(9573),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4400),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
