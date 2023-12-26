@@ -13,7 +13,7 @@ public class AccessToken : Entity
         Id = id;
         UserId = userId;
         Token = token;
-        Expirytime = expiryTime;
+        ExpiryTime = expiryTime;
         IsRevoked = isRevoked;
     }
     
@@ -21,7 +21,7 @@ public class AccessToken : Entity
 
     public string Token { get; set; } = default!;
     
-    public DateTimeOffset Expirytime { get; set; }
+    public DateTimeOffset ExpiryTime { get; set; }
     
     public bool IsRevoked { get; set; }
 }
