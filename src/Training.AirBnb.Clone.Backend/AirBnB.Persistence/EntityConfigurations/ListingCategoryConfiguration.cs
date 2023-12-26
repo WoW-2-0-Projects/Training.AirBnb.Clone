@@ -8,11 +8,22 @@ public class ListingCategoryConfiguration : IEntityTypeConfiguration<ListingCate
 {
     public void Configure(EntityTypeBuilder<ListingCategory> builder)
     {
-        builder.Property(category => category.Name).IsRequired().HasMaxLength(64);
-        builder.Property(category => category.StorageFileId).IsRequired();
+        builder
+            .Property(category => category.Name)
+            .IsRequired()
+            .HasMaxLength(64);
 
-        builder.HasIndex(category => category.Name).IsUnique();
+        builder
+            .Property(category => category.StorageFileId)
+            .IsRequired();
 
-        builder.HasOne(category => category.ImageStorageFile).WithOne().HasForeignKey(typeof(ListingCategory), "StorageFileId");
+        builder
+            .HasIndex(category => category.Name)
+            .IsUnique();
+
+        builder
+            .HasOne(category => category.ImageStorageFile)
+            .WithOne()
+            .HasForeignKey<ListingCategory>(category => category.StorageFileId);
     }
 }
