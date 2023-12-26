@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Common;
+using AirBnB.Domain.Common;
 using AirBnB.Domain.Enums;
 
 namespace AirBnB.Domain.Entities;
@@ -43,9 +43,15 @@ public sealed class User : SoftDeletedEntity
     /// Gets or sets user activation
     /// </summary>
     public bool IsActive { get; set; }
-    
+
     /// <summary>
     ///Gets or sets user's phone number 
     /// </summary>
     public string PhoneNumber { get; set; } = default!;
+
+
+    /// <summary>
+    /// User settings property for includes
+    /// </summary>
+    public UserSettings? UserSettings { get; set; }
 }
