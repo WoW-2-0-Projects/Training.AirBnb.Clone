@@ -8,5 +8,6 @@ public enum StorageFileType
     /// <summary>
     /// Represents an image
     /// </summary>
-    Image
+    Image = 0,
+    ListingCategoryImage = 1
 }
