@@ -14,6 +14,8 @@ public class IdentityDbContext : DbContext
 
     public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
 
+    public DbSet<UserSettings> UserSettings => Set<UserSettings>();
+
     public IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOptions) : base(dbContextOptions)
     {
     }

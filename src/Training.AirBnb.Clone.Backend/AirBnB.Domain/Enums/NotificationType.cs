@@ -1,17 +1,17 @@
-﻿namespace AirBnB.Domain.Enums;
+namespace AirBnB.Domain.Enums;
 
 /// <summary>
-/// Enumerates the types of notifications.
+/// Represents the type of notification that can be used in the system.
 /// </summary>
 public enum NotificationType
 {
     /// <summary>
-    /// Represents a Short Message Service (SMS) notification.
+    /// Indicates an email notification type to send notifications via email.
     /// </summary>
-    Sms,
+    Email = 0,
 
     /// <summary>
-    /// Represents an email notification.
+    /// Indicates an SMS notification type to send notifications via SMS.
     /// </summary>
-    Email
+    Sms = 1,
 }
