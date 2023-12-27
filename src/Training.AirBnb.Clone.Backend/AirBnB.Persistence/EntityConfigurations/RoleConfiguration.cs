@@ -16,10 +16,17 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
     /// <param name="builder">The EntityTypeBuilder for the 'Role' entity.</param>
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        // Ensure that the 'Type' property has a unique index
+        /// <summary>
+        /// Ensure that the 'Type' property has a unique index
+        /// </summary>
+        /// <param name="builder">The EntityTypeBuilder for the 'Role' entity.</param>
+
         builder.HasIndex(role => role.Type).IsUnique();
 
-        // Seed initial data for roles in the database
+        /// <summary>
+        /// Seed initial data for roles in the database
+        /// </summary>
+        /// <param name="builder">The EntityTypeBuilder for the 'Role' entity.</param>
         builder.HasData(
             new Role
             {

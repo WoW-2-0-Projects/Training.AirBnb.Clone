@@ -8,18 +8,32 @@ namespace AirBnB.Domain.Entities;
 
 public class Role : IEntity
 {
-    // Unique identifier for the Role entity.
+    /// <summary>
+    /// Unique identifier for the Role entity. 
+    /// </summary>
+
     public Guid Id { get; set; }
 
-    // Represents the type of the role (e.g., Admin, User, etc.).
+    /// <summary>
+    /// Represents the type of the role (e.g., Admin, User, etc.).
+    /// </summary>
+
     public RoleType Type { get; set; }
 
-    // Indicates whether the role is disabled or not.
+    /// <summary>
+    /// Indicates whether the role is disabled or not. 
+    /// </summary>
     public bool IsDisable { get; set; }
 
-    // Timestamp indicating when this role was created.
+    /// <summary>
+    /// Timestamp indicating when this role was created. 
+    /// </summary>
+
     public DateTime CreatedTime { get; set; }
 
-    // Timestamp indicating the last modification time of this role.
+    /// <summary>
+    /// Timestamp indicating the last modification time of this role. 
+    /// </summary>
+
     public DateTime ModifiedTime { get; set; }
 }

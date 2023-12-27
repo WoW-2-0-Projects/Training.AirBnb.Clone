@@ -19,15 +19,22 @@ public class RoleValidation : AbstractValidator<Role>
     {
         var validationSettingsValue = validationSettings.Value;
 
-        // Define validation rules for different scenarios (e.g., entity creation)
+
+        /// <summary>
+        /// Define validation rules for different scenarios (e.g., entity creation)
+        /// </summary>
         RuleSet(
             EntityEvent.OnCreate.ToString(), // Rule set for entity creation
             () =>
             {
-                // Ensure the 'Id' property is not empty when creating a role
+                /// <summary>
+                /// Ensure the 'Id' property is not empty when creating a role
+                /// </summary>
                 RuleFor(code => code.Id).NotEqual(Guid.Empty);
 
-                // Ensure the 'Type' property is not empty when creating a role
+                /// <summary>
+                /// Ensure the 'Type' property is not empty when creating a role
+                /// </summary>
                 RuleFor(role => role.Type)
                     .NotEmpty();
             }

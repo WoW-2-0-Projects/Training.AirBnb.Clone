@@ -7,8 +7,10 @@ namespace AirBnB.Persistence.Repositories.Interfaces;
 /// </summary>
 public interface IRoleRepository
 {
-    // Retrieves IQueryable collection of Role entities based on the specified predicate.
-    // - 'predicate': Optional filter condition expressed as a lambda expression.
-    // - 'asNoTracking': Indicates whether to track changes (default is false).
+    /// <summary>
+    /// Retrieves IQueryable collection of Role entities based on the specified predicate.
+    /// - 'predicate': Optional filter condition expressed as a lambda expression.
+    /// - 'asNoTracking': Indicates whether to track changes (default is false).
+    /// </summary>
     IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = false);
 }

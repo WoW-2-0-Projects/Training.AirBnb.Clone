@@ -31,8 +31,11 @@ public class RoleService : IRoleService
     /// <returns>A ValueTask representing the retrieved role (or null if not found).</returns>
     public async ValueTask<Role?> GetByTypeAsync(RoleType roleType, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
-        // Retrieve the role using the specified role type asynchronously
+        /// <summary>
+        /// Retrieve the role using the specified role type asynchronously
+        /// </summary>
+
         return await _roleRepository.Get(asNoTracking: asNoTracking)
-            .SingleOrDefaultAsync(role => role.Type == roleType, cancellationToken);
+            .FirstOrDefaultAsync(role => role.Type == roleType, cancellationToken);
     }
 }
