@@ -25,16 +25,22 @@ public sealed class User : SoftDeletedEntity
     ///Gets or sets the password of the user 
     /// </summary>
     public string Password { get; set; } = default!;
-    
+
     //TODO: Add User Role for Identity 
-    
+
     /// <summary>
     /// Gets or sets user activation
     /// </summary>
     public bool IsActive { get; set; }
-    
+
     /// <summary>
     ///Gets or sets user's phone number 
     /// </summary>
     public string PhoneNumber { get; set; } = default!;
+
+
+    /// <summary>
+    /// User settings property for includes
+    /// </summary>
+    public UserSettings? UserSettings { get; set; }
 }

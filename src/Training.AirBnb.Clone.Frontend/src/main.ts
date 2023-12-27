@@ -1,14 +1,13 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
-import router from './infrastructure/router'
+import { AppThemeService } from "@/infrastructure/services/AppThemeService";
 
-const app = createApp(App)
+const appThemeService = new AppThemeService();
 
-app.use(createPinia())
-app.use(router)
+const app = createApp(App);
+
+appThemeService.setAppTheme();
 
 app.mount('#app')
