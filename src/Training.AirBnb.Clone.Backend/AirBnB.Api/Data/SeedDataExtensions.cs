@@ -1,6 +1,7 @@
 ﻿using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
+using AutoMapper.Configuration.Annotations;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +33,10 @@ public static class SeedDataExtensions
     /// <returns>An asynchronous task representing the seeding process.</returns>
     private static async ValueTask SeedUsersAsync(this IdentityDbContext dbContext)
     {
+        var userRoleId = dbContext.Roles.First(role => role.Type == RoleType.User).Id;
+
         var userFaker = new Faker<User>()
+            .RuleFor(user => user.RoleId, () => userRoleId)
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
