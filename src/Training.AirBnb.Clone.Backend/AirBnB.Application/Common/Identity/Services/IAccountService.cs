@@ -29,9 +29,9 @@ public interface IAccountService
     /// <summary>
     /// verifies a user by their verification token.
     /// </summary>
-    /// <param name="token"></param>
-    /// <param name="saveChanges"></param>
+    /// <param name="emailAddress"></param>
+    /// <param name="asNoTracking"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<bool> VerificateUserAsync(string token, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<bool> VerifyUserAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
 }

@@ -22,198 +22,198 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("BuiltDate")
-                        .HasColumnType("date");
+                b.Property<DateOnly>("BuiltDate")
+                    .HasColumnType("date");
 
-                    b.Property<DateTimeOffset?>("DeletedTime")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTimeOffset?>("DeletedTime")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("boolean");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Listings", "identity");
-                });
+                b.ToTable("Listings", "identity");
+            });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                b.Property<string>("FileName")
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnType("character varying(255)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                b.Property<int>("Type")
+                    .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("StorageFiles", "identity");
-                });
+                b.ToTable("StorageFiles", "identity");
+            });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset?>("DeletedTime")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTimeOffset?>("DeletedTime")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                b.Property<string>("EmailAddress")
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnType("character varying(128)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                b.Property<string>("FirstName")
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnType("character varying(128)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsActive")
+                    .HasColumnType("boolean");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("boolean");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                b.Property<string>("LastName")
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnType("character varying(128)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnType("character varying(256)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("PhoneNumber")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("EmailAddress")
-                        .IsUnique();
+                b.HasIndex("EmailAddress")
+                    .IsUnique();
 
-                    b.ToTable("Users", "identity");
-                });
+                b.ToTable("Users", "identity");
+            });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.VerificationCode", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                b.Property<string>("Code")
+                    .IsRequired()
+                    .HasMaxLength(64)
+                    .HasColumnType("character varying(64)");
 
-                    b.Property<int>("CodeType")
-                        .HasColumnType("integer");
+                b.Property<int>("CodeType")
+                    .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset>("ExpiryTime")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTimeOffset>("ExpiryTime")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsActive")
+                    .HasColumnType("boolean");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                b.Property<int>("Type")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("VerificationLink")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                b.Property<string>("VerificationLink")
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("VerificationCode", "identity");
+                b.ToTable("VerificationCode", "identity");
 
-                    b.HasDiscriminator<int>("Type");
+                b.HasDiscriminator<int>("Type");
 
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.UserInfoVerificationCode", b =>
-                {
-                    b.HasBaseType("AirBnB.Domain.Entities.VerificationCode");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasIndex("UserId");
-
-                    b.HasDiscriminator().HasValue(1);
-                });
+                b.UseTphMappingStrategy();
+            });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserInfoVerificationCode", b =>
-                {
-                    b.HasOne("AirBnB.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+            {
+                b.HasBaseType("AirBnB.Domain.Entities.VerificationCode");
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uuid");
+
+                b.HasIndex("UserId");
+
+                b.HasDiscriminator().HasValue(1);
+            });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserInfoVerificationCode", b =>
+            {
+                b.HasOne("AirBnB.Domain.Entities.User", null)
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
                 {
                     b.OwnsOne("AirBnB.Domain.Entities.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("ListingId")
-                                .HasColumnType("uuid");
+                    {
+                        b1.Property<Guid>("ListingId")
+                            .HasColumnType("uuid");
 
-                            b1.Property<string>("City")
-                                .HasMaxLength(256)
-                                .HasColumnType("character varying(256)");
+                        b1.Property<string>("City")
+                            .HasMaxLength(256)
+                            .HasColumnType("character varying(256)");
 
-                            b1.Property<Guid?>("CityId")
-                                .HasColumnType("uuid");
+                        b1.Property<Guid?>("CityId")
+                            .HasColumnType("uuid");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision");
+                        b1.Property<double>("Latitude")
+                            .HasColumnType("double precision");
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision");
+                        b1.Property<double>("Longitude")
+                            .HasColumnType("double precision");
 
-                            b1.HasKey("ListingId");
+                        b1.HasKey("ListingId");
 
-                            b1.ToTable("Listings", "identity");
+                        b1.ToTable("Listings", "identity");
 
-                            b1.WithOwner()
-                                .HasForeignKey("ListingId");
-                        });
+                        b1.WithOwner()
+                            .HasForeignKey("ListingId");
+                    });
 
                     b.OwnsOne("AirBnB.Domain.Entities.Money", "PricePerNight", b1 =>
-                        {
-                            b1.Property<Guid>("ListingId")
-                                .HasColumnType("uuid");
+                    {
+                        b1.Property<Guid>("ListingId")
+                            .HasColumnType("uuid");
 
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("numeric");
+                        b1.Property<decimal>("Amount")
+                            .HasColumnType("numeric");
 
-                            b1.Property<int>("Currency")
-                                .HasColumnType("integer");
+                        b1.Property<int>("Currency")
+                            .HasColumnType("integer");
 
-                            b1.HasKey("ListingId");
+                        b1.HasKey("ListingId");
 
-                            b1.ToTable("Listings", "identity");
+                        b1.ToTable("Listings", "identity");
 
-                            b1.WithOwner()
-                                .HasForeignKey("ListingId");
-                        });
+                        b1.WithOwner()
+                            .HasForeignKey("ListingId");
+                    });
 
                     b.Navigation("Address")
                         .IsRequired();
@@ -221,6 +221,7 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                     b.Navigation("PricePerNight")
                         .IsRequired();
                 });
+            });
         }
     }
 }

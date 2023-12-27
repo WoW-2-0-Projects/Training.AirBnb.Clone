@@ -2,18 +2,24 @@
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
+using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
-public class AccountService(UserValidator validator, IUserRepository userRepository) : IAccountService
+public class AccountService(
+    IdentityDbContext dbContext,
+    UserValidator validator,
+    IUserRepository userRepository
+    ) : IAccountService
 {
-    public async ValueTask<bool> CreateUserAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<bool> CreateUserAsync(User user, bool saveChanges = true, 
+        CancellationToken cancellationToken = default)
     {
-        var validationResult =
-             validator.Validate(user, options => options.IncludeRuleSets(EntityEvent.OnCreate.ToString()));
+        var validationResult = validator.Validate(user, options => 
+                 options.IncludeRuleSets(EntityEvent.OnCreate.ToString()));
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
@@ -23,23 +29,32 @@ public class AccountService(UserValidator validator, IUserRepository userReposit
         return true;
     }
 
-    public async ValueTask<User?> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    public async ValueTask<User?> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false,
+        CancellationToken cancellationToken = default)
     {
         if (emailAddress is null)
-            throw new ArgumentNullException(nameof(emailAddress), "Email address not found!");
+            throw new ArgumentNullException(nameof(emailAddress), "Email address cannot be null!");
 
         var query = userRepository.Get(user => user.EmailAddress == emailAddress);
 
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        var account = await query.SingleOrDefaultAsync(cancellationToken);
-
-        return account;
+        return await query.SingleOrDefaultAsync(cancellationToken);
     }
 
-    public ValueTask<bool> VerificateUserAsync(string token, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public async ValueTask<bool> VerifyUserAsync(string emailAddress, bool asNoTracking = false, 
+        CancellationToken cancellationToken = default)
     {
-        throw new Exception();
+        if (emailAddress is null)
+            throw new ArgumentNullException(nameof(emailAddress), "Email address cannot be null!");
+        
+        var user = dbContext.Users.Where(user => user.EmailAddress == emailAddress);
+
+        if (asNoTracking)
+            user = user.AsNoTracking();
+
+        return await user.AnyAsync(cancellationToken);
     }
+
 }
