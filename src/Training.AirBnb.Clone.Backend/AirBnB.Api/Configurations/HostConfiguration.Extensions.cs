@@ -155,6 +155,9 @@ public static partial class HostConfiguration
         // register repositories
         builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
 
+        // register foundation services
+        builder.Services.AddScoped<IListingCategoryService, ListingCategoryService>();
+
         return builder;
     }
 
