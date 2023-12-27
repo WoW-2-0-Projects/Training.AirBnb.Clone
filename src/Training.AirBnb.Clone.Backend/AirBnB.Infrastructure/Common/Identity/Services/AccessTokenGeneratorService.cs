@@ -113,7 +113,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
             new(ClaimTypes.Email, user.EmailAddress),
 
             // Claim representing the user's role.
-            // new(ClaimTypes.Role, user.Role.ToString()),
+            new(ClaimTypes.Role, user.Role.ToString()),
 
             // Claim representing the user's unique identifier.
             new(ClaimConstants.UserId, user.Id.ToString()),
