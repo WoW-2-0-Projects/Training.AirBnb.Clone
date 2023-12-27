@@ -20,6 +20,8 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using AirBnB.Application.Listings.Services;
+using AirBnB.Infrastructure.Listings.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -142,7 +144,20 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
+    /// <summary>
+    /// Configures Listings Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        // register repositories
+        builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+
+        return builder;
+    }
+
     /// <summary>
     /// Extension method to configure and add verification infrastructure to the web application.
     /// </summary>
