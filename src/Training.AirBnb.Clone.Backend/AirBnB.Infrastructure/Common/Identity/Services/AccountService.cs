@@ -32,8 +32,8 @@ public class AccountService(
     public async ValueTask<User?> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false,
         CancellationToken cancellationToken = default)
     {
-        if (emailAddress is null)
-            throw new ArgumentNullException(nameof(emailAddress), "Email address cannot be null!");
+        if (string.IsNullOrWhiteSpace(emailAddress))
+            throw new ArgumentNullException(nameof(emailAddress),"Email address cannot be null or empty.");
 
         var query = userRepository.Get(user => user.EmailAddress == emailAddress);
 
@@ -46,8 +46,8 @@ public class AccountService(
     public async ValueTask<bool> VerifyUserAsync(string emailAddress, bool asNoTracking = false, 
         CancellationToken cancellationToken = default)
     {
-        if (emailAddress is null)
-            throw new ArgumentNullException(nameof(emailAddress), "Email address cannot be null!");
+        if (string.IsNullOrWhiteSpace(emailAddress))
+            throw new ArgumentNullException(nameof(emailAddress),"Email address cannot be null or empty.");
         
         var user = dbContext.Users.Where(user => user.EmailAddress == emailAddress);
 
