@@ -10,9 +10,7 @@ using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Infrastructure.Common.Verifications.Services;
 using AirBnB.Application.Common.StorageFiles;
-using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.StorageFiles;
-
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
@@ -117,14 +115,12 @@ public static partial class HostConfiguration
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
-        
+
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
-            .AddScoped<IUserSettingsService, UserSettingsService>()
-            .AddScoped<IListingRepository, ListingRepository>()
-            .AddScoped<IListingService, ListingService>();
+            .AddScoped<IUserSettingsService, UserSettingsService>();
 
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
@@ -153,10 +149,14 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
     {
         // register repositories
-        builder.Services.AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+        builder.Services
+            .AddScoped<IListingRepository, ListingRepository>()
+            .AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
 
         // register foundation services
-        builder.Services.AddScoped<IListingCategoryService, ListingCategoryService>();
+        builder.Services
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IListingCategoryService, ListingCategoryService>();
 
         return builder;
     }
