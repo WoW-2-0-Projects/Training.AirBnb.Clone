@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.StorageFiles.Settings;
 
 namespace AirBnB.Api.Configurations;
 
@@ -134,6 +135,8 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
+
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
             .AddScoped<IStorageFileService, StorageFileService>();
@@ -200,6 +203,8 @@ public static partial class HostConfiguration
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddControllers();
+
+        builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
         return builder;
     }
