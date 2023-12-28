@@ -3,21 +3,24 @@ using System;
 using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Migrations
+namespace AirBnB.Persistence.Migrations.IdentityDb
 {
-    [DbContext(typeof(NotificationDbContext))]
-    partial class NotificationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(IdentityDbContext))]
+    [Migration("20231226161740_RoleMigrations")]
+    partial class RoleMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("notification")
+                .HasDefaultSchema("identity")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -57,7 +60,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type", "TemplateType")
                         .IsUnique();
 
-                    b.ToTable("NotificationTemplates", "notification");
+                    b.ToTable("NotificationTemplates", "identity");
 
                     b.HasDiscriminator<int>("Type");
 
@@ -87,13 +90,13 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
-                    b.ToTable("Role", "notification");
+                    b.ToTable("Role", "identity");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("29e62346-1bb7-4fd4-833f-8ebd85734570"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4396),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 17, 38, 445, DateTimeKind.Utc).AddTicks(5311),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
@@ -101,7 +104,7 @@ namespace AirBnB.Persistence.Migrations
                         new
                         {
                             Id = new Guid("eec07fc2-2a0d-4e63-b084-1975e836793c"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4399),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 17, 38, 445, DateTimeKind.Utc).AddTicks(5314),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
@@ -109,7 +112,7 @@ namespace AirBnB.Persistence.Migrations
                         new
                         {
                             Id = new Guid("c93760c5-03ed-4845-b3c9-01c125ef326a"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4400),
+                            CreatedTime = new DateTime(2023, 12, 26, 16, 17, 38, 445, DateTimeKind.Utc).AddTicks(5315),
                             IsDisable = false,
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
@@ -132,7 +135,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StorageFile", "notification");
+                    b.ToTable("StorageFiles", "identity");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -184,7 +187,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User", "notification");
+                    b.ToTable("Users", "identity");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.EmailTemplate", b =>
