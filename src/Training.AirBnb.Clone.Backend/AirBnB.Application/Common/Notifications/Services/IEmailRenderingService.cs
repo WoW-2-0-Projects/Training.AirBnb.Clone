@@ -3,7 +3,7 @@
 namespace AirBnB.Application.Common.Notifications.Services;
 
 /// <summary>
-/// Represents a service for rendering email message
+/// Represents a service which provides email rendering functionalities
 /// </summary>
 public interface IEmailRenderingService
 {
