@@ -14,26 +14,46 @@ public static class DbContextExtensions
     /// <param name="modelBuilder"></param>
     public static void ApplyEntityConfigurations<TDataContext>(this ModelBuilder modelBuilder) where TDataContext : DbContext
     {
-        // Get type information for the provided DbContext type.
         var dbContextType = typeof(TDataContext);
 
-        // Retrieve properties of type DbSet<> from the DbContext.
-        var dbSetProperties = dbContextType
-            .GetProperties()
-            .Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
+        var entityConfigurationTypes = GetEntityConfigurations(dbContextType).ToList();
 
-        // Extract entity types from DbSet<> properties.
-        var dbSetTypes = dbSetProperties
+        entityConfigurationTypes.ForEach(type => modelBuilder.ApplyConfiguration((dynamic)Activator.CreateInstance(type)!));
+    }
+
+    /// <summary>
+    /// Retrieves entity types from the specified DbContext type by inspecting its properties of type DbSet<>.
+    /// </summary>
+    /// <param name="dbContextType"></param>
+    /// <returns>A list of entity types extracted from DbSet<> properties in the DbContext.</returns>
+    public static IList<Type> GetEntityTypes(Type dbContextType)
+    {
+        var dbSetProperties = dbContextType
+           .GetProperties()
+           .Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
+
+        return dbSetProperties
             .Select(p => p.PropertyType.GetGenericArguments()[0])
             .ToList();
+    }
 
-        // Create a list of IEntityTypeConfiguration<> types for each entity type.
+
+    /// <summary>
+    /// Retrieves entity configuration types related to the specified DbContext type.
+    /// </summary>
+    /// <param name="dbContextType">The type of DbContext to analyze.</param>
+    /// <returns>
+    /// A list of types representing entity configurations associated with the entities in the DbContext.
+    /// </returns>
+    public static IList<Type> GetEntityConfigurations(Type dbContextType)
+    {
+        var dbSetTypes = GetEntityTypes(dbContextType);
+
         var possibleEntityConfigurationTypes = dbSetTypes
             .Select(dbSetType => typeof(IEntityTypeConfiguration<>)
             .MakeGenericType(dbSetType))
             .ToList();
 
-        // Discover and filter classes implementing entity configurations.
         var matchingConfigurationTypes = AppDomain.CurrentDomain
             .GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -41,7 +61,6 @@ public static class DbContextExtensions
                            possibleEntityConfigurationTypes.Exists(configType => configType.IsAssignableFrom(type)))
             .ToList();
 
-        // Apply each discovered configuration to the ModelBuilder.
-        matchingConfigurationTypes.ForEach(type => modelBuilder.ApplyConfiguration((dynamic)Activator.CreateInstance(type)!));
+        return matchingConfigurationTypes;
     }
 }
