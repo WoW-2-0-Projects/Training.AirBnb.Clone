@@ -1,15 +1,18 @@
-﻿using System.Reflection;
+using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Settings;
-using AirBnB.Application.Common.StorageFiles;
-using AirBnB.Domain.Entities;
+using AirBnB.Application.Common.Verifications.Services;
 using AirBnB.Infrastructure.Common.Caching;
 using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
+using AirBnB.Infrastructure.Common.Verifications.Services;
+using AirBnB.Application.Common.StorageFiles;
+using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.StorageFiles;
+
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
@@ -112,11 +115,17 @@ public static partial class HostConfiguration
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
-
+        
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>();
-        
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
+            .AddScoped<IUserSettingsService, UserSettingsService>()
+            .AddScoped<IListingRepository, ListingRepository>()
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IRoleService, RoleService>();
+
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
         return builder;
@@ -137,6 +146,23 @@ public static partial class HostConfiguration
     }
     
     /// <summary>
+    /// Extension method to configure and add verification infrastructure to the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddVerificationInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<VerificationCodeSettings>(
+            builder.Configuration.GetSection(nameof(VerificationCodeSettings)));
+
+        builder.Services.AddScoped<IUserInfoVerificationCodeRepository, UserInfoVerificationCodeRepository>();
+
+        builder.Services.AddScoped<IUserInfoVerificationCodeService, UserInfoVerificationCodeService>();
+
+        return builder;
+    }
+    
+    /// <summary>
     /// Seeds data into the application's database by creating a service scope and initializing the seed operation.
     /// </summary>
     /// <param name="app"></param>
@@ -148,7 +174,6 @@ public static partial class HostConfiguration
         
         return app;
     }
-
     
     /// <summary>
     /// Configures exposers including controllers
