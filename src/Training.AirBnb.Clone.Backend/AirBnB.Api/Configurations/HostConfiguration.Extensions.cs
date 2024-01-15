@@ -11,7 +11,6 @@ using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Infrastructure.Common.Verifications.Services;
 using AirBnB.Application.Common.StorageFiles;
-using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.StorageFiles;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
@@ -22,6 +21,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
+using AirBnB.Application.Listings.Services;
+using AirBnB.Infrastructure.Listings.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -124,7 +125,9 @@ public static partial class HostConfiguration
             
         builder.Services
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
-            .AddScoped<ISmsTemplateService, SmsTemplateService>();
+            .AddScoped<ISmsTemplateService, SmsTemplateService>()
+            .AddScoped<IEmailRenderingService, EmailRenderingService>()
+            .AddScoped<ISmsRenderingService, SmsRenderingService>();
         
         return builder;
     }
@@ -141,14 +144,12 @@ public static partial class HostConfiguration
                 o => o.MigrationsHistoryTable(
                     tableName: HistoryRepository.DefaultTableName,
                     schema: "identity")));
-        
+
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IUserSettingsService, UserSettingsService>()
-            .AddScoped<IListingRepository, ListingRepository>()
-            .AddScoped<IListingService, ListingService>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IRoleService, RoleService>();
 
@@ -164,13 +165,35 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
+
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
             .AddScoped<IStorageFileService, StorageFileService>();
 
         return builder;
     }
-    
+
+    /// <summary>
+    /// Configures Listings Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        // register repositories
+        builder.Services
+            .AddScoped<IListingRepository, ListingRepository>()
+            .AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+
+        // register foundation services
+        builder.Services
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IListingCategoryService, ListingCategoryService>();
+
+        return builder;
+    }
+
     /// <summary>
     /// Extension method to configure and add verification infrastructure to the web application.
     /// </summary>
@@ -210,6 +233,8 @@ public static partial class HostConfiguration
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddControllers();
+
+        builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
         return builder;
     }
