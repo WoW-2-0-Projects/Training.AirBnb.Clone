@@ -29,6 +29,24 @@ public class AccessTokenValidator : AbstractValidator<AccessToken>
 
                 // Ensure that UserId is not empty during creation.
                 RuleFor(accessToken => accessToken.UserId).NotEqual(Guid.Empty);
+
+                // Ensure that Token is not empty during creation.
+                RuleFor(accessToken => accessToken.Token).NotEmpty();
+
+                // Ensure that ExpiryTime is greater than the current time during creation.
+                RuleFor(accessToken => accessToken.ExpiryTime)
+                    .GreaterThan(DateTimeOffset.UtcNow)
+                    .Custom((accessToken, context) =>
+                    {
+                        // Add additional custom validation for ExpiryTime if needed.
+                        if (accessToken > DateTimeOffset.UtcNow.AddMinutes(jwtSettingsValue.ExpirationTimeInMinute))
+                        {
+                            context.AddFailure(
+                                nameof(AccessToken.ExpiryTime),
+                                $"{nameof(AccessToken.ExpiryTime)} cannot be greater than the expiration time of the JWT token."
+                            );
+                        }
+                    });
             }
         );
 
