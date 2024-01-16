@@ -3,6 +3,7 @@ using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
+using AirBnB.Application.Common.Serializers;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Application.Common.Verifications.Services;
 using AirBnB.Infrastructure.Common.Caching;
@@ -22,6 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
+using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 
@@ -104,6 +106,19 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
     {
         builder.Services.AddAutoMapper(Assemblies);
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures and adds Serializers to web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddSerializers(this WebApplicationBuilder builder)
+    {
+        // register json serialization settings
+        builder.Services.AddSingleton<IJsonSerializationSettingsProvider, JsonSerializationSettingsProvider>();
+        
         return builder;
     }
     
