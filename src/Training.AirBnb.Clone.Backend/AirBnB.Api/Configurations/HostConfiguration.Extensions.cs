@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.StorageFiles.Settings;
 
 namespace AirBnB.Api.Configurations;
 

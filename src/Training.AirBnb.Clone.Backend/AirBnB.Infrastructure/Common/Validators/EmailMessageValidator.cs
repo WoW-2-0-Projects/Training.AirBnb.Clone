@@ -19,7 +19,7 @@ public class EmailMessageValidator : AbstractValidator<EmailMessage>
         RuleSet(NotificationEvent.OnSending.ToString(),
             () =>
             {
-                RuleFor(message => message.SendEmailAddress).NotNull().NotEmpty();
+                RuleFor(message => message.SenderEmailAddress).NotNull().NotEmpty();
                 RuleFor(message => message.ReceiverEmailAddress).NotNull().NotEmpty();
                 RuleFor(message => message.Subject).NotNull().NotEmpty();
                 RuleFor(message => message.Body).NotNull().NotEmpty();
