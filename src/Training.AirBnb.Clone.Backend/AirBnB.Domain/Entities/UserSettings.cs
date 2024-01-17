@@ -6,7 +6,7 @@ namespace AirBnB.Domain.Entities;
 /// <summary>
 /// Represents a user settings entity
 /// </summary>
-public class UserSettings : SoftDeletedEntity
+public class UserSettings : AuditableEntity
 {
     /// <summary>
     /// Gets or sets user preferred theme of user

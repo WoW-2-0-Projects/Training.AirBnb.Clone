@@ -16,5 +16,5 @@ public class Role : AuditableEntity
     /// <summary>
     /// Indicates whether the role is disabled or not. 
     /// </summary>
-    public bool IsDisable { get; set; }
+    public bool IsDisabled { get; set; }
 }

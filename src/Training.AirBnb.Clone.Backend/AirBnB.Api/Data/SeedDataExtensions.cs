@@ -43,7 +43,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.Password, data => data.Internet.Password(8))
+            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(userFaker.Generate(100));

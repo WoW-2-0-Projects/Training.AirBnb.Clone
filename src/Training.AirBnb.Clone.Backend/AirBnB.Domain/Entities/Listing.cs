@@ -5,7 +5,7 @@ namespace AirBnB.Domain.Entities;
 /// <summary>
 /// Represents a listing entity.
 /// </summary>
-public class Listing : SoftDeletedEntity
+public class Listing : AuditableEntity
 {
     /// <summary>
     /// Gets or sets the name of the listing.

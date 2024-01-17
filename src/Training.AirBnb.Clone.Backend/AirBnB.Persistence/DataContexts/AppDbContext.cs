@@ -39,10 +39,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     #region Listings
 
     public DbSet<Listing> Listings => Set<Listing>();
-
-    #endregion
     
     public DbSet<ListingCategory> ListingCategories => Set<ListingCategory>();
+
+    #endregion
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
