@@ -129,12 +129,6 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<NotificationDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationConnection"),
-                o => o.MigrationsHistoryTable(
-                    tableName: HistoryRepository.DefaultTableName,
-                    schema: "notification")));
-
         builder.Services
             .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
             .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
@@ -155,12 +149,6 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<IdentityDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                o => o.MigrationsHistoryTable(
-                    tableName: HistoryRepository.DefaultTableName,
-                    schema: "identity")));
-
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>()
@@ -224,6 +212,14 @@ public static partial class HostConfiguration
 
         builder.Services.AddScoped<IUserInfoVerificationCodeService, UserInfoVerificationCodeService>();
 
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
+        
         return builder;
     }
     

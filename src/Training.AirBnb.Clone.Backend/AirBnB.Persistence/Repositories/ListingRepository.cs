@@ -8,8 +8,8 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class ListingRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker) 
-    : EntityRepositoryBase<Listing, IdentityDbContext>(
+public class ListingRepository(AppDbContext dbContext, ICacheBroker cacheBroker) 
+    : EntityRepositoryBase<Listing, AppDbContext>(
         dbContext, cacheBroker,
         new CacheEntryOptions()
         ), IListingRepository

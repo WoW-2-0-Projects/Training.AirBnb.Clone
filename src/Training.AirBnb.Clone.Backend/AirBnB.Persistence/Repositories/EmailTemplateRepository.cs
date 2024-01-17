@@ -8,8 +8,8 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class EmailTemplateRepository(NotificationDbContext dbContext, ICacheBroker cacheBroker):
-    EntityRepositoryBase<EmailTemplate, NotificationDbContext>(dbContext, cacheBroker, new CacheEntryOptions()), IEmailTemplateRepository
+public class EmailTemplateRepository(AppDbContext dbContext, ICacheBroker cacheBroker):
+    EntityRepositoryBase<EmailTemplate, AppDbContext>(dbContext, cacheBroker, new CacheEntryOptions()), IEmailTemplateRepository
 {
     public new IQueryable<EmailTemplate> Get(
         Expression<Func<EmailTemplate, bool>>? predicate = default,

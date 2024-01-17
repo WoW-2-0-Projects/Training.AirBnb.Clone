@@ -14,6 +14,7 @@ public static partial class HostConfiguration
             .AddValidators()
             .AddMappers()
             .AddSerializers()
+            .AddPersistence()
             .AddDevTools()
             .AddStorageFileInfrastructure()
             .AddIdentityInfrastructure()

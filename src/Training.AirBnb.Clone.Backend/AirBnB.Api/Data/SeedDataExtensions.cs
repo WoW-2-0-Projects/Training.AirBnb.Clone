@@ -1,7 +1,6 @@
 ﻿using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
-using AutoMapper.Configuration.Annotations;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -20,7 +19,7 @@ public static class SeedDataExtensions
     /// <returns>An asynchronous task representing the initialization process.</returns>
     public static async ValueTask InitializeSeedAsync(this IServiceProvider serviceProvider)
     {
-        var identityDbContext = serviceProvider.GetRequiredService<IdentityDbContext>();
+        var identityDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
         if (!await identityDbContext.Users.AnyAsync())
@@ -35,7 +34,7 @@ public static class SeedDataExtensions
     /// </summary>
     /// <param name="dbContext">The IdentityDbContext instance to seed data into.</param>
     /// <returns>An asynchronous task representing the seeding process.</returns>
-    private static async ValueTask SeedUsersAsync(this IdentityDbContext dbContext)
+    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
     {
         var userRoleId = dbContext.Roles.First(role => role.Type == RoleType.User).Id;
 
@@ -58,7 +57,7 @@ public static class SeedDataExtensions
     /// <param name="webHostEnvironment"></param>
     /// <returns></returns>
     private static async ValueTask SeedListingCategoriesAsync(
-        this IdentityDbContext listingsDbcontext,
+        this AppDbContext listingsDbcontext,
         IHostEnvironment webHostEnvironment)
     {
         var listingCategoriesFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "ListingCategories.json");
