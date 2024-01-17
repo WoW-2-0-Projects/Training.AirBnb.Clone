@@ -1,4 +1,4 @@
-namespace AirBnB.Domain.Common;
+namespace AirBnB.Domain.Common.Entities;
 
 public interface IAuditableEntity : ISoftDeletedEntity
 {
@@ -16,5 +16,5 @@ public interface IAuditableEntity : ISoftDeletedEntity
     /// <value>
     /// The date and time when the entity was last updated.
     /// </value>
-    public DateTimeOffset? UpdatedTime { get; set; }
+    public DateTimeOffset? ModifiedTime { get; set; }
 }

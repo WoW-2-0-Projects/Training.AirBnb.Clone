@@ -1,4 +1,6 @@
-﻿namespace AirBnB.Domain.Common.Query;
+﻿using AirBnB.Domain.Common.Entities;
+
+namespace AirBnB.Domain.Common.Query;
 
 /// <summary>
 /// Represents an interface for objects that can be converted to a query specification.

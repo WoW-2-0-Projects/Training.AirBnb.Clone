@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Common;
+﻿using AirBnB.Domain.Common.Entities;
 
 namespace AirBnB.Domain.Entities;
 

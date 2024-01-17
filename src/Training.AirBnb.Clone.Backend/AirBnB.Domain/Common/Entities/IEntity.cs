@@ -1,4 +1,4 @@
-namespace AirBnB.Domain.Common;
+namespace AirBnB.Domain.Common.Entities;
 
 public interface IEntity
 {

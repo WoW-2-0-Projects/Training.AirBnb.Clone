@@ -1,4 +1,4 @@
-namespace AirBnB.Domain.Common;
+namespace AirBnB.Domain.Common.Entities;
 
 /// <summary>
 /// Represents the base class for entities in the system.
