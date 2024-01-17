@@ -3,17 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Migrations.IdentityDb
+namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class ListingCategoryMigration : Migration
+    public partial class ListingCategoriesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "ListingCategories",
-                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -29,7 +28,6 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                     table.ForeignKey(
                         name: "FK_ListingCategories_StorageFiles_StorageFileId",
                         column: x => x.StorageFileId,
-                        principalSchema: "identity",
                         principalTable: "StorageFiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -37,14 +35,12 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListingCategories_Name",
-                schema: "identity",
                 table: "ListingCategories",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListingCategories_StorageFileId",
-                schema: "identity",
                 table: "ListingCategories",
                 column: "StorageFileId",
                 unique: true);
@@ -54,8 +50,7 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ListingCategories",
-                schema: "identity");
+                name: "ListingCategories");
         }
     }
 }

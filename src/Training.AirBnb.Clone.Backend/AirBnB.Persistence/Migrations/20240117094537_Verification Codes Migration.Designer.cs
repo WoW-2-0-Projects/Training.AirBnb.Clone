@@ -3,6 +3,7 @@ using System;
 using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,14 +11,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AirBnB.Persistence.Migrations
 {
-    [DbContext(typeof(NotificationDbContext))]
-    partial class NotificationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20240117094537_Verification Codes Migration")]
+    partial class VerificationCodesMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("notification")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -43,21 +45,21 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTimeOffset?>("ModifiedTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("TemplateType")
                         .HasColumnType("integer");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Type", "TemplateType")
                         .IsUnique();
 
-                    b.ToTable("NotificationTemplates", "notification");
+                    b.ToTable("NotificationTemplates", (string)null);
 
                     b.HasDiscriminator<int>("Type");
 
@@ -70,13 +72,19 @@ namespace AirBnB.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsDisable")
+                    b.Property<DateTimeOffset?>("DeletedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ModifiedTime")
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("ModifiedTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Type")
@@ -87,33 +95,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
-                    b.ToTable("Role", "notification");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("29e62346-1bb7-4fd4-833f-8ebd85734570"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4396),
-                            IsDisable = false,
-                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("eec07fc2-2a0d-4e63-b084-1975e836793c"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4399),
-                            IsDisable = false,
-                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = new Guid("c93760c5-03ed-4845-b3c9-01c125ef326a"),
-                            CreatedTime = new DateTime(2023, 12, 26, 16, 18, 46, 309, DateTimeKind.Utc).AddTicks(4400),
-                            IsDisable = false,
-                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        });
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
@@ -132,7 +114,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StorageFile", "notification");
+                    b.ToTable("StorageFiles");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -140,6 +122,9 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
                         .HasColumnType("timestamp with time zone");
@@ -165,7 +150,10 @@ namespace AirBnB.Persistence.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<string>("Password")
+                    b.Property<DateTimeOffset?>("ModifiedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -184,7 +172,79 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User", "notification");
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("DeletedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("ModifiedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PreferredNotificationType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PreferredTheme")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserSettings");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.VerificationCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("CodeType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("ExpiryTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("VerificationLink")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VerificationCodes");
+
+                    b.HasDiscriminator<int>("Type");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.EmailTemplate", b =>
@@ -196,14 +256,26 @@ namespace AirBnB.Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.HasDiscriminator().HasValue(1);
+                    b.HasDiscriminator().HasValue(0);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.SmsTemplate", b =>
                 {
                     b.HasBaseType("AirBnB.Domain.Entities.NotificationTemplate");
 
-                    b.HasDiscriminator().HasValue(0);
+                    b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserInfoVerificationCode", b =>
+                {
+                    b.HasBaseType("AirBnB.Domain.Entities.VerificationCode");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue(1);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -215,6 +287,32 @@ namespace AirBnB.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
+                {
+                    b.HasOne("AirBnB.Domain.Entities.User", "User")
+                        .WithOne("UserSettings")
+                        .HasForeignKey("AirBnB.Domain.Entities.UserSettings", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserInfoVerificationCode", b =>
+                {
+                    b.HasOne("AirBnB.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
+                {
+                    b.Navigation("UserSettings")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

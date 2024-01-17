@@ -6,27 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSmsAndEmailTemplate : Migration
+    public partial class NotificationTemplatesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PhoneNumberId",
-                schema: "notification",
-                table: "User");
-
-            migrationBuilder.AddColumn<string>(
-                name: "PhoneNumber",
-                schema: "notification",
-                table: "User",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "NotificationTemplates",
-                schema: "notification",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -37,7 +23,7 @@ namespace AirBnB.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    ModifiedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +32,6 @@ namespace AirBnB.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_NotificationTemplates_Type_TemplateType",
-                schema: "notification",
                 table: "NotificationTemplates",
                 columns: new[] { "Type", "TemplateType" },
                 unique: true);
@@ -56,21 +41,7 @@ namespace AirBnB.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "NotificationTemplates",
-                schema: "notification");
-
-            migrationBuilder.DropColumn(
-                name: "PhoneNumber",
-                schema: "notification",
-                table: "User");
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "PhoneNumberId",
-                schema: "notification",
-                table: "User",
-                type: "uuid",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+                name: "NotificationTemplates");
         }
     }
 }

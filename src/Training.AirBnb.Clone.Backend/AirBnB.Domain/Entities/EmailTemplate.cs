@@ -1,5 +1,4 @@
 ﻿using Type = AirBnB.Domain.Enums.NotificationType;
-using AirBnB.Domain.Common;
 
 namespace AirBnB.Domain.Entities;
 

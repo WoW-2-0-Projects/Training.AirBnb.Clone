@@ -1,5 +1,4 @@
 ﻿using AirBnB.Domain.Entities;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

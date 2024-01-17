@@ -3,17 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Migrations.IdentityDb
+namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddVerificationCode : Migration
+    public partial class VerificationCodesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "VerificationCode",
-                schema: "identity",
+                name: "VerificationCodes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -27,20 +26,18 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VerificationCode", x => x.Id);
+                    table.PrimaryKey("PK_VerificationCodes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VerificationCode_Users_UserId",
+                        name: "FK_VerificationCodes_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "identity",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_VerificationCode_UserId",
-                schema: "identity",
-                table: "VerificationCode",
+                name: "IX_VerificationCodes_UserId",
+                table: "VerificationCodes",
                 column: "UserId");
         }
 
@@ -48,8 +45,7 @@ namespace AirBnB.Persistence.Migrations.IdentityDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "VerificationCode",
-                schema: "identity");
+                name: "VerificationCodes");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AirBnB.Domain.Common.Caching;
+using AirBnB.Domain.Common.Entities;
 using AirBnB.Domain.Comparers;
 using Microsoft.EntityFrameworkCore.Query;
 

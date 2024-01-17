@@ -6,14 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStoragefile : Migration
+    public partial class StorageFilesMIgration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "StorageFiles",
-                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -30,8 +29,7 @@ namespace AirBnB.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StorageFiles",
-                schema: "identity");
+                name: "StorageFiles");
         }
     }
 }

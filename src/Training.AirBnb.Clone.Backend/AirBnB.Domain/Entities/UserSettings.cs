@@ -1,12 +1,12 @@
-﻿using AirBnB.Domain.Common;
+﻿using AirBnB.Domain.Common.Entities;
 using AirBnB.Domain.Enums;
 
 namespace AirBnB.Domain.Entities;
 
 /// <summary>
-/// Represents a usersettings entity
+/// Represents a user settings entity
 /// </summary>
-public class UserSettings : SoftDeletedEntity
+public class UserSettings : AuditableEntity
 {
     /// <summary>
     /// Gets or sets user preferred theme of user

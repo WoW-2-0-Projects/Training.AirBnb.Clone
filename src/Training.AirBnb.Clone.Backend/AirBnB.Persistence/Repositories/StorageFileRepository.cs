@@ -10,7 +10,7 @@ namespace AirBnB.Persistence.Repositories;
 /// <summary>
 /// Repository for managing storage files, extending the base entity repository for <see cref="StorageFile"/>.
 /// </summary>
-public class StorageFileRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker) : EntityRepositoryBase<StorageFile, IdentityDbContext>(
+public class StorageFileRepository(AppDbContext dbContext, ICacheBroker cacheBroker) : EntityRepositoryBase<StorageFile, AppDbContext>(
     dbContext,
     cacheBroker, 
     new CacheEntryOptions()), IStorageFileRepository

@@ -7,8 +7,8 @@ using System.Linq.Expressions;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class UserSettingsRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker)
-    : EntityRepositoryBase<UserSettings, IdentityDbContext>(dbContext, cacheBroker, new()), IUserSettingsRepository
+public class UserSettingsRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
+    : EntityRepositoryBase<UserSettings, AppDbContext>(dbContext, cacheBroker, new()), IUserSettingsRepository
 {
     public new ValueTask<UserSettings> CreateAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
         => base.CreateAsync(userSettings, saveChanges, cancellationToken);

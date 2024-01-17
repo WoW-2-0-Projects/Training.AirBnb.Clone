@@ -1,4 +1,4 @@
-namespace AirBnB.Domain.Common;
+namespace AirBnB.Domain.Common.Entities;
 
 /// <summary>
 /// Gets or sets the identifier of the user who deleted the entity.

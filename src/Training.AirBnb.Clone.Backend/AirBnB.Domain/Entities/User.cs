@@ -1,12 +1,11 @@
-using AirBnB.Domain.Common;
-using AirBnB.Domain.Enums;
+using AirBnB.Domain.Common.Entities;
 
 namespace AirBnB.Domain.Entities;
 
 /// <summary>
 /// Represents a user entity
 /// </summary>
-public sealed class User : SoftDeletedEntity
+public sealed class User : AuditableEntity
 {
     /// <summary>
     /// Gets or sets the first name of the user
@@ -26,7 +25,7 @@ public sealed class User : SoftDeletedEntity
     /// <summary>
     ///Gets or sets the password of the user 
     /// </summary>
-    public string Password { get; set; } = default!;
+    public string PasswordHash { get; set; } = default!;
     
     ///<summary>
     /// Gets or sets the Role Id of user
@@ -51,5 +50,5 @@ public sealed class User : SoftDeletedEntity
     /// <summary>
     /// User settings property for includes
     /// </summary>
-    public UserSettings? UserSettings { get; set; }
+    public UserSettings UserSettings { get; set; }
 }

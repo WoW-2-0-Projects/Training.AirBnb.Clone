@@ -11,16 +11,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AirBnB.Persistence.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231216201058_Update User Model")]
-    partial class UpdateUserModel
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20240117064621_UsersMigration")]
+    partial class UsersMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("identity")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -31,6 +30,9 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
                         .HasColumnType("timestamp with time zone");
@@ -56,7 +58,10 @@ namespace AirBnB.Persistence.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<string>("Password")
+                    b.Property<DateTimeOffset?>("ModifiedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -70,7 +75,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("EmailAddress")
                         .IsUnique();
 
-                    b.ToTable("Users", "identity");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

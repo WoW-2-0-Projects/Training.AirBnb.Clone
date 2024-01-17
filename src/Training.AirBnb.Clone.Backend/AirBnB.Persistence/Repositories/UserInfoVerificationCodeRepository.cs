@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace AirBnB.Persistence.Repositories;
 
 public class UserInfoVerificationCodeRepository
-    (IdentityDbContext dbContext, ICacheBroker cacheBroker) 
-    : EntityRepositoryBase<UserInfoVerificationCode, IdentityDbContext>
+    (AppDbContext dbContext, ICacheBroker cacheBroker) 
+    : EntityRepositoryBase<UserInfoVerificationCode, AppDbContext>
         (dbContext, cacheBroker), 
         IUserInfoVerificationCodeRepository
 {
