@@ -20,7 +20,6 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Common.Serializers;
@@ -258,8 +257,9 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
-            policy => policy.WithOrigins("http://localhost:5173")
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", 
+            policy => policy
+                .WithOrigins(builder.Configuration["ApiClientSettings:WebClientAddress"]!)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()));

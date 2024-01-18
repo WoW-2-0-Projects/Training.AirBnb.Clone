@@ -21,8 +21,8 @@ public static partial class HostConfiguration
             .AddListingsInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
-            .AddExposers()
-            .AddCors();
+            .AddCors()
+            .AddExposers();
 
         return new(builder);
     }
@@ -37,8 +37,8 @@ public static partial class HostConfiguration
         await app.SeedDataAsync();
         app
             .UseDevTools()
-            .UseExposers()
             .UseCors()
+            .UseExposers()
             .UseStaticFiles();
         
         return app;
