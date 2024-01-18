@@ -6,6 +6,7 @@ using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
@@ -32,13 +33,23 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         CancellationToken cancellationToken = default
     ) => 
          userRepository.GetAsync(querySpecification, cancellationToken);
-
+    
     public ValueTask<IList<User>> GetAsync(
         QuerySpecification querySpecification,
         CancellationToken cancellationToken = default
-    ) => userRepository.GetAsync(querySpecification, cancellationToken); 
-    
+    ) => userRepository.GetAsync(querySpecification, cancellationToken);
 
+    public async ValueTask<User?> GetByEmailAddressAsync(
+        string emailAddress,
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await userRepository
+            .Get(asNoTracking: asNoTracking)
+            .Include(user => user.Role)
+            .SingleOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
+    }
     public ValueTask<IList<User>> GetByIdsAsync(
         IEnumerable<Guid> ids,
         bool asNoTracking = false,
