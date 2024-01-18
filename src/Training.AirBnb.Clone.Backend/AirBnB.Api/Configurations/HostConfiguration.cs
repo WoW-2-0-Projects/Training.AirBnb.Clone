@@ -13,8 +13,13 @@ public static partial class HostConfiguration
             .AddCaching()
             .AddValidators()
             .AddMappers()
+            .AddSerializers()
+            .AddPersistence()
             .AddDevTools()
+            .AddStorageFileInfrastructure()
             .AddIdentityInfrastructure()
+            .AddListingsInfrastructure()
+            .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
             .AddExposers();
 

@@ -1,4 +1,4 @@
-namespace AirBnB.Domain.Common;
+namespace AirBnB.Domain.Common.Entities;
 
 /// <summary>
 /// Represents an abstract class for entities that include audit information.
@@ -14,5 +14,5 @@ public abstract class AuditableEntity : SoftDeletedEntity, IAuditableEntity
     /// <summary>
     /// Gets or sets the date and time when the entity was last updated.
     /// </summary>
-    public DateTimeOffset? UpdatedTime { get; set; }
+    public DateTimeOffset? ModifiedTime { get; set; }
 }

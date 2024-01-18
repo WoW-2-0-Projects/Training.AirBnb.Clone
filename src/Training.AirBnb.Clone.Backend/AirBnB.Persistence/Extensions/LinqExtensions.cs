@@ -1,4 +1,5 @@
 ﻿using AirBnB.Domain.Common;
+using AirBnB.Domain.Common.Entities;
 using AirBnB.Domain.Common.Query;
 using Microsoft.EntityFrameworkCore;
 
