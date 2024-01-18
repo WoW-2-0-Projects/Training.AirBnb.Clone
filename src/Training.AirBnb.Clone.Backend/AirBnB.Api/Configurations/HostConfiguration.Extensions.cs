@@ -250,6 +250,22 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    
+    /// <summary>
+    /// Configures CORS for the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
+            policy => policy.WithOrigins("http://localhost:5173")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()));
+        
+        return builder;
+    }
 
     /// <summary>
     /// Configures devTools including controllers
@@ -273,6 +289,18 @@ public static partial class HostConfiguration
     {
         app.MapControllers();
 
+        return app;
+    }
+    
+    /// <summary>
+    /// Enables CORS middleware in the web application pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static WebApplication UseCors(this WebApplication app)
+    {
+        app.UseCors("AllowSpecificOrigin");
+        
         return app;
     }
 
