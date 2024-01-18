@@ -26,4 +26,9 @@ public class Listing : AuditableEntity
     /// Gets or sets the price per night for the listing.
     /// </summary>
     public Money PricePerNight { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets feedbacks navigation property for the listing.
+    /// </summary>
+    public List<GuestFeedback> Feedbacks { get; set; }
 }
