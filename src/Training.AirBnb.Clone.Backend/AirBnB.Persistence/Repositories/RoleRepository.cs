@@ -8,12 +8,12 @@ namespace AirBnB.Persistence.Repositories;
 /// <summary>
 /// This class represents a repository for handling Role entities, implementing IRoleRepository.
 /// </summary>
-public class RoleRepository : EntityRepositoryBase<Role, IdentityDbContext>, IRoleRepository
+public class RoleRepository : EntityRepositoryBase<Role, AppDbContext>, IRoleRepository
 {
     /// <summary>
     /// Constructor for RoleRepository, taking IdentityDbContext and ICacheBroker as dependencies.
-    /// </summary
-    public RoleRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker)
+    /// </summary>
+    public RoleRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
         : base(dbContext, cacheBroker)
     {
 
@@ -21,12 +21,10 @@ public class RoleRepository : EntityRepositoryBase<Role, IdentityDbContext>, IRo
 
     /// <summary>
     /// Overrides the Get method from the base class to retrieve Role entities.
-    /// </summary
-    public new IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate, bool asNoTracking)
+    /// </summary>
+    public new IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = false)
     {
-        /// <summary>
-        /// Calls the base class's Get method to retrieve Role entities based on provided parameters.
-        /// </summary
+        // Calls the base class's Get method to retrieve Role entities based on provided parameters.
         return base.Get(predicate, asNoTracking);
     }
 }

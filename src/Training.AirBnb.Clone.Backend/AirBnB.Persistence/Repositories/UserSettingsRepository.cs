@@ -7,17 +7,17 @@ using System.Linq.Expressions;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class UserSettingsRepository(IdentityDbContext dbContext, ICacheBroker cacheBroker)
-    : EntityRepositoryBase<UserSettings, IdentityDbContext>(dbContext, cacheBroker, new()), IUserSettingsRepository
+public class UserSettingsRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
+    : EntityRepositoryBase<UserSettings, AppDbContext>(dbContext, cacheBroker, new()), IUserSettingsRepository
 {
     public new ValueTask<UserSettings> CreateAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
         => base.CreateAsync(userSettings, saveChanges, cancellationToken);
 
     public new ValueTask<UserSettings?> DeleteAsync(UserSettings userSettings, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => DeleteAsync(userSettings, saveChanges, cancellationToken);
+        => base.DeleteAsync(userSettings, saveChanges, cancellationToken);
 
     public new ValueTask<UserSettings?> DeleteByIdAsync(Guid userSettingsId, bool saveChanges = true, CancellationToken cancellationToken = default)
-        => DeleteByIdAsync(userSettingsId, saveChanges, cancellationToken);
+        => base.DeleteByIdAsync(userSettingsId, saveChanges, cancellationToken);
 
     public new IQueryable<UserSettings> Get(Expression<Func<UserSettings, bool>>? predicate, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);

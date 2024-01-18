@@ -1,6 +1,5 @@
 ﻿using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

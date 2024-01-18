@@ -1,7 +1,9 @@
+using System.Text;
 using System.Reflection;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
+using AirBnB.Application.Common.Serializers;
 using AirBnB.Application.Common.Settings;
 using AirBnB.Application.Common.Verifications.Services;
 using AirBnB.Infrastructure.Common.Caching;
@@ -10,16 +12,20 @@ using AirBnB.Infrastructure.Common.Notifications.Services;
 using AirBnB.Infrastructure.Common.Settings;
 using AirBnB.Infrastructure.Common.Verifications.Services;
 using AirBnB.Application.Common.StorageFiles;
-using AirBnB.Domain.Entities;
 using AirBnB.Infrastructure.Common.StorageFiles;
-
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.IdentityModel.Tokens;
+using AirBnB.Application.Listings.Services;
+using AirBnB.Infrastructure.Common.Serializers;
+using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.StorageFiles.Settings;
 
 namespace AirBnB.Api.Configurations;
 
@@ -53,6 +59,30 @@ public static partial class HostConfiguration
 
         // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
+        
+        // register authentication handlers
+        var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ??
+                          throw new InvalidOperationException("JwtSettings is not configured.");
+
+        // add authentication
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(
+                options =>
+                {
+                    options.RequireHttpsMetadata = false;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = jwtSettings.ValidateIssuer,
+                        ValidIssuer = jwtSettings.ValidIssuer,
+                        ValidAudience = jwtSettings.ValidAudience,
+                        ValidateAudience = jwtSettings.ValidateAudience,
+                        ValidateLifetime = jwtSettings.ValidateLifetime,
+                        ValidateIssuerSigningKey = jwtSettings.ValidateIssuerSigningKey,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+                    };
+                }
+            );
 
         return builder;
     }
@@ -78,6 +108,19 @@ public static partial class HostConfiguration
         builder.Services.AddAutoMapper(Assemblies);
         return builder;
     }
+
+    /// <summary>
+    /// Configures and adds Serializers to web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddSerializers(this WebApplicationBuilder builder)
+    {
+        // register json serialization settings
+        builder.Services.AddSingleton<IJsonSerializationSettingsProvider, JsonSerializationSettingsProvider>();
+        
+        return builder;
+    }
     
     /// <summary>
     /// Registers NotificationDbContext in DI 
@@ -86,19 +129,15 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<NotificationDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationConnection"),
-                o => o.MigrationsHistoryTable(
-                    tableName: HistoryRepository.DefaultTableName,
-                    schema: "notification")));
-
         builder.Services
             .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
             .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
             
         builder.Services
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
-            .AddScoped<ISmsTemplateService, SmsTemplateService>();
+            .AddScoped<ISmsTemplateService, SmsTemplateService>()
+            .AddScoped<IEmailRenderingService, EmailRenderingService>()
+            .AddScoped<ISmsRenderingService, SmsRenderingService>();
         
         return builder;
     }
@@ -110,19 +149,11 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<IdentityDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                o => o.MigrationsHistoryTable(
-                    tableName: HistoryRepository.DefaultTableName,
-                    schema: "identity")));
-        
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IUserSettingsService, UserSettingsService>()
-            .AddScoped<IListingRepository, ListingRepository>()
-            .AddScoped<IListingService, ListingService>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IRoleService, RoleService>();
 
@@ -138,13 +169,35 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
+
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
             .AddScoped<IStorageFileService, StorageFileService>();
 
         return builder;
     }
-    
+
+    /// <summary>
+    /// Configures Listings Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddListingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        // register repositories
+        builder.Services
+            .AddScoped<IListingRepository, ListingRepository>()
+            .AddScoped<IListingCategoryRepository, ListingCategoryRepository>();
+
+        // register foundation services
+        builder.Services
+            .AddScoped<IListingService, ListingService>()
+            .AddScoped<IListingCategoryService, ListingCategoryService>();
+
+        return builder;
+    }
+
     /// <summary>
     /// Extension method to configure and add verification infrastructure to the web application.
     /// </summary>
@@ -159,6 +212,14 @@ public static partial class HostConfiguration
 
         builder.Services.AddScoped<IUserInfoVerificationCodeService, UserInfoVerificationCodeService>();
 
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
+        
         return builder;
     }
     
@@ -184,6 +245,8 @@ public static partial class HostConfiguration
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddControllers();
+
+        builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
         return builder;
     }

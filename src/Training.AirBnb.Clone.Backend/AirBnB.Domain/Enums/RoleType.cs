@@ -6,17 +6,22 @@
 public enum RoleType
 {
     /// <summary>
-    /// Represents a regular user role in the system.
+    /// Represents a system-level role with special permissions.
     /// </summary>
-    User = 0,
-
+    System = 0,
+    
     /// <summary>
     /// Represents an administrative role with elevated privileges.
     /// </summary>
-    Admin = 2,
-
+    Admin = 1,
+    
     /// <summary>
-    /// Represents a system-level role with special permissions.
+    /// Represents a host role with specific responsibilities
     /// </summary>
-    System = 1
+    Host = 2,
+    
+    /// <summary>
+    /// Represents a guest role for regular customers or visitors without administrative privileges.
+    /// </summary>
+    Guest = 3
 }

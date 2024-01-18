@@ -1,9 +1,9 @@
 ﻿using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
-using AutoMapper.Configuration.Annotations;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace AirBnB.Api.Data;
 
@@ -13,37 +13,110 @@ namespace AirBnB.Api.Data;
 public static class SeedDataExtensions
 {
     /// <summary>
-    /// Initializes seed data in the IdentityDbContext by checking for existing users and seeding them if necessary.
+    /// Initializes seed data in the AppDbContext by checking for existing users and seeding them if necessary.
     /// </summary>
     /// <param name="serviceProvider">The service provider to resolve dependencies.</param>
     /// <returns>An asynchronous task representing the initialization process.</returns>
     public static async ValueTask InitializeSeedAsync(this IServiceProvider serviceProvider)
     {
-        var identityDbContext = serviceProvider.GetRequiredService<IdentityDbContext>();
+        var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
+        var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
-        if (!await identityDbContext.Users.AnyAsync())
-            await identityDbContext.SeedUsersAsync();
+        if (!await appDbContext.Roles.AnyAsync())
+            await appDbContext.SeedRolesAsync();
         
+        if (!await appDbContext.Users.AnyAsync())
+            await appDbContext.SeedUsersAsync();
+
+        if (!await appDbContext.ListingCategories.AnyAsync())
+            await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
     }
 
     /// <summary>
-    /// Seeds user data into the IdentityDbContext using Bogus library.
+    /// Seeds the database with initial roles.
     /// </summary>
-    /// <param name="dbContext">The IdentityDbContext instance to seed data into.</param>
-    /// <returns>An asynchronous task representing the seeding process.</returns>
-    private static async ValueTask SeedUsersAsync(this IdentityDbContext dbContext)
+    /// <param name="dbContext"></param>
+    private static async ValueTask SeedRolesAsync(this AppDbContext dbContext)
     {
-        var userRoleId = dbContext.Roles.First(role => role.Type == RoleType.User).Id;
+        var roles = new List<Role>()
+        {
+            new Role
+            {
+                Id = Guid.Parse("7700e8af-6e37-4448-9409-8d9d03911732"),
+                CreatedTime = DateTimeOffset.UtcNow,
+                Type = RoleType.System
+            },
+            new Role
+            {
+                Id = Guid.Parse("8346abd3-ec6e-4be4-9e17-784733a9e269"),
+                CreatedTime = DateTimeOffset.UtcNow,
+                Type = RoleType.Admin
+            },
+            new Role
+            {
+                Id = Guid.Parse("22acb325-9a85-4ccd-afde-bbfcdd4ae53c"),
+                CreatedTime = DateTimeOffset.UtcNow,
+                Type = RoleType.Guest
+            },
+            new Role
+            {
+                Id = Guid.Parse("a42302e1-ffa0-490b-8398-d4323bb3a9e4"),
+                CreatedTime = DateTimeOffset.UtcNow,
+                Type = RoleType.Host
+            }
+        };
+
+        await dbContext.Roles.AddRangeAsync(roles);
+        await dbContext.SaveChangesAsync();
+    }
+    
+    /// <summary>
+    /// Seeds user data into the AppDbContext using Bogus library.
+    /// </summary>
+    /// <param name="dbContext">The AppDbContext instance to seed data into.</param>
+    /// <returns>An asynchronous task representing the seeding process.</returns>
+    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
+    {
+        var userRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
 
         var userFaker = new Faker<User>()
             .RuleFor(user => user.RoleId, () => userRoleId)
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.Password, data => data.Internet.Password(8))
+            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(userFaker.Generate(100));
         await dbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Seeds listing categories into the AppDbContext from a JSON file.
+    /// </summary>
+    /// <param name="appDbContext"></param>
+    /// <param name="webHostEnvironment"></param>
+    /// <returns></returns>
+    private static async ValueTask SeedListingCategoriesAsync(
+        this AppDbContext appDbContext,
+        IHostEnvironment webHostEnvironment)
+    {
+        var listingCategoriesFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "ListingCategories.json");
+
+        // Retrieve listing categories
+        var listingCategories = JsonConvert.DeserializeObject<List<ListingCategory>>(await File.ReadAllTextAsync(listingCategoriesFileName))!;
+
+        // Set category images
+        listingCategories.ForEach(
+            listingCategory => listingCategory.ImageStorageFile = new StorageFile
+            {
+                Id = listingCategory.StorageFileId,
+                FileName = $"{listingCategory.StorageFileId}.jpg",
+                Type = StorageFileType.ListingCategoryImage
+            }
+        );
+
+        await appDbContext.ListingCategories.AddRangeAsync(listingCategories);
+        await appDbContext.SaveChangesAsync();
     }
 }
