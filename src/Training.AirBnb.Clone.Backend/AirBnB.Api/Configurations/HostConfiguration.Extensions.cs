@@ -244,14 +244,18 @@ public static partial class HostConfiguration
     {
         // register ef core interceptors
         builder.Services
-            .AddScoped<UpdateAuditableInterceptor>();
+            .AddScoped<UpdatePrimaryKeyInterceptor>()
+            .AddScoped<UpdateAuditableInterceptor>()
+            .AddScoped<UpdateSoftDeletionInterceptor>();
         
         // register db context
         builder.Services.AddDbContext<AppDbContext>((provider, options) =>
         {
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"));
-
-            options.AddInterceptors(provider.GetRequiredService<UpdateAuditableInterceptor>());
+            options
+                .UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"))
+                .AddInterceptors(provider.GetRequiredService<UpdatePrimaryKeyInterceptor>(),
+                    provider.GetRequiredService<UpdateAuditableInterceptor>(),
+                    provider.GetRequiredService<UpdateSoftDeletionInterceptor>());
         });
         
         return builder;
