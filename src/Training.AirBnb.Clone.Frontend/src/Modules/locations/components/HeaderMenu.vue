@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow gap-5 md:flex-none text-textPrimary theme-bg-secondary pt-[8px] pb-[10px] pl-[20px] pr-[10px] theme-border theme-shadow rounded-full  theme-bg-secondary theme-border theme-shadow hover-shadow primary-transition">
+  <div class="flex flex-grow md:grow-0 md:w-fit items-center justify-center pl-6 pr-2 gap-4 border border-gray-300 shadow-md rounded-full">
     <div class="h-8 hidden md:flex items-center justify-center gap-5 theme-text-primary">
       <button class="text-sm font-medium line-clamp-1">
         <span class="line-clamp-1">Anywhere</span>

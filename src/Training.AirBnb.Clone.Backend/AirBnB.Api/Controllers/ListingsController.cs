@@ -6,7 +6,7 @@ using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;    
 
 namespace AirBnB.Api.Controllers;
 

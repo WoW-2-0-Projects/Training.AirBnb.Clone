@@ -103,6 +103,7 @@ namespace AirBnB.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -113,6 +114,12 @@ namespace AirBnB.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDisabled")
+=======
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDisable")
+>>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("ModifiedTime")
@@ -126,7 +133,37 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
+<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.ToTable("Roles");
+=======
+                    b.ToTable("Roles", "identity");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("29e62346-1bb7-4fd4-833f-8ebd85734570"),
+                            CreatedTime = new DateTime(2024, 1, 7, 12, 44, 52, 577, DateTimeKind.Utc).AddTicks(6274),
+                            IsDisable = false,
+                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("eec07fc2-2a0d-4e63-b084-1975e836793c"),
+                            CreatedTime = new DateTime(2024, 1, 7, 12, 44, 52, 577, DateTimeKind.Utc).AddTicks(6279),
+                            IsDisable = false,
+                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("c93760c5-03ed-4845-b3c9-01c125ef326a"),
+                            CreatedTime = new DateTime(2024, 1, 7, 12, 44, 52, 577, DateTimeKind.Utc).AddTicks(6282),
+                            IsDisable = false,
+                            ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = 0
+                        });
+>>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
@@ -396,8 +433,12 @@ namespace AirBnB.Persistence.Migrations
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
+<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.Navigation("UserSettings")
                         .IsRequired();
+=======
+                    b.Navigation("UserSettings");
+>>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                 });
 #pragma warning restore 612, 618
         }

@@ -12,6 +12,8 @@
     <!-- Header Home -->
     <header-home/>
 
+
+
     <!-- Bottom border -->
     <div class="absolute border-b-2 border-borderSecondary"></div>
 
@@ -23,8 +25,9 @@
 
 import MainLogo from "@/common/components/icons/MainLogo.vue";
 
-import HeaderMenu from "@/modules/locations/components/HeaderMenu.vue";
+import HeaderMenu from "@/Modules/locations/components/HeaderMenu.vue";
 
-import HeaderHome from "@/modules/locations/components/HeaderHome.vue";
+import HeaderHome from "@/Modules/locations/components/HeaderHome.vue";
+import ProfileMenuComponent from "@/Modules/profile/components/ProfileMenuComponent.vue";
 
 </script>

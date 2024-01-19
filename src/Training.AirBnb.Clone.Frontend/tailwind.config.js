@@ -38,5 +38,8 @@ export default {
       }
     },
   },
+  fontFamily:{
+    textGill: 'Gill Sans'
+  },
   plugins: [],
 }
