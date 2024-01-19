@@ -94,7 +94,7 @@ public static class SeedDataExtensions
         await dbContext.Users.AddAsync(systemUser);
         
         // Add Hosts
-        var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
+        var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
 
         var hostFaker = new Faker<User>()
             .RuleFor(user => user.RoleId, () => hostRoleId)
