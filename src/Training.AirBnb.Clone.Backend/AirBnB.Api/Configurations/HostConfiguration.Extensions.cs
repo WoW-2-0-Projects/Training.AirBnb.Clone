@@ -27,6 +27,7 @@ using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
+using AirBnB.Persistence.Interceptors;
 
 namespace AirBnB.Api.Configurations;
 
@@ -234,10 +235,24 @@ public static partial class HostConfiguration
         return builder;
     }
     
+    /// <summary>
+    /// Configures DbContext and ef-core interceptors for the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
+        // register ef core interceptors
+        builder.Services
+            .AddScoped<UpdateAuditableInterceptor>();
+        
+        // register db context
+        builder.Services.AddDbContext<AppDbContext>((provider, options) =>
+        {
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"));
+
+            options.AddInterceptors(provider.GetRequiredService<UpdateAuditableInterceptor>());
+        });
         
         return builder;
     }
