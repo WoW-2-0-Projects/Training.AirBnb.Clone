@@ -12,10 +12,17 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
     public void Configure(EntityTypeBuilder<Listing> builder)
     {
         builder.Property(listing => listing.Name).IsRequired().HasMaxLength(256);
+        builder.Property(listing => listing.CreatedByUserId).IsRequired();
+        builder.Property(listing => listing.DeletedByUserId).IsRequired();
 
-        builder.OwnsOne(listing => listing.Address).Property(address => address.City).IsRequired(false)
+        builder.OwnsOne(listing => listing.Address)
+            .Property(address => address.City)
+            .IsRequired(false)
             .HasMaxLength(256);
 
         builder.OwnsOne(listing => listing.PricePerNight);
+
+        builder.HasOne<User>(listing => listing.Host)
+            .WithMany(user => user.Listings);
     }
 }
