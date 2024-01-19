@@ -26,6 +26,7 @@ using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AirBnB.Api.Configurations;
 
@@ -156,7 +157,13 @@ public static partial class HostConfiguration
             .AddScoped<IUserSettingsService, UserSettingsService>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IRoleService, RoleService>()
-            .AddScoped<IAccountService, AccountService>();
+            .AddScoped<IAccountService, AccountService>()
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
+            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
+            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IPasswordHasherService, PasswordHasherService>();
+            
 
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
