@@ -3,6 +3,7 @@ using System;
 using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118114414_IsEmailAddressVerified Property")]
+    partial class IsEmailAddressVerifiedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,64 +24,6 @@ namespace AirBnB.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.GuestFeedback", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<byte>("Accuracy")
-                        .HasColumnType("smallint");
-
-                    b.Property<byte>("CheckIn")
-                        .HasColumnType("smallint");
-
-                    b.Property<byte>("Cleanliness")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<byte>("Communication")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset?>("DeletedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("GuestId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("ListingId")
-                        .HasColumnType("uuid");
-
-                    b.Property<byte>("Location")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTimeOffset?>("ModifiedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<double>("OverallRating")
-                        .HasColumnType("double precision");
-
-                    b.Property<byte>("Value")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuestId");
-
-                    b.HasIndex("ListingId");
-
-                    b.ToTable("GuestFeedbacks");
-                });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
                 {
@@ -401,25 +346,6 @@ namespace AirBnB.Persistence.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.GuestFeedback", b =>
-                {
-                    b.HasOne("AirBnB.Domain.Entities.User", "Guest")
-                        .WithMany()
-                        .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AirBnB.Domain.Entities.Listing", "Listing")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Guest");
-
-                    b.Navigation("Listing");
-                });
-
             modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
                 {
                     b.OwnsOne("AirBnB.Domain.Entities.Address", "Address", b1 =>
@@ -514,11 +440,6 @@ namespace AirBnB.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
-                {
-                    b.Navigation("Feedbacks");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>

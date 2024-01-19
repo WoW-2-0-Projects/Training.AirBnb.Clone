@@ -20,7 +20,6 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Infrastructure.Common.Serializers;
@@ -155,7 +154,8 @@ public static partial class HostConfiguration
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IUserSettingsService, UserSettingsService>()
             .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IRoleService, RoleService>();
+            .AddScoped<IRoleService, RoleService>()
+            .AddScoped<IAccountService, AccountService>();
 
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
@@ -250,6 +250,23 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    
+    /// <summary>
+    /// Configures CORS for the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", 
+            policy => policy
+                .WithOrigins(builder.Configuration["ApiClientSettings:WebClientAddress"]!)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()));
+        
+        return builder;
+    }
 
     /// <summary>
     /// Configures devTools including controllers
@@ -273,6 +290,18 @@ public static partial class HostConfiguration
     {
         app.MapControllers();
 
+        return app;
+    }
+    
+    /// <summary>
+    /// Enables CORS middleware in the web application pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static WebApplication UseCors(this WebApplication app)
+    {
+        app.UseCors("AllowSpecificOrigin");
+        
         return app;
     }
 
