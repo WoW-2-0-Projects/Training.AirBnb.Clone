@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-
     .theme-bg-primary {
         @apply bg-bgColorPrimary dark:bg-bgColorPrimaryDark;
     }
@@ -16,6 +15,14 @@
         @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
     }
 
+    .theme-bg-primary-toggle{
+        @apply bg-bgColorPrimary dark:bg-bgColorPrimary
+    }
+
+    .theme-bg-accent {
+        @apply bg-textSecondaryDark dark:bg-borderColorDark;
+    }
+
     .theme-border {
         @apply border border-borderColor dark:border-borderColorDark;
     }
@@ -23,6 +30,7 @@
     .theme-shadow {
         @apply shadow-shadowColor;
     }
+
 
     .theme-text-primary {
         @apply text-textPrimary dark:text-textPrimaryDark;
@@ -43,21 +51,34 @@
         @apply stroke-textSecondary dark:stroke-textSecondaryDark;
         @apply fill-textSecondary dark:fill-textSecondaryDark;
     }
-
+    .theme-hover-shadow {
+        @apply hover:shadow-sm dark:hover:shadow-xl
+    }
     .hover-shadow {
         @apply shadow-md hover:shadow-lg ;
     }
 
     .hover-shadow-zero {
-        @apply shadow-none hover:shadow-md ;
+        @apply shadow-none hover:shadow-md;
     }
 
+    .theme-sub-menu{
+        @apply invisible;
+    }
+
+    .theme-sub-menu.open-menu {
+        @apply visible
+    }
     .primary-transition {
         @apply transition duration-200;
     }
 
     .select-opacity {
         @apply hover:opacity-80 focus:opacity-100 active:opacity-100 group-hover:opacity-80 group-focus:opacity-100 group-active:opacity-100;
+    }
+
+    .primary-transition-toggle{
+        @apply transition-all duration-300
     }
 
     .selected-opacity {

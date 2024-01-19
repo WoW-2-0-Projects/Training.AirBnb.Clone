@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden md:flex items-center justify-center theme-bg p-[12px] gap-3">
+  <div class="hidden md:flex items-center justify-center theme-bg p-3 gap-3">
     <button class="text-sm theme-text-primary font-medium line-clamp-1">
       <span class="line-clamp-1">Airbnb your home</span>
     </button>
@@ -17,7 +17,8 @@
       </svg>
     </button>
 
-    <button class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full">
+    <!--Profile image-->
+    <button @click="menu()" :class="subMenuVisible ? 'shadow-md' : 'shadow-0'" class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full relative">
       <span class="h-6 w-6 flex items-center justify-center ">
                 <svg class="h-4 w-4 theme-icon-primary"
                      xmlns="http://www.w3.org/2000/svg"
@@ -29,9 +30,11 @@
                         <path d="M2 16h28M2 24h28M2 8h28"></path>
                     </g>
                 </svg>
-            </span>
+      </span>
       <span class="h-8 w-8 ">
-                <svg class="h-8 w-8 theme-icon-secondary"
+        
+        <img v-if="userImageAvailable" :src="user.Image" class="h-8 w-8 theme-icon-secondary"/>
+                <svg v-if="!userImageAvailable" class="h-8 w-8 theme-icon-secondary"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 32 32"
                      aria-hidden="true"
@@ -41,8 +44,10 @@
                         d="M16 .7C7.56.7.7 7.56.7 16S7.56 31.3 16 31.3 31.3 24.44 31.3 16 24.44.7 16 .7zm0 28c-4.02 0-7.6-1.88-9.93-4.81a12.43 12.43 0 0 1 6.45-4.4A6.5 6.5 0 0 1 9.5 14a6.5 6.5 0 0 1 13 0 6.51 6.51 0 0 1-3.02 5.5 12.42 12.42 0 0 1 6.45 4.4A12.67 12.67 0 0 1 16 28.7z">
                     </path>
                 </svg>
-            </span>
+      </span>
     </button>
+
+    <profile-menu-component :class="{ 'visible': subMenuVisible, 'hidden': !subMenuVisible }"/>
   </div>
 
   <button class="md:hidden justify-end p-4 theme-border border-[1px] theme-icon-primary rounded-full ml-3">
@@ -53,4 +58,14 @@
 
 </template>
 <script setup lang="ts">
+import ProfileMenuComponent from "@/Modules/profile/components/ProfileMenuComponent.vue";
+import {ref} from 'vue';
+const subMenuVisible = ref(false);
+
+const menu = () => {
+  subMenuVisible.value = !subMenuVisible.value;
+};
+
+//User profile image part if image available it shows else svg icon shows
+const userImageAvailable = ref(false); // Is image available?
 </script>

@@ -7,9 +7,7 @@
   
   <!--Listings-->
   <listings-grid class="mt-24"/>
-  
-  
-  <button class="mt-80" @click="appThemeService.toggleDarkMode()">Dark mode</button>
+
 </div>
 
 </template>
@@ -21,5 +19,4 @@ import MainHeader from "@/common/components/MainHeader.vue";
 import { AppThemeService } from "@/infrastructure/services/AppThemeService";
 
 const appThemeService = new AppThemeService();
-
 </script>
