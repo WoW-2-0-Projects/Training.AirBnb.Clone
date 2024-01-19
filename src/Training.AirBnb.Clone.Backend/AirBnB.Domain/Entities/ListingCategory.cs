@@ -26,4 +26,9 @@ public class ListingCategory : SoftDeletedEntity
     /// Gets or sets the category image
     /// </summary>
     public virtual StorageFile ImageStorageFile { get; set; }
+
+    /// <summary>
+    /// Navigation property that stores the listings related to this category 
+    /// </summary>
+    public virtual List<ListingCategoryAssociation> ListingCategoryAssociations { get; set; }
 }

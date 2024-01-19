@@ -46,4 +46,9 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// Gets or sets the navigation user property who owns this listing.
     /// </summary>
     public virtual User Host { get; set; }
+
+    /// <summary>
+    /// Navigation property that stores the categories of a listing
+    /// </summary>
+    public virtual List<ListingCategoryAssociation> ListingCategoryAssociations { get; set; }
 }
