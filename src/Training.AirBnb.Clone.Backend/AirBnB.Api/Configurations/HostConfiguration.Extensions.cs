@@ -20,9 +20,10 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
+using AirBnB.Domain.Brokers;
+using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
@@ -216,6 +217,23 @@ public static partial class HostConfiguration
         return builder;
     }
 
+    /// <summary>
+    /// Configures Request Context tool for the web applicaiton.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddRequestContextTools(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddHttpContextAccessor();
+        
+        builder.Services.AddScoped<IRequestUserContextProvider, RequestUserContextProvider>();
+
+        builder.Services.Configure<RequestUserContextSettings>(
+            builder.Configuration.GetSection(nameof(RequestUserContextSettings)));
+        
+        return builder;
+    }
+    
     private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<AppDbContext>(options =>

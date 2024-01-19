@@ -18,6 +18,7 @@ public static partial class HostConfiguration
             .AddDevTools()
             .AddStorageFileInfrastructure()
             .AddIdentityInfrastructure()
+            .AddRequestContextTools()
             .AddListingsInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
