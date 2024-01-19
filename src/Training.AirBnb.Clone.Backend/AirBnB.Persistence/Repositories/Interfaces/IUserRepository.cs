@@ -15,7 +15,7 @@ public interface IUserRepository
     /// <param name="predicate"></param>
     /// <param name="asNoTracking"></param>
     /// <returns>An IQueryable collection of User objects.</returns>
-    IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false);
+    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false);
 
     /// <summary>
     /// /// Retrieves a collection of users based on the specified predicate. 

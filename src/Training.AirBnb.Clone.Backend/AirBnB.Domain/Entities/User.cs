@@ -43,6 +43,11 @@ public sealed class User : AuditableEntity
     public bool IsActive { get; set; }
 
     /// <summary>
+    /// Gets or sets user's email address verification
+    /// </summary>
+    public bool IsEmailAddressVerified { get; set; }
+    
+    /// <summary>
     ///Gets or sets user's phone number 
     /// </summary>
     public string PhoneNumber { get; set; } = default!;
