@@ -45,6 +45,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     
     public DbSet<ListingCategory> ListingCategories => Set<ListingCategory>();
 
+    public DbSet<ListingCategoryAssociation> ListingCategoryAssociations => Set<ListingCategoryAssociation>();
+
     #endregion
     #region Ratings
 
