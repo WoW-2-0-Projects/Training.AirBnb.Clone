@@ -33,6 +33,9 @@ public static class SeedDataExtensions
 
         if (!await appDbContext.Listings.AnyAsync())
             await appDbContext.SeedListingsAsync();
+
+        if (!await appDbContext.GuestFeedbacks.AnyAsync())
+            await appDbContext.SeedGuestFeedbacksAsync();
     }
 
     /// <summary>
@@ -205,5 +208,40 @@ public static class SeedDataExtensions
 
         await appDbContext.Listings.AddRangeAsync(listings);
         appDbContext.SaveChanges();
+    }
+    
+    /// <summary>
+    /// Seeds Guest Feedbacks data into the AppDbContext using Bogus library.
+    /// </summary>
+    /// <param name="dbContext"></param>
+    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext)
+    {
+        var listings = dbContext.Listings.AsQueryable();
+
+        var feedbackFaker = new Faker<GuestFeedback>()
+            .RuleFor(feedback => feedback.Communication, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.Cleanliness, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.Accuracy, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.Location, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.Value, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.CheckIn, data => data.Random.Byte(1, 5))
+            .RuleFor(feedback => feedback.Comment, data => data.Lorem.Paragraph())
+            .RuleFor(feedback => feedback.CreatedTime, data => data.Date.PastOffset(5, DateTimeOffset.UtcNow))
+            .RuleFor(feedback => feedback.Listing, data => data.PickRandom<Listing>(listings))
+            .RuleFor(feedback => feedback.GuestId, (data, feedback) =>
+            {
+                var listingOwnerId = feedback.Listing.HostId;
+                
+                return data.PickRandom(dbContext.Users.Select(user => user.Id)
+                    .Where(userId => userId != listingOwnerId).ToList());
+            })
+            .RuleFor(feedback => feedback.OverallRating, (data, feedback) => 
+                (feedback.Accuracy + feedback.Value + feedback.Cleanliness + 
+                 feedback.Communication + feedback.Location + feedback.CheckIn) / 6.0);
+
+        var guestFeedbacks = feedbackFaker.Generate(100);
+        
+        await dbContext.GuestFeedbacks.AddRangeAsync(guestFeedbacks);
+        dbContext.SaveChanges();
     }
 }
