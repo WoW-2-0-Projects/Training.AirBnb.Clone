@@ -9,17 +9,17 @@ namespace AirBnB.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService, IMapper mapper) : ControllerBase
 {
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegistrationDetails registrationDetails, CancellationToken cancellationToken)
+    [HttpPost("sign-up")]
+    public async Task<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails, CancellationToken cancellationToken)
     {
-        var result = await authService.RegisterAsync(registrationDetails, cancellationToken);
+        var result = await authService.SignUpAsync(signUpDetails, cancellationToken);
         return result ? Ok(result) : BadRequest();
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDetails loginDetails, CancellationToken cancellationToken)
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignIn([FromBody] SignInDetails signInDetails, CancellationToken cancellationToken)
     {
-        var result = await authService.LoginAsync(loginDetails);
+        var result = await authService.SignInAsync(signInDetails);
         return Ok(result);
     }
 }
