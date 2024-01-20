@@ -24,8 +24,10 @@ using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
+using AirBnB.Application.Ratings.Services;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using AirBnB.Persistence.Interceptors;
 
@@ -215,6 +217,18 @@ public static partial class HostConfiguration
 
         builder.Services.AddScoped<IUserInfoVerificationCodeService, UserInfoVerificationCodeService>();
 
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Listing Ratings and Feedbacks infrastructure including repositories and services
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
+        
         return builder;
     }
 
