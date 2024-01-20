@@ -30,6 +30,9 @@ public static class SeedDataExtensions
 
         if (!await appDbContext.ListingCategories.AnyAsync())
             await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
+
+        if (!await appDbContext.Listings.AnyAsync())
+            await appDbContext.SeedListingsAsync();
     }
 
     /// <summary>
@@ -67,7 +70,7 @@ public static class SeedDataExtensions
         };
 
         await dbContext.Roles.AddRangeAsync(roles);
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
     }
     
     /// <summary>
@@ -118,8 +121,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
-       
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
     }
 
     /// <summary>
@@ -148,6 +150,60 @@ public static class SeedDataExtensions
         );
 
         await appDbContext.ListingCategories.AddRangeAsync(listingCategories);
-        await appDbContext.SaveChangesAsync();
+        appDbContext.SaveChanges();
+    }
+
+    /// <summary>
+    /// Seeds the listings data into the AppDbContext using Bogus library.
+    /// </summary>
+    /// <param name="appDbContext"></param>
+    private static async ValueTask SeedListingsAsync(this AppDbContext appDbContext)
+    {
+        // get existing hosts
+        var hosts = appDbContext.Users
+            .Where(user => user.Role.Type == RoleType.Host)
+            .Select(host => host.Id);
+
+        // generate fake addresses
+        var addressFaker = new Faker<Address>()
+            .RuleFor(address => address.City, data => data.Address.City())
+            .RuleFor(address => address.CityId, Guid.NewGuid())
+            .RuleFor(address => address.Latitude, data => data.Address.Latitude())
+            .RuleFor(address => address.Longitude, data => data.Address.Longitude());
+
+        var addresses = addressFaker.Generate(100).ToHashSet();
+
+        // generate fake money
+        var moneyFaker = new Faker<Money>()
+            .RuleFor(money => money.Amount, data => data.Random.Decimal(10, 10_000))
+            .RuleFor(money => money.Currency, Currency.USD);
+
+        var money = moneyFaker.Generate(100).ToHashSet();
+
+        // generate fake listings
+        var listingsFaker = new Faker<Listing>()
+            .RuleFor(listing => listing.Name, data => data.Lorem.Word())
+            .RuleFor(listing => listing.BuiltDate, data => data.Date.PastDateOnly(100))
+            .RuleFor(listing => listing.Address, data =>
+            {
+                var chosenAddress = data.PickRandom<Address>(addresses);
+                addresses.Remove(chosenAddress);
+                return chosenAddress;
+            })
+            .RuleFor(listing => listing.PricePerNight, data =>
+            {
+                var chosenMoney = data.PickRandom<Money>(money);
+                money.Remove(chosenMoney);
+                return chosenMoney;
+            })
+            .RuleFor(listing => listing.HostId, data => data.PickRandom<Guid>(hosts))
+            .RuleFor(listing => listing.CreatedByUserId, (data, listing) => listing.HostId)
+            .RuleFor(listing => listing.DeletedByUserId, Guid.Empty)
+            .RuleFor(listing => listing.CreatedTime, data => data.Date.PastOffset(5, DateTimeOffset.UtcNow));
+
+        var listings = listingsFaker.Generate(100);
+
+        await appDbContext.Listings.AddRangeAsync(listings);
+        appDbContext.SaveChanges();
     }
 }
