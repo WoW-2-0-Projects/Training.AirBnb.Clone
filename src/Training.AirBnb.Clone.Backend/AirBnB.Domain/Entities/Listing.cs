@@ -55,5 +55,5 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// <summary>
     /// Gets or sets feedbacks navigation property for the listing.
     /// </summary>
-    public List<GuestFeedback> Feedbacks { get; set; }
+    public virtual List<GuestFeedback> Feedbacks { get; set; }
 }
