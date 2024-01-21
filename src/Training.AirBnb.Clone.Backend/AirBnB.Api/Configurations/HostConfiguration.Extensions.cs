@@ -150,6 +150,8 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<PasswordValidationSettings>(builder.Configuration.GetSection(nameof(PasswordValidationSettings)));
+        
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserService, UserService>()
@@ -162,6 +164,7 @@ public static partial class HostConfiguration
             .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
             .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
             .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
             .AddScoped<IPasswordHasherService, PasswordHasherService>();
             
 
