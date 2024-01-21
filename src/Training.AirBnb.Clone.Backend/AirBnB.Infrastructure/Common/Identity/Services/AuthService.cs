@@ -4,6 +4,7 @@ using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
+using AutoMapper;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
@@ -13,39 +14,37 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// </summary>
 public class AuthService(
     IUserService userService,
+    IMapper mapper,
+    IPasswordGeneratorService passwordGeneratorService,
+    IAccountService accountService,
     IRoleService roleService,
     IPasswordHasherService passwordHasherService,
     IUserRepository userRepository
     ) : IAuthService
 {
     
-    public async ValueTask<User> RegisterAsync(RegistrationDetails registrationDetails, CancellationToken cancellationToken = default)
+    public async ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default)
     {
-        var foundUser = await userService.GetByEmailAddressAsync(registrationDetails.EmailAddress,true, cancellationToken);
+        var foundUserId = await userService.GetByEmailAddressAsync(signUpDetails.EmailAddress,true, cancellationToken);
 
-        if (foundUser is not null)
+        if (foundUserId is null)
             throw new InvalidOperationException("User with this email address already exists.");
 
-        var defaultRole = await roleService.GetByTypeAsync(RoleType.Guest, true, cancellationToken) ??
-                          throw new InvalidOperationException("Role with this type doesn't exist");
-
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            FirstName = registrationDetails.FirstName,
-            LastName = registrationDetails.LastName,
-            EmailAddress = registrationDetails.EmailAddress,
-            PasswordHash = passwordHasherService.HashPassword(registrationDetails.Password),
-            RoleId = defaultRole.Id
-        };
-
-        return await userRepository.CreateAsync(user, cancellationToken: cancellationToken);
+        var user = mapper.Map<User>(signUpDetails);
+        var password = signUpDetails.AutoGeneratePassword
+            ? passwordGeneratorService.GeneratePassword()
+            : passwordGeneratorService.GetValidatedPassword(signUpDetails.Password!, user);
+        
+        user.PasswordHash = passwordHasherService.HashPassword(password);
+        
+        return await accountService.CreateUserAsync(user, cancellationToken);
     }
 
-    public ValueTask<string> LoginAsync(LoginDetails loginDetails, CancellationToken cancellationToken = default)
+    public ValueTask<string> SignUpAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)
     {
-        var foundUser = userService
+        throw new NotImplementedException();
     }
+    
 
     public ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, Guid actionUserId, CancellationToken cancellationToken = default)
     {
