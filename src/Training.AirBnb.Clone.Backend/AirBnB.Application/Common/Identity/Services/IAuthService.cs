@@ -11,20 +11,20 @@ public interface IAuthService
     /// <summary>
     /// Asynchronously registers a new user with the specified registration details.
     /// </summary>
-    /// <param name="registrationDetails">The registration information for the new user</param>
+    /// <param name="signUpDetails">The registration information for the new user</param>
     /// <param name="cancellationToken">A token that can be used to cancel the registration operation</param>
     /// <returns>A ValueTask<bool> that indicates whether the registration was successful.</returns>
-    ValueTask<User> RegisterAsync(RegistrationDetails registrationDetails, CancellationToken cancellationToken = default);
+    ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously attempts to log in a user with the provided credentials.
     /// </summary>
-    /// <param name="loginDetails">The login details containing the user's username and password.</param>
+    /// <param name="signInDetails">The login details containing the user's username and password.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the login operation.</param>
     /// <returns>A ValueTask<string> that contains:
     /// - An authentication token if the login is successful.
     /// - Null if the login fails.</returns>
-    ValueTask<string> LoginAsync(LoginDetails loginDetails, CancellationToken cancellationToken = default);
+    ValueTask<string> SignUpAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously grants a specified role to a user.
