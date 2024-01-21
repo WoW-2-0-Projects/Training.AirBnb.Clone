@@ -39,16 +39,14 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         CancellationToken cancellationToken = default
     ) => userRepository.GetAsync(querySpecification, cancellationToken);
 
-    public async ValueTask<User?> GetByEmailAddressAsync(
+    public async ValueTask<Guid?> GetByEmailAddressAsync(
         string emailAddress,
         bool asNoTracking = false,
         CancellationToken cancellationToken = default
     )
     {
-        return await userRepository
-            .Get(asNoTracking: asNoTracking)
-            .Include(user => user.Role)
-            .SingleOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
+        var userId = await Get(user => user.EmailAddress == emailAddress, true).Select(user => user.Id).FirstOrDefaultAsync(cancellationToken);
+        return userId != Guid.Empty ? userId : default(Guid);
     }
     public ValueTask<IList<User>> GetByIdsAsync(
         IEnumerable<Guid> ids,
