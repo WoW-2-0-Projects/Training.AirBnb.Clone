@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
@@ -83,7 +83,14 @@ public static class SeedDataExtensions
         var systemUser = new User
         {
             Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-            RoleId = systemRoleId,
+            Roles = new List<UserRole>
+            {
+                new UserRole
+                {
+                    UserId = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
+                    RoleId = systemRoleId
+                }    
+            },
             FirstName = "System",
             LastName = "System",
             EmailAddress = "example@gmail.com",
@@ -97,7 +104,14 @@ public static class SeedDataExtensions
         var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
 
         var hostFaker = new Faker<User>()
-            .RuleFor(user => user.RoleId, () => hostRoleId)
+            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
+            {
+                new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = hostRoleId
+                }
+            })
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
@@ -110,18 +124,48 @@ public static class SeedDataExtensions
         var guestRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
 
         var guestFaker = new Faker<User>()
-            .RuleFor(user => user.RoleId, () => guestRoleId)
+            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
+            {
+                new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = guestRoleId
+                }
+            })
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
             .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
-
+        
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
-       
-        await dbContext.SaveChangesAsync();
+        
+        var hostGuestFaker = new Faker<User>()
+            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
+            {
+                new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = guestRoleId
+                },
+                new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = hostRoleId
+                }
+            })
+            .RuleFor(user => user.FirstName, data => data.Name.FirstName())
+            .RuleFor(user => user.LastName, data => data.Name.LastName())
+            .RuleFor(user => user.EmailAddress, data => data.Person.Email)
+            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+        
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
+        
+        dbContext.SaveChanges();
     }
 
+    
     /// <summary>
     /// Seeds listing categories into the AppDbContext from a JSON file.
     /// </summary>
