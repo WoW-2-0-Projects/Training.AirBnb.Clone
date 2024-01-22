@@ -27,15 +27,10 @@ public sealed class User : AuditableEntity
     /// </summary>
     public string PasswordHash { get; set; } = default!;
     
-    ///<summary>
-    /// Gets or sets the Role Id of user
-    /// </summary>
-    public Guid RoleId { get; set; }
-
     /// <summary>
     /// Gets or sets the User role type
     /// </summary>
-    public Role Role { get; set; }
+    public IList<UserRole> Roles { get; set; }
     
     /// <summary>
     /// Gets or sets user activation
