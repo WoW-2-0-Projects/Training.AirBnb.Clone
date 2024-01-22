@@ -3,6 +3,7 @@ using System.Text;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
+using AirBnB.Domain.Extension;
 using AirBnB.Infrastructure.Common.Settings;
 using FluentValidation;
 using Microsoft.Extensions.Options;
