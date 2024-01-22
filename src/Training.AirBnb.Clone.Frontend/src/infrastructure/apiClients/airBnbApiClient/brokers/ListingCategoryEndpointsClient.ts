@@ -9,6 +9,6 @@ export class ListingCategoryEndpointsClient {
     }
 
     public async getAsync() {
-        return await this.client.getAsync<Array<ListingCategory>>("api/categories");
+        return await this.client.getAsync<Array<ListingCategory>>("api/listings/categories");
     }
 }

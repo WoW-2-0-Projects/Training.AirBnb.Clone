@@ -77,17 +77,48 @@ public static class SeedDataExtensions
     /// <returns>An asynchronous task representing the seeding process.</returns>
     private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
     {
-        var userRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
+        // Add system user.
+        var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
 
-        var userFaker = new Faker<User>()
-            .RuleFor(user => user.RoleId, () => userRoleId)
+        var systemUser = new User
+        {
+            Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
+            RoleId = systemRoleId,
+            FirstName = "System",
+            LastName = "System",
+            EmailAddress = "example@gmail.com",
+            PasswordHash = "A1rBnB.$com",
+            PhoneNumber = ""
+        };
+
+        await dbContext.Users.AddAsync(systemUser);
+        
+        // Add Hosts
+        var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
+
+        var hostFaker = new Faker<User>()
+            .RuleFor(user => user.RoleId, () => hostRoleId)
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
             .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
-        await dbContext.AddRangeAsync(userFaker.Generate(100));
+        await dbContext.AddRangeAsync(hostFaker.Generate(100));
+        
+        // Add guests.
+        var guestRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
+
+        var guestFaker = new Faker<User>()
+            .RuleFor(user => user.RoleId, () => guestRoleId)
+            .RuleFor(user => user.FirstName, data => data.Name.FirstName())
+            .RuleFor(user => user.LastName, data => data.Name.LastName())
+            .RuleFor(user => user.EmailAddress, data => data.Person.Email)
+            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+
+        await dbContext.AddRangeAsync(guestFaker.Generate(100));
+       
         await dbContext.SaveChangesAsync();
     }
 
