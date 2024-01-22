@@ -56,4 +56,9 @@ public sealed class User : AuditableEntity
     /// User settings property for includes
     /// </summary>
     public UserSettings UserSettings { get; set; }
+
+    /// <summary>
+    /// Gets or sets listings owned by the user.
+    /// </summary>
+    public List<Listing> Listings { get; set; }
 }

@@ -20,13 +20,15 @@ using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
+using AirBnB.Domain.Brokers;
+using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using AirBnB.Persistence.Interceptors;
 
 namespace AirBnB.Api.Configurations;
 
@@ -226,10 +228,45 @@ public static partial class HostConfiguration
         return builder;
     }
 
+    /// <summary>
+    /// Configures Request Context tool for the web applicaiton.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddRequestContextTools(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddHttpContextAccessor();
+        
+        builder.Services.AddScoped<IRequestUserContextProvider, RequestUserContextProvider>();
+
+        builder.Services.Configure<RequestUserContextSettings>(
+            builder.Configuration.GetSection(nameof(RequestUserContextSettings)));
+        
+        return builder;
+    }
+    
+    /// <summary>
+    /// Configures DbContext and ef-core interceptors for the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
+        // register ef core interceptors
+        builder.Services
+            .AddScoped<UpdatePrimaryKeyInterceptor>()
+            .AddScoped<UpdateAuditableInterceptor>()
+            .AddScoped<UpdateSoftDeletionInterceptor>();
+        
+        // register db context
+        builder.Services.AddDbContext<AppDbContext>((provider, options) =>
+        {
+            options
+                .UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"))
+                .AddInterceptors(provider.GetRequiredService<UpdatePrimaryKeyInterceptor>(),
+                    provider.GetRequiredService<UpdateAuditableInterceptor>(),
+                    provider.GetRequiredService<UpdateSoftDeletionInterceptor>());
+        });
         
         return builder;
     }
@@ -261,6 +298,23 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    
+    /// <summary>
+    /// Configures CORS for the web application.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", 
+            policy => policy
+                .WithOrigins(builder.Configuration["ApiClientSettings:WebClientAddress"]!)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()));
+        
+        return builder;
+    }
 
     /// <summary>
     /// Configures devTools including controllers
@@ -284,6 +338,18 @@ public static partial class HostConfiguration
     {
         app.MapControllers();
 
+        return app;
+    }
+    
+    /// <summary>
+    /// Enables CORS middleware in the web application pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static WebApplication UseCors(this WebApplication app)
+    {
+        app.UseCors("AllowSpecificOrigin");
+        
         return app;
     }
 
