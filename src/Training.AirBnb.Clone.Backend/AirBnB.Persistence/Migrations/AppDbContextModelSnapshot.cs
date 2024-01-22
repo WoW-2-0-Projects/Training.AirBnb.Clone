@@ -256,17 +256,27 @@ namespace AirBnB.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmailAddress")
                         .IsUnique();
 
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserRole", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoleId");
+
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
@@ -464,15 +474,23 @@ namespace AirBnB.Persistence.Migrations
                     b.Navigation("ListingCategory");
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
+            modelBuilder.Entity("AirBnB.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("AirBnB.Domain.Entities.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AirBnB.Domain.Entities.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
@@ -505,9 +523,16 @@ namespace AirBnB.Persistence.Migrations
                     b.Navigation("ListingCategoryAssociations");
                 });
 
+            modelBuilder.Entity("AirBnB.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
                     b.Navigation("Listings");
+
+                    b.Navigation("Roles");
 
                     b.Navigation("UserSettings")
                         .IsRequired();
