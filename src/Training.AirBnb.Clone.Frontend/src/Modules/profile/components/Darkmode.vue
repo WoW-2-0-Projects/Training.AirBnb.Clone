@@ -18,7 +18,5 @@ const emit = defineEmits(['update:modelValue'])
 function toggle(){
   emit('update:modelValue', !props.modelValue)
     appThemeService.toggleDarkMode();
-  // else
-  //   appThemeService.toggleDarkMode();
 }
 </script>

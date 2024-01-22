@@ -32,7 +32,9 @@
                 </svg>
       </span>
       <span class="h-8 w-8 ">
-                <svg class="h-8 w-8 theme-icon-secondary"
+        
+        <img v-if="userImageAvailable" :src="user.Image" class="h-8 w-8 theme-icon-secondary"/>
+                <svg v-if="!userImageAvailable" class="h-8 w-8 theme-icon-secondary"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 32 32"
                      aria-hidden="true"

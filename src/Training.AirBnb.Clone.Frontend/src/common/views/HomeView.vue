@@ -9,6 +9,8 @@
   <listings-grid class="mt-24"/>
 
 </div>
+=======
+>>>>>>> Stashed changes
 
 </template>
 
