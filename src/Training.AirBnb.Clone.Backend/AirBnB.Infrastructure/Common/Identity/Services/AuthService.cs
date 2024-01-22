@@ -7,7 +7,6 @@ using AutoMapper;
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 /// <summary>
-/// <summary>
 /// Encapsulates authentication-related functionality, such as user registration, login, and role management.
 /// </summary>
 public class AuthService(

@@ -10,12 +10,14 @@ using Microsoft.Extensions.Options;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
+/// <summary>
+/// Provides services for generating and validating passwords.
+/// </summary>
 public class PasswordGeneratorService(
     IOptions<PasswordValidationSettings> passwordValidationSettings,
     IValidator<CredentialDetails> credentialDetailsValidator) : IPasswordGeneratorService
 {
-
-     private readonly PasswordValidationSettings _passwordValidationSettings = passwordValidationSettings.Value;
+    private readonly PasswordValidationSettings _passwordValidationSettings = passwordValidationSettings.Value;
     private readonly Random _random = new();
 
     public string GeneratePassword()
