@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
@@ -7,9 +8,12 @@ using AirBnB.Infrastructure.Common.Validators;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 
-namespace AirBnB.Infrastructure.Common.Identity.Services;
+namespace AirBnB.Infrastructure.Listings.Services;
 
-public class ListingService(IListingRepository listingRepository, ListingValidator listingValidator)
+public class ListingService(
+    IListingRepository listingRepository,
+    ListingValidator listingValidator,
+    IRequestUserContextProvider userContextProvider)
     : IListingService 
 {
     public IQueryable<Listing> Get(
@@ -44,6 +48,8 @@ public class ListingService(IListingRepository listingRepository, ListingValidat
         bool saveChanges = true, 
         CancellationToken cancellationToken = default)
     {
+        listing.HostId = userContextProvider.GetUserId();
+        
         var validationResult = listingValidator
             .Validate(listing,
                 options =>

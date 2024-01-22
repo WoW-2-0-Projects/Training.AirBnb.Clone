@@ -14,12 +14,8 @@ public class ListingValidator : AbstractValidator<Listing>
     /// </summary>
     public ListingValidator()
     {
-        RuleSet(
-            EntityEvent.OnCreate.ToString(),
-            () =>
-            {
-                RuleFor(listing => listing.Id).NotEqual(Guid.Empty);
-            
+        RuleSet(EntityEvent.OnCreate.ToString(), () => 
+        {
             RuleFor(listing => listing.Name)
                 .NotEmpty()
                 .MaximumLength(128);

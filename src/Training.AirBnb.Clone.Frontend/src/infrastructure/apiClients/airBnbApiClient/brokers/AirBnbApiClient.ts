@@ -6,7 +6,7 @@ export class AirBnbApiClient {
     public readonly baseUrl: string;
 
     constructor() {
-        this.baseUrl = "https://localhost:7104";
+        this.baseUrl = "https://localhost:7266";
 
         this.client = new ApiClientBase({
             baseURL: this.baseUrl,
