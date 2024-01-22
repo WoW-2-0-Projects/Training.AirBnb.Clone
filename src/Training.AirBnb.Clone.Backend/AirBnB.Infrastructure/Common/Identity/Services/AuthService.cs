@@ -1,8 +1,6 @@
 ﻿using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
-using AirBnB.Domain.Enums;
-using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
 using AutoMapper;
 
@@ -15,10 +13,10 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 public class AuthService(
     IUserService userService,
     IMapper mapper,
-    IPasswordGeneratorService passwordGeneratorService,
     IAccountService accountService,
-    IRoleService roleService,
+    IPasswordGeneratorService passwordGeneratorService,
     IPasswordHasherService passwordHasherService,
+    IRoleService roleService,
     IUserRepository userRepository
     ) : IAuthService
 {
