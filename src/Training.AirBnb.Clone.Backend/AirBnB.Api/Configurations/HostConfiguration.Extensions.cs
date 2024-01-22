@@ -228,6 +228,7 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
+        builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
         
         return builder;
     }
