@@ -15,6 +15,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<Role> Roles => Set<Role>();
 
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
+
     public DbSet<UserSettings> UserSettings => Set<UserSettings>();
 
     #endregion
