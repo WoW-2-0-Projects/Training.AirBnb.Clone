@@ -18,5 +18,8 @@ public class Role : AuditableEntity
     /// </summary>
     public bool IsDisabled { get; set; }
     
+    /// <summary>
+    /// ist of user roles associated with this entity.
+    /// </summary>
     public IList<UserRole> Users { get; set; }
 }
