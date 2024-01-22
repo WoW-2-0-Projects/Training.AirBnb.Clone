@@ -18,7 +18,7 @@
     </button>
 
     <!--Profile image-->
-    <button @click="menu()" :class="subMenuVisible ? 'shadow-md' : 'shadow-0'" class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full relative">
+    <button ref="profileButton" @click="toggleUserProfile" class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full relative">
       <span class="h-6 w-6 flex items-center justify-center ">
                 <svg class="h-4 w-4 theme-icon-primary"
                      xmlns="http://www.w3.org/2000/svg"
@@ -32,9 +32,7 @@
                 </svg>
       </span>
       <span class="h-8 w-8 ">
-        
-        <img v-if="userImageAvailable" :src="user.Image" class="h-8 w-8 theme-icon-secondary"/>
-                <svg v-if="!userImageAvailable" class="h-8 w-8 theme-icon-secondary"
+                <svg class="h-8 w-8 theme-icon-secondary"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 32 32"
                      aria-hidden="true"
@@ -47,7 +45,7 @@
       </span>
     </button>
 
-    <profile-menu-component :class="{ 'visible': subMenuVisible, 'hidden': !subMenuVisible }"/>
+    <profile-menu-component v-if="showUserProfile" @onClose="toggleUserProfile"/>
   </div>
 
   <button class="md:hidden justify-end p-4 theme-border border-[1px] theme-icon-primary rounded-full ml-3">
@@ -60,12 +58,9 @@
 <script setup lang="ts">
 import ProfileMenuComponent from "@/Modules/profile/components/ProfileMenuComponent.vue";
 import {ref} from 'vue';
-const subMenuVisible = ref(false);
 
-const menu = () => {
-  subMenuVisible.value = !subMenuVisible.value;
-};
-
-//User profile image part if image available it shows else svg icon shows
-const userImageAvailable = ref(false); // Is image available?
+const showUserProfile =ref<boolean>(false);
+const toggleUserProfile = () => {
+  showUserProfile.value = !showUserProfile.value;
+}
 </script>

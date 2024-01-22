@@ -10,5 +10,6 @@ const appThemeService = new AppThemeService();
 const app = createApp(App);
 
 appThemeService.setAppTheme();
+console.log("main.ts file: ", appThemeService.isDarkMode())
 
 app.mount('#app')

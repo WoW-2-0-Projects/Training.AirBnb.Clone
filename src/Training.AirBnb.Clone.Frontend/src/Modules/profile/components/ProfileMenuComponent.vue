@@ -1,5 +1,5 @@
 <template>
-  <div class="top-[65px] h-auto w-[220px] rounded-xl theme-bg-primary mr-[-20px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start  theme-shadow z-10 border-b border-2 absolute">
+  <div tabindex="0" ref="container" @focusout="onClose" class="top-[65px] h-auto w-[220px] rounded-xl theme-bg-primary mr-[-20px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start  theme-shadow z-10 border-b border-2 absolute">
     <button class="theme-text-primary font-sans text-left w-full p-3 theme-hover-shadow">
         <strong> <a href="http://localhost:5173/">Sign up</a></strong>
     </button>
@@ -32,21 +32,36 @@
 </template>
 <script setup lang="ts">
 import Darkmode from "@/Modules/profile/components/Darkmode.vue";
-import {ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
+import {AppThemeService} from "@/infrastructure/services/AppThemeService";
 
-const toggleState = ref(false)
+const appThemeService = new AppThemeService();
+
+const toggleState = ref(appThemeService.isDarkMode() ? true : false!);
+console.log("Profile Menu component isDarkMode: ", appThemeService.isDarkMode());
 
 const props = defineProps({
   value:{
     type: Boolean
   }
 })
-const emit = defineEmits(['update:value']);
-function toggle(){
-  emit('update:value', !props.value)
-  if(props.value)
-    appThemeService.toggleDarkMode();
-  else
-    appThemeService.toggleDarkMode();
+const emit = defineEmits(['update:value', 'onClose']);
+
+//profile menu - visible or invisible
+const container =ref<HTMLElement>();
+
+onMounted(async () => {
+  await nextTick(() => {
+    container.value?.focus();
+  });
+});
+
+
+const onClose = () => {
+  setTimeout(() => {
+    const innerElementFocused = container.value!.contains(document.activeElement!);
+    if (!innerElementFocused)
+      emit('onClose');
+  }, 50);
 }
 </script>
