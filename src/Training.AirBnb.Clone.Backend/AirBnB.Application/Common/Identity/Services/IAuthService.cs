@@ -24,7 +24,7 @@ public interface IAuthService
     /// <returns>A ValueTask<string> that contains:
     /// - An authentication token if the login is successful.
     /// - Null if the login fails.</returns>
-    ValueTask<string> SignUpAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default);
+    ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously grants a specified role to a user.

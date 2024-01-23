@@ -1,7 +1,8 @@
-﻿using AirBnB.Application.Common.Identity.Models;
+﻿using System.Security.Authentication;
+using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Entities;
-using AirBnB.Persistence.Repositories.Interfaces;
 using AutoMapper;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
@@ -15,8 +16,8 @@ public class AuthService(
     IAccountService accountService,
     IPasswordGeneratorService passwordGeneratorService,
     IPasswordHasherService passwordHasherService,
-    IRoleService roleService,
-    IUserRepository userRepository
+    IAccessTokenService accessTokenService,
+    IAccessTokenGeneratorService accessTokenGeneratorService
     ) : IAuthService
 {
     
@@ -24,7 +25,7 @@ public class AuthService(
     {
         var foundUserId = await userService.GetByEmailAddressAsync(signUpDetails.EmailAddress,true, cancellationToken);
 
-        if (foundUserId is null)
+        if (foundUserId is not null)
             throw new InvalidOperationException("User with this email address already exists.");
 
         var user = mapper.Map<User>(signUpDetails);
@@ -37,9 +38,18 @@ public class AuthService(
         return await accountService.CreateUserAsync(user, cancellationToken);
     }
 
-    public ValueTask<string> SignUpAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)
+    public async ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var foundUser =
+            await userService.GetByEmailAddressAsync(signInDetails.EmailAddress, true, cancellationToken);
+        
+        if(foundUser is null || passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.PasswordHash))
+                throw new AuthenticationException("SignUp details are invalid, contact support.");
+
+        var accessToken = accessTokenGeneratorService.GetToken(foundUser);
+        await accessTokenService.CreateAsync(accessToken, true, cancellationToken);
+
+        return accessToken;
     }
     
 
