@@ -19,7 +19,7 @@ public class AuthController(IAuthService authService, IMapper mapper) : Controll
     [HttpPost("sign-in")]
     public async Task<IActionResult> SignIn([FromBody] SignInDetails signInDetails, CancellationToken cancellationToken)
     {
-      //  var result = await authService.SignInAsync(signInDetails);
-        return Ok();
+        var result = await authService.SignInAsync(signInDetails, cancellationToken);
+        return Ok(result);
     }
 }
