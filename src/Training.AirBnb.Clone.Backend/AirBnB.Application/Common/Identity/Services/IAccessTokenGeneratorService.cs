@@ -1,4 +1,6 @@
-﻿using AirBnB.Domain.Entities;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using AirBnB.Domain.Entities;
 
 namespace AirBnB.Application.Common.Notifications.Services;
 
@@ -20,4 +22,20 @@ public interface IAccessTokenGeneratorService
     /// <param name="accessToken">The access token for which the ID is to be retrieved.</param>
     /// <returns>The unique identifier (ID) associated with the provided access token.</returns>
     Guid GetTokenId(string accessToken);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
+    JwtSecurityToken GetJwtToken(User user, AccessToken accessToken);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
+    List<Claim> GetClaims(User user, AccessToken accessToken);
 }

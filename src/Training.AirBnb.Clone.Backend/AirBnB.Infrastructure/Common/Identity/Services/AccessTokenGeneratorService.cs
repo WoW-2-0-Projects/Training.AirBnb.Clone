@@ -76,11 +76,11 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="user">The user for whom the token is generated.</param>
     /// <param name="accessToken">The associated access token.</param>
     /// <returns>A JwtSecurityToken representing the generated JWT token.</returns>
-    private JwtSecurityToken GetJwtToken(User user, AccessToken accessToken)
+    public JwtSecurityToken GetJwtToken(User user, AccessToken accessToken)
     {
         // Retrieve the claims associated with the user and access token.
         var claims = GetClaims(user, accessToken);
-
+        accessToken.UserId = user.Id;
         // Create a SymmetricSecurityKey using the specified secret key.
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
 
@@ -104,7 +104,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="user">The user for whom claims are generated.</param>
     /// <param name="accessToken">The associated access token.</param>
     /// <returns>A list of Claim objects representing the generated claims.</returns>
-    private List<Claim> GetClaims(User user, AccessToken accessToken)
+    public List<Claim> GetClaims(User user, AccessToken accessToken)
     {
         // Create a list of claims with standard and custom claim types.
         return new List<Claim>
