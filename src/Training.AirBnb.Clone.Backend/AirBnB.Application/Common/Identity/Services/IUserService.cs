@@ -46,9 +46,9 @@ public interface IUserService
     /// - The retrieved user entity if found.
     /// - Null if no user with the specified email address exists.
     /// </returns>
-    ValueTask<Guid?> GetByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
+    ValueTask<User> GetByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
     
-    /// <summary>
+     /// <summary>
     /// Retrieves a collection of users based on the specified predicate.
     /// </summary>
     /// <param name="querySpecification"></param>
