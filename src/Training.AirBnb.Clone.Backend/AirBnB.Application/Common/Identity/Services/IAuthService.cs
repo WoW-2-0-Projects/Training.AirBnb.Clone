@@ -1,5 +1,6 @@
 ﻿using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
@@ -44,5 +45,5 @@ public interface IAuthService
     /// <param name="actionUserId">The unique identifier of the user performing the role revocation action.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns></returns>
-    ValueTask<bool> RevokeRoleAsync(Guid userId, string roleType, Guid actionUserId, CancellationToken cancellationToken = default);
+    ValueTask<bool> RevokeRoleAsync(Guid userId, string roleType, Guid actionUserId, RoleType actionUserRole, CancellationToken cancellationToken = default);
 }
