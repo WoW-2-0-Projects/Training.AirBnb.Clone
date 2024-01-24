@@ -43,6 +43,11 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     public Guid DeletedByUserId { get; set; }
 
     /// <summary>
+    /// Gets or sets rating of the listing.
+    /// </summary>
+    public Rating Rating { get; set; }
+    
+    /// <summary>
     /// Gets or sets the navigation user property who owns this listing.
     /// </summary>
     public virtual User Host { get; set; }

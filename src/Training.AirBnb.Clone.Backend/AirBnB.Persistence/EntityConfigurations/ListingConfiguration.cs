@@ -22,6 +22,8 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 
         builder.OwnsOne(listing => listing.PricePerNight);
 
+        builder.OwnsOne(listing => listing.Rating);
+
         builder.HasOne<User>(listing => listing.Host)
             .WithMany(user => user.Listings);
     }
