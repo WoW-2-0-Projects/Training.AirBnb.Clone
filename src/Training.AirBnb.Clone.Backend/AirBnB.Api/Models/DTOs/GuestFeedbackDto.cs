@@ -5,6 +5,11 @@ namespace AirBnB.Api.Models.DTOs;
 public class GuestFeedbackDto
 {
     /// <summary>
+    /// Gets or sets the unique identifier of the Guest Feedback dto
+    /// </summary>
+    public Guid Id { get; set; }
+    
+    /// <summary>
     /// Gets or sets the guest's comment regarding the experience.
     /// </summary>
     public string Comment { get; set; } = default!;
