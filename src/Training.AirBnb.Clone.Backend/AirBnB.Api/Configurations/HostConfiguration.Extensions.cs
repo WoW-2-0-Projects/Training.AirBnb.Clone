@@ -25,6 +25,7 @@ using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
+using AirBnB.Application.Ratings.Settings;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.Ratings.Services;
@@ -227,6 +228,13 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
     {
+        // configure ratings related settings.
+        builder.Services.Configure<BackgroundServiceSettings>(
+            builder.Configuration.GetSection(nameof(BackgroundServiceSettings)));
+        builder.Services.Configure<GuestFeedbacksCacheSettings>(
+            builder.Configuration.GetSection(nameof(GuestFeedbacksCacheSettings)));
+        
+        // register services
         builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
         builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
         
@@ -234,7 +242,7 @@ public static partial class HostConfiguration
     }
 
     /// <summary>
-    /// Configures Request Context tool for the web applicaiton.
+    /// Configures Request Context tool for the web application.
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
