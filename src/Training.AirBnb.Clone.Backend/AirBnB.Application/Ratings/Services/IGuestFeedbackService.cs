@@ -49,4 +49,28 @@ public interface IGuestFeedbackService
         GuestFeedback guestFeedback, 
         bool saveChanges = true, 
         CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Deletes a GuestFeedback entity asynchronously.
+    /// </summary>
+    /// <param name="guestFeedback"></param>
+    /// <param name="saveChanges"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<GuestFeedback?> DeleteAsync(
+        GuestFeedback guestFeedback, 
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes a GuestFeedback entity by its unique identifier asynchronously.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="saveChanges"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<GuestFeedback?> DeleteByIdAsync(
+        Guid id, 
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default);
 }

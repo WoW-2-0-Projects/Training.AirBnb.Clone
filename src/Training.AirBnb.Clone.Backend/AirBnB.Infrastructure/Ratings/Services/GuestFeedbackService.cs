@@ -53,4 +53,20 @@ public class GuestFeedbackService(
         
         return await guestFeedbackRepository.CreateAsync(guestFeedback, saveChanges, cancellationToken);
     }
+
+    public async ValueTask<GuestFeedback?> DeleteAsync(
+        GuestFeedback guestFeedback, 
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default)
+    {
+        return await guestFeedbackRepository.DeleteAsync(guestFeedback, saveChanges, cancellationToken);
+    }
+
+    public async ValueTask<GuestFeedback?> DeleteByIdAsync(
+        Guid id, 
+        bool saveChanges = true, 
+        CancellationToken cancellationToken = default)
+    {
+        return await guestFeedbackRepository.DeleteByIdAsync(id, saveChanges, cancellationToken);
+    }
 }
