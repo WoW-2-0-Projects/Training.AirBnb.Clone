@@ -25,7 +25,7 @@ using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
-using AirBnB.Application.Ratings.Settings;
+using AirBnB.Domain.Settings;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.Ratings.Services;
@@ -237,6 +237,9 @@ public static partial class HostConfiguration
         // register services
         builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
         builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
+        builder.Services.AddScoped<IRatingRecalculationService, RatingRecalculationService>();
+        
+        builder.Services.AddHostedService<RatingRecalculationScheduler>();
         
         return builder;
     }
