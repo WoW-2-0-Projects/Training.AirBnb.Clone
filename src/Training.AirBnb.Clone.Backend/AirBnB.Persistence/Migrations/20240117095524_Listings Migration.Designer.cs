@@ -103,7 +103,6 @@ namespace AirBnB.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -113,13 +112,11 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsDisabled")
-=======
+                    b.Property<bool>("IsDisabled");
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDisable")
->>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("ModifiedTime")
@@ -133,9 +130,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
-<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.ToTable("Roles");
-=======
                     b.ToTable("Roles", "identity");
 
                     b.HasData(
@@ -163,7 +158,6 @@ namespace AirBnB.Persistence.Migrations
                             ModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         });
->>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
@@ -433,12 +427,9 @@ namespace AirBnB.Persistence.Migrations
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
-<<<<<<< Updated upstream:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/20240117095524_Listings Migration.Designer.cs
                     b.Navigation("UserSettings")
                         .IsRequired();
-=======
                     b.Navigation("UserSettings");
->>>>>>> Stashed changes:src/Training.AirBnb.Clone.Backend/AirBnB.Persistence/Migrations/IdentityDb/IdentityDbContextModelSnapshot.cs
                 });
 #pragma warning restore 612, 618
         }

@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AirBnB.Persistence.Migrations.NotificationDb
 {
-    [DbContext(typeof(NotificationDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20240107124530_RoleMigrations")]
     partial class RoleMigrations
     {
