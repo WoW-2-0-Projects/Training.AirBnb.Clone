@@ -41,6 +41,17 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
+   /// <summary>
+   /// Adds MediatR services to the application with custom service registrations.
+   /// </summary>
+   /// <param name="builder"></param>
+   /// <returns></returns>
+    private static WebApplicationBuilder AddMediator(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assemblies.ToArray()); });
+
+        return builder;
+    }
     /// <summary>
     /// Adds caching services to the web application builder.
     /// </summary>
