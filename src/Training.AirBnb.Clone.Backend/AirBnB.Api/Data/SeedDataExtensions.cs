@@ -1,7 +1,10 @@
+using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
+using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -21,12 +24,13 @@ public static class SeedDataExtensions
     {
         var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
-
+        var passwordHasherService = serviceProvider.GetRequiredService<IPasswordHasherService>();
+        
         if (!await appDbContext.Roles.AnyAsync())
             await appDbContext.SeedRolesAsync();
         
         if (!await appDbContext.Users.AnyAsync())
-            await appDbContext.SeedUsersAsync();
+            await appDbContext.SeedUsersAsync(passwordHasherService);
 
         if (!await appDbContext.ListingCategories.AnyAsync())
             await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
@@ -75,30 +79,48 @@ public static class SeedDataExtensions
     /// </summary>
     /// <param name="dbContext">The AppDbContext instance to seed data into.</param>
     /// <returns>An asynchronous task representing the seeding process.</returns>
-    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
+    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext, IPasswordHasherService passwordHasherService)
     {
         // Add system user.
         var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
-
-        var systemUser = new User
+        var users = new List<User>
         {
-            Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-            Roles = new List<UserRole>
+            new()
             {
-                new UserRole
+                Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
+                Roles = new List<UserRole>
                 {
-                    UserId = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-                    RoleId = systemRoleId
-                }    
+                    new UserRole
+                    {
+                        UserId = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
+                        RoleId = systemRoleId
+                    }    
+                },
+                FirstName = "System",
+                LastName = "System",
+                EmailAddress = "example@gmail.com",
+                PasswordHash = "A1rBnB.$com",
+                PhoneNumber = ""
             },
-            FirstName = "System",
-            LastName = "System",
-            EmailAddress = "example@gmail.com",
-            PasswordHash = "A1rBnB.$com",
-            PhoneNumber = ""
-        };
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<UserRole>
+                {
+                    new UserRole
+                    {
+                        RoleId = systemRoleId
+                    }    
+                },
+                FirstName = "Admin",
+                LastName = "Admin",
+                EmailAddress = "admin@gmail.com",
+                PasswordHash = "$2a$11$fzwFIBLmS1jV2k40s2szLeQl1qnZHzq/HX.HiPTw7bGeUOcxbkZfu\n", //Admin@1
+                PhoneNumber = "+99891223435",
+            }
+        };  
 
-        await dbContext.Users.AddAsync(systemUser);
+         dbContext.Users.AddRange(users);
         
         // Add Hosts
         var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
@@ -122,7 +144,7 @@ public static class SeedDataExtensions
         
         // Add guests.
         var guestRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
-
+        
         var guestFaker = new Faker<User>()
             .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
             {
@@ -135,7 +157,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
         
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
