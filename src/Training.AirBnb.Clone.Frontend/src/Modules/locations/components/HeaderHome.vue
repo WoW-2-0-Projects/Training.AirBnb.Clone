@@ -1,12 +1,12 @@
 <template>
   <div class="hidden md:flex items-center justify-center theme-bg p-[12px] gap-3">
-    <button class="text-sm theme-text-primary font-medium line-clamp-1">
+    <button class="text-sm font-medium theme-text-primary line-clamp-1">
       <span class="line-clamp-1">Airbnb your home</span>
     </button>
 
     <button>
       <svg xmlns="http://www.w3.org/2000/svg"
-           class="theme-icon-primary w-4 h-4 stroke-0"
+           class="w-4 h-4 stroke-0 theme-icon-primary"
            viewBox="0 0 16 16"
            aria-hidden="true"
            role="presentation"
@@ -17,9 +17,9 @@
       </svg>
     </button>
 
-    <button class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full">
-      <span class="h-6 w-6 flex items-center justify-center ">
-                <svg class="h-4 w-4 theme-icon-primary"
+    <button class="flex items-center justify-center gap-2 pb-[4px] pt-[4px] pl-[10px] pr-[10px] theme-border rounded-full" @click="signInUpRequest">
+      <span class="flex items-center justify-center w-6 h-6 ">
+                <svg class="w-4 h-4 theme-icon-primary"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 32 32"
                      aria-hidden="true"
@@ -30,8 +30,8 @@
                     </g>
                 </svg>
             </span>
-      <span class="h-8 w-8 ">
-                <svg class="h-8 w-8 theme-icon-secondary"
+      <span class="w-8 h-8 ">
+                <svg class="w-8 h-8 theme-icon-secondary"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 32 32"
                      aria-hidden="true"
@@ -52,5 +52,13 @@
   </button>
 
 </template>
+
 <script setup lang="ts">
+
+const emit = defineEmits(['signInUpRequest']);
+
+const signInUpRequest = () => {
+  emit('signInUpRequest');
+}
+
 </script>

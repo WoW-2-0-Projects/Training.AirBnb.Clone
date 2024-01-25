@@ -1,7 +1,7 @@
 <template>
 
   <header
-      class="w-full fixed h-20 top-0 z-10 flex justify-between items-center theme-bg-primary content-padding border-b theme-border">
+      class="fixed top-0 z-10 flex items-center justify-between w-full h-20 border-b theme-bg-primary content-padding theme-border">
 
     <!-- Logo -->
     <main-logo/>
@@ -10,7 +10,7 @@
     <header-menu/>
 
     <!-- Header Home -->
-    <header-home/>
+    <header-home @sign-in-up-request="$emit('signInUpRequest')"/>
 
     <!-- Bottom border -->
     <div class="absolute border-b-2 border-borderSecondary"></div>
