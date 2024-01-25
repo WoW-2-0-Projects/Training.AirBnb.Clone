@@ -1,10 +1,8 @@
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
-using AirBnB.Infrastructure.Common.Identity.Services;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -115,11 +113,11 @@ public static class SeedDataExtensions
                 FirstName = "Admin",
                 LastName = "Admin",
                 EmailAddress = "admin@gmail.com",
-                PasswordHash = "$2a$11$fzwFIBLmS1jV2k40s2szLeQl1qnZHzq/HX.HiPTw7bGeUOcxbkZfu\n", //Admin@1
+                PasswordHash = "$2a$11$.VevOH3bNJJemRbntcXHoOFAupwjpYMIx8/TdyMjPPbOlZh5EILTK", //@Adm1n
                 PhoneNumber = "+99891223435",
             }
         };  
-
+        
          dbContext.Users.AddRange(users);
         
         // Add Hosts
@@ -137,7 +135,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(hostFaker.Generate(100));
