@@ -10,18 +10,9 @@ namespace AirBnB.Infrastructure.Common.Notifications.Brokers;
 /// <summary>
 /// Implementation of ISmsSenderBroker interface using Twilio for sending sms messages to the specified number
 /// </summary>
-public class TwilioSmsSenderBroker : ISmsSenderBroker
+public class TwilioSmsSenderBroker(IOptions<TwilioSmsSenderSettings> twilioSmsSenderSettings) : ISmsSenderBroker
 {
-    private readonly TwilioSmsSenderSettings _twilioSmsSenderSettings;
-    
-    /// <summary>
-    /// Initializes a new instance of the TwilioSmsSenderBroker class with Twilio settings.
-    /// </summary>
-    /// <param name="twilioSmsSenderSettings">Twilio settings injected via dependency injection.</param>
-    public TwilioSmsSenderBroker(IOptions<TwilioSmsSenderSettings> twilioSmsSenderSettings)
-    {
-        _twilioSmsSenderSettings = twilioSmsSenderSettings.Value;
-    }
+    private readonly TwilioSmsSenderSettings _twilioSmsSenderSettings = twilioSmsSenderSettings.Value;
     
     /// <summary>
     /// Sends an SMS asynchronously using Twilio based on the provided SmsMessage and Twilio settings.

@@ -10,18 +10,9 @@ namespace AirBnB.Infrastructure.Common.Notifications.Brokers;
 /// <summary>
 /// Implementation of the IEmailSenderBroker interface using SMTP for sending email messages.
 /// </summary>
-public class SmtpEmailSenderBroker : IEmailSenderBroker
+public class SmtpEmailSenderBroker(IOptions<SmtpEmailSenderSettings> smtpEmailSenderSettings) : IEmailSenderBroker
 {
-    private readonly SmtpEmailSenderSettings _smtpEmailSenderSettings;
-
-    /// <summary>
-    /// Initializes a new instance of the SmtpEmailSenderBroker class with SMTP settings.
-    /// </summary>
-    /// <param name="smtpEmailSenderSettings">SMTP settings injected via dependency injection.</param>
-    public SmtpEmailSenderBroker(IOptions<SmtpEmailSenderSettings> smtpEmailSenderSettings)
-    {
-        _smtpEmailSenderSettings = smtpEmailSenderSettings.Value;
-    }
+    private readonly SmtpEmailSenderSettings _smtpEmailSenderSettings = smtpEmailSenderSettings.Value;
     
     /// <summary>
     /// Sends an email asynchronously using SMTP based on the provided EmailMessage and SMTP settings.

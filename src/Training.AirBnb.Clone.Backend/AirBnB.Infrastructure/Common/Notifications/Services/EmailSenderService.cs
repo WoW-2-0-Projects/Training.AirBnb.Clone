@@ -9,24 +9,9 @@ namespace AirBnB.Infrastructure.Common.Notifications.Services;
 /// <summary>
 /// Implementation of the IEmailSenderService interface orchestrating the sending of email messages.
 /// </summary>
-public class EmailSenderService : IEmailSenderService
+public class EmailSenderService(IEnumerable<IEmailSenderBroker> emailSenderBroker,
+    IValidator<EmailMessage> emailMessageValidator) : IEmailSenderService
 {
-    private readonly IEnumerable<IEmailSenderBroker> _emailSenderBrokers;
-    private readonly IValidator<EmailMessage> _emailMessageValidator;
-    
-    /// <summary>
-    /// Initializes a new instance of the EmailSenderService class.
-    /// </summary>
-    /// <param name="emailSenderBroker">Collection of email sender brokers injected via dependency injection.</param>
-    /// <param name="emailMessageValidator">Validator for email messages injected via dependency injection.</param>
-    public EmailSenderService(
-        IEnumerable<IEmailSenderBroker> emailSenderBroker,
-        IValidator<EmailMessage> emailMessageValidator)
-    {
-        _emailSenderBrokers = emailSenderBroker;
-        _emailMessageValidator = emailMessageValidator;
-    }
-    
     /// <summary>
     /// Sends an email asynchronously by orchestrating the process through available EmailSenderBrokers.
     /// </summary>
@@ -37,23 +22,20 @@ public class EmailSenderService : IEmailSenderService
     /// </returns>
     public async ValueTask<bool> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default)
     {
-            var validationResult = _emailMessageValidator.Validate(emailMessage,
+            var validationResult = emailMessageValidator.Validate(emailMessage,
                 options => options.IncludeRuleSets(NotificationEvent.OnSending.ToString()));
-
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
-
-            foreach (var smsSenderBroker in _emailSenderBrokers)
+            foreach (var smsSenderBroker in emailSenderBroker)
             {
                 var sendNotifcationTask = () => smsSenderBroker.SendAsync(emailMessage, cancellationToken);
                 var result = await sendNotifcationTask.GetValueAsync();
-
+                
                 emailMessage.IsSuccessful = result.IsSuccess;
                 emailMessage.ErrorMessage = result.Exception.Message;
 
                 return result.IsSuccess;
             }
-            
             return false;
     }
 }
