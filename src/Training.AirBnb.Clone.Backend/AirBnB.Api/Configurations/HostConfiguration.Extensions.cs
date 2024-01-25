@@ -152,27 +152,31 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
+        //configuration settings
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
         builder.Services.Configure<PasswordValidationSettings>(builder.Configuration.GetSection(nameof(PasswordValidationSettings)));
-        
+        builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
+        //register repository
         builder.Services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>()
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
-            .AddScoped<IUserSettingsService, UserSettingsService>()
             .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
+        
+        //register services
+        builder.Services    
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserSettingsService, UserSettingsService>()
             .AddScoped<IRoleService, RoleService>()
             .AddScoped<IAccountService, AccountService>()
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
             .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
             .AddScoped<IAccessTokenService, AccessTokenService>()
             .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
-            .AddScoped<IPasswordHasherService, PasswordHasherService>();
-            
-
-        builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
-
+            .AddScoped<IPasswordHasherService, PasswordHasherService>()
+            .AddScoped<IUserRoleService, UserRoleService>();
+        
         return builder;
     }
     
