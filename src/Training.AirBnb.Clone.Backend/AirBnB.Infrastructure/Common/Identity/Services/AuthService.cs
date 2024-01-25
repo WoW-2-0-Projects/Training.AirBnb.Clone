@@ -4,10 +4,8 @@ using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
-using AirBnB.Persistence.DataContexts;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
@@ -15,30 +13,34 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// Encapsulates authentication-related functionality, such as user registration, login, and role management.
 /// </summary>
 public class AuthService(
-    IUserService userService,
     IMapper mapper,
+    IUserService userService,
     IRoleService roleService,
     IAccountService accountService,
-    IPasswordGeneratorService passwordGeneratorService,
-    IPasswordHasherService passwordHasherService,
+    IUserRoleService userRoleService,
     IAccessTokenService accessTokenService,
-    IAccessTokenGeneratorService accessTokenGeneratorService,
-    AppDbContext appDbContext
+    IPasswordHasherService passwordHasherService,
+    IPasswordGeneratorService passwordGeneratorService,
+    IAccessTokenGeneratorService accessTokenGeneratorService
     ) : IAuthService
 {
     
     public async ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default)
     {
+        //check that the user is in the database at the entered email address
         var foundUserId = await userService.GetByEmailAddressAsync(signUpDetails.EmailAddress,true, cancellationToken);
-
         if (foundUserId is not null)
             throw new InvalidOperationException("User with this email address already exists.");
 
+        //map the entered user object
         var user = mapper.Map<User>(signUpDetails);
+        
+        //generating complex password
         var password = signUpDetails.AutoGeneratePassword
             ? passwordGeneratorService.GeneratePassword()
             : passwordGeneratorService.GetValidatedPassword(signUpDetails.Password!, user);
         
+        //hash password
         user.PasswordHash = passwordHasherService.HashPassword(password);
         
         return await accountService.CreateUserAsync(user, cancellationToken);
@@ -46,16 +48,19 @@ public class AuthService(
 
     public async ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)
     {
+        //bring the user all his materials from the database by email address entered
         var foundUser =
             await userService.Get(asNoTracking: true)
                 .Include(user => user.Roles)
                 .ThenInclude(role => role.Role)
                 .FirstOrDefaultAsync(user => user.EmailAddress == signInDetails.EmailAddress,
                     cancellationToken: cancellationToken);
-        
+       
+        //verify that the user has password entered correctly
         if(foundUser is null || passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.PasswordHash))
                 throw new AuthenticationException("Sign in details are invalid, contact support.");
-
+        
+        //token generating 
         var accessToken = accessTokenGeneratorService.GetToken(foundUser);
         await accessTokenService.CreateAsync(accessToken, true, cancellationToken);
 
@@ -68,13 +73,19 @@ public class AuthService(
         Guid actionUserId,
         CancellationToken cancellationToken = default)
     {
+        //checking user having
         var user = await userService.GetByIdAsync(userId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
-        _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new IncompleteInitialization();
-
+       
+        //authorization process 
+        _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
+        
+        //transfer of string type role to Enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
         
+        //get the desired role from the base
         var role = await roleService.GetByTypeAsync(roleValue, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Role with type '{roleValue}' could not be retrieved. It may not exist in the system");
         
+        //change user role
         user.Roles = new List<UserRole>
         {
             new UserRole
@@ -95,25 +106,17 @@ public class AuthService(
         RoleType actionUserRole,
         CancellationToken cancellationToken = default)
     {
-        var user = await userService.Get(asNoTracking: true)
-            .Include(user => user.Roles)
-            .ThenInclude(role => role.Role)
-            .FirstOrDefaultAsync(user => user.Id == userId,
-                cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
+        //authorization process 
+        _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
         
-        _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new IncompleteInitialization();
-        
+        //transfer of string type role to Enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
-
-        if (roleValue >= actionUserRole || roleValue == RoleType.Guest )
-            throw new AuthenticationException("Invalid  role to update");
-
-        var selectedRole = user.Roles.FirstOrDefault(role => role.Role.Type == roleValue) ?? throw new AuthenticationException(" invalid role");
-
-        //user.Roles.Remove(selectedRole);
-
-        appDbContext.UserRoles.Remove(selectedRole);
-        await appDbContext.SaveChangesAsync(cancellationToken);
+        
+        //check the level of the role
+        if (roleValue >= actionUserRole || roleValue == RoleType.Guest)
+            throw new AuthenticationException("Invalid role to update");
+        
+        await userRoleService.RevokeRoleAsync(userId, roleValue, cancellationToken);
         return true;
     }
 }
