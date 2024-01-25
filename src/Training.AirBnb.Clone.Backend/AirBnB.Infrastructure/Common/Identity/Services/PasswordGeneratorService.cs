@@ -15,7 +15,8 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// </summary>
 public class PasswordGeneratorService(
     IOptions<PasswordValidationSettings> passwordValidationSettings,
-    IValidator<CredentialDetails> credentialDetailsValidator) : IPasswordGeneratorService
+    IValidator<CredentialDetails> credentialDetailsValidator
+    ) : IPasswordGeneratorService
 {
     private readonly PasswordValidationSettings _passwordValidationSettings = passwordValidationSettings.Value;
     private readonly Random _random = new();
