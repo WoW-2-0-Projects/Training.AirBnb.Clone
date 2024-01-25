@@ -4,7 +4,6 @@ using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Constants;
 using AirBnB.Domain.Enums;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +11,7 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IAuthService authService, IMapper mapper) : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost("sign-up")]
     public async Task<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails, CancellationToken cancellationToken)
