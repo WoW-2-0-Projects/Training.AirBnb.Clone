@@ -11,6 +11,8 @@ public class GuestFeedbackConfiguration : IEntityTypeConfiguration<GuestFeedback
         builder.OwnsOne<Rating>(feedback => feedback.Rating);
 
         builder.Navigation(feedback => feedback.Rating);
+
+        builder.Property(feedback => feedback.Comment).HasMaxLength(2000);
         
         builder.HasOne<User>(feedback => feedback.Guest).WithMany();
         builder.HasOne<Listing>(feedback => feedback.Listing)
