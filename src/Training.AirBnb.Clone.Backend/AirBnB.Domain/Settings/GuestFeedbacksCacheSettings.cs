@@ -8,10 +8,10 @@ public class GuestFeedbacksCacheSettings
     /// <summary>
     /// Gets or sets the absolute expiration time for cached GuestFeedback entities, specified in hours.
     /// </summary>
-    public int AbsoluteExpirationTimeInHours { get; set; }
+    public int AbsoluteExpirationTimeInSeconds { get; init; }
 
     /// <summary>
     /// Gets or sets the sliding expiration time for cached GuestFeedback entities, specified in hours.
     /// </summary>
-    public int SlidingExpirationTimeInHours { get; set; }
+    public int SlidingExpirationTimeInSeconds { get; init; }
 }

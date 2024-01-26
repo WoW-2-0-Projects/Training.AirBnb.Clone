@@ -3,10 +3,10 @@ namespace AirBnB.Application.Common.Settings;
 /// <summary>
 /// Represents the settings for a background service.
 /// </summary>
-public class BackgroundServiceSettings
+public abstract class BackgroundServiceSettings
 {
     /// <summary>
-    /// Gets or sets the time interval between each execution of the Listing Rating recalculation process, specified in hours.
+    /// Gets or sets the time interval between each execution of the background service, specified in seconds.
     /// </summary>
-    public int ListingRatingRecalculationIntervalInHours { get; set; }
+    public int ExecutionIntervalInSeconds { get; init; }
 }
