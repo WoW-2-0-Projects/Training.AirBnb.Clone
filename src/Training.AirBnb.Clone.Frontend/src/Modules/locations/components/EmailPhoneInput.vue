@@ -4,14 +4,13 @@
     <CountryCodePicker v-if="!byEmail"/>
 
     <div class="h-[56px] w-[520px] flex flex-col justify-center px-3 py-1"
-        :class="[isFocused ? 'border-2 rounded-md border-black' : 'border rounded-md border-[#b0b0b0]']"
-        tabindex="0"
-        @click="toggleIsFocused"
-        @blur="onBlur">
+        :class="[isFocused ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : byEmail ? 'border rounded-md border-[#b0b0b0]' : 'border-x border-b rounded-b-md border-[#b0b0b0]']"
+        tabindex="0">
         
         <h3 class="text-[#797979] text-[12px]">{{ byEmail ? 'Email' : 'Phone number' }}</h3>
-        <input v-if="!byEmail" type="text" class="text-base text-textPrimary focus:outline-none" @keydown="handleKeyDown">
-        <input v-if="byEmail" type="text" class="text-base text-textPrimary focus:outline-none">
+        <input v-if="!byEmail" type="text" class="text-base bg-transparent theme-text-primary focus:outline-none" @keydown="handleKeyDown" @click="toggleIsFocused" @blur="onBlur">
+        <input v-if="byEmail" type="text" class="text-base bg-transparent theme-text-primary focus:outline-none" @click="toggleIsFocused" @blur="onBlur">
+
     </div>
 </div>
 
@@ -33,20 +32,20 @@ const props = defineProps({
 const isFocused = ref<boolean>(false);
 
 const toggleIsFocused = () => {
-    isFocused.value = !isFocused.value;
+    isFocused.value = true;
 }
 
 const onBlur = () => {
     isFocused.value = false;
+    console.log("blur")
 }
-
 
 const handleKeyDown = (event: KeyboardEvent) => {
     const allowedKeys = ['Backspace', 'ArrowRight', 'ArrowUp', 'ArrowDown']
 
     if (!allowedKeys.includes(event.key) && (event.key.length === 1 && isNaN(Number(event.key)))) {
         event.preventDefault();
-      }
+    }
 }
 
 </script>
