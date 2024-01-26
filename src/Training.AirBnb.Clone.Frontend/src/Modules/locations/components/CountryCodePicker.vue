@@ -1,6 +1,6 @@
 <template>
 
-<div class="h-[56px] w-[520px] px-3 py-1 flex justify-between"
+<div class="h-[56px] w-auto px-3 py-1 flex justify-between"
     :class="[isOpen ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : 'border rounded-t-md border-[#b0b0b0]']"
     tabindex="0"
     @click="toggleDown"
@@ -31,7 +31,7 @@
 <div v-show="isOpen" class="relative">
 
 
-<div class="absolute z-20 theme-bg-secondary theme-text-primary border border-[#b0b0b0] rounded-md shadow-xl w-[520px] max-h-96 overflow-y-auto">
+<div class="absolute z-20 theme-bg-secondary theme-text-primary border border-[#b0b0b0] rounded-md shadow-xl w-full max-h-96 overflow-y-auto">
     <h5 v-for="(country, index) in countriesWithPhoneCodes" :key="index" class="px-1 hover:bg-[#dd524c] hover:text-white" @mousedown="selectCountry(country)">{{ `${country.country} (${country.code})` }}</h5>
 </div>
 
@@ -42,7 +42,9 @@
 <script setup lang="ts">
 
 import { CountryPhoneCode } from '../models/CountryPhoneCode';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const emit = defineEmits(['countryCodeChanged']);
 
 const isOpen = ref(false);
 
@@ -209,6 +211,11 @@ const selectedCountry = ref<CountryPhoneCode>(countriesWithPhoneCodes[0]);
 
 const selectCountry = (country: CountryPhoneCode) => {
     selectedCountry.value = country;
+    emit('countryCodeChanged', country);
 }
+
+onMounted(() => {
+   selectCountry(selectedCountry.value); 
+});
 
 </script>
