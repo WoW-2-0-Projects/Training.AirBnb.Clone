@@ -3,11 +3,11 @@
 <Teleport to="body">
     <div v-show="modalActive" class="absolute top-0 z-10 flex justify-center w-screen bg-black bg-opacity-40">
     
-        <div class="border-2 w-[570px] bg-white rounded-xl h-auto">
+        <div class="border-2 w-[570px] theme-bg-secondary theme-border rounded-xl h-auto">
             <!-- Header (Login) -->
-            <div class="h-[64px] border-b gray-300 flex justify-between items-center px-4">
+            <div class="h-[64px] border-b theme-border flex justify-between items-center px-4">
 
-                <button class="hover:bg-gray-100 rounded-full h-8 px-[8px]" @click="closeModal">
+                <button class="rounded-full h-8 px-[8px] theme-button" @click="closeModal">
                     <svg xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 32 32" 
                     aria-hidden="true" 
@@ -24,20 +24,20 @@
                     </svg>
                 </button>
 
-                <h2 class="font-semibold basis-[64%] text-textPrimary">Log in or sign up</h2>
+                <h2 class="font-semibold basis-[64%] theme-text-primary">Log in or sign up</h2>
             </div>
 
             <!-- Body -->
-            <div class="mx-5 mb-5">
+            <div class="mx-5 mb-5 theme-text-primary">
                 <!-- Welcome Message -->
-                <h1 class="mt-8 text-2xl font-semibold text-textPrimary">Welcome to Airbnb</h1>
+                <h1 class="mt-8 text-2xl font-semibold">Welcome to Airbnb</h1>
 
                 <!-- Sign Up/In using phone number or email -->
                 <EmailPhoneInput :by-email="signInByEmail"/>
                 
                 <!-- Privacy Policy section -->
                 <h6 class="text-[12px]">We'll call or text you to confirm your number. Standard message and data rates apply. 
-                    <a class="font-semibold underline text-textPrimary" href="https://google.com" target="_blank">Privacy Policy</a>
+                    <a class="font-semibold underline" href="https://google.com" target="_blank">Privacy Policy</a>
                 </h6>
                 
                 <!-- Continue button -->
