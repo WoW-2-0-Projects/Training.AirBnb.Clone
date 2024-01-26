@@ -1,9 +1,9 @@
 <template>
 
 <Teleport to="body">
-    <div v-show="modalActive" class="absolute top-0 z-10 flex justify-center w-screen bg-black bg-opacity-40">
+    <div v-show="modalActive" class="fixed inset-0 z-10 overflow-auto bg-black bg-opacity-50 no-scrollbar" @click="closeModal">
     
-        <div class="border-2 w-[570px] theme-bg-secondary theme-border rounded-xl h-auto">
+        <div class="relative h-auto mx-auto my-8 border-2 sm:w-full md:w-[570px] lg:w-[570px] xl:w-[570px] theme-bg-secondary theme-border rounded-xl" @click.stop>
             <!-- Header (Login) -->
             <div class="h-[64px] border-b theme-border flex justify-between items-center px-4">
 
@@ -33,15 +33,10 @@
                 <h1 class="mt-8 text-2xl font-semibold">Welcome to Airbnb</h1>
 
                 <!-- Sign Up/In using phone number or email -->
-                <EmailPhoneInput :by-email="signInByEmail"/>
-                
-                <!-- Privacy Policy section -->
-                <h6 class="text-[12px]">We'll call or text you to confirm your number. Standard message and data rates apply. 
-                    <a class="font-semibold underline" href="https://google.com" target="_blank">Privacy Policy</a>
-                </h6>
+                <EmailPhoneInput :by-email="signInByEmail" @input-submit="onSubmit"/>
                 
                 <!-- Continue button -->
-                <button class="rounded-lg bg-red-500 text-white font-bold mt-5 px-[228px] py-3">Continue</button>
+                <button class="w-full py-3 mt-5 font-bold text-white bg-red-500 rounded-lg">Continue</button>
 
                 <!-- Divider -->
                 <div class="flex mt-5 place-items-center">
@@ -83,6 +78,10 @@ const signInByEmail = ref<boolean>(false);
 
 const changeAuthType = () => {
     signInByEmail.value = !signInByEmail.value;
+}
+
+const onSubmit = (value: string) => {
+    // need to send a request to api (when backend is ready)
 }
 
 </script>

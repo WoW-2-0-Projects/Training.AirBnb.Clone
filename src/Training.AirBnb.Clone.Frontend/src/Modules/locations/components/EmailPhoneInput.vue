@@ -20,7 +20,7 @@
 
      <!-- Privacy Policy section -->
     <h6 class="text-[12px]">We'll call or text you to confirm your number. Standard message and data rates apply. 
-        <a class="font-semibold underline" href="https://google.com" target="_blank">Privacy Policy</a>
+        <a class="font-semibold underline" href="" target="_blank">Privacy Policy</a>
     </h6>
 </div>
 
