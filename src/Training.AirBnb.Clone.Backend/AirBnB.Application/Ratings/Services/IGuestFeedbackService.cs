@@ -36,7 +36,7 @@ public interface IGuestFeedbackService
     /// </summary>
     /// <param name="listingId"></param>
     /// <returns></returns>
-    public ValueTask<IList<GuestFeedback>> GetByListingIdAsync(Guid listingId);
+    ValueTask<IList<GuestFeedback>> GetByListingIdAsync(Guid listingId);
     
     /// <summary>
     /// Creates a new GuestFeedback entity asynchronously.

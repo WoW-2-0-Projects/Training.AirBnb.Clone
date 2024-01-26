@@ -65,16 +65,4 @@ public interface IGuestFeedbackRepository
         Guid id, 
         bool saveChanges = true,
         CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Caches a GuestFeedback entity with a specified key asynchronously.
-    /// </summary>
-    /// <param name="guestFeedback"></param>
-    /// <param name="key"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public ValueTask CacheFeedback(
-        GuestFeedback guestFeedback,
-        string key,
-        CancellationToken cancellationToken = default);
 }

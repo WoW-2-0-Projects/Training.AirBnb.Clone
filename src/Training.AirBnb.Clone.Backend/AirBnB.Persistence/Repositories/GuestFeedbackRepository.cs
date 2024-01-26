@@ -70,7 +70,7 @@ public class GuestFeedbackRepository(AppDbContext dbContext, ICacheBroker cacheB
         return deletedFeedback;
     }
     
-    public async ValueTask CacheFeedback(
+    private async ValueTask CacheFeedback(
         GuestFeedback guestFeedback, 
         string key, 
         CancellationToken cancellationToken = default)
@@ -82,8 +82,8 @@ public class GuestFeedbackRepository(AppDbContext dbContext, ICacheBroker cacheB
 
         await cacheBroker.SetAsync(key, cachedFeedbacks,
             new CacheEntryOptions(
-                TimeSpan.FromHours(_feedbackCachingSettings.AbsoluteExpirationTimeInHours),
-                TimeSpan.FromHours(_feedbackCachingSettings.SlidingExpirationTimeInHours)),
+                TimeSpan.FromHours(_feedbackCachingSettings.AbsoluteExpirationTimeInSeconds),
+                TimeSpan.FromHours(_feedbackCachingSettings.SlidingExpirationTimeInSeconds)),
             cancellationToken);
     }
 }

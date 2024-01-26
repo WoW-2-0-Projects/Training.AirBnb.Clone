@@ -11,13 +11,13 @@ namespace AirBnB.Api.Controllers;
 [Route("api/[controller]")]
 public class RatingsController(IMapper mapper, IGuestFeedbackService guestFeedbackService) : ControllerBase
 {
-    [HttpGet("guestFeedback/{listingId:guid}")]
+    [HttpGet("{listingId:guid}")]
     public async ValueTask<IActionResult> GetFeedbacksByListingId([FromRoute]Guid listingId, CancellationToken cancellationToken = default)
     {
         return Ok(mapper.Map<IEnumerable<GuestFeedbackDto>>(await guestFeedbackService.GetByListingIdAsync(listingId)));
     }
     
-    [HttpPost("guestFeedback")]
+    [HttpPost()]
     public async ValueTask<IActionResult> CreateFeedbackAsync([FromBody]GuestFeedbackDto guestFeedback,
         CancellationToken cancellationToken = default)
     {
@@ -25,7 +25,7 @@ public class RatingsController(IMapper mapper, IGuestFeedbackService guestFeedba
             .CreateAsync(mapper.Map<GuestFeedback>(guestFeedback), true, cancellationToken));
     }
 
-    [HttpDelete("guestFeedback/{feedbackId:guid}")]
+    [HttpDelete("{feedbackId:guid}")]
     public async ValueTask<IActionResult> DeleteFeedbackByIdAsync([FromRoute] Guid feedbackId, 
         CancellationToken cancellationToken = default)
     {
