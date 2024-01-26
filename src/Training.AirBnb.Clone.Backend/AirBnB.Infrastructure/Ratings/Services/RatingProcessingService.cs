@@ -7,35 +7,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Infrastructure.Ratings.Services;
 
-public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext appDbContext) 
-    : IRatingRecalculationService
+public class RatingProcessingService(ICacheBroker cacheBroker, AppDbContext appDbContext) 
+    : IRatingProcessingService
 {
     private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1); 
     
-    public async ValueTask RecalculateListingsRatings()
+    public async ValueTask ProcessListingsRatings()
     {
         await Semaphore.WaitAsync();
-       
-        var deletedFeedbacks = await GetCachedFeedbacks(CacheKeyConstants.DeletedGuestFeedbacks)
-            is List<GuestFeedback> removedFeedbacks
-            ? GroupRatingsByListingId(removedFeedbacks)
-            : new List<(Guid ListingId, int FeedbacksCount, Rating RatingSum)>();
-
-        foreach (var deletedFeedback in deletedFeedbacks)
-            UpdateDeletedRatings(deletedFeedback);
-
-        var addedFeedbacks = await GetCachedFeedbacks(CacheKeyConstants.AddedGuestFeedbacks)
-            is List<GuestFeedback> newFeedbacks
-            ? GroupRatingsByListingId(newFeedbacks)
-            : new List<(Guid ListingId, int FeedbacksCount, Rating RatingSum)>();
-
-        foreach (var addedFeedback in addedFeedbacks)
-            UpdateRatings(addedFeedback);
+        
+        await ProcessCachedFeedbacks(CacheKeyConstants.DeletedGuestFeedbacks, UpdateDeletedRatings);
+        await ProcessCachedFeedbacks(CacheKeyConstants.AddedGuestFeedbacks, UpdateRatings);
         
         Semaphore.Release();
     }
 
-    public async ValueTask<List<GuestFeedback>?> GetCachedFeedbacks(string key)
+    private async ValueTask ProcessCachedFeedbacks(string cacheKey,
+        Func<(Guid ListingId, int FeedbacksCount, Rating RatingSum), ValueTask> updateMethod)
+    {
+        var cachedFeedbacks = await GetCachedFeedbacks(cacheKey) ?? [];
+        var groupedFeedbacks = GroupRatingsByListingId(cachedFeedbacks);
+
+        foreach (var feedback in groupedFeedbacks)
+            await updateMethod(feedback);
+    }
+    
+    private async ValueTask<List<GuestFeedback>?> GetCachedFeedbacks(string key)
     {
         var feedbacks = await cacheBroker.GetAsync<List<GuestFeedback>>(key);
         await cacheBroker.SetAsync<List<GuestFeedback>>(key, []);
@@ -43,7 +40,7 @@ public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext a
         return feedbacks;
     }
 
-    public IList<(Guid ListingId, int FeedbacksCount, Rating RatingSum)> GroupRatingsByListingId(IList<GuestFeedback> guestFeedbacks)
+    private IList<(Guid ListingId, int FeedbacksCount, Rating RatingSum)> GroupRatingsByListingId(IList<GuestFeedback> guestFeedbacks)
     {
          return guestFeedbacks.GroupBy(feedback => feedback.ListingId)
             .Select(group => (
@@ -62,7 +59,7 @@ public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext a
             .ToList();
     }
 
-    public void UpdateRatings((Guid ListingId, int FeedbacksCount, Rating RatingSum) newFeedbacks)
+    private async ValueTask UpdateRatings((Guid ListingId, int FeedbacksCount, Rating RatingSum) newFeedbacks)
     {
         var (listingId, feedbacksCount, ratingSum) = newFeedbacks;
 
@@ -71,9 +68,9 @@ public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext a
 
         var existingRatingsCount = allFeedbacksCount - feedbacksCount;
         
-        appDbContext.Listings.Where(listing => listing.Id == listingId)
+        await appDbContext.Listings.Where(listing => listing.Id == listingId)
             .Select(listing => listing.Rating)
-            .ExecuteUpdate(setters => setters
+            .ExecuteUpdateAsync(setters => setters
                 .SetProperty(rating => rating.OverallRating, rating =>
                     (rating.OverallRating * existingRatingsCount + ratingSum.OverallRating) / allFeedbacksCount)
                 .SetProperty(rating => rating.Cleanliness, rating => 
@@ -90,7 +87,7 @@ public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext a
                     (rating.Value * existingRatingsCount + ratingSum.Value) / allFeedbacksCount));
     }
 
-    public void UpdateDeletedRatings((Guid ListingId, int FeedbacksCount, Rating RatingSum) deletedFeedbacks)
+    private async ValueTask UpdateDeletedRatings((Guid ListingId, int FeedbacksCount, Rating RatingSum) deletedFeedbacks)
     {
         var (listingId, feedbacksCount, ratingSum) = deletedFeedbacks;
 
@@ -101,9 +98,9 @@ public class RatingRecalculationService(ICacheBroker cacheBroker, AppDbContext a
 
         if (existingRatingsCount == 0) existingRatingsCount++;
         
-        appDbContext.Listings.Where(listing => listing.Id == listingId)
+        await appDbContext.Listings.Where(listing => listing.Id == listingId)
             .Select(listing => listing.Rating)
-            .ExecuteUpdate(setters => setters
+            .ExecuteUpdateAsync(setters => setters
                 .SetProperty(rating => rating.OverallRating, rating =>
                     (rating.OverallRating * allFeedbacksCount - ratingSum.OverallRating) / existingRatingsCount)
                 .SetProperty(rating => rating.Cleanliness, rating => 

@@ -25,6 +25,7 @@ using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
+using AirBnB.Application.Ratings.Settings;
 using AirBnB.Domain.Settings;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
@@ -229,17 +230,18 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
     {
         // configure ratings related settings.
-        builder.Services.Configure<BackgroundServiceSettings>(
-            builder.Configuration.GetSection(nameof(BackgroundServiceSettings)));
+        builder.Services.Configure<RatingProcessingSchedulerSettings>(
+            builder.Configuration.GetSection(nameof(RatingProcessingSchedulerSettings)));
+        
         builder.Services.Configure<GuestFeedbacksCacheSettings>(
             builder.Configuration.GetSection(nameof(GuestFeedbacksCacheSettings)));
         
         // register services
         builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
         builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
-        builder.Services.AddScoped<IRatingRecalculationService, RatingRecalculationService>();
+        builder.Services.AddScoped<IRatingProcessingService, RatingProcessingService>();
         
-        builder.Services.AddHostedService<RatingRecalculationScheduler>();
+        builder.Services.AddHostedService<RatingProcessingScheduler>();
         
         return builder;
     }
