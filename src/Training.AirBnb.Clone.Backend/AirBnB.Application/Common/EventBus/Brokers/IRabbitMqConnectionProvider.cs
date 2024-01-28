@@ -1,6 +1,6 @@
 ﻿using RabbitMQ.Client;
 
-namespace AirBnB.Application.Common.EventBus;
+namespace AirBnB.Application.Common.EventBus.Brokers;
 
 /// <summary>
 /// Represents an interface for providing RabbitMQ connections and creating channels for communication.
