@@ -26,15 +26,5 @@ public interface IEvenBusBroker
     /// </remarks>
     ValueTask PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent;
 
-    /// <summary>
-    /// Subscribes a handler to an event, allowing it to handle the event when published.
-    /// </summary>
-    /// <typeparam name="TEvent">The type of the event to subscribe to.</typeparam>
-    /// <typeparam name="TEventHandler">The type of the event handler that will handle the event.</typeparam>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-    /// <remarks>
-    /// The event handler must implement the <see cref="IEventHandler{TEvent}"/> interface for proper event handling.
-    /// </remarks>
-    ValueTask SubscribeAsync<TEvent, TEventHandler>() where TEvent : IEvent where TEventHandler : IEventHandler<TEvent>;
-
+   
 }
