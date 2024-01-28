@@ -12,6 +12,7 @@ public static partial class HostConfiguration
         builder
             .AddMediator()
             .AddCaching()
+            .AddEventBus()
             .AddValidators()
             .AddMappers()
             .AddSerializers()
