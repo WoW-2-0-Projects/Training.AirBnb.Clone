@@ -166,9 +166,9 @@ public static class SeedDataExtensions
     private static async ValueTask SeedListingsAsync(this AppDbContext appDbContext)
     {
         // get existing hosts
-        var hosts = appDbContext.Users
+        var hosts = await appDbContext.Users
             .Where(user => user.Role.Type == RoleType.Host)
-            .Select(host => host.Id);
+            .Select(host => host.Id).ToListAsync();
 
         // generate fake addresses
         var addressFaker = new Faker<Address>()
@@ -219,7 +219,7 @@ public static class SeedDataExtensions
     /// <param name="dbContext"></param>
     private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker)
     {
-        var listings = dbContext.Listings.AsQueryable();
+        var listings = await dbContext.Listings.ToListAsync();
 
         var feedbackFaker = new Faker<GuestFeedback>()
             .RuleFor(feedback => feedback.Rating, GenerateFakeRatings)
