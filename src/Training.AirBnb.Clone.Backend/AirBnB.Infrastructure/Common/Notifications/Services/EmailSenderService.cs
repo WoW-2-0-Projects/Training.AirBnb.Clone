@@ -3,6 +3,7 @@ using AirBnB.Application.Common.Notifications.Models;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Enums;
 using AirBnB.Domain.Extensions;
+using AirBnB.Persistence.Extensions;
 using FluentValidation;
 
 namespace AirBnB.Infrastructure.Common.Notifications.Services;
@@ -26,16 +27,15 @@ public class EmailSenderService(IEnumerable<IEmailSenderBroker> emailSenderBroke
                 options => options.IncludeRuleSets(NotificationEvent.OnSending.ToString()));
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
-            foreach (var smsSenderBroker in emailSenderBroker)
+
+            var accomplishedBroker = await emailSenderBroker.FirstOrDefaultAsync( async emailSenderBrokers =>
             {
-                var sendNotifcationTask = () => smsSenderBroker.SendAsync(emailMessage, cancellationToken);
+                var sendNotifcationTask = () => emailSenderBrokers.SendAsync(emailMessage, cancellationToken);
                 var result = await sendNotifcationTask.GetValueAsync();
-                
-                emailMessage.IsSuccessful = result.IsSuccess;
-                emailMessage.ErrorMessage = result.Exception.Message;
+                (emailMessage.IsSuccessful, emailMessage.ErrorMessage) = (result.IsSuccess, result.Exception?.Message);
 
                 return result.IsSuccess;
-            }
+            }, cancellationToken);
             return false;
     }
 }
