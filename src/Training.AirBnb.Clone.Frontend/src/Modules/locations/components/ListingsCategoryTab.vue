@@ -1,6 +1,6 @@
 <template>
     
-    <div class="fixed top-0 z-10 flex items-center justify-center w-full gap-4 pt-2 mt-20 theme-bg-primary content-padding">
+    <div class=" top-0 fixed z-10 flex items-center justify-center w-full gap-4 pt-2 mt-20 theme-bg-primary content-padding">
         <horizontal-scroll :scrollChangeSource="listingCategories" class="relative">
             <listing-category-card v-for="listingCategory in listingCategories"
                 :listingCategory="listingCategory"

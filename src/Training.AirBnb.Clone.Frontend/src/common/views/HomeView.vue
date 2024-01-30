@@ -9,10 +9,8 @@
   <listings-container/>
   
   <!--Listings-->
-  <listings-grid class="mt-24"/>
-  
-  
-  <button class="mt-80" @click="appThemeService.toggleDarkMode()">Dark mode</button>
+  <listings-grid/>
+
 </div>
 
 </template>
