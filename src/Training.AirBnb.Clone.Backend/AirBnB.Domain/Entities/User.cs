@@ -21,11 +21,6 @@ public sealed class User : AuditableEntity
     /// Gets or sets the email address of the user
     /// </summary>
     public string EmailAddress { get; set; } = default!;
-
-    /// <summary>
-    ///Gets or sets the password of the user 
-    /// </summary>
-    public string PasswordHash { get; set; } = default!;
     
     ///<summary>
     /// Gets or sets the Role Id of user
@@ -61,4 +56,6 @@ public sealed class User : AuditableEntity
     /// Gets or sets listings owned by the user.
     /// </summary>
     public List<Listing> Listings { get; set; }
+    
+    public UserCredentials UserCredentials { get; set; }
 }
