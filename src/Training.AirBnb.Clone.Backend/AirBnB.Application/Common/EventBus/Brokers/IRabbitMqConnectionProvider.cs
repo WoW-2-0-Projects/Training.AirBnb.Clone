@@ -10,9 +10,6 @@ public interface IRabbitMqConnectionProvider
     /// <summary>
     /// Asynchronously creates a RabbitMQ channel for communication.
     /// </summary>
-    /// <returns>A <see cref="ValueTask{TResult}"/> representing the asynchronous operation. The result is the created RabbitMQ channel.</returns>
-    /// <remarks>
-    /// Creating a channel is an asynchronous operation that allows for the establishment of a communication channel with RabbitMQ for sending and receiving messages.
-    /// </remarks>
+    /// <returns></returns>
     ValueTask<IChannel> CreateChannelAsync();
 }

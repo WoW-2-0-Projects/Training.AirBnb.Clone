@@ -106,8 +106,7 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
     {
         //register settings
-        builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)))
-            .Configure<NotificationSubscriberSettings>(builder.Configuration.GetSection(nameof(NotificationSubscriberSettings)));
+        builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
         
         //register brokers
         builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
