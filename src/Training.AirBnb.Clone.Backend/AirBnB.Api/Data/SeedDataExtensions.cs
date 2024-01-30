@@ -3,6 +3,7 @@ using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace AirBnB.Api.Data;
@@ -87,7 +88,6 @@ public static class SeedDataExtensions
             FirstName = "System",
             LastName = "System",
             EmailAddress = "example@gmail.com",
-            PasswordHash = "A1rBnB.$com",
             PhoneNumber = ""
         };
 
@@ -101,7 +101,10 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.UserCredentials, data => new UserCredentials
+            {
+                PasswordHash = data.Internet.Password(8)
+            })
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(hostFaker.Generate(100));
@@ -114,7 +117,10 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.UserCredentials, data => new UserCredentials()
+            {
+                PasswordHash = data.Internet.Password(8)
+            })
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
