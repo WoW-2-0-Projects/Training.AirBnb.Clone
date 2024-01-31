@@ -9,5 +9,5 @@ namespace AirBnB.Domain.Common.Entities;
 
 public interface IDeletionAuditableEntity 
 {
-    public Guid DeletedByUserId { get; set; }
+    public Guid? DeletedByUserId { get; set; }
 }

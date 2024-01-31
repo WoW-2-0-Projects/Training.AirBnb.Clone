@@ -40,7 +40,7 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// <summary>
     /// Gets or sets the user ID who deleted the listing.
     /// </summary>
-    public Guid DeletedByUserId { get; set; }
+    public Guid? DeletedByUserId { get; set; }
 
     /// <summary>
     /// Gets or sets the navigation user property who owns this listing.

@@ -22,7 +22,7 @@ namespace AirBnB.Persistence.Migrations
                 name: "DeletedByUserId",
                 table: "Listings",
                 type: "uuid",
-                nullable: false,
+                nullable: true,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
