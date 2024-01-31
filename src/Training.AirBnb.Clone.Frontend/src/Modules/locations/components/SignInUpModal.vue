@@ -2,8 +2,8 @@
 
 <Teleport to="body">
     <div v-show="modalActive" class="fixed inset-0 z-10 overflow-auto bg-black bg-opacity-50 no-scrollbar" @click="closeModal">
-    
-        <div class="relative h-auto mx-auto my-8 border-2 sm:w-full md:w-[570px] lg:w-[570px] xl:w-[570px] theme-bg-secondary theme-border rounded-xl" @click.stop>
+        
+        <div class="relative h-auto mx-auto my-8 border-2 sm:w-full md:w-[570px] theme-bg-secondary theme-border rounded-xl" @click.stop>
             <!-- Header (Login) -->
             <div class="h-[64px] border-b theme-border flex justify-between items-center px-4">
 

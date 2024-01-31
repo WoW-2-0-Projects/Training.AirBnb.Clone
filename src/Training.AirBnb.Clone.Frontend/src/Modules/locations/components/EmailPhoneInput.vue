@@ -9,13 +9,13 @@
         
         <h3 class="text-[#797979] text-[12px]">{{ byEmail ? 'Email' : 'Phone number' }}</h3>
         
-        <div class="flex items-center">
-            <form @submit.prevent="onSubmit">
-                <span v-if="!byEmail" class="whitespace-pre-wrap">{{ selectedCountryCode }}</span>
-                <input v-if="!byEmail" v-model="phoneNumber" type="text" class="text-base bg-transparent theme-text-primary focus:outline-none" @keydown="handleKeyDown" @click="toggleIsFocused" @blur="onBlur">
-                <input v-if="byEmail" v-model="email" type="text" class="text-base bg-transparent theme-text-primary focus:outline-none" @click="toggleIsFocused" @blur="onBlur">
-            </form>
-        </div>
+        
+        <form @submit.prevent="onSubmit" class="flex items-center w-full">
+            <span v-if="!byEmail" class="whitespace-pre-wrap">{{ selectedCountryCode }}</span>
+            <input v-if="!byEmail" v-model="phoneNumber" type="text" class="w-full text-base bg-transparent theme-text-primary focus:outline-none" @keydown="handleKeyDown" @click="toggleIsFocused" @blur="onBlur">
+            <input v-if="byEmail" v-model="email" type="text" class="w-full text-base bg-transparent theme-text-primary focus:outline-none" @click="toggleIsFocused" @blur="onBlur">
+        </form>
+        
     </div>
 
      <!-- Privacy Policy section -->
@@ -66,7 +66,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
 const selectedCountryCode = ref<string>();
 
 const onCountryChanged = (country: CountryPhoneCode) => {
-    selectedCountryCode.value = `${country.code} `
+    selectedCountryCode.value = `${country.code}  `
 }
 
 const onSubmit = () => {
@@ -76,11 +76,9 @@ const onSubmit = () => {
         emit('inputSubmit', phoneNumber.value);
 }
 
-watch(() => props.byEmail, (oldValue, newValue) => {
-    if (newValue != oldValue) {
+watch(() => props.byEmail, () => {
         email.value = '';
         phoneNumber.value = '';
-    }
 })
 
 </script>

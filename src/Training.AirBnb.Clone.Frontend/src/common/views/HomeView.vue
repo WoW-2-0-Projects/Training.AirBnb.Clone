@@ -3,7 +3,7 @@
 <div class="flex flex-col w-screen h-screen theme-bg-primary">
 
   <!-- Header-->
-  <main-header @sign-in-up-request="$emit('signInUpRequest')"/>
+  <main-header/>
   
   <!-- Listings Container -->
   <listings-container/>
@@ -23,7 +23,6 @@ import ListingsGrid from "@/Modules/locations/components/ListingsGrid.vue";
 import MainHeader from "@/common/components/MainHeader.vue";
 import { AppThemeService } from "@/infrastructure/services/AppThemeService";
 import ListingsContainer from "@/modules/locations/components/ListingsContainer.vue";
-import type { emit } from "process";
 
 const appThemeService = new AppThemeService();
 
