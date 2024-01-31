@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 
-import ListingsGrid from "@/Modules/locations/components/ListingsGrid.vue";
+import ListingsGrid from "@/modules/locations/components/ListingsGrid.vue";
 import MainHeader from "@/common/components/MainHeader.vue";
 import { AppThemeService } from "@/infrastructure/services/AppThemeService";
 import ListingsContainer from "@/modules/locations/components/ListingsContainer.vue";
