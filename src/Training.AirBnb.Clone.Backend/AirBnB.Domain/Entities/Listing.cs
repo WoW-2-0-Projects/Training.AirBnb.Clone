@@ -50,5 +50,5 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// <summary>
     /// Navigation property that stores the categories of a listing
     /// </summary>
-    public virtual List<ListingCategoryAssociation> ListingCategoryAssociations { get; set; }
+    public List<ListingCategory> ListingCategories { get; set; }
 }
