@@ -17,7 +17,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<UserSettings> UserSettings => Set<UserSettings>();
 
-    public DbSet<UserCredentials> UserCredentialss => Set<UserCredentials>();
+    public DbSet<UserCredentials> UserCredentials => Set<UserCredentials>();
 
     #endregion
     #region Notification
