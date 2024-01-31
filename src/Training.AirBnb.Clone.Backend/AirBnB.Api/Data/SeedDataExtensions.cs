@@ -179,7 +179,7 @@ public static class SeedDataExtensions
             listing =>
             {
                 // Add random built date
-                listing.BuiltDate = DateOnly.FromDateTime(randomDateTimeProvider.Generate(new DateTime(1950, 1, 1), DateTime.Now.AddYears(3)));
+                listing.BuiltDate = DateOnly.FromDateTime(randomDateTimeProvider.Generate(new DateTime(1950, 1, 1), DateTime.Now.AddYears(-3)));
 
                 // Add host
                 listing.HostId = users[hostCounter].Id;
