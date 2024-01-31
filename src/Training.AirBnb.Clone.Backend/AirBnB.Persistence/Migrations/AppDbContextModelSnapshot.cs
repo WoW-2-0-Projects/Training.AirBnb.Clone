@@ -479,7 +479,7 @@ namespace AirBnB.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("UserCredentialss");
+                            b1.ToTable("UserCredentials");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

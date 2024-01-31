@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240130111752_Add_UserCredentials")]
+    [Migration("20240131074059_Add_UserCredentials")]
     partial class Add_UserCredentials
     {
         /// <inheritdoc />
@@ -482,7 +482,7 @@ namespace AirBnB.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("UserCredentialss");
+                            b1.ToTable("UserCredentials");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
