@@ -16,8 +16,8 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="DeepCloner" Version="0.10.4" />
     <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Polly" Version="8.2.0" />
   </ItemGroup>
 

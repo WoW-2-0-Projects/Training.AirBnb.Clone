@@ -30,5 +30,5 @@ public class ListingCategory : SoftDeletedEntity
     /// <summary>
     /// Navigation property that stores the listings related to this category 
     /// </summary>
-    public virtual List<ListingCategoryAssociation> ListingCategoryAssociations { get; set; }
+    public List<Listing> Listings { get; set; }
 }
