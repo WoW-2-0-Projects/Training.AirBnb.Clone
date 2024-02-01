@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 namespace AirBnB.Persistence.Repositories;
 
 public class EmailHistoryRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
-    : EntityRepositoryBase<EmailHistory, AppDbContext>(dbContext, cacheBroker, new CacheEntryOptions()), ISmsHistoryRepository
+    : EntityRepositoryBase<EmailHistory, AppDbContext>(dbContext, cacheBroker, new CacheEntryOptions()), IEmailHistoryRepository
 {
     public new IQueryable<EmailHistory> Get(
         Expression<Func<EmailHistory, bool>>? predicate = null,
