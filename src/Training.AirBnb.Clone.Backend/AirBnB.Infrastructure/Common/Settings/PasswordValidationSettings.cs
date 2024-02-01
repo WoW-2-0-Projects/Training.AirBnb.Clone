@@ -5,21 +5,33 @@
 /// </summary>
 public class PasswordValidationSettings
 {
-    // Must contain at least one digit
+    /// <summary>
+    /// Determines if a password must contain at least one numerical digit (0-9).
+    /// </summary>
     public bool RequireDigit { get; set; }
    
-    // Must contain at least one uppercase letter
+    /// <summary>
+    /// Determines if a password must contain at least one uppercase letter (A-Z).
+    /// </summary>
     public bool RequireUppercase { get; set; }
    
-    // Must contain at least one lowercase letter
+    /// <summary>
+    /// Determines if a password must contain at least one lowercase letter (a-z).
+    /// </summary>
     public bool RequireLowercase { get; set; }
    
-    // Must contain at least one non-alphanumeric character
+    /// <summary>
+    /// Determines if a password must contain at least one non-alphanumeric character (e.g., symbols like !@#$%^&*).
+    /// </summary>
     public bool RequireNonAlphanumeric { get; set; }
     
-    // Minimum allowed length
+    /// <summary>
+    /// Sets the minimum allowable length for passwords.
+    /// </summary>
     public int MinimumLength { get; set; }
    
-    // Maximum allowed length (default: typically 128)
+    /// <summary>
+    /// Sets the maximum allowable length for passwords.
+    /// </summary>
     public int MaximumLength { get; set; }
 }

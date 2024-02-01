@@ -27,20 +27,20 @@ public class AuthService(
     
     public async ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default)
     {
-        //check that the user is in the database at the entered email address
+        //Check that the user is in the database at the entered email address
         var foundUserId = await userService.GetByEmailAddressAsync(signUpDetails.EmailAddress,true, cancellationToken);
         if (foundUserId is not null)
             throw new InvalidOperationException("User with this email address already exists.");
 
-        //map the entered user object
+        //Map the entered user object
         var user = mapper.Map<User>(signUpDetails);
         
-        //generating complex password
+        //Generating complex password
         var password = signUpDetails.AutoGeneratePassword
             ? passwordGeneratorService.GeneratePassword()
             : passwordGeneratorService.GetValidatedPassword(signUpDetails.Password!, user);
         
-        //hash password
+        //Hash password
         user.PasswordHash = passwordHasherService.HashPassword(password);
         
         return await accountService.CreateUserAsync(user, cancellationToken);
@@ -48,18 +48,18 @@ public class AuthService(
 
     public async ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)
     {
-        //bring the user all his materials from the database by email address entered
+        //Bring the user all his materials from the database by email address entered
         var foundUser =
             await userService.Get(asNoTracking: true)
                 .Include(user => user.Roles)
                 .FirstOrDefaultAsync(user => user.EmailAddress == signInDetails.EmailAddress,
                     cancellationToken: cancellationToken);
         
-        //verify that the user has password entered correctly
+        //Verify that the user has password entered correctly
         if(foundUser is null || passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.PasswordHash))
                 throw new AuthenticationException("Sign in details are invalid, contact support.");
         
-        //token generating 
+        //Token generating 
         var accessToken = accessTokenGeneratorService.GetToken(foundUser);
         await accessTokenService.CreateAsync(accessToken, true, cancellationToken);
 
@@ -75,16 +75,16 @@ public class AuthService(
         //Checking user having
         var user = await userService.GetByIdAsync(userId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
         
-        //authorization process 
+        //Authorization process 
         _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
         
-        //transfer of string type role to enam type
+        //Transfer of string type role to enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
         
-        //get the desired role from the base
+        //Get the desired role from the base
         var role = await roleService.GetByTypeAsync(roleValue, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Role with type '{roleValue}' could not be retrieved. It may not exist in the system");
         
-        //change user role
+        //Change user role
         user.Roles = new List<Role>
         {
             role
@@ -102,13 +102,13 @@ public class AuthService(
         RoleType actionUserRole,
         CancellationToken cancellationToken = default)
     {
-        //authorization process 
+        //Authorization process 
         _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
         
-        //transfer of string type role to enam type
+        //Transfer of string type role to enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
         
-        //check the level of the role
+        //Check the level of the role
         if (roleValue >= actionUserRole || roleValue == RoleType.Guest)
             throw new AuthenticationException("Invalid role to update");
         
