@@ -19,16 +19,19 @@ export default {
         bgColorSecondaryDark: '#2c313c',
         borderColor: '#eaeaea',
         borderColorDark: '#dddddd',
+        inputBorderColor: '#b0b0b0',
 
 
         shadowColor: '#000000',
         shadowColorDark: '#404759',
+        dropDownHoverColor: '#dd524c',
 
 
         textPrimary: '#222222',
         textSecondary: '#717171',
         textPrimaryDark: '#cdcdcd',
         textSecondaryDark: '#818181',
+        modalTextSecondary: '#797979',
 
 
         logoSelected: '#000000',

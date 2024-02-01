@@ -45,4 +45,12 @@ export class DocumentService {
     public removeEventListener(element: HTMLElement, eventName: string, callback: (event: HTMLElement) => void): void {
         element.removeEventListener(eventName, (event: Event) => callback(event.target as HTMLElement));
     }
+
+    public handleBodyOverflow(isModalActive: boolean): void {
+        if (isModalActive) {
+            document.body.classList.add("overflow-hidden");
+        } else {
+            document.body.classList.remove("overflow-hidden");
+        }
+    }
 }
