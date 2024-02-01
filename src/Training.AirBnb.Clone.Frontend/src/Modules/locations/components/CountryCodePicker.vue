@@ -1,12 +1,12 @@
 <template>
 
 <div class="h-[56px] w-auto px-3 py-1 flex justify-between"
-    :class="[isOpen ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : 'border rounded-t-md border-[#b0b0b0]']"
+    :class="[isOpen ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : 'border rounded-t-md border-inputBorderColor']"
     tabindex="0"
     @click="toggleDown"
     @blur="onBlur">
     <div>
-        <h3 class="text-[#797979] text-[12px]">Country/Region</h3>
+        <h3 class="text-modalTextSecondary text-[12px]">Country/Region</h3>
         <h1 class="text-base theme-text-primary">{{ `${selectedCountry.country} (${selectedCountry.code})` }}</h1>
     </div>
     
@@ -31,8 +31,8 @@
 <div v-show="isOpen" class="relative">
 
 
-<div class="absolute z-20 theme-bg-secondary theme-text-primary border border-[#b0b0b0] rounded-md shadow-xl w-full max-h-96 overflow-y-auto">
-    <h5 v-for="(country, index) in countriesWithPhoneCodes" :key="index" class="px-1 hover:bg-[#dd524c] hover:text-white" @mousedown="selectCountry(country)">{{ `${country.country} (${country.code})` }}</h5>
+<div class="absolute z-20 w-full overflow-y-auto border rounded-md shadow-xl theme-bg-secondary theme-text-primary border-inputBorderColor max-h-96">
+    <h5 v-for="(country, index) in countriesWithPhoneCodes" :key="index" class="px-1 hover:bg-dropDownHoverColor hover:text-white" @mousedown="selectCountry(country)">{{ `${country.country} (${country.code})` }}</h5>
 </div>
 
 </div>

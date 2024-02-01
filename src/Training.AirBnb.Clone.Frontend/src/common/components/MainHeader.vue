@@ -27,21 +27,16 @@
 import MainLogo from "@/common/components/icons/MainLogo.vue";
 import HeaderMenu from "@/modules/locations/components/HeaderMenu.vue";
 import HeaderHome from "@/modules/locations/components/HeaderHome.vue";
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 import SignInUpModal from "@/Modules/locations/components/SignInUpModal.vue";
+import { DocumentService } from "@/infrastructure/services/DocumentService";
 
 const modalActive = ref(false);
+const documentService = new DocumentService();
 
 const toggleModal = () => {
   modalActive.value = !modalActive.value;
+  documentService.handleBodyOverflow(modalActive.value);
 }
-
-watchEffect(() => {
-  if (modalActive.value) {
-    document.body.classList.add('overflow-hidden');
-  } else {
-    document.body.classList.remove('overflow-hidden');
-  }
-});
 
 </script>

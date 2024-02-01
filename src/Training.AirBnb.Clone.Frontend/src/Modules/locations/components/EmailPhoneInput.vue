@@ -4,10 +4,10 @@
     <CountryCodePicker v-if="!byEmail" @country-code-changed="onCountryChanged"/>
 
     <div class="h-[56px] w-auto flex flex-col justify-center px-3 py-1"
-        :class="[isFocused ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : byEmail ? 'border rounded-md border-[#b0b0b0]' : 'border-x border-b rounded-b-md border-[#b0b0b0]']"
+        :class="[isFocused ? 'border-2 rounded-md border-black dark:border-bgColorPrimary' : byEmail ? 'border rounded-md border-inputBorderColor' : 'border-x border-b rounded-b-md border-inputBorderColor']"
         tabindex="0">
         
-        <h3 class="text-[#797979] text-[12px]">{{ byEmail ? 'Email' : 'Phone number' }}</h3>
+        <h3 class="text-modalTextSecondary text-[12px]">{{ byEmail ? 'Email' : 'Phone number' }}</h3>
         
         
         <form @submit.prevent="onSubmit" class="flex items-center w-full">
