@@ -37,7 +37,9 @@ public static partial class HostConfiguration
     /// <returns>Application host</returns>
     public static async ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
     {
+        await app.MigrateDatabaseSchemasAsync();
         await app.SeedDataAsync();
+        
         app
             .UseDevTools()
             .UseCors()

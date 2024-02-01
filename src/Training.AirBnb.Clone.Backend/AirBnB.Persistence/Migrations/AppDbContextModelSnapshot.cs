@@ -37,7 +37,8 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("DeletedByUserId")
+                    b.Property<Guid?>("DeletedByUserId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
@@ -113,7 +114,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasIndex("ListingCategoryId");
 
-                    b.ToTable("ListingCategoryAssociations");
+                    b.ToTable("ListingCategoryAssociations", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.NotificationTemplate", b =>
@@ -448,13 +449,13 @@ namespace AirBnB.Persistence.Migrations
             modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategoryAssociation", b =>
                 {
                     b.HasOne("AirBnB.Domain.Entities.ListingCategory", "ListingCategory")
-                        .WithMany("ListingCategoryAssociations")
+                        .WithMany()
                         .HasForeignKey("ListingCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AirBnB.Domain.Entities.Listing", "Listing")
-                        .WithMany("ListingCategoryAssociations")
+                        .WithMany()
                         .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -493,16 +494,6 @@ namespace AirBnB.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
-                {
-                    b.Navigation("ListingCategoryAssociations");
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
-                {
-                    b.Navigation("ListingCategoryAssociations");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
