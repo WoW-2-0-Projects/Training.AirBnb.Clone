@@ -631,12 +631,12 @@ namespace AirBnB.Persistence.Migrations
                 {
                     b.Navigation("Feedbacks");
 
-                    b.Navigation("ListingCategoryAssociations");
+                    b.Navigation("ListingCategories");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
                 {
-                    b.Navigation("ListingCategoryAssociations");
+                    b.Navigation("Listings");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
