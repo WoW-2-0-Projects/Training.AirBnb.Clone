@@ -1,5 +1,5 @@
 <template>
-  <div tabindex="0" ref="container" @focusout="onClose" class="absolute top-[70px] h-auto w-[220px] z-auto rounded-xl theme-bg-primary -mr-[20px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start theme-border theme-shadow">
+  <div tabindex="0" ref="container" @focusout="onClose" class="absolute top-[70px] h-auto w-[220px] z-auto rounded-xl theme-bg-primary -mr-[40px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start theme-border theme-shadow">
     <button class="theme-text-primary rounded-t-xl theme-hover-button font-sans text-left w-full p-3 theme-hover-shadow">
       <strong> <a href="http://localhost:5173/">Sign up</a></strong>
     </button>
@@ -26,14 +26,14 @@
 
     <div class="h-[50px] w-full flex items-center max-w-full max-h-full rounded-b-xl theme-hover-button">
       <span class="mr-[75px] text-left theme-text-primary font-sans font-light pl-3">Dark mode</span>
-      <darkmode v-model="toggleState"/>
+      <dark-mode-toggler v-model="toggleState"/>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import Darkmode from "@/Modules/profile/components/Darkmode.vue";
 import {nextTick, onMounted, ref} from "vue";
 import {AppThemeService} from "@/infrastructure/services/AppThemeService";
+import DarkModeToggler from "@/Modules/profile/components/DarkModeToggler.vue";
 
 const appThemeService = new AppThemeService();
 
