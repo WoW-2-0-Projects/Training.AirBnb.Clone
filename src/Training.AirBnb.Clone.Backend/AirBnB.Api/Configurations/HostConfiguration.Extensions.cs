@@ -44,11 +44,11 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
-   /// <summary>
-   /// Adds MediatR services to the application with custom service registrations.
-   /// </summary>
-   /// <param name="builder"></param>
-   /// <returns></returns>
+    /// <summary>
+    /// Adds MediatR services to the application with custom service registrations.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     private static WebApplicationBuilder AddMediator(this WebApplicationBuilder builder)
     {
         builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assemblies.ToArray()); });
@@ -75,7 +75,7 @@ public static partial class HostConfiguration
 
         // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
-        
+
         // register authentication handlers
         var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ??
                           throw new InvalidOperationException("JwtSettings is not configured.");
@@ -107,17 +107,17 @@ public static partial class HostConfiguration
     {
         //register settings
         builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
-        
+
         //register brokers
         builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
             .AddSingleton<IEvenBusBroker, RabbitMqEventBusBroker>();
-        
+
         //register general background service
         builder.Services.AddHostedService<EventBusBackgroundService>();
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Configures the Dependency Injection container to include validators from referenced assemblies.
     /// </summary>
@@ -149,10 +149,10 @@ public static partial class HostConfiguration
     {
         // register json serialization settings
         builder.Services.AddSingleton<IJsonSerializationSettingsProvider, JsonSerializationSettingsProvider>();
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Registers NotificationDbContext in DI 
     /// </summary>
@@ -162,14 +162,18 @@ public static partial class HostConfiguration
     {
         builder.Services
             .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
-            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
-            
+            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>()
+            .AddScoped<IEmailHistoryRepository, EmailHistoryRepository>()
+            .AddScoped<ISmsHistoryRepository, SmsHistoryRepository>();
+
         builder.Services
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<ISmsTemplateService, SmsTemplateService>()
             .AddScoped<IEmailRenderingService, EmailRenderingService>()
-            .AddScoped<ISmsRenderingService, SmsRenderingService>();
-        
+            .AddScoped<ISmsRenderingService, SmsRenderingService>()
+            .AddScoped<IEmailHistoryService, EmailHistoryService>()
+            .AddScoped<ISmsHistoryService, SmsHistoryService>();
+
         return builder;
     }
 
@@ -193,7 +197,7 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
     /// <summary>
     ///  Extension method to add storage file infrastructure services
     /// </summary>
@@ -255,15 +259,15 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddRequestContextTools(this WebApplicationBuilder builder)
     {
         builder.Services.AddHttpContextAccessor();
-        
+
         builder.Services.AddScoped<IRequestUserContextProvider, RequestUserContextProvider>();
 
         builder.Services.Configure<RequestUserContextSettings>(
             builder.Configuration.GetSection(nameof(RequestUserContextSettings)));
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Configures DbContext and ef-core interceptors for the web application.
     /// </summary>
@@ -276,7 +280,7 @@ public static partial class HostConfiguration
             .AddScoped<UpdatePrimaryKeyInterceptor>()
             .AddScoped<UpdateAuditableInterceptor>()
             .AddScoped<UpdateSoftDeletionInterceptor>();
-        
+
         // register db context
         builder.Services.AddDbContext<AppDbContext>((provider, options) =>
         {
@@ -286,10 +290,10 @@ public static partial class HostConfiguration
                     provider.GetRequiredService<UpdateAuditableInterceptor>(),
                     provider.GetRequiredService<UpdateSoftDeletionInterceptor>());
         });
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Seeds data into the application's database by creating a service scope and initializing the seed operation.
     /// </summary>
@@ -299,10 +303,10 @@ public static partial class HostConfiguration
     {
         var serviceScope = app.Services.CreateScope();
         await serviceScope.ServiceProvider.InitializeSeedAsync();
-        
+
         return app;
     }
-    
+
     /// <summary>
     /// Configures exposers including controllers
     /// </summary>
@@ -317,7 +321,7 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
     /// <summary>
     /// Configures CORS for the web application.
     /// </summary>
@@ -325,13 +329,13 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", 
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
             policy => policy
                 .WithOrigins(builder.Configuration["ApiClientSettings:WebClientAddress"]!)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()));
-        
+
         return builder;
     }
 
@@ -359,7 +363,7 @@ public static partial class HostConfiguration
 
         return app;
     }
-    
+
     /// <summary>
     /// Enables CORS middleware in the web application pipeline.
     /// </summary>
@@ -368,7 +372,7 @@ public static partial class HostConfiguration
     private static WebApplication UseCors(this WebApplication app)
     {
         app.UseCors("AllowSpecificOrigin");
-        
+
         return app;
     }
 
