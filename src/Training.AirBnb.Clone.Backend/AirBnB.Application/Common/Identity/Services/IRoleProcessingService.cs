@@ -3,7 +3,7 @@ using AirBnB.Domain.Enums;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
-public interface IUserRoleService
+public interface IRoleProcessingService
 {
     /// <summary>
     /// Revokes a specified role from a user asynchronously.

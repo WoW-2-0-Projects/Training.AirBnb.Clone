@@ -29,7 +29,7 @@ public interface IAccessTokenGeneratorService
     /// <param name="user"></param>
     /// <param name="accessToken"></param>
     /// <returns></returns>
-    JwtSecurityToken GetJwtToken(User user, AccessToken accessToken);
+    JwtSecurityToken GetToken(User user, AccessToken accessToken);
 
     /// <summary>
     /// 

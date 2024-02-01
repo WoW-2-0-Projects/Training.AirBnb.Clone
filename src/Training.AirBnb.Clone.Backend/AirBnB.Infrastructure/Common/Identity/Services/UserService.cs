@@ -47,7 +47,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         return await userRepository
             .Get(asNoTracking: asNoTracking)
             .Include(user => user.Roles)
-            .SingleOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
+            .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
         
     }
     public ValueTask<IList<User>> GetByIdsAsync(

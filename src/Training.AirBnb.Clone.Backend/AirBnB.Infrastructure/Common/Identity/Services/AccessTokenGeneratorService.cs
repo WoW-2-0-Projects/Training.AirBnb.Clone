@@ -35,7 +35,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
         };
 
         // Generate a JWT token for the user and associate it with the AccessToken.
-        var jwtToken = GetJwtToken(user, accessToken);
+        var jwtToken = GetToken(user, accessToken);
 
         // Write the JWT token to a string and assign it to the AccessToken's Token property.
         var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
@@ -76,7 +76,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="user">The user for whom the token is generated.</param>
     /// <param name="accessToken">The associated access token.</param>
     /// <returns>A JwtSecurityToken representing the generated JWT token.</returns>
-    public JwtSecurityToken GetJwtToken(User user, AccessToken accessToken)
+    public JwtSecurityToken GetToken(User user, AccessToken accessToken)
     {
         // Retrieve the claims associated with the user and access token.
         var claims = GetClaims(user, accessToken);
@@ -114,13 +114,13 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
             
             // Claim representing the user's role.
             //TODO :  fix to add multiple roles
-            new(ClaimTypes.Role, user.Roles[0].Role.Type.ToString()),
+            new(ClaimTypes.Role, user.Roles[0].Type.ToString()),
 
             // Claim representing the user's unique identifier.
             new(ClaimConstants.UserId, user.Id.ToString()),
 
-            // Claim representing the unique identifier of the associated access token.
-            new(ClaimConstants.AccessTokenId, accessToken.Id.ToString())
+            //  This claim uniquely identifies the JWT and is often used to prevent
+            new(JwtRegisteredClaimNames.Jti, accessToken.Id.ToString())
         };
     }
 }

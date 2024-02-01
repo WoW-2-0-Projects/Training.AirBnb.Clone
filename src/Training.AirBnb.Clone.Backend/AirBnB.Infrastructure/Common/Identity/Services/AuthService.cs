@@ -17,7 +17,7 @@ public class AuthService(
     IUserService userService,
     IRoleService roleService,
     IAccountService accountService,
-    IUserRoleService userRoleService,
+    IRoleProcessingService roleProcessingService,
     IAccessTokenService accessTokenService,
     IPasswordHasherService passwordHasherService,
     IPasswordGeneratorService passwordGeneratorService,
@@ -52,10 +52,9 @@ public class AuthService(
         var foundUser =
             await userService.Get(asNoTracking: true)
                 .Include(user => user.Roles)
-                .ThenInclude(role => role.Role)
                 .FirstOrDefaultAsync(user => user.EmailAddress == signInDetails.EmailAddress,
                     cancellationToken: cancellationToken);
-       
+        
         //verify that the user has password entered correctly
         if(foundUser is null || passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.PasswordHash))
                 throw new AuthenticationException("Sign in details are invalid, contact support.");
@@ -73,25 +72,22 @@ public class AuthService(
         Guid actionUserId,
         CancellationToken cancellationToken = default)
     {
-        //checking user having
+        //Checking user having
         var user = await userService.GetByIdAsync(userId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
-       
+        
         //authorization process 
         _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
         
-        //transfer of string type role to Enam type
+        //transfer of string type role to enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
         
         //get the desired role from the base
         var role = await roleService.GetByTypeAsync(roleValue, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Role with type '{roleValue}' could not be retrieved. It may not exist in the system");
         
         //change user role
-        user.Roles = new List<UserRole>
+        user.Roles = new List<Role>
         {
-            new UserRole
-            {
-                RoleId = role.Id
-            }
+            role
         };
         
         await userService.UpdateAsync(user, cancellationToken: cancellationToken);
@@ -109,14 +105,14 @@ public class AuthService(
         //authorization process 
         _ = await userService.GetByIdAsync(actionUserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException("Failed to retrieve user with ID {actionUserId}");
         
-        //transfer of string type role to Enam type
+        //transfer of string type role to enam type
         if (!Enum.TryParse(roleType, out RoleType roleValue))  throw new InvalidOperationException("Invalid role type provided.");
         
         //check the level of the role
         if (roleValue >= actionUserRole || roleValue == RoleType.Guest)
             throw new AuthenticationException("Invalid role to update");
         
-        await userRoleService.RevokeRoleAsync(userId, roleValue, cancellationToken);
+        await roleProcessingService.RevokeRoleAsync(userId, roleValue, cancellationToken);
         return true;
     }
 }

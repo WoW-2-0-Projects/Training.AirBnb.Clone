@@ -4,7 +4,7 @@ using BC = BCrypt.Net.BCrypt;
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 /// <summary>
-/// password hashing service entered
+/// Provides password hashing functionalities
 /// </summary>
 public class PasswordHasherService : IPasswordHasherService
 {

@@ -11,25 +11,24 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// </summary>
 /// <param name="appDbContext"></param>
 /// <param name="userService"></param>
-public class UserRoleService(
+public class RoleProcessingService(
     AppDbContext appDbContext, 
     IUserService userService
-    ) : IUserRoleService
+    ) : IRoleProcessingService
 {
     public async ValueTask<bool> RevokeRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
     {
         //bring the user all his materials from the database by email address entered
         var user = await userService.Get(asNoTracking: true)
             .Include(user => user.Roles)
-            .ThenInclude(role => role.Role)
             .FirstOrDefaultAsync(user => user.Id == userId,
                 cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
         
         //choosing the right role
-        var selectedRole = user.Roles.FirstOrDefault(role => role.Role.Type == roleType) ?? throw new AuthenticationException(" Invalid role type");
+        var selectedRole = user.Roles.FirstOrDefault(role => role.Type == roleType) ?? throw new AuthenticationException(" Invalid role type");
         
         //delete the selected role
-        appDbContext.UserRoles.Remove(selectedRole);
+        appDbContext.Roles.Remove(selectedRole);
         
         await appDbContext.SaveChangesAsync(cancellationToken);
 

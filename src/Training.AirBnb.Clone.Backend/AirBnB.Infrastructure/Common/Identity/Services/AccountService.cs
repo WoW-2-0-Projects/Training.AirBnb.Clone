@@ -25,14 +25,12 @@ public class AccountService(
 
     public async ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {
-       user.Roles = new List<UserRole>
-       {
-           new UserRole
-           {
-               RoleId = (await roleService.GetByTypeAsync(RoleType.Guest)).Id
-           }
-       };
-          
+
+        new UserRole
+        {
+            RoleId = (await roleService.GetByTypeAsync(RoleType.Guest)).Id
+        };
+        
         var createdUser = await userService.CreateAsync(user, cancellationToken: cancellationToken);
         await userSettingsService.CreateAsync(
             new UserSettings
