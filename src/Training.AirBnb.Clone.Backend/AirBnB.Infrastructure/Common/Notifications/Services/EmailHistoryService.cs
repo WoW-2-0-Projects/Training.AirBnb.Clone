@@ -1,4 +1,5 @@
 ﻿using AirBnB.Application.Common.Notifications.Services;
+using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using System.Linq.Expressions;
@@ -14,7 +15,8 @@ public class EmailHistoryService(
 
     public ValueTask<EmailHistory> CreateAsync(EmailHistory emailHistory, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var validationResult = emailHistoryValidator.Validate(emailHistory);
+        var validationResult = emailHistoryValidator.Validate(emailHistory,
+            options => options.IncludeRuleSets(EntityEvent.OnCreate.ToString()));
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
