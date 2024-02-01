@@ -15,7 +15,8 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
         builder.Property(listing => listing.CreatedByUserId).IsRequired();
         builder.Property(listing => listing.DeletedByUserId).IsRequired();
 
-        builder.OwnsOne(listing => listing.Address)
+        builder
+            .OwnsOne(listing => listing.Address)
             .Property(address => address.City)
             .IsRequired(false)
             .HasMaxLength(256);

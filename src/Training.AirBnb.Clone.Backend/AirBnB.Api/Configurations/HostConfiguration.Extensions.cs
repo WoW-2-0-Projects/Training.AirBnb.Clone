@@ -1,5 +1,6 @@
 using System.Text;
 using System.Reflection;
+using AirBnb.Api.Configurations;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
@@ -316,6 +317,20 @@ public static partial class HostConfiguration
         });
         
         return builder;
+    }
+    
+    /// <summary>
+    /// Migrates existing database schema to data sources
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static async ValueTask<WebApplication> MigrateDatabaseSchemasAsync(this WebApplication app)
+    {
+        var serviceScopeFactory = app.Services.GetRequiredKeyedService<IServiceScopeFactory>(null);
+        
+        await serviceScopeFactory.MigrateAsync<AppDbContext>();
+        
+        return app;
     }
     
     /// <summary>
