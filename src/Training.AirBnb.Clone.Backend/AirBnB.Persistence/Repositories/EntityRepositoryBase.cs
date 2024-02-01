@@ -120,7 +120,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
     {
         var foundEntity = default(TEntity?);
 
-        if (cacheEntryOptions is null || !await cacheBroker.TryGetAsync<TEntity>(id.ToString(), out var cachedEntity))
+        if (cacheEntryOptions is null || !await cacheBroker.TryGetAsync<TEntity>(id.ToString(), out var cachedEntity, cancellationToken))
         {
             var initialQuery = DbContext.Set<TEntity>().AsQueryable();
 
@@ -130,7 +130,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
             foundEntity = await initialQuery.FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
 
             if (cacheEntryOptions is not null && foundEntity is not null)
-                await cacheBroker.SetAsync(foundEntity.Id.ToString(), foundEntity, cacheEntryOptions);
+                await cacheBroker.SetAsync(foundEntity.Id.ToString(), foundEntity, cacheEntryOptions, cancellationToken);
         }
         else
             foundEntity = cachedEntity;
@@ -175,7 +175,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
 
         if (cacheEntryOptions is not null)
-            await cacheBroker.SetAsync(entity.Id.ToString(), entity, cacheEntryOptions);
+            await cacheBroker.SetAsync(entity.Id.ToString(), entity, cacheEntryOptions, cancellationToken);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -199,7 +199,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         DbContext.Set<TEntity>().Update(entity);
 
         if (cacheEntryOptions is not null)
-            await cacheBroker.SetAsync(entity.Id.ToString(), entity, cacheEntryOptions);
+            await cacheBroker.SetAsync(entity.Id.ToString(), entity, cacheEntryOptions, cancellationToken);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -223,7 +223,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         DbContext.Set<TEntity>().Remove(entity);
 
         if (cacheEntryOptions is not null)
-            await cacheBroker.DeleteAsync(entity.Id.ToString());
+            await cacheBroker.DeleteAsync(entity.Id.ToString(), cancellationToken);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -251,7 +251,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
         DbContext.Set<TEntity>().Remove(entity);
 
         if (cacheEntryOptions is not null)
-            await cacheBroker.DeleteAsync(entity.Id.ToString());
+            await cacheBroker.DeleteAsync(entity.Id.ToString(), cancellationToken);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);

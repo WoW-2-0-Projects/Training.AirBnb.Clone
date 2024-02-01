@@ -31,4 +31,9 @@ public class ListingDto
     /// Gets or sets the price per night for the listing.
     /// </summary>
     public Money PricePerNight { get; set; } = default!;
+    
+    /// <summary>
+    /// Gets or sets the rating of the listing.
+    /// </summary>
+    public Rating? Rating { get; set; }
 }
