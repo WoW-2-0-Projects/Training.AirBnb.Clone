@@ -14,5 +14,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.EmailAddress).IsRequired().HasMaxLength(128);
         builder.Property(user => user.PasswordHash).IsRequired().HasMaxLength(256);
         builder.HasIndex(user => user.EmailAddress).IsUnique();
+        
+        builder
+            .HasMany(user => user.Roles)
+            .WithMany(role => role.Users)
+            .UsingEntity<UserRole>(userRole =>
+            {
+                userRole.HasKey(relation => new { relation.UserId, relation.RoleId });
+                userRole.ToTable($"{nameof(UserRole)}s");
+            });
     }
 }
