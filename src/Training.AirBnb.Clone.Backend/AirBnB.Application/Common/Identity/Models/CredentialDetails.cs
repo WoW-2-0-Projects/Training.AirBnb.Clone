@@ -6,7 +6,7 @@
 public class CredentialDetails
 {
     /// <summary>
-    /// get or set password of the CredentialDetails
+    /// Gets or sets password of the credential details
     /// </summary>
     public string Password { get; set; }
 }

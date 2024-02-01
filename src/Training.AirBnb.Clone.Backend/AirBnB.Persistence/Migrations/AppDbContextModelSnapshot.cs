@@ -61,7 +61,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasIndex("HostId");
 
-                    b.ToTable("Listings");
+                    b.ToTable("Listings", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
@@ -95,7 +95,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("StorageFileId")
                         .IsUnique();
 
-                    b.ToTable("ListingCategories");
+                    b.ToTable("ListingCategories", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategoryAssociation", b =>
@@ -113,7 +113,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasIndex("ListingCategoryId");
 
-                    b.ToTable("ListingCategoryAssociations");
+                    b.ToTable("ListingCategoryAssociations", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.NotificationTemplate", b =>
@@ -186,7 +186,9 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
+                    
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
@@ -205,7 +207,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StorageFiles");
+                    b.ToTable("StorageFiles", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -261,7 +263,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("EmailAddress")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserRole", b =>
@@ -275,8 +277,8 @@ namespace AirBnB.Persistence.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles");
+                    
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
@@ -311,7 +313,7 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSettings");
+                    b.ToTable("UserSettings", (string)null);
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.VerificationCode", b =>
@@ -344,7 +346,7 @@ namespace AirBnB.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VerificationCodes");
+                    b.ToTable("VerificationCodes", (string)null);
 
                     b.HasDiscriminator<int>("Type");
 
@@ -390,7 +392,7 @@ namespace AirBnB.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("AirBnB.Domain.Entities.Address", "Address", b1 =>
+                    b.OwnsOne("AirBnB.Domain.Entities.Listing.Address#AirBnB.Domain.Entities.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("ListingId")
                                 .HasColumnType("uuid");
@@ -410,13 +412,13 @@ namespace AirBnB.Persistence.Migrations
 
                             b1.HasKey("ListingId");
 
-                            b1.ToTable("Listings");
+                            b1.ToTable("Listings", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ListingId");
                         });
 
-                    b.OwnsOne("AirBnB.Domain.Entities.Money", "PricePerNight", b1 =>
+                    b.OwnsOne("AirBnB.Domain.Entities.Listing.PricePerNight#AirBnB.Domain.Entities.Money", "PricePerNight", b1 =>
                         {
                             b1.Property<Guid>("ListingId")
                                 .HasColumnType("uuid");
@@ -429,7 +431,7 @@ namespace AirBnB.Persistence.Migrations
 
                             b1.HasKey("ListingId");
 
-                            b1.ToTable("Listings");
+                            b1.ToTable("Listings", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ListingId");
@@ -476,21 +478,17 @@ namespace AirBnB.Persistence.Migrations
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserRole", b =>
                 {
-                    b.HasOne("AirBnB.Domain.Entities.Role", "Role")
-                        .WithMany("Users")
+                    b.HasOne("AirBnB.Domain.Entities.Role", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AirBnB.Domain.Entities.User", "User")
-                        .WithMany("Roles")
+                    b.HasOne("AirBnB.Domain.Entities.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>
@@ -523,20 +521,16 @@ namespace AirBnB.Persistence.Migrations
                     b.Navigation("ListingCategoryAssociations");
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
                     b.Navigation("Listings");
 
-                    b.Navigation("Roles");
-
                     b.Navigation("UserSettings")
                         .IsRequired();
+
+                    b.Navigation("Roles");
                 });
+            
 #pragma warning restore 612, 618
         }
     }
