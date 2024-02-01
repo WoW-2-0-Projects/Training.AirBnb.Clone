@@ -1,6 +1,7 @@
 using System.Text;
 using System.Reflection;
 using AirBnB.Api.Data;
+using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Serializers;
@@ -23,6 +24,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
+using AirBnB.Infrastructure.Common.EventBus.Brokers;
+using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Application.Ratings.Settings;
@@ -45,6 +48,17 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
+   /// <summary>
+   /// Adds MediatR services to the application with custom service registrations.
+   /// </summary>
+   /// <param name="builder"></param>
+   /// <returns></returns>
+    private static WebApplicationBuilder AddMediator(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assemblies.ToArray()); });
+
+        return builder;
+    }
     /// <summary>
     /// Adds caching services to the web application builder.
     /// </summary>
@@ -90,6 +104,21 @@ public static partial class HostConfiguration
                 }
             );
 
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
+    {
+        //register settings
+        builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
+        
+        //register brokers
+        builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
+            .AddSingleton<IEvenBusBroker, RabbitMqEventBusBroker>();
+        
+        //register general background service
+        builder.Services.AddHostedService<EventBusBackgroundService>();
+        
         return builder;
     }
     
