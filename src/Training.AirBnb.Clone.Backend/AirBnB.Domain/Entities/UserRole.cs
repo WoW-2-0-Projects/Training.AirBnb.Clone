@@ -1,18 +1,35 @@
 ﻿using AirBnB.Domain.Enums;
 
 namespace AirBnB.Domain.Entities;
-
+/// <summary>
+/// Represents a user role entity
+/// </summary>
 public class UserRole
 {
-    //ID of the user account
+    
+    public UserRole()
+    {
+        
+    }
+
+    /// <summary>
+    /// Constructs a new UserRole instance, associating a user with a specific role.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user to be assigned the role.</param>
+    /// <param name="roleId">The unique identifier of the role to be assigned to the user.</param>
+    /// <remarks>
+    /// This constructor utilizes a concise expression-bodied syntax to directly initialize the 
+    /// `UserId` and `RoleId` properties of the UserRole object upon creation.
+    /// </remarks>
+    public UserRole(Guid userId, Guid roleId) => (UserId, UserId) = (userId, roleId);
+    
+    /// <summary>
+    /// Gets or sets the user id
+    /// </summary>
     public Guid UserId { get; set; }
     
-    //ID of the assigned role
+    /// <summary>
+    /// Gets or sets the role id
+    /// </summary>
     public Guid RoleId { get; set; }
-    
-    //Navigation property to retrieve full user details 
-    public User User { get; set; }
-    
-    //Navigation property to retrieve details of the assigned role
-    public Role Role { get; set; }
 }

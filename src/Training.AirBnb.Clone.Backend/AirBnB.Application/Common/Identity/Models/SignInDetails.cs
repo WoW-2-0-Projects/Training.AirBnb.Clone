@@ -1,17 +1,17 @@
 ﻿namespace AirBnB.Application.Common.Identity.Models;
 
 /// <summary>
-/// Represents login details for Authorization
+/// Represents login details for authorization
 /// </summary>
 public class SignInDetails
 {
     /// <summary>
-    /// get or set EmailAddress of the LoginDetails
+    /// Gets or sets email address of the login details
     /// </summary>
     public string EmailAddress { get; set; } = string.Empty;
 
     /// <summary>
-    /// get or set Password of the LoginDetails
+    /// Gets or sets password of the Login details
     /// </summary>
     public string Password { get; set; } = string.Empty;
 }
