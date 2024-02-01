@@ -18,7 +18,7 @@
     </button>
 
     <!--Profile-->
-    <button @click="toggleUserProfile" class="relative h-12 flex items-center justify-center gap-3 pb-[4px] pt-[4px] pl-[10px] pr-[7px] theme-border rounded-full">
+    <button ref="profileButton" :disabled="profileButtonDisable" :class="showUserProfile ? 'shadow-md' : 'shadow-none' " @click="toggleUserProfile" class="hover-shadow-zero relative h-12 flex items-center justify-center gap-3 pb-[4px] pt-[4px] pl-[10px] pr-[7px] theme-border rounded-full">
       <span class="h-6 w-6 flex items-center justify-center">
         <svg class="h-5 w-5 theme-icon-primary"
             xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +62,13 @@ import ProfileMenuComponent from "@/Modules/profile/components/ProfileMenuCompon
 import {ref} from 'vue';
 
 const showUserProfile =ref<boolean>(false);
+const profileButtonDisable = ref<boolean>(false);
 const toggleUserProfile = () => {
   showUserProfile.value = !showUserProfile.value;
-  console.log(showUserProfile.value)
+  profileButtonDisable.value = true;
+
+  setTimeout(()=>{
+    profileButtonDisable.value = false;
+  }, 200);
 }
 </script>

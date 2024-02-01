@@ -12,6 +12,11 @@
         @apply bg-textSecondaryDark dark:bg-borderColorDark;
     }
 
+    .theme-bg-toggle {
+        @apply bg-gray-400 group-hover:bg-textSecondaryDark dark:group-hover:bg-bgColorPrimary dark:bg-bgColorPrimary
+    }
+
+
     .theme-text-primary {
         @apply text-textPrimary dark:text-textPrimaryDark;
     }
@@ -44,6 +49,9 @@
         @apply fill-textSecondary dark:fill-textSecondaryDark;
     }
 
+    .theme-hover-button{
+        @apply hover:bg-gray-100 dark:hover:bg-bgColorSecondaryDark
+    }
     .hover-shadow {
         @apply shadow-md hover:shadow-lg ;
     }
