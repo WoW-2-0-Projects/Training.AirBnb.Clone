@@ -175,7 +175,7 @@ public static partial class HostConfiguration
             .AddScoped<IAccessTokenService, AccessTokenService>()
             .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
             .AddScoped<IPasswordHasherService, PasswordHasherService>()
-            .AddScoped<IUserRoleService, UserRoleService>();
+            .AddScoped<IRoleProcessingService, RoleProcessingService>();
         
         return builder;
     }

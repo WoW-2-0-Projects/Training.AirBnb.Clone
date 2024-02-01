@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
-using AirBnB.Domain.Constants;
+using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IAuthService authService) : ControllerBase
+public class AuthController(IAuthService authService, IRequestUserContextProvider requestUserContextProvider) : ControllerBase
 {
     [HttpPost("sign-up")]
     public async Task<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails, CancellationToken cancellationToken)
@@ -31,8 +31,11 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpPost("users/{userId:guid}/roles/{roleType}")]
     public async Task<IActionResult> GrandRole([FromRoute] Guid userId, [FromRoute] string roleType, CancellationToken cancellationToken = default)
     {
-        var actionUserId = Guid.Parse(User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimConstants.UserId)).Value);
+
+        var actionUserId = requestUserContextProvider.GetUserId();
+        
         if (actionUserId == default) throw new AuthenticationException("does not set object");
+        
         var result = await authService.GrandRoleAsync(userId, roleType, actionUserId, cancellationToken);
         return result ? Ok(result) : NoContent();
     }
@@ -41,7 +44,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpDelete("users/{userId:guid}/roles/{roleType}")]
     public async Task<IActionResult> RevokeRole([FromRoute] Guid userId, [FromRoute] string roleType, CancellationToken cancellationToken = default)
     {
-        var actionUserId = Guid.Parse(User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimConstants.UserId)).Value);
+        var actionUserId = requestUserContextProvider.GetUserId();
         var actionUserRole = Enum.Parse<RoleType>(User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Role)).Value);
         
         var result = await authService.RevokeRoleAsync(userId, roleType, actionUserId, actionUserRole, cancellationToken);

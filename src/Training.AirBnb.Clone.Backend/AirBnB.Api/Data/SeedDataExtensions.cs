@@ -80,100 +80,58 @@ public static class SeedDataExtensions
     private static async ValueTask SeedUsersAsync(this AppDbContext dbContext, IPasswordHasherService passwordHasherService)
     {
         // Add system user.
-        var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
+       // var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
         var users = new List<User>
         {
             new()
             {
                 Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-                Roles = new List<UserRole>
-                {
-                    new UserRole
-                    {
-                        UserId = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-                        RoleId = systemRoleId
-                    }    
-                },
                 FirstName = "System",
                 LastName = "System",
                 EmailAddress = "example@gmail.com",
-                PasswordHash = "A1rBnB.$com",
+                PasswordHash = "$2a$11$7CblN46.ijAjU98BhD5wf.ZageDRq8uabpL5rmwdcC/VBC6hifiIa",//A1rBnB.$com,
                 PhoneNumber = ""
             },
             new()
             {
-                Id = Guid.NewGuid(),
-                Roles = new List<UserRole>
-                {
-                    new UserRole
-                    {
-                        RoleId = systemRoleId
-                    }    
-                },
                 FirstName = "Admin",
                 LastName = "Admin",
                 EmailAddress = "admin@gmail.com",
-                PasswordHash = "$2a$11$.VevOH3bNJJemRbntcXHoOFAupwjpYMIx8/TdyMjPPbOlZh5EILTK", //@Adm1n
+                PasswordHash = "$2a$11$uUKbkiC9nzwqpAaGN5tV9uLIa8XWynAgX4fYoue4sYj9M4NmSPFW6", //@dmin
                 PhoneNumber = "+99891223435",
             }
         };  
         
          dbContext.Users.AddRange(users);
+         var getAllRoles = dbContext.Roles.ToList();
         
-        // Add Hosts
-        var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
+         // Add Hosts
+        var hostRole = getAllRoles.First(role => role.Type == RoleType.Host);
 
         var hostFaker = new Faker<User>()
-            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
-            {
-                new UserRole
-                {
-                    UserId = user.Id,
-                    RoleId = hostRoleId
-                }
-            })
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
             .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
-            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.Roles, () => new List<Role>() { hostRole });
 
         await dbContext.AddRangeAsync(hostFaker.Generate(100));
         
         // Add guests.
-        var guestRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
-        
+        var guestRole = getAllRoles.First(role => role.Type == RoleType.Guest);
+
         var guestFaker = new Faker<User>()
-            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
-            {
-                new UserRole
-                {
-                    UserId = user.Id,
-                    RoleId = guestRoleId
-                }
-            })
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
             .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
-            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.Roles, () => new List<Role>() { guestRole });
         
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
         
         var hostGuestFaker = new Faker<User>()
-            .RuleFor(user => user.Roles, (data, user) => new List<UserRole>
-            {
-                new UserRole
-                {
-                    UserId = user.Id,
-                    RoleId = guestRoleId
-                },
-                new UserRole
-                {
-                    UserId = user.Id,
-                    RoleId = hostRoleId
-                }
-            })
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
