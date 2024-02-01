@@ -95,11 +95,9 @@ public class RedisDistributedCacheBroker(
 
         var currentEntryOptions = _entryOptions.DeepClone();
 
-        currentEntryOptions.AbsoluteExpirationRelativeToNow = entryOptions.AbsoluteExpirationRelativeToNow.HasValue
-            ? currentEntryOptions.AbsoluteExpirationRelativeToNow
-            : null;
+        currentEntryOptions.AbsoluteExpirationRelativeToNow = entryOptions.AbsoluteExpirationRelativeToNow;
 
-        currentEntryOptions.SlidingExpiration = entryOptions.SlidingExpiration.HasValue ? currentEntryOptions.SlidingExpiration : null;
+        currentEntryOptions.SlidingExpiration = entryOptions.SlidingExpiration;
 
         return currentEntryOptions;
     }

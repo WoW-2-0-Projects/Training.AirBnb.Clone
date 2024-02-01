@@ -1,4 +1,4 @@
-﻿using AirBnB.Domain.Common.Entities;
+using AirBnB.Domain.Common.Entities;
 
 namespace AirBnB.Domain.Entities;
 
@@ -43,6 +43,11 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     public Guid? DeletedByUserId { get; set; }
 
     /// <summary>
+    /// Gets or sets rating of the listing.
+    /// </summary>
+    public Rating Rating { get; set; }
+    
+    /// <summary>
     /// Gets or sets the navigation user property who owns this listing.
     /// </summary>
     public virtual User Host { get; set; }
@@ -51,4 +56,9 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// Navigation property that stores the categories of a listing
     /// </summary>
     public List<ListingCategory> ListingCategories { get; set; }
+
+    /// <summary>
+    /// Gets or sets feedbacks navigation property for the listing.
+    /// </summary>
+    public virtual List<GuestFeedback> Feedbacks { get; set; }
 }

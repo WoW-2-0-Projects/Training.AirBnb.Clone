@@ -1,4 +1,4 @@
-﻿namespace AirBnB.Api.Configurations;
+namespace AirBnB.Api.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -24,6 +24,7 @@ public static partial class HostConfiguration
             .AddListingsInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
+            .AddRatingsInfrastructure()
             .AddCors()
             .AddExposers();
 

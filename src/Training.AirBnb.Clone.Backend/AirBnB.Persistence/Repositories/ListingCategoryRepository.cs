@@ -7,7 +7,9 @@ using AirBnB.Persistence.Repositories.Interfaces;
 
 namespace AirBnB.Persistence.Repositories;
 
-public class ListingCategoryRepository(AppDbContext dbContext, ICacheBroker cacheBroker) : EntityRepositoryBase<ListingCategory, AppDbContext>(dbContext, cacheBroker, new CacheEntryOptions()), IListingCategoryRepository
+public class ListingCategoryRepository(AppDbContext dbContext, ICacheBroker cacheBroker) 
+    : EntityRepositoryBase<ListingCategory, AppDbContext>(dbContext, cacheBroker, new CacheEntryOptions()),
+        IListingCategoryRepository
 {
     public new ValueTask<IList<ListingCategory>> GetAsync(
         QuerySpecification<ListingCategory> querySpecification, 

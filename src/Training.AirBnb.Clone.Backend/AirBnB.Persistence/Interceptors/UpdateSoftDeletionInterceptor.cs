@@ -1,7 +1,11 @@
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Common.Entities;
+using AirBnB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AirBnB.Persistence.Interceptors;
 
@@ -41,7 +45,10 @@ public class UpdateSoftDeletionInterceptor(IRequestUserContextProvider userConte
             if (entry.State != EntityState.Deleted) return;
             
             entry.State = EntityState.Modified;
-                
+            
+            var ownedTypes = entry.References.Where(entity => entity.Metadata.TargetEntityType.IsOwned()).ToList();
+            ownedTypes.ForEach(entity => entity.TargetEntry.State = EntityState.Modified);
+
             entry.Property(nameof(ISoftDeletedEntity.IsDeleted)).CurrentValue = true;
             entry.Property(nameof(ISoftDeletedEntity.DeletedTime)).CurrentValue = DateTimeOffset.UtcNow;
         });

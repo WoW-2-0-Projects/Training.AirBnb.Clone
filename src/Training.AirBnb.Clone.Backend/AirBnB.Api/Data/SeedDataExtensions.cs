@@ -1,6 +1,8 @@
 using AirBnB.Domain.Brokers;
+using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
+using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,7 @@ public static class SeedDataExtensions
     {
         var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+        var cacheBroker = serviceProvider.GetRequiredService<ICacheBroker>();
 
         if (!await appDbContext.Roles.AnyAsync())
             await appDbContext.SeedRolesAsync();
@@ -34,6 +37,9 @@ public static class SeedDataExtensions
 
         if (!await appDbContext.Listings.AnyAsync())
             await appDbContext.SeedListingsAsync(webHostEnvironment);
+
+        if (!await appDbContext.GuestFeedbacks.AnyAsync())
+            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker);
 
         // check change tracker and if changes exist, save changes to database
         if (appDbContext.ChangeTracker.HasChanges())
@@ -75,7 +81,7 @@ public static class SeedDataExtensions
         };
 
         await dbContext.Roles.AddRangeAsync(roles);
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
     }
     
     /// <summary>
@@ -126,8 +132,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
-       
-        await dbContext.SaveChangesAsync();
+        dbContext.SaveChanges();
     }
 
     /// <summary>
@@ -197,5 +202,109 @@ public static class SeedDataExtensions
 
         await appDbContext.Listings.AddRangeAsync(listings);
         await appDbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Seeds the listings data into the AppDbContext using Bogus library.
+    /// </summary>
+    /// <param name="appDbContext"></param>
+    private static async ValueTask SeedListingsAsync(this AppDbContext appDbContext)
+    {
+        // get existing hosts
+        var hosts = await appDbContext.Users
+            .Where(user => user.Role.Type == RoleType.Host)
+            .Select(host => host.Id).ToListAsync();
+
+        // generate fake addresses
+        var addressFaker = new Faker<Address>()
+            .RuleFor(address => address.City, data => data.Address.City())
+            .RuleFor(address => address.CityId, Guid.NewGuid())
+            .RuleFor(address => address.Latitude, data => data.Address.Latitude())
+            .RuleFor(address => address.Longitude, data => data.Address.Longitude());
+
+        var addresses = addressFaker.Generate(100).ToHashSet();
+
+        // generate fake money
+        var moneyFaker = new Faker<Money>()
+            .RuleFor(money => money.Amount, data => data.Random.Decimal(10, 10_000))
+            .RuleFor(money => money.Currency, Currency.USD);
+
+        var money = moneyFaker.Generate(100).ToHashSet();
+
+        // generate fake listings
+        var listingsFaker = new Faker<Listing>()
+            .RuleFor(listing => listing.Name, data => data.Lorem.Word())
+            .RuleFor(listing => listing.BuiltDate, data => data.Date.PastDateOnly(100))
+            .RuleFor(listing => listing.Address, data =>
+            {
+                var chosenAddress = data.PickRandom<Address>(addresses);
+                addresses.Remove(chosenAddress);
+                return chosenAddress;
+            })
+            .RuleFor(listing => listing.PricePerNight, data =>
+            {
+                var chosenMoney = data.PickRandom<Money>(money);
+                money.Remove(chosenMoney);
+                return chosenMoney;
+            })
+            .RuleFor(listing => listing.HostId, data => data.PickRandom<Guid>(hosts))
+            .RuleFor(listing => listing.CreatedByUserId, (data, listing) => listing.HostId)
+            .RuleFor(listing => listing.DeletedByUserId, Guid.Empty)
+            .RuleFor(listing => listing.CreatedTime, data => data.Date.PastOffset(5, DateTimeOffset.UtcNow));
+
+        var listings = listingsFaker.Generate(100);
+
+        await appDbContext.Listings.AddRangeAsync(listings);
+        appDbContext.SaveChanges();
+    }
+    
+    /// <summary>
+    /// Seeds Guest Feedbacks data into the AppDbContext using Bogus library.
+    /// </summary>
+    /// <param name="dbContext"></param>
+    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker)
+    {
+        var listings = await dbContext.Listings.ToListAsync();
+
+        var feedbackFaker = new Faker<GuestFeedback>()
+            .RuleFor(feedback => feedback.Rating, GenerateFakeRatings)
+            .RuleFor(feedback => feedback.Comment, data => data.Lorem.Paragraph())
+            .RuleFor(feedback => feedback.CreatedTime, data => data.Date.PastOffset(5, DateTimeOffset.UtcNow))
+            .RuleFor(feedback => feedback.Listing, data => data.PickRandom<Listing>(listings))
+            .RuleFor(feedback => feedback.GuestId, (data, feedback) =>
+            {
+                var listingOwnerId = feedback.Listing.HostId;
+
+                return data.PickRandom(dbContext.Users.Select(user => user.Id)
+                    .Where(userId => userId != listingOwnerId).ToList());
+            });
+
+        var feedbacks = feedbackFaker.Generate(100);
+        
+        await dbContext.GuestFeedbacks.AddRangeAsync(feedbacks);
+        dbContext.SaveChanges();
+
+        await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, feedbacks);
+    }
+
+    /// <summary>
+    /// Generates Faker rating.
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    private static Rating GenerateFakeRatings()
+    {
+        var ratingsFaker = new Faker<Rating>()
+            .RuleFor(rating => rating.Accuracy, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.Cleanliness, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.Communication, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.CheckIn, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.Location, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.Value, data => data.Random.Byte(1, 5))
+            .RuleFor(rating => rating.OverallRating, (data, rating) => 
+                (rating.Accuracy + rating.Value + rating.Cleanliness + 
+                 rating.Communication + rating.Location + rating.CheckIn) / 6);
+
+        return ratingsFaker.Generate();
     }
 }
