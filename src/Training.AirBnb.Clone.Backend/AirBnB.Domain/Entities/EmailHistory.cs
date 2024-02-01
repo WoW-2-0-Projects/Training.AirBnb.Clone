@@ -34,5 +34,5 @@ public class EmailHistory : NotificationHistory
     /// <summary>
     /// Gets or sets the associated EmailTemplate object for this email history entry.
     /// </summary>
-    public EmailTemplate EmailTemplate { get; set; }
+    public EmailTemplate Template { get; set; }
 }
