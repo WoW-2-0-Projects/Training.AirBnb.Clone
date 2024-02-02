@@ -3,6 +3,7 @@ using System;
 using AirBnB.Persistence.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirBnB.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202052552_UpdateAuditableEntity")]
+    partial class UpdateAuditableEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,37 +155,6 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("ListingCategoryId");
 
                     b.ToTable("ListingCategoryAssociations", (string)null);
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.ListingMediaFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset?>("DeletedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("ListingId")
-                        .HasColumnType("uuid");
-
-                    b.Property<byte>("OrderNumber")
-                        .HasColumnType("smallint");
-
-                    b.Property<Guid>("StorageFileId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListingId");
-
-                    b.HasIndex("StorageFileId")
-                        .IsUnique();
-
-                    b.ToTable("ListingMediaFiles");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.NotificationTemplate", b =>
@@ -626,25 +598,6 @@ namespace AirBnB.Persistence.Migrations
                     b.Navigation("ListingCategory");
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.ListingMediaFile", b =>
-                {
-                    b.HasOne("AirBnB.Domain.Entities.Listing", "Listing")
-                        .WithMany("ImagesStorageFile")
-                        .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AirBnB.Domain.Entities.StorageFile", "StorageFile")
-                        .WithOne()
-                        .HasForeignKey("AirBnB.Domain.Entities.ListingMediaFile", "StorageFileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Listing");
-
-                    b.Navigation("StorageFile");
-                });
-
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
                     b.HasOne("AirBnB.Domain.Entities.Role", "Role")
@@ -679,8 +632,6 @@ namespace AirBnB.Persistence.Migrations
             modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
                 {
                     b.Navigation("Feedbacks");
-
-                    b.Navigation("ImagesStorageFile");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
