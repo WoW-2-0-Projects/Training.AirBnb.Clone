@@ -14,8 +14,7 @@ public class NotificationsController(IEmailTemplateService emailTemplateService,
     public async ValueTask<IActionResult> GetSmsTemplates([FromQuery] FilterPagination filterPagination,
         CancellationToken cancellationToken)
     {
-        var result = await smsTemplateService.GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(),
-            cancellationToken);
+        var result = smsTemplateService.Get();
 
         return result.Any() ? Ok(mapper.Map<SmsTemplateDto>(result)) : NotFound();
     }
@@ -24,8 +23,7 @@ public class NotificationsController(IEmailTemplateService emailTemplateService,
     public async ValueTask<IActionResult> GetEmailTemplates([FromQuery] FilterPagination filterPagination,
         CancellationToken cancellationToken)
     {
-        var result = await emailTemplateService.GetAsync(filterPagination.ToQueryPagination(true).ToQuerySpecification(),
-            cancellationToken);
+        var result = emailTemplateService.Get();
 
         return result.Any() ? Ok(mapper.Map<EmailTemplateDto>(result)) : NotFound();
     }

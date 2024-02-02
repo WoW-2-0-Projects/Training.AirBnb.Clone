@@ -23,13 +23,6 @@ public class UserSettingsService(
 
     public IQueryable<UserSettings> Get(Expression<Func<UserSettings, bool>>? predicate, bool asNoTracking = false)
         => userSettingsRepository.Get(predicate, asNoTracking);
-
-    public ValueTask<IList<UserSettings>> GetAsync(QuerySpecification<UserSettings> querySpecification, CancellationToken cancellationToken = default)
-        => userSettingsRepository.GetAsync(querySpecification, cancellationToken);
-
-    public ValueTask<IList<UserSettings>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        => userSettingsRepository.GetAsync(querySpecification, cancellationToken);
-
     public ValueTask<UserSettings?> GetByIdAsync(Guid userSettingsId, bool asNoTracking = false, CancellationToken cancellationToken = default)
         => userSettingsRepository.GetByIdAsync(userSettingsId, asNoTracking, cancellationToken);
 

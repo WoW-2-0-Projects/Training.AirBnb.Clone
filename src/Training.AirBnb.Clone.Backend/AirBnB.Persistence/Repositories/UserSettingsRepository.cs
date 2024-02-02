@@ -22,12 +22,6 @@ public class UserSettingsRepository(AppDbContext dbContext, ICacheBroker cacheBr
     public new IQueryable<UserSettings> Get(Expression<Func<UserSettings, bool>>? predicate, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
 
-    public new ValueTask<IList<UserSettings>> GetAsync(QuerySpecification<UserSettings> querySpecification, CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
-
-    public new ValueTask<IList<UserSettings>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
-
     public new ValueTask<UserSettings?> GetByIdAsync(Guid userSettingsId, bool asNoTracking = false, CancellationToken cancellationToken = default)
         => base.GetByIdAsync(userSettingsId, asNoTracking, cancellationToken);
 

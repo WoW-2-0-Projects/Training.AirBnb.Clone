@@ -27,18 +27,6 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
     ) =>
         userRepository.GetByIdAsync(userId, asNoTracking, cancellationToken);
 
-    public  ValueTask<IList<User>> GetAsync(
-        QuerySpecification<User> querySpecification,
-        CancellationToken cancellationToken = default
-    ) => 
-         userRepository.GetAsync(querySpecification, cancellationToken);
-
-    public ValueTask<IList<User>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default
-    ) => userRepository.GetAsync(querySpecification, cancellationToken); 
-    
-
     public ValueTask<IList<User>> GetByIdsAsync(
         IEnumerable<Guid> ids,
         bool asNoTracking = false,

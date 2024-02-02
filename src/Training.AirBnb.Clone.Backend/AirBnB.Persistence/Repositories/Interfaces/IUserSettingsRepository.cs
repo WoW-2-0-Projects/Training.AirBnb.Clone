@@ -16,24 +16,6 @@ public interface IUserSettingsRepository
     IQueryable<UserSettings> Get(Expression<Func<UserSettings, bool>>? predicate, bool asNoTracking = false);
 
     /// <summary>
-    /// /// Retrieves a collection of user settings based on the specified predicate. 
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<UserSettings>> GetAsync(QuerySpecification<UserSettings> querySpecification,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// /// Retrieves a collection of user settings based on the specified predicate. 
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<UserSettings>> GetAsync(QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Retrieves a user settings by their unique identifier 
     /// </summary>
     /// <param name="userSettingsId"></param>

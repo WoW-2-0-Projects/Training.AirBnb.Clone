@@ -195,6 +195,13 @@ public static class LinqExtensions
         return source.Skip((int)((querySpecification.PaginationOptions.PageToken - 1) * querySpecification.PaginationOptions.PageSize))
             .Take((int)querySpecification.PaginationOptions.PageSize);
     }
+
+    public static IQueryable<TSource> ApplyPagination<TSource>(this IQueryable<TSource> sources,
+        FilterPagination paginationOptions)
+    {
+        return sources.Skip((int)((paginationOptions.PageToken - 1) * paginationOptions.PageSize))
+            .Take((int)paginationOptions.PageSize);
+    }
     
     /// <summary>
     /// Applies pagination options from the query specification to the IQueryable source.

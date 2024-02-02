@@ -18,22 +18,6 @@ public interface IEmailTemplateRepository
     IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>>? predicate = default, bool asNoTracking = false);
 
     /// <summary>
-    /// Asynchronously retrieves a list of email templates based on the provided query specification.
-    /// </summary>
-    /// <param name="querySpecification">The query specification for filtering email templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of email templates.</returns>
-    ValueTask<IList<EmailTemplate>> GetAsync(QuerySpecification<EmailTemplate> querySpecification, CancellationToken cancellationToken = default);
-    
-    /// <summary>
-    /// Asynchronously retrieves a list of email templates based on a generic query specification.
-    /// </summary>
-    /// <param name="querySpecification">The generic query specification for filtering email templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of email templates.</returns>
-    ValueTask<IList<EmailTemplate>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Asynchronously creates a new email template.
     /// </summary>
     /// <param name="emailTemplate">The email template to create.</param>

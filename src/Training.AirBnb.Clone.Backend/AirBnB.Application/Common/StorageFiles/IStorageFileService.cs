@@ -1,4 +1,5 @@
-﻿using AirBnB.Domain.Common.Query;
+﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
 namespace AirBnB.Application.Common.StorageFiles;
@@ -9,18 +10,11 @@ namespace AirBnB.Application.Common.StorageFiles;
 public interface IStorageFileService
 {
     /// <summary>
-    /// /// Retrieves a list of storage files based on the provided query specification.
+    /// Retrieves a queryable collection of StorageFile entities based on the specified predicate.
     /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<StorageFile>> GetAsync(QuerySpecification<StorageFile> querySpecification, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Retrieves a list of storage files based on the provided query specification.
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<StorageFile>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default);
+    /// <param name="predicate">A predicate to filter the StorageFile entities (optional).</param>
+    /// <param name="asNoTracking">Indicates whether to disable change tracking for the entities (default: false).</param>
+    /// <returns>A queryable collection of StorageFile entities.</returns>
+    IQueryable<StorageFile> Get(Expression<Func<StorageFile, bool>>? predicate = default, bool asNoTracking = false);
+    
 }

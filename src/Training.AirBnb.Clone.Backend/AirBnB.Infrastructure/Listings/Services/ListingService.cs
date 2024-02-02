@@ -21,16 +21,6 @@ public class ListingService(
         bool asNoTracking = false)
         => listingRepository.Get(predicate, asNoTracking);
 
-    public ValueTask<IList<Listing>> GetAsync(
-        QuerySpecification<Listing> querySpecification,
-        CancellationToken cancellationToken = default)
-        => listingRepository.GetAsync(querySpecification, cancellationToken);
-
-    public ValueTask<IList<Listing>> GetAsync(
-        QuerySpecification querySpecification, 
-        CancellationToken cancellationToken = default)
-        => listingRepository.GetAsync(querySpecification, cancellationToken);
-
     public ValueTask<Listing?> GetByIdAsync(
         Guid listingId,
         bool asNoTracking = false,

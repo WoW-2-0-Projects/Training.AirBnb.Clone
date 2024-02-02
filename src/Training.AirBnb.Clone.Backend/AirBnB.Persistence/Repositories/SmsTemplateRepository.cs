@@ -15,16 +15,6 @@ public class SmsTemplateRepository(AppDbContext dbContext, ICacheBroker cacheBro
         Expression<Func<SmsTemplate, bool>>? predicate = default,
         bool asNoTracking = false) => 
         base.Get(predicate, asNoTracking);
-
-    public new ValueTask<IList<SmsTemplate>> GetAsync(
-        QuerySpecification<SmsTemplate> querySpecification,
-        CancellationToken cancellationToken = default) =>
-        base.GetAsync(querySpecification, cancellationToken);
-
-    public ValueTask<IList<SmsTemplate>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default) =>
-        base.GetAsync(querySpecification, cancellationToken);
     
     public new async ValueTask<SmsTemplate> CreateAsync(
         SmsTemplate smsTemplate,

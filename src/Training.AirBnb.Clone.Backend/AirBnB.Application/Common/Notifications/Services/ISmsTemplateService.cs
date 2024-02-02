@@ -1,4 +1,6 @@
-﻿using AirBnB.Domain.Common.Query;
+﻿using System.Linq.Expressions;
+using AirBnB.Application.Common.Notifications.Models;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 
@@ -10,21 +12,13 @@ namespace AirBnB.Application.Common.Notifications.Services;
 public interface ISmsTemplateService
 {
     /// <summary>
-    /// Asynchronously retrieves a list of SMS templates based on the provided query specification.
+    /// Retrieves a queryable collection of SmsTemplate entities based on the specified predicate.
     /// </summary>
-    /// <param name="querySpecification">The query specification for filtering SMS templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of SMS templates.</returns>
-    ValueTask<IList<SmsTemplate>> GetAsync(QuerySpecification<SmsTemplate> querySpecification, CancellationToken cancellationToken = default);
-    
-    /// <summary>
-    /// Asynchronously retrieves a list of SMS templates based on a generic query specification.
-    /// </summary>
-    /// <param name="querySpecification">The generic query specification for filtering SMS templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of SMS templates.</returns>
-    ValueTask<IList<SmsTemplate>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default);
-
+    /// <param name="predicate">A predicate to filter the SmsTemplate entities (optional).</param>
+    /// <param name="asNoTracking">Indicates whether to disable change tracking for the entities (default: false).</param>
+    /// <returns>A queryable collection of SmsTemplate entities.</returns>
+    IQueryable<SmsTemplate> Get(Expression<Func<SmsTemplate, bool>>? predicate = default, bool asNoTracking = false);
+ 
     /// <summary>
     /// Asynchronously retrieves an SMS template by its notification template type.
     /// </summary>

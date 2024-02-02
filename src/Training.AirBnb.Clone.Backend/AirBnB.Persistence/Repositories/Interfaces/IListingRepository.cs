@@ -17,30 +17,6 @@ public interface IListingRepository
     /// <returns></returns>
     IQueryable<Listing> Get(Expression<Func<Listing, bool>>? predicate = default,
         bool asNoTracking = false);
-
-    /// <summary>
-    /// Asynchronously retrieves a list of listings based on the specified typed query specification.
-    /// </summary>
-    /// <param name="querySpecification">The typed query specification used to filter and retrieve listings.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the asynchronous operation.</param>
-    /// <returns>
-    /// A <see cref="ValueTask{TResult}"/> representing the asynchronous operation.
-    /// The result contains a list of <see cref="Listing"/> objects that match the specified typed query.
-    /// </returns>
-    ValueTask<IList<Listing>> GetAsync(QuerySpecification<Listing> querySpecification,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Asynchronously retrieves a list of listings based on the specified query specification.
-    /// </summary>
-    /// <param name="querySpecification">The query specification used to filter and retrieve listings.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the asynchronous operation.</param>
-    /// <returns>
-    /// A <see cref="ValueTask{TResult}"/> representing the asynchronous operation.
-    /// The result contains a list of <see cref="Listing"/> objects that match the specified query.
-    /// </returns>
-    ValueTask<IList<Listing>> GetAsync(QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Gets a listing by its unique identifier asynchronously.
