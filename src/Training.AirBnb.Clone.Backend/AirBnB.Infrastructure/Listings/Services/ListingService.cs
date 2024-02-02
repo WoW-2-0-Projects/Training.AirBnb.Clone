@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using AirBnB.Application.Common.Identity.Services;
+﻿using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
@@ -7,6 +6,7 @@ using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Validators;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Infrastructure.Listings.Services;
 
@@ -17,9 +17,16 @@ public class ListingService(
     : IListingService 
 {
     public IQueryable<Listing> Get(
-        Expression<Func<Listing, bool>>? predicate = default,
+        FilterPagination filterPagination,
         bool asNoTracking = false)
-        => listingRepository.Get(predicate, asNoTracking);
+    {
+        return listingRepository.Get(asNoTracking: asNoTracking)
+            .Include(listing => listing.ImagesStorageFile
+                .OrderBy(image => image.OrderNumber))
+            .ThenInclude(media => media.StorageFile)
+            .Skip((int)((filterPagination.PageToken - 1) * filterPagination.PageSize))
+            .Take((int)filterPagination.PageSize);
+    }
 
     public ValueTask<IList<Listing>> GetAsync(
         QuerySpecification<Listing> querySpecification,
