@@ -5,6 +5,7 @@ using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
+using AirBnB.Persistence.Extensions;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -156,7 +157,6 @@ public static class SeedDataExtensions
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
         dbContext.SaveChanges();
     }
-
     
     /// <summary>
     /// Seeds listing categories into the AppDbContext from a JSON file.
@@ -194,7 +194,10 @@ public static class SeedDataExtensions
     {
         var randomDateTimeProvider = new RandomDateTimeProvider();
         var listingsFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Listings.json");
-        var users = await appDbContext.Users.Include(user => user.Role).Where(user => user.Role!.Type == RoleType.Host).ToListAsync();
+       
+        var users = appDbContext.Users
+            .Where(user => user.Roles.Any(role => role.Type == RoleType.Host)).ToList();
+        
         var listingCategories = appDbContext.ListingCategories.Local.ToList();
 
         // Retrieve listings
@@ -215,9 +218,9 @@ public static class SeedDataExtensions
 
                 // Fix listing category relationship
                 listing.ListingCategories = listing.ListingCategories.Select(
-                        selectedCategory => listingCategories.First(listingCategory => listingCategory.Id == selectedCategory.Id)
+                        selectedCategory => listingCategories.FirstOrDefault(listingCategory => listingCategory.Id == selectedCategory.Id)
                     )
-                    .ToList();
+                    .ToList()!;
 
                 hostCounter = (hostCounter + 1) % users.Count;
             }
@@ -234,9 +237,10 @@ public static class SeedDataExtensions
     private static async ValueTask SeedListingsAsync(this AppDbContext appDbContext)
     {
         // get existing hosts
-        var hosts = await appDbContext.Users
-            .Where(user => user.Role.Type == RoleType.Host)
+        var hosts = await appDbContext.Roles
+            .Where(role => role.Type == RoleType.Host)
             .Select(host => host.Id).ToListAsync();
+         
 
         // generate fake addresses
         var addressFaker = new Faker<Address>()
