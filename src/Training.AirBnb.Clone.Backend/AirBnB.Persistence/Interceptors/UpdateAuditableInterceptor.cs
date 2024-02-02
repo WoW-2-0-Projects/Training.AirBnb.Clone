@@ -40,7 +40,8 @@ public class UpdateAuditableInterceptor(IRequestUserContextProvider userContextP
         // Set CreatedByUserId property for entities implementing ICreationAuditableEntity
         creationAuditableEntries.ForEach(entry =>
         {
-            if (entry.State == EntityState.Added)
+            // TODO : This is only for seed data, remove after optimizing seed data
+            if (entry.State == EntityState.Added && entry.Entity.CreatedByUserId == Guid.Empty)
                 entry.Property(nameof(ICreationAuditableEntity.CreatedByUserId)).CurrentValue =
                     userContextProvider.GetUserId();
         });

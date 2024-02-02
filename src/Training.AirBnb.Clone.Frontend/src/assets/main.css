@@ -16,6 +16,10 @@
         @apply text-textPrimary dark:text-textPrimaryDark;
     }
 
+    .theme-button {
+        @apply text-textPrimary hover:bg-bgColorPrimary dark:text-textPrimaryDark dark:hover:text-textPrimary;
+    }
+
     .theme-bg-secondary {
         @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
     }

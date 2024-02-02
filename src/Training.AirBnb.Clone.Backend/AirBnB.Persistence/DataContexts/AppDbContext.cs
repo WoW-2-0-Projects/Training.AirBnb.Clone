@@ -28,6 +28,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<SmsTemplate> SmsTemplates => Set<SmsTemplate>();
 
+    #endregion
+    #region Verification
+
     public DbSet<VerificationCode> VerificationCodes => Set<VerificationCode>();
 
     public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes => Set<UserInfoVerificationCode>();
@@ -45,6 +48,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ListingCategory> ListingCategories => Set<ListingCategory>();
 
     public DbSet<ListingCategoryAssociation> ListingCategoryAssociations => Set<ListingCategoryAssociation>();
+
+    #endregion
+    #region Ratings
+
+    public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
 
     #endregion
     
