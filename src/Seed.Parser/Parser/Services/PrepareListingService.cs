@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Parser.Extensions;
 
 namespace Parser.Services;
 
@@ -31,7 +32,7 @@ public static class PrepareListingService
 
                     if (category is null)
                         throw new Exception("Category not found - " + directory.Name);
-                    
+
                     return (CategoryId: Guid.Parse(category.id.ToString()), Files: Directory.GetFiles(directory.FullName, "*.json").ToList());
                 }
             )
@@ -111,7 +112,7 @@ public static class PrepareListingService
     {
         // Validate listings are unique
         // if (listings.DistinctBy(listing => listing.name).Count() < listings.Count)
-            // throw new Exception("Duplicate listing name");
+        // throw new Exception("Duplicate listing name");
 
         var httpClient = new HttpClient
         {
@@ -122,53 +123,76 @@ public static class PrepareListingService
 
         var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
 
-        var listingsResult = await Task.WhenAll(
-            listings.Select(
-                    async listing =>
-                    {
-                        var images = await Task.WhenAll(
-                            ((List<string>)listing.imagesStorageFile).Select(
-                                async imageUrl =>
+        var finishedListings = 0;
+
+        var result = new List<dynamic>();
+
+        var filePath = Path.Combine(workingDirectory, "Data", "SeedData", "Images", "Listings");
+
+        var currentProgress = 0D;
+
+        if (!Directory.Exists(filePath))
+            Directory.CreateDirectory(filePath);
+
+        foreach (var listingsBatch in listings.Chunk(210))
+        {
+            result.AddRange(
+                await Task.WhenAll(
+                    listingsBatch.Select(
+                            async listing =>
+                            {
+                                var images = await Task.WhenAll(
+                                    ((List<string>)listing.imagesStorageFile).Select(
+                                        async imageUrl =>
+                                        {
+                                            var storageFileId = Guid.NewGuid();
+                                            var imageFileName = $"{storageFileId}.jpg";
+                                            var imageFilePath = Path.Combine(filePath, imageFileName);
+
+                                            // Download and save image
+                                            await using var imageStream = await httpClient.GetStreamAsync(new Uri(imageUrl));
+                                            await using var fileStream = File.Create(imageFilePath);
+
+                                            await imageStream.CopyToAsync(fileStream);
+                                            await imageStream.FlushAsync();
+                                            await fileStream.FlushAsync();
+
+                                            imageStream.Close();
+                                            fileStream.Close();
+
+                                            return (dynamic)new
+                                            {
+                                                id = storageFileId
+                                            };
+                                        }
+                                    )
+                                );
+
+                                var progress = (double)++finishedListings / listings.Count * 100;
+
+                                if (progress > currentProgress)
                                 {
-                                    var storageFileId = Guid.NewGuid();
-                                    var imageFileName = $"{storageFileId}.jpg";
-                                    var imageFilePath = Path.Combine(workingDirectory, "Data", "SeedData", "Images", "Listings", imageFileName);
-
-                                    // Download and save image
-                                    await using var imageStream = await httpClient.GetStreamAsync(new Uri(imageUrl));
-                                    await using var fileStream = File.Create(imageFilePath);
-
-                                    await imageStream.CopyToAsync(fileStream);
-                                    await imageStream.FlushAsync();
-                                    await fileStream.FlushAsync();
-
-                                    imageStream.Close();
-                                    fileStream.Close();
-
-                                    return (dynamic)new
-                                    {
-                                        id = storageFileId
-                                    };
+                                    currentProgress = progress;
+                                    Console.Clear();
+                                    Console.WriteLine($"Progress: {currentProgress:F2}%");
                                 }
-                            )
-                        );
 
-                        return (dynamic)new
-                        {
-                            name = listing.name,
-                            categoryId = listing.categoryId,
-                            imagesStorageFile = images,
-                            location = listing.location,
-                            price = listing.price
-                        };
-                    }
+                                return (dynamic)new
+                                {
+                                    name = listing.name,
+                                    categoryId = listing.categoryId,
+                                    imagesStorageFile = images,
+                                    location = listing.location,
+                                    price = listing.price
+                                };
+                            }
+                        )
+                        .ToList()
                 )
-                .ToList()
-        );
+            );
+        }
 
-        return listingsResult.ToList();
-
-        // Save listing to file
+        return result;
     }
 }
 

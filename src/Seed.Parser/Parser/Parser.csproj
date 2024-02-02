@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\SeedData\Images\Listings\" />
       <Folder Include="Data\SeedData\Prepare\A-frames\" />
       <Folder Include="Data\SeedData\Prepare\Adapted\" />
       <Folder Include="Data\SeedData\Prepare\Amazing pools\" />
