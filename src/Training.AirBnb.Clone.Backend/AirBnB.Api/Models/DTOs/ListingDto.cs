@@ -36,4 +36,11 @@ public class ListingDto
     /// Gets or sets the rating of the listing.
     /// </summary>
     public Rating? Rating { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the urls of the images associated with the listing.
+    /// </summary>
+    public List<string> ImagesUrls { get; set; }
+
+    /*public ListingMediaFile ImagesStorageFile { get; set; }*/
 }
