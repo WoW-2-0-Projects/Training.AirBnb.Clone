@@ -28,7 +28,7 @@ public class RoleProcessingService(
         var selectedRole = user.Roles.FirstOrDefault(role => role.Type == roleType) ?? throw new AuthenticationException(" Invalid role type");
         
         //Delete the selected role
-        appDbContext.Roles.Remove(selectedRole);
+        user.Roles.Remove(selectedRole);
         
         await appDbContext.SaveChangesAsync(cancellationToken);
 
