@@ -134,7 +134,7 @@ public static class PrepareListingService
         if (!Directory.Exists(filePath))
             Directory.CreateDirectory(filePath);
 
-        foreach (var listingsBatch in listings.Chunk(210))
+        foreach (var listingsBatch in listings.Chunk(200))
         {
             result.AddRange(
                 await Task.WhenAll(
