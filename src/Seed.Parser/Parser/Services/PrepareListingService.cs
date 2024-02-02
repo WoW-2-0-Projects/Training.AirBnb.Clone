@@ -180,7 +180,12 @@ public static class PrepareListingService
                                 return (dynamic)new
                                 {
                                     name = listing.name,
-                                    categoryId = listing.categoryId,
+                                    listingCategories = new []{ 
+                                        new
+                                        {
+                                            listing.categoryId,
+                                        }
+                                    },
                                     imagesStorageFile = images,
                                     location = listing.location,
                                     price = listing.price
