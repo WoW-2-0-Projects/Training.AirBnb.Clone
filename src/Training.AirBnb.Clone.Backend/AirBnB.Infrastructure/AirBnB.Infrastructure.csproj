@@ -19,6 +19,7 @@
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
     <PackageReference Include="Polly" Version="8.2.0" />
+    <PackageReference Include="Twilio" Version="7.0.0-rc.1" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using AirBnb.Api.Configurations;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Brokers;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Serializers;
 using AirBnB.Application.Common.Settings;
@@ -25,12 +26,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
-using AirBnB.Infrastructure.Common.EventBus.Brokers;
+using AirBnB.Infrastructure.Common.Notifications.Brokers;
 using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Application.Ratings.Settings;
 using AirBnB.Domain.Settings;
+using AirBnB.Infrastructure.Common.EventBus.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.Ratings.Services;
@@ -172,6 +174,16 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<ISmsTemplateService, SmsTemplateService>()
+            .AddScoped<IEmailRenderingService, EmailRenderingService>()
+            .AddScoped<ISmsRenderingService, SmsRenderingService>();
+
+        builder.Services
+            .AddScoped<ISmsSenderBroker, TwilioSmsSenderBroker>()
+            .AddScoped<IEmailSenderBroker, SmtpEmailSenderBroker>();
+
+        builder.Services
+            .AddScoped<IEmailSenderService, EmailSenderService>()
+            .AddScoped<ISmsSenderService, SmsSenderService>()
             .AddScoped<IEmailRenderingService, EmailRenderingService>()
             .AddScoped<ISmsRenderingService, SmsRenderingService>();
         

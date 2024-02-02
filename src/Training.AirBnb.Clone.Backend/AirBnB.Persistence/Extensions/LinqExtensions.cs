@@ -230,4 +230,21 @@ public static class LinqExtensions
         return source.Skip((int)((querySpecification.PaginationOptions.PageToken - 1) * querySpecification.PaginationOptions.PageSize))
             .Take((int)querySpecification.PaginationOptions.PageSize);
     }
+
+    public static async Task<T?> FirstOrDefaultAsync<T>(
+        this IEnumerable<T> source,
+        Func<T, Task<bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        if(cancellationToken.IsCancellationRequested) return default;
+        
+        foreach (var item in source)
+            if (await predicate(item))
+                return item;
+
+        return default;
+    }
 }
