@@ -60,7 +60,7 @@ public class Listing : AuditableEntity, ICreationAuditableEntity, IDeletionAudit
     /// <summary>
     /// Navigation property that stores the images of a listing.
     /// </summary>
-    public virtual IList<ListingMediaFile> ImagesStorageFile { get; set; }
+    public virtual List<ListingMediaFile> ImagesStorageFile { get; set; }
     
     /// <summary>
     /// Gets or sets feedbacks navigation property for the listing.

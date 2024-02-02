@@ -93,8 +93,6 @@ public static class SeedDataExtensions
     /// <returns>An asynchronous task representing the seeding process.</returns>
     private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
     {
-        var randomDateTimeProvider = new RandomDateTimeProvider();
-        
         // Add system user.
         var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
 
@@ -190,6 +188,7 @@ public static class SeedDataExtensions
         listings.ForEach(
             listing =>
             {
+                listing.Id = Guid.NewGuid();
                 // Add random built date
                 listing.BuiltDate = DateOnly.FromDateTime(randomDateTimeProvider.Generate(new DateTime(1950, 1, 1), DateTime.Now.AddYears(-3)));
 
@@ -203,6 +202,21 @@ public static class SeedDataExtensions
                         selectedCategory => listingCategories.First(listingCategory => listingCategory.Id == selectedCategory.Id)
                     )
                     .ToList();
+
+                // Add listing media files
+                byte order = 0;
+                listing.ImagesStorageFile.ForEach(image =>
+                {
+                    image.StorageFile = new StorageFile()
+                    {
+                        Id = image.Id,
+                        FileName = $"{image.Id}.jpg",
+                        Type = StorageFileType.ListingImage
+                    };
+                    
+                    image.Id = Guid.NewGuid();
+                    image.OrderNumber = order++;
+                });
 
                 hostCounter = (hostCounter + 1) % users.Count;
             }
