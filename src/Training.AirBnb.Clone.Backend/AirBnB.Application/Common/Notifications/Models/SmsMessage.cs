@@ -8,14 +8,14 @@ namespace AirBnB.Application.Common.Notifications.Models;
 public class SmsMessage : NotificationMessage
 {
     /// <summary>
-    /// Gets or sets sms address of sender user
+    /// Gets or sets sms phone Number of sender user
     /// </summary>
-    public string SenderEmailAddress { get; set; } = default!;
+    public string SenderPhoneNumber { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets sms address of receiver user
+    /// Gets or sets sms phone Number of receiver user
     /// </summary>
-    public string ReceiverEmailAddress { get; set; } = default!;
+    public string ReceiverPhoneNumber { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets sms template of the sms message
