@@ -6,7 +6,7 @@
                 :listingCategory="listingCategory"
                 :selectedCategoryId="selectedCategoryId"
                 :index="listingCategory.id"
-                @onCategorySelected="onCategorySelected"/>
+                @category-selected="onCategorySelected"/>
         </horizontal-scroll>
 
         <!-- Filters actions -->

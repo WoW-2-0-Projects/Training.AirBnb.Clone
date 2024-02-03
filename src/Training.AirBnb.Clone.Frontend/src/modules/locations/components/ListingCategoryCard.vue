@@ -1,6 +1,6 @@
 <template>
 
-    <div class="h-[80px] min-w-[50px] flex flex-col justify-center items-center group select-common cursor-pointer select-none">
+    <div class="h-[80px] min-w-[50px] flex flex-col justify-center items-center group select-common cursor-pointer select-none" @click="$emit('categorySelected', listingCategory.id)">
 
         <!-- Category icon -->
         <img class="h-[24px] w-[24px] mb-2 primary-transition whitespace-nowrap dark:invert" 
@@ -36,6 +36,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const emit = defineEmits(['categorySelected'])
 
 const isSelected = computed(() => props.selectedCategoryId === props.listingCategory.id);
 </script>
