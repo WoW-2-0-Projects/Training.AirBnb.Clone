@@ -46,6 +46,31 @@ export class DocumentService {
         }
     }
 
+    public scrollTo(element: HTMLElement, position: number) {
+        element.scrollTo({
+            left: position,
+            behavior: "smooth"
+        });
+    }
+
+    public scrollToBeginning(element: HTMLElement) {
+        element.scroll({
+            left: 0,
+            behavior: "smooth"
+        });
+    }
+
+    public scrollToEnd(element: HTMLElement) {
+        element.scroll({
+            left: element.scrollWidth,
+            behavior: "smooth"
+        });
+    }
+    
+    public getChildWidth(element: HTMLElement): number {
+        return element.children.length == 0 ? 0 : (element.children[0] as HTMLElement).offsetWidth;
+    }
+
     public addEventListener(element: HTMLElement, eventName: string, callback: (event: HTMLElement) => void): void {
         element.addEventListener(eventName, (event: Event) => callback(event.target as HTMLElement));
     }
