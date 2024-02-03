@@ -9,7 +9,7 @@
     </div>
 
     <!-- Next button -->
-    <next-button v-if="canScrollNext" class="mb-3 theme-bg-primary hover-shadow-zero" @click="onScrollNext"/>
+    <next-button v-if="canScrollNext" class="w-auto mb-3 theme-bg-primary hover-shadow-zero" @click="onScrollNext"/>
 
 </template>
 
@@ -27,11 +27,6 @@ const props = defineProps({
    scrollChangeSource: {
         type: Array as PropType<Array<any>>,
         required: true
-   },
-   scrollDistance: {
-        type: Number as PropType<number>,
-        required: false,
-        default: 450
    }
 });
 
@@ -51,8 +46,8 @@ watch(() => [props.scrollChangeSource], () => {
 });
 
 const computeCanScroll = () => {
-  canScrollPrev.value = documentService.canScrollLeft(scrollContainer.value!);
-  canScrollNext.value = documentService.canScrollRight(scrollContainer.value!);  
+  canScrollPrev.value = documentService.canScrollLeft(scrollContainer.value!, 30);
+  canScrollNext.value = documentService.canScrollRight(scrollContainer.value!, 30);  
 };
 
 onMounted(() => {
@@ -63,6 +58,7 @@ onMounted(() => {
    isMounted.value = true;
 });
 
+
 onUnmounted(() => {
    if (!scrollContainer.value) return;
    
@@ -72,13 +68,13 @@ onUnmounted(() => {
 const onScrollPrev = () => {
   if (!scrollContainer.value) return;  
 
-  documentService.scrollLeft(scrollContainer.value, props.scrollDistance);
+  documentService.scrollLeft(scrollContainer.value);
 };
 
 const onScrollNext = () => {
     if (!scrollContainer.value) return;
 
-    documentService.scrollRight(scrollContainer.value, props.scrollDistance);
+    documentService.scrollRight(scrollContainer.value);
 }
 
 const onScroll = (target: HTMLElement) => {
