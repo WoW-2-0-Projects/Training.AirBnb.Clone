@@ -1,4 +1,4 @@
-﻿namespace AirBnB.Api.Configurations;
+namespace AirBnB.Api.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -24,6 +24,7 @@ public static partial class HostConfiguration
             .AddListingsInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
+            .AddRatingsInfrastructure()
             .AddCors()
             .AddExposers();
 
@@ -37,7 +38,9 @@ public static partial class HostConfiguration
     /// <returns>Application host</returns>
     public static async ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
     {
+        await app.MigrateDatabaseSchemasAsync();
         await app.SeedDataAsync();
+        
         app
             .UseDevTools()
             .UseCors()

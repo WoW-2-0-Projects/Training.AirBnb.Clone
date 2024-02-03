@@ -32,6 +32,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<SmsHistory> SmsHistories => Set<SmsHistory>();
 
+    #region Verification
+
     public DbSet<VerificationCode> VerificationCodes => Set<VerificationCode>();
 
     public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes => Set<UserInfoVerificationCode>();
@@ -52,6 +54,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     #endregion
 
+    #region Ratings
+
+    public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
+
+    #endregion
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

@@ -1,8 +1,10 @@
 using System.Text;
 using System.Reflection;
+using AirBnb.Api.Configurations;
 using AirBnB.Api.Data;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Brokers;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Serializers;
 using AirBnB.Application.Common.Settings;
@@ -24,11 +26,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
-using AirBnB.Infrastructure.Common.EventBus.Brokers;
+using AirBnB.Infrastructure.Common.Notifications.Brokers;
 using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
+using AirBnB.Application.Ratings.Services;
+using AirBnB.Application.Ratings.Settings;
+using AirBnB.Domain.Settings;
+using AirBnB.Infrastructure.Common.EventBus.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using AirBnB.Persistence.Interceptors;
 
@@ -174,6 +181,14 @@ public static partial class HostConfiguration
             .AddScoped<IEmailHistoryService, EmailHistoryService>()
             .AddScoped<ISmsHistoryService, SmsHistoryService>();
 
+        builder.Services
+            .AddScoped<ISmsSenderBroker, TwilioSmsSenderBroker>()
+            .AddScoped<IEmailSenderBroker, SmtpEmailSenderBroker>();
+
+        builder.Services
+            .AddScoped<IEmailSenderService, EmailSenderService>()
+            .AddScoped<ISmsSenderService, SmsSenderService>();
+        
         return builder;
     }
 
@@ -252,7 +267,31 @@ public static partial class HostConfiguration
     }
 
     /// <summary>
-    /// Configures Request Context tool for the web applicaiton.
+    /// Configures Listing Ratings and Feedbacks infrastructure including repositories and services
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        // configure ratings related settings.
+        builder.Services.Configure<RatingProcessingSchedulerSettings>(
+            builder.Configuration.GetSection(nameof(RatingProcessingSchedulerSettings)));
+        
+        builder.Services.Configure<GuestFeedbacksCacheSettings>(
+            builder.Configuration.GetSection(nameof(GuestFeedbacksCacheSettings)));
+        
+        // register services
+        builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
+        builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
+        builder.Services.AddScoped<IRatingProcessingService, RatingProcessingService>();
+        
+        builder.Services.AddHostedService<RatingProcessingScheduler>();
+        
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Request Context tool for the web application.
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -294,6 +333,20 @@ public static partial class HostConfiguration
         return builder;
     }
 
+    /// <summary>
+    /// Migrates existing database schema to data sources
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static async ValueTask<WebApplication> MigrateDatabaseSchemasAsync(this WebApplication app)
+    {
+        var serviceScopeFactory = app.Services.GetRequiredKeyedService<IServiceScopeFactory>(null);
+        
+        await serviceScopeFactory.MigrateAsync<AppDbContext>();
+        
+        return app;
+    }
+    
     /// <summary>
     /// Seeds data into the application's database by creating a service scope and initializing the seed operation.
     /// </summary>
