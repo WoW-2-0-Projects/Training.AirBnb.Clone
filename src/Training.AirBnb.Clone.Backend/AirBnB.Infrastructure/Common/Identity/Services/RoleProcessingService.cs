@@ -1,7 +1,9 @@
 ﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
+using AirBnB.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
@@ -12,26 +14,58 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// <param name="appDbContext"></param>
 /// <param name="userService"></param>
 public class RoleProcessingService(
-    AppDbContext appDbContext, 
-    IUserService userService
-    ) : IRoleProcessingService
+    AppDbContext appDbContext,
+    IUserService userService,
+    IRoleService roleService,
+    IUserRoleRepository userRoleRepository
+) : IRoleProcessingService
 {
-    public async ValueTask<bool> RevokeRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
+    public async ValueTask GrandRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
     {
-        //Bring the user all his materials from the database by email address entered
+        // Query user
         var user = await userService.Get(asNoTracking: true)
-            .Include(user => user.Roles)
-            .FirstOrDefaultAsync(user => user.Id == userId,
-                cancellationToken: cancellationToken) ?? throw new InvalidOperationException("User not found");
-        
-        //Choosing the right role
-        var selectedRole = user.Roles.FirstOrDefault(role => role.Type == roleType) ?? throw new AuthenticationException(" Invalid role type");
-        
-        //Delete the selected role
-        user.Roles.Remove(selectedRole);
-        
-        await appDbContext.SaveChangesAsync(cancellationToken);
+                       .Include(user => user.Roles)
+                       .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
+                   throw new InvalidOperationException("User not found");
 
-        return true;
+        if (user.Roles.Any(role => role.Type == roleType))
+            throw new InvalidOperationException("User already has the role");
+
+        // Query selected role
+        var selectedRole = await roleService.GetByTypeAsync(roleType, cancellationToken: cancellationToken) ??
+                           throw new InvalidOperationException("Role not found");
+
+        // Add role to user
+        await userRoleRepository.CreateAsync(
+            new UserRole
+            {
+                RoleId = selectedRole.Id,
+                UserId = user.Id
+            },
+            cancellationToken: cancellationToken
+        );
+    }
+
+    public async ValueTask RevokeRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
+    {
+        // TODO : Add navigation to user role to role and use then include
+        var user = await userService.Get(asNoTracking: true)
+                       .Include(user => user.Roles)
+                       .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
+                   throw new InvalidOperationException("User not found");
+
+        //Choosing the right role
+        var selectedRole = user.Roles.FirstOrDefault(role => role.Type == roleType) ??
+                           throw new AuthenticationException("Given role wasn't grand to the user.");
+
+        // Delete the selected role
+        await userRoleRepository.DeleteAsync(
+            new UserRole
+            {
+                RoleId = selectedRole.Id,
+                UserId = user.Id
+            },
+            cancellationToken: cancellationToken
+        );
     }
 }

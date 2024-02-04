@@ -43,7 +43,10 @@ public class AuthService(
         //Hash password
         user.PasswordHash = passwordHasherService.HashPassword(password);
         
-        return await accountService.CreateUserAsync(user, cancellationToken);
+        var createdUser = await accountService.CreateUserAsync(user, cancellationToken);
+        
+        // TODO : add other validation logic
+        return createdUser is not null;
     }
 
     public async ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default)

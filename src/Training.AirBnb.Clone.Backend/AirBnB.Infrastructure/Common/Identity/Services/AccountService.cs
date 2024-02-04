@@ -12,37 +12,38 @@ public class AccountService(
     IRoleService roleService,
     IUserRepository userRepository,
     IUserSettingsService userSettingsService,
+    IRoleProcessingService roleProcessingService,
     IUserInfoVerificationCodeService userInfoVerificationCodeService
-    ) : IAccountService
+) : IAccountService
 {
-    public async ValueTask<User?> GetUserByEmailAddressAsync(string emailAddress, bool asNoTracking = false,
-        CancellationToken cancellationToken = default)
+    public async ValueTask<User?> GetUserByEmailAddressAsync(
+        string emailAddress,
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default
+    )
     {
         return await userRepository.Get(asNoTracking: asNoTracking)
-            .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress,
-                cancellationToken: cancellationToken);
+            .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
     }
 
-    public async ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default)
+    public async ValueTask<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {
-
-        new UserRole
-        {
-            RoleId = (await roleService.GetByTypeAsync(RoleType.Guest)).Id
-        };
-        
+        // Create user
         var createdUser = await userService.CreateAsync(user, cancellationToken: cancellationToken);
+        
+        // Create user settings
         await userSettingsService.CreateAsync(
             new UserSettings
             {
                 UserId = createdUser.Id
-            }, 
-            cancellationToken: cancellationToken);
+            },
+            cancellationToken: cancellationToken
+        );
+
         // send welcome email
-        
-        // send verification email
-        
-        return true;
+        await roleProcessingService.GrandRoleAsync(createdUser.Id, RoleType.Guest, cancellationToken);
+
+        return createdUser;
     }
 
     public async ValueTask<bool> VerifyUserAsync(string code, CancellationToken cancellationToken = default)
@@ -63,8 +64,7 @@ public class AccountService(
             default: throw new NotSupportedException();
         }
 
-        await userInfoVerificationCodeService.DeactivateAsync(userVerifyCode.Code.Id,
-            cancellationToken: cancellationToken);
+        await userInfoVerificationCodeService.DeactivateAsync(userVerifyCode.Code.Id, cancellationToken: cancellationToken);
 
         return true;
     }

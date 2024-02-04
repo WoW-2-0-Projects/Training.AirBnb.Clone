@@ -1,10 +1,12 @@
-﻿using AirBnB.Domain.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AirBnB.Domain.Common.Entities;
+using AirBnB.Domain.Enums;
 
 namespace AirBnB.Domain.Entities;
 /// <summary>
 /// Represents a user role entity
 /// </summary>
-public class UserRole
+public class UserRole : IEntity
 {
     
     public UserRole()
@@ -32,4 +34,7 @@ public class UserRole
     /// Gets or sets the role id
     /// </summary>
     public Guid RoleId { get; set; }
+
+    [NotMapped]
+    public Guid Id { get; set; }
 }

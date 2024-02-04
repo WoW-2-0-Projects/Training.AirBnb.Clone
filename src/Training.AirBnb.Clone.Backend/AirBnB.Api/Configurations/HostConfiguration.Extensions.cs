@@ -208,6 +208,7 @@ public static partial class HostConfiguration
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IUserRoleRepository, UserRoleRepository>()
             .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
         
         //register services
