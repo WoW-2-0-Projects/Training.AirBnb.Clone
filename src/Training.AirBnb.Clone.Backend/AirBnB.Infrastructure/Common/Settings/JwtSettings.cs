@@ -39,7 +39,7 @@ public class JwtSettings
     /// <summary>
     /// Gets or sets the expiration time of JWTs in minutes.
     /// </summary>
-    public int ExpirationTimeInMinute { get; set; }
+    public int ExpirationTimeInMinutes { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to validate the issuer signing key of the JWT.

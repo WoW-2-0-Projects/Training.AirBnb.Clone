@@ -81,20 +81,22 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
         // Retrieve the claims associated with the user and access token.
         var claims = GetClaims(user, accessToken);
         accessToken.UserId = user.Id;
+        accessToken.ExpiryTime = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationTimeInMinutes);
+        
         // Create a SymmetricSecurityKey using the specified secret key.
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
 
-        // Create SigningCredentials using the security key and HMACSHA256 algorithm.
+        // Create SigningCredentials using the security key and sha 256 algorithm.
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         // Create and return a new JwtSecurityToken with the specified parameters.
         return new JwtSecurityToken(
-            _jwtSettings.ValidIssuer,
-            _jwtSettings.ValidAudience,
-            claims,
-            DateTime.UtcNow,
-            DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationTimeInMinute),
-            credentials
+            issuer: _jwtSettings.ValidIssuer,
+            audience: _jwtSettings.ValidAudience,
+            claims: claims,
+            notBefore: DateTime.UtcNow,
+            expires: accessToken.ExpiryTime.UtcDateTime,
+            signingCredentials: credentials
         );
     }
 
