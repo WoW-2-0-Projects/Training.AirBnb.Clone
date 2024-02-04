@@ -15,9 +15,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<Role> Roles => Set<Role>();
 
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
+
     public DbSet<UserSettings> UserSettings => Set<UserSettings>();
 
     #endregion
+    
     #region Notification
 
     public DbSet<NotificationTemplate> NotificationTemplates => Set<NotificationTemplate>();
@@ -32,6 +35,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<SmsHistory> SmsHistories => Set<SmsHistory>();
 
+    #endregion
+    
     #region Verification
 
     public DbSet<VerificationCode> VerificationCodes => Set<VerificationCode>();

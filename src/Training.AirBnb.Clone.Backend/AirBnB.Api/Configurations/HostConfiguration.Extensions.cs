@@ -37,6 +37,7 @@ using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
 
 namespace AirBnB.Api.Configurations;
@@ -199,17 +200,32 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services
-            .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>()
-            .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
-            .AddScoped<IUserSettingsService, UserSettingsService>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IRoleService, RoleService>()
-            .AddScoped<IAccountService, AccountService>();
-
+        //configuration settings
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+        builder.Services.Configure<PasswordValidationSettings>(builder.Configuration.GetSection(nameof(PasswordValidationSettings)));
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
+        //register repository
+        builder.Services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IUserRoleRepository, UserRoleRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
+        
+        //register services
+        builder.Services    
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserSettingsService, UserSettingsService>()
+            .AddScoped<IRoleService, RoleService>()
+            .AddScoped<IAccountService, AccountService>()
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
+            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
+            .AddScoped<IPasswordHasherService, PasswordHasherService>()
+            .AddScoped<IRoleProcessingService, RoleProcessingService>();
+        
         return builder;
     }
 

@@ -35,8 +35,20 @@ public interface IUserService
     /// <returns></returns>
     ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
         CancellationToken cancellationToken = default);
-    
+
     /// <summary>
+    /// Asynchronously retrieves a user entity with the specified email address from the data source.
+    /// </summary>
+    /// <param name="emailAddress">The email address of the user to retrieve.</param>
+    /// <param name="asNoTracking">Optional flag indicating whether to retrieve the user without tracking changes. Defaults to false.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A ValueTask containing:
+    /// - The retrieved user entity if found.
+    /// - Null if no user with the specified email address exists.
+    /// </returns>
+    ValueTask<User> GetByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
+    
+     /// <summary>
     /// Retrieves a collection of users based on the specified predicate.
     /// </summary>
     /// <param name="querySpecification"></param>
