@@ -39,7 +39,7 @@ public class AccessTokenValidator : AbstractValidator<AccessToken>
                     .Custom((accessToken, context) =>
                     {
                         // Add additional custom validation for ExpiryTime if needed.
-                        if (accessToken > DateTimeOffset.UtcNow.AddMinutes(jwtSettingsValue.ExpirationTimeInMinute))
+                        if (accessToken > DateTimeOffset.UtcNow.AddMinutes(jwtSettingsValue.ExpirationTimeInMinutes))
                         {
                             context.AddFailure(
                                 nameof(AccessToken.ExpiryTime),
@@ -64,7 +64,7 @@ public class AccessTokenValidator : AbstractValidator<AccessToken>
                     .Custom(
                         (accesstoken, context) =>
                         {
-                            if (accesstoken > DateTimeOffset.UtcNow.AddMinutes(jwtSettingsValue.ExpirationTimeInMinute))
+                            if (accesstoken > DateTimeOffset.UtcNow.AddMinutes(jwtSettingsValue.ExpirationTimeInMinutes))
                                 context.AddFailure(
                                     nameof(AccessToken.ExpiryTime),
                                     $"{nameof(AccessToken.ExpiryTime)} cannot be greater than the expiration time of the JWT token"

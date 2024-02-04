@@ -17,4 +17,9 @@ public class Role : AuditableEntity
     /// Indicates whether the role is disabled or not. 
     /// </summary>
     public bool IsDisabled { get; set; }
+    
+    /// <summary>
+    /// List of user roles associated with this entity.
+    /// </summary>
+    public IList<User> Users { get; set; }
 }

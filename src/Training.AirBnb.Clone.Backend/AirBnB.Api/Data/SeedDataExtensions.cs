@@ -1,6 +1,7 @@
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Constants;
+using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Caching.Brokers;
@@ -28,11 +29,13 @@ public static class SeedDataExtensions
         var cacheBroker = serviceProvider.GetRequiredService<ICacheBroker>();
         var ratingProcessingService = serviceProvider.GetRequiredService<IRatingProcessingService>();
 
+        var passwordHasherService = serviceProvider.GetRequiredService<IPasswordHasherService>();
+        
         if (!await appDbContext.Roles.AnyAsync())
             await appDbContext.SeedRolesAsync();
 
         if (!await appDbContext.Users.AnyAsync())
-            await appDbContext.SeedUsersAsync();
+            await appDbContext.SeedUsersAsync(passwordHasherService);
 
         if (!await appDbContext.ListingCategories.AnyAsync())
             await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
@@ -91,54 +94,80 @@ public static class SeedDataExtensions
     /// </summary>
     /// <param name="dbContext">The AppDbContext instance to seed data into.</param>
     /// <returns>An asynchronous task representing the seeding process.</returns>
-    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext)
+    private static async ValueTask SeedUsersAsync(this AppDbContext dbContext, IPasswordHasherService passwordHasherService)
     {
-        // Add system user.
-        var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
-
-        var systemUser = new User
-        {
-            Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
-            RoleId = systemRoleId,
-            FirstName = "System",
-            LastName = "System",
-            EmailAddress = "example@gmail.com",
-            PasswordHash = "A1rBnB.$com",
-            PhoneNumber = ""
-        };
-
-        await dbContext.Users.AddAsync(systemUser);
+        var roles = dbContext.Roles.ToList();
         
-        // Add Hosts
-        var hostRoleId = dbContext.Roles.First(role => role.Type == RoleType.Host).Id;
+        // Add system user.
+       // var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
+        var users = new List<User>
+        {
+            new()
+            {
+                Id = Guid.Parse("7dead347-e459-4c4a-85b0-8f1b373d3dec"),
+                FirstName = "System",
+                LastName = "System",
+                EmailAddress = "example@gmail.com",
+                PasswordHash = "$2a$11$b1aYo5P/Yqgs8voe1WHw3eJBuEGq0eVt15WQxFhNv3al5xBFh7ELu", // System_1
+                PhoneNumber = "",
+                Roles = new List<Role>
+                {
+                    roles.First(role => role.Type == RoleType.System)
+                }
+            },
+            new()
+            {
+                FirstName = "Admin",
+                LastName = "Admin",
+                EmailAddress = "admin@gmail.com",
+                PasswordHash = "$2a$11$uUKbkiC9nzwqpAaGN5tV9uLIa8XWynAgX4fYoue4sYj9M4NmSPFW6", //@dmin
+                PhoneNumber = "+99891223435",
+                Roles = new List<Role>
+                {
+                    roles.First(role => role.Type == RoleType.Admin)
+                }
+            }
+        };  
+        
+         dbContext.Users.AddRange(users);
+        
+         // Add Hosts
+        var hostRole = roles.First(role => role.Type == RoleType.Host);
 
         var hostFaker = new Faker<User>()
-            .RuleFor(user => user.Id, Guid.NewGuid)
-            .RuleFor(user => user.RoleId, () => hostRoleId)
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
-            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.Roles, () => new List<Role>() { hostRole });
 
         await dbContext.AddRangeAsync(hostFaker.Generate(1000));
         
         // Add guests.
-        var guestRoleId = dbContext.Roles.First(role => role.Type == RoleType.Guest).Id;
+        var guestRole = roles.First(role => role.Type == RoleType.Guest);
 
         var guestFaker = new Faker<User>()
-            .RuleFor(user => user.Id, Guid.NewGuid)
-            .RuleFor(user => user.RoleId, () => guestRoleId)
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => data.Internet.Password(8))
+            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.Roles, () => new List<Role>() { guestRole });
+        
+        await dbContext.AddRangeAsync(guestFaker.Generate(100));
+        
+        var hostGuestFaker = new Faker<User>()
+            .RuleFor(user => user.FirstName, data => data.Name.FirstName())
+            .RuleFor(user => user.LastName, data => data.Name.LastName())
+            .RuleFor(user => user.EmailAddress, data => data.Person.Email)
+            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
-        await dbContext.AddRangeAsync(guestFaker.Generate(1000));
-        dbContext.SaveChanges();
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
+        await dbContext.SaveChangesAsync();
     }
-
+    
     /// <summary>
     /// Seeds listing categories into the AppDbContext from a JSON file.
     /// </summary>
@@ -176,7 +205,10 @@ public static class SeedDataExtensions
     {
         var randomDateTimeProvider = new RandomDateTimeProvider();
         var listingsFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Listings.json");
-        var users = await appDbContext.Users.Include(user => user.Role).Where(user => user.Role!.Type == RoleType.Host).ToListAsync();
+       
+        var users = appDbContext.Users
+            .Where(user => user.Roles.Any(role => role.Type == RoleType.Host)).ToList();
+        
         var listingCategories = appDbContext.ListingCategories.ToList();
 
         // Retrieve listings
@@ -199,9 +231,9 @@ public static class SeedDataExtensions
 
                 // Fix listing category relationship
                 listing.ListingCategories = listing.ListingCategories.Select(
-                        selectedCategory => listingCategories.First(listingCategory => listingCategory.Id == selectedCategory.Id)
+                        selectedCategory => listingCategories.FirstOrDefault(listingCategory => listingCategory.Id == selectedCategory.Id)
                     )
-                    .ToList();
+                    .ToList()!;
 
                 // Add listing media files
                 byte order = 0;
