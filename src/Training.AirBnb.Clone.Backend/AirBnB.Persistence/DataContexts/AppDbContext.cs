@@ -10,7 +10,7 @@ namespace AirBnB.Persistence.DataContexts;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     #region Identity
-    
+
     public DbSet<User> Users => Set<User>();
 
     public DbSet<Role> Roles => Set<Role>();
@@ -28,7 +28,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<SmsTemplate> SmsTemplates => Set<SmsTemplate>();
 
-    #endregion
+    public DbSet<NotificationHistory> NotificationHistories => Set<NotificationHistory>();
+
+    public DbSet<EmailHistory> EmailHistories => Set<EmailHistory>();
+
+    public DbSet<SmsHistory> SmsHistories => Set<SmsHistory>();
+
     #region Verification
 
     public DbSet<VerificationCode> VerificationCodes => Set<VerificationCode>();
@@ -44,12 +49,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     #region Listings
 
     public DbSet<Listing> Listings => Set<Listing>();
-    
+
     public DbSet<ListingCategory> ListingCategories => Set<ListingCategory>();
 
     public DbSet<ListingCategoryAssociation> ListingCategoryAssociations => Set<ListingCategoryAssociation>();
 
     #endregion
+
     #region Ratings
 
     public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
