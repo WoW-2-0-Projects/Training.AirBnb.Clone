@@ -32,18 +32,16 @@ public interface IAuthService
     /// </summary>
     /// <param name="userId">The unique identifier of the user to receive the role.</param>
     /// <param name="roleType">The type of role to grant (e.g., "Admin", "User", "Moderator", etc.).</param>
-    /// <param name="actionUserId">he unique identifier of the user performing the role granting action.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns>A ValueTask<bool> indicating whether the role was granted successfully.</returns>
-    ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, Guid actionUserId, CancellationToken cancellationToken = default);
+    ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously revokes a specified role from a user.
     /// </summary>
     /// <param name="userId">The unique identifier of the user from whom to revoke the role.</param>
     /// <param name="roleType">The type of role to revoke (e.g., "Admin", "User", "Moderator", etc.).</param>
-    /// <param name="actionUserId">The unique identifier of the user performing the role revocation action.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns></returns>
-    ValueTask<bool> RevokeRoleAsync(Guid userId, string roleType, Guid actionUserId, RoleType actionUserRole, CancellationToken cancellationToken = default);
+    ValueTask<bool> RevokeRoleAsync(Guid userId, string roleType, CancellationToken cancellationToken = default);
 }

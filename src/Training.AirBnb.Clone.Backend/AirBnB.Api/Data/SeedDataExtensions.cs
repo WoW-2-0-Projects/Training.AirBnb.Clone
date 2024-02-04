@@ -95,6 +95,8 @@ public static class SeedDataExtensions
     /// <returns>An asynchronous task representing the seeding process.</returns>
     private static async ValueTask SeedUsersAsync(this AppDbContext dbContext, IPasswordHasherService passwordHasherService)
     {
+        var roles = dbContext.Roles.ToList();
+        
         // Add system user.
        // var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
         var users = new List<User>
@@ -105,8 +107,12 @@ public static class SeedDataExtensions
                 FirstName = "System",
                 LastName = "System",
                 EmailAddress = "example@gmail.com",
-                PasswordHash = "$2a$11$7CblN46.ijAjU98BhD5wf.ZageDRq8uabpL5rmwdcC/VBC6hifiIa",//A1rBnB.$com,
-                PhoneNumber = ""
+                PasswordHash = "$2a$11$b1aYo5P/Yqgs8voe1WHw3eJBuEGq0eVt15WQxFhNv3al5xBFh7ELu", // System_1
+                PhoneNumber = "",
+                Roles = new List<Role>
+                {
+                    roles.First(role => role.Type == RoleType.System)
+                }
             },
             new()
             {
@@ -115,14 +121,17 @@ public static class SeedDataExtensions
                 EmailAddress = "admin@gmail.com",
                 PasswordHash = "$2a$11$uUKbkiC9nzwqpAaGN5tV9uLIa8XWynAgX4fYoue4sYj9M4NmSPFW6", //@dmin
                 PhoneNumber = "+99891223435",
+                Roles = new List<Role>
+                {
+                    roles.First(role => role.Type == RoleType.Admin)
+                }
             }
         };  
         
          dbContext.Users.AddRange(users);
-         var getAllRoles = dbContext.Roles.ToList();
         
          // Add Hosts
-        var hostRole = getAllRoles.First(role => role.Type == RoleType.Host);
+        var hostRole = roles.First(role => role.Type == RoleType.Host);
 
         var hostFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -135,7 +144,7 @@ public static class SeedDataExtensions
         await dbContext.AddRangeAsync(hostFaker.Generate(100));
         
         // Add guests.
-        var guestRole = getAllRoles.First(role => role.Type == RoleType.Guest);
+        var guestRole = roles.First(role => role.Type == RoleType.Guest);
 
         var guestFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -154,8 +163,8 @@ public static class SeedDataExtensions
             .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
 
-        await dbContext.AddRangeAsync(guestFaker.Generate(100));
-        dbContext.SaveChanges();
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
+        await dbContext.SaveChangesAsync();
     }
     
     /// <summary>

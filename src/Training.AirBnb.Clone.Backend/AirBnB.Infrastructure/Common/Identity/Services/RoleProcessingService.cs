@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.DataContexts;
@@ -11,13 +12,12 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// <summary>
 /// Provides services for managing user roles within the application.
 /// </summary>
-/// <param name="appDbContext"></param>
-/// <param name="userService"></param>
 public class RoleProcessingService(
     AppDbContext appDbContext,
     IUserService userService,
     IRoleService roleService,
-    IUserRoleRepository userRoleRepository
+    IUserRoleRepository userRoleRepository,
+    IRequestUserContextProvider requestUserContextProvider
 ) : IRoleProcessingService
 {
     public async ValueTask GrandRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
@@ -27,6 +27,13 @@ public class RoleProcessingService(
                        .Include(user => user.Roles)
                        .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
                    throw new InvalidOperationException("User not found");
+
+        // Retrieve action user role
+        var actionUserRole = requestUserContextProvider.GetUserRole();
+
+        // Validate action permission
+        if (actionUserRole <= RoleType.Host || actionUserRole <= roleType)
+            throw new AuthenticationException("User does not have permission to grand a role");
 
         if (user.Roles.Any(role => role.Type == roleType))
             throw new InvalidOperationException("User already has the role");
@@ -48,7 +55,6 @@ public class RoleProcessingService(
 
     public async ValueTask RevokeRoleAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
     {
-        // TODO : Add navigation to user role to role and use then include
         var user = await userService.Get(asNoTracking: true)
                        .Include(user => user.Roles)
                        .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
@@ -56,7 +62,14 @@ public class RoleProcessingService(
 
         //Choosing the right role
         var selectedRole = user.Roles.FirstOrDefault(role => role.Type == roleType) ??
-                           throw new AuthenticationException("Given role wasn't grand to the user.");
+                           throw new AuthenticationException("Given role wasn't granted to the user.");
+        
+        // Retrieve action user role
+        var actionUserRole = requestUserContextProvider.GetUserRole();
+
+        // Validate action permission
+        if (actionUserRole <= RoleType.Host || actionUserRole <= roleType)
+            throw new AuthenticationException("User does not have permission to grand a role");
 
         // Delete the selected role
         await userRoleRepository.DeleteAsync(

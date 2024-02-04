@@ -12,7 +12,7 @@ public static class ExceptionExtensions
     /// </summary>
     /// <typeparam name="T">The type of the result.</typeparam>
     /// <param name="func">The asynchronous function to invoke.</param>
-    /// <returns>A ValueTask<FuncResult<T>> representing the result of the asynchronous operation.</returns>
+    /// <returns>A <see cref="FuncResult{T}"/> representing the result of the asynchronous operation.</returns>
     public static async ValueTask<FuncResult<T>> GetValueAsync<T>(this Func<Task<T>> func) where T : struct
     {
         FuncResult<T> result;
@@ -46,6 +46,23 @@ public static class ExceptionExtensions
         catch (Exception e)
         {
             result = new FuncResult<T>(e);
+        }
+        
+        return result;
+    }
+    
+    public static async ValueTask<FuncResult<bool>> GetValueAsync(this Func<ValueTask> func)
+    {
+        FuncResult<bool> result;
+
+        try
+        {
+            await func();
+            result = new FuncResult<bool>(true);
+        }
+        catch (Exception e)
+        {
+            result = new FuncResult<bool>(e);
         }
         
         return result;

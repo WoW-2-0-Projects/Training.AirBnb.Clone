@@ -27,27 +27,19 @@ public class AuthController(IAuthService authService, IRequestUserContextProvide
         return Ok(result);
     }
     
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, System")]
     [HttpPost("users/{userId:guid}/roles/{roleType}")]
     public async Task<IActionResult> GrandRole([FromRoute] Guid userId, [FromRoute] string roleType, CancellationToken cancellationToken = default)
     {
-
-        var actionUserId = requestUserContextProvider.GetUserId();
-        
-        if (actionUserId == default) throw new AuthenticationException("does not set object");
-        
-        var result = await authService.GrandRoleAsync(userId, roleType, actionUserId, cancellationToken);
+        var result = await authService.GrandRoleAsync(userId, roleType, cancellationToken);
         return result ? Ok(result) : NoContent();
     }
     
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, System")]
     [HttpDelete("users/{userId:guid}/roles/{roleType}")]
     public async Task<IActionResult> RevokeRole([FromRoute] Guid userId, [FromRoute] string roleType, CancellationToken cancellationToken = default)
     {
-        var actionUserId = requestUserContextProvider.GetUserId();
-        var actionUserRole = Enum.Parse<RoleType>(User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Role)).Value);
-        
-        var result = await authService.RevokeRoleAsync(userId, roleType, actionUserId, actionUserRole, cancellationToken);
+        var result = await authService.RevokeRoleAsync(userId, roleType, cancellationToken);
         return result ? Ok(result) : NoContent();
     }
 } 

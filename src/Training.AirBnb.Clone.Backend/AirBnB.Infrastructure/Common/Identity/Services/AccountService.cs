@@ -9,10 +9,8 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 public class AccountService(
     IUserService userService,
-    IRoleService roleService,
     IUserRepository userRepository,
     IUserSettingsService userSettingsService,
-    IRoleProcessingService roleProcessingService,
     IUserInfoVerificationCodeService userInfoVerificationCodeService
 ) : IAccountService
 {
@@ -39,9 +37,8 @@ public class AccountService(
             },
             cancellationToken: cancellationToken
         );
-
-        // send welcome email
-        await roleProcessingService.GrandRoleAsync(createdUser.Id, RoleType.Guest, cancellationToken);
+        
+        // TODO : Send welcome email
 
         return createdUser;
     }

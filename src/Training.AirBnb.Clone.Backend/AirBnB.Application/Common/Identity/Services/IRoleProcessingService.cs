@@ -1,5 +1,4 @@
-﻿using AirBnB.Domain.Entities;
-using AirBnB.Domain.Enums;
+﻿using AirBnB.Domain.Enums;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
