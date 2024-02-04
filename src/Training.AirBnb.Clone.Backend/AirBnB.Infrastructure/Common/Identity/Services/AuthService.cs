@@ -2,6 +2,7 @@
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
+using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Domain.Extensions;
@@ -16,13 +17,13 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 public class AuthService(
     IMapper mapper,
     IUserService userService,
-    IRoleService roleService,
     IAccountService accountService,
     IRoleProcessingService roleProcessingService,
     IAccessTokenService accessTokenService,
     IPasswordHasherService passwordHasherService,
     IPasswordGeneratorService passwordGeneratorService,
-    IAccessTokenGeneratorService accessTokenGeneratorService
+    IAccessTokenGeneratorService accessTokenGeneratorService,
+    IRequestUserContextProvider requestUserContextProvider
 ) : IAuthService
 {
     public async ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default)
@@ -46,7 +47,7 @@ public class AuthService(
         var createdUser = await accountService.CreateUserAsync(user, cancellationToken);
 
         // Grand guest role
-        await roleProcessingService.GrandRoleAsync(createdUser.Id, RoleType.Guest, cancellationToken);
+        await roleProcessingService.GrandRoleBySystemAsync(createdUser.Id, RoleType.Guest, cancellationToken);
 
         // TODO : add other validation logic
         return createdUser is not null;
@@ -75,7 +76,12 @@ public class AuthService(
         if (!Enum.TryParse(roleType, out RoleType roleValue))
             throw new InvalidOperationException("Invalid role type provided.");
 
-        var grandRoleTask = () => roleProcessingService.GrandRoleAsync(userId, roleValue, cancellationToken);
+        var grandRoleTask = () => roleProcessingService.GrandRoleAsync(
+            userId,
+            roleValue,
+            requestUserContextProvider.GetUserRole(),
+            cancellationToken
+        );
         var grandRoleValue = await grandRoleTask.GetValueAsync();
 
         if (grandRoleValue is { IsSuccess: false, Exception: not null })
@@ -91,7 +97,12 @@ public class AuthService(
         if (!Enum.TryParse(roleType, out RoleType roleValue))
             throw new InvalidOperationException("Invalid role type provided.");
 
-        var revokeRoleTask = () => roleProcessingService.RevokeRoleAsync(userId, roleValue, cancellationToken);
+        var revokeRoleTask = () => roleProcessingService.RevokeRoleAsync(
+            userId,
+            roleValue,
+            requestUserContextProvider.GetUserRole(),
+            cancellationToken
+        );
         var grandRoleValue = await revokeRoleTask.GetValueAsync();
 
         if (grandRoleValue is { IsSuccess: false, Exception: not null })
