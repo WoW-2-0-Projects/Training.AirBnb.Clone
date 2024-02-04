@@ -1,3 +1,4 @@
+using AirBnB.Application.Ratings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Constants;
 using AirBnB.Application.Common.Identity.Services;
@@ -5,7 +6,6 @@ using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
-using AirBnB.Persistence.Extensions;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -27,6 +27,7 @@ public static class SeedDataExtensions
         var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
         var cacheBroker = serviceProvider.GetRequiredService<ICacheBroker>();
+        var ratingProcessingService = serviceProvider.GetRequiredService<IRatingProcessingService>();
 
         var passwordHasherService = serviceProvider.GetRequiredService<IPasswordHasherService>();
         
@@ -43,11 +44,11 @@ public static class SeedDataExtensions
             await appDbContext.SeedListingsAsync(webHostEnvironment);
 
         if (!await appDbContext.GuestFeedbacks.AnyAsync())
-            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker);
+            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
 
         // check change tracker and if changes exist, save changes to database
         if (appDbContext.ChangeTracker.HasChanges())
-            await appDbContext.SaveChangesAsync();
+            appDbContext.SaveChanges();
     }
 
     /// <summary>
@@ -141,7 +142,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
             .RuleFor(user => user.Roles, () => new List<Role>() { hostRole });
 
-        await dbContext.AddRangeAsync(hostFaker.Generate(100));
+        await dbContext.AddRangeAsync(hostFaker.Generate(1000));
         
         // Add guests.
         var guestRole = roles.First(role => role.Type == RoleType.Guest);
@@ -191,6 +192,7 @@ public static class SeedDataExtensions
         );
 
         await appDbContext.ListingCategories.AddRangeAsync(listingCategories);
+        appDbContext.SaveChanges();
     }
 
     /// <summary>
@@ -207,7 +209,7 @@ public static class SeedDataExtensions
         var users = appDbContext.Users
             .Where(user => user.Roles.Any(role => role.Type == RoleType.Host)).ToList();
         
-        var listingCategories = appDbContext.ListingCategories.Local.ToList();
+        var listingCategories = appDbContext.ListingCategories.ToList();
 
         // Retrieve listings
         var listings = JsonConvert.DeserializeObject<List<Listing>>(await File.ReadAllTextAsync(listingsFileName))!;
@@ -218,12 +220,14 @@ public static class SeedDataExtensions
         listings.ForEach(
             listing =>
             {
+                listing.Id = Guid.NewGuid();
                 // Add random built date
                 listing.BuiltDate = DateOnly.FromDateTime(randomDateTimeProvider.Generate(new DateTime(1950, 1, 1), DateTime.Now.AddYears(-3)));
 
                 // Add host
                 listing.HostId = users[hostCounter].Id;
                 listing.CreatedByUserId = users[hostCounter].Id;
+                listing.CreatedTime = users[hostCounter].CreatedTime;
 
                 // Fix listing category relationship
                 listing.ListingCategories = listing.ListingCategories.Select(
@@ -231,64 +235,24 @@ public static class SeedDataExtensions
                     )
                     .ToList()!;
 
+                // Add listing media files
+                byte order = 0;
+                listing.ImagesStorageFile.ForEach(image =>
+                {
+                    image.StorageFile = new StorageFile()
+                    {
+                        Id = image.Id,
+                        FileName = $"{image.Id}.jpg",
+                        Type = StorageFileType.ListingImage
+                    };
+                    
+                    image.Id = Guid.NewGuid();
+                    image.OrderNumber = order++;
+                });
+
                 hostCounter = (hostCounter + 1) % users.Count;
             }
         );
-
-        await appDbContext.Listings.AddRangeAsync(listings);
-        await appDbContext.SaveChangesAsync();
-    }
-
-    /// <summary>
-    /// Seeds the listings data into the AppDbContext using Bogus library.
-    /// </summary>
-    /// <param name="appDbContext"></param>
-    private static async ValueTask SeedListingsAsync(this AppDbContext appDbContext)
-    {
-        // get existing hosts
-        var hosts = await appDbContext.Roles
-            .Where(role => role.Type == RoleType.Host)
-            .Select(host => host.Id).ToListAsync();
-         
-
-        // generate fake addresses
-        var addressFaker = new Faker<Address>()
-            .RuleFor(address => address.City, data => data.Address.City())
-            .RuleFor(address => address.CityId, Guid.NewGuid())
-            .RuleFor(address => address.Latitude, data => data.Address.Latitude())
-            .RuleFor(address => address.Longitude, data => data.Address.Longitude());
-
-        var addresses = addressFaker.Generate(100).ToHashSet();
-
-        // generate fake money
-        var moneyFaker = new Faker<Money>()
-            .RuleFor(money => money.Amount, data => data.Random.Decimal(10, 10_000))
-            .RuleFor(money => money.Currency, Currency.USD);
-
-        var money = moneyFaker.Generate(100).ToHashSet();
-
-        // generate fake listings
-        var listingsFaker = new Faker<Listing>()
-            .RuleFor(listing => listing.Name, data => data.Lorem.Word())
-            .RuleFor(listing => listing.BuiltDate, data => data.Date.PastDateOnly(100))
-            .RuleFor(listing => listing.Address, data =>
-            {
-                var chosenAddress = data.PickRandom<Address>(addresses);
-                addresses.Remove(chosenAddress);
-                return chosenAddress;
-            })
-            .RuleFor(listing => listing.PricePerNight, data =>
-            {
-                var chosenMoney = data.PickRandom<Money>(money);
-                money.Remove(chosenMoney);
-                return chosenMoney;
-            })
-            .RuleFor(listing => listing.HostId, data => data.PickRandom<Guid>(hosts))
-            .RuleFor(listing => listing.CreatedByUserId, (data, listing) => listing.HostId)
-            .RuleFor(listing => listing.DeletedByUserId, Guid.Empty)
-            .RuleFor(listing => listing.CreatedTime, data => data.Date.PastOffset(5, DateTimeOffset.UtcNow));
-
-        var listings = listingsFaker.Generate(100);
 
         await appDbContext.Listings.AddRangeAsync(listings);
         appDbContext.SaveChanges();
@@ -298,9 +262,10 @@ public static class SeedDataExtensions
     /// Seeds Guest Feedbacks data into the AppDbContext using Bogus library.
     /// </summary>
     /// <param name="dbContext"></param>
-    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker)
+    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker, IRatingProcessingService ratingProcessingService)
     {
         var listings = await dbContext.Listings.ToListAsync();
+        var users = await dbContext.Users.Select(user => user.Id).ToListAsync();
 
         var feedbackFaker = new Faker<GuestFeedback>()
             .RuleFor(feedback => feedback.Rating, GenerateFakeRatings)
@@ -311,16 +276,17 @@ public static class SeedDataExtensions
             {
                 var listingOwnerId = feedback.Listing.HostId;
 
-                return data.PickRandom(dbContext.Users.Select(user => user.Id)
-                    .Where(userId => userId != listingOwnerId).ToList());
+                return data.PickRandom(users
+                    .Where(userId => userId != listingOwnerId));
             });
 
-        var feedbacks = feedbackFaker.Generate(100);
+        var feedbacks = feedbackFaker.Generate(2000);
         
         await dbContext.GuestFeedbacks.AddRangeAsync(feedbacks);
         dbContext.SaveChanges();
 
         await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, feedbacks);
+        await ratingProcessingService.ProcessListingsRatings();
     }
 
     /// <summary>

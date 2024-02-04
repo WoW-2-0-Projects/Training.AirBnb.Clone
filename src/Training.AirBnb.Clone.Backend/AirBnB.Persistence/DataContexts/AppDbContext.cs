@@ -48,6 +48,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
 
+    public DbSet<ListingMediaFile> ListingMediaFiles => Set<ListingMediaFile>();
+
     #endregion
     #region Listings
 

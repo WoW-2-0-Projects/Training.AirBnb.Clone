@@ -13,5 +13,10 @@ public enum StorageFileType
     /// <summary>
     /// Represents Listing Category Image
     /// </summary>
-    ListingCategoryImage = 1
+    ListingCategoryImage = 1,
+    
+    /// <summary>
+    /// Represents Listing Image
+    /// </summary>
+    ListingImage = 2
 }
