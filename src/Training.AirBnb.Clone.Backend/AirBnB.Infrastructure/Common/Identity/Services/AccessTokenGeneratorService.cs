@@ -35,7 +35,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
         };
 
         // Generate a JWT token for the user and associate it with the AccessToken.
-        var jwtToken = GetJwtToken(user, accessToken);
+        var jwtToken = GetToken(user, accessToken);
 
         // Write the JWT token to a string and assign it to the AccessToken's Token property.
         var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
@@ -76,25 +76,27 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="user">The user for whom the token is generated.</param>
     /// <param name="accessToken">The associated access token.</param>
     /// <returns>A JwtSecurityToken representing the generated JWT token.</returns>
-    private JwtSecurityToken GetJwtToken(User user, AccessToken accessToken)
+    public JwtSecurityToken GetToken(User user, AccessToken accessToken)
     {
         // Retrieve the claims associated with the user and access token.
         var claims = GetClaims(user, accessToken);
-
+        accessToken.UserId = user.Id;
+        accessToken.ExpiryTime = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationTimeInMinutes);
+        
         // Create a SymmetricSecurityKey using the specified secret key.
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
 
-        // Create SigningCredentials using the security key and HMACSHA256 algorithm.
+        // Create SigningCredentials using the security key and sha 256 algorithm.
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         // Create and return a new JwtSecurityToken with the specified parameters.
         return new JwtSecurityToken(
-            _jwtSettings.ValidIssuer,
-            _jwtSettings.ValidAudience,
-            claims,
-            DateTime.UtcNow,
-            DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationTimeInMinute),
-            credentials
+            issuer: _jwtSettings.ValidIssuer,
+            audience: _jwtSettings.ValidAudience,
+            claims: claims,
+            notBefore: DateTime.UtcNow,
+            expires: accessToken.ExpiryTime.UtcDateTime,
+            signingCredentials: credentials
         );
     }
 
@@ -104,22 +106,23 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="user">The user for whom claims are generated.</param>
     /// <param name="accessToken">The associated access token.</param>
     /// <returns>A list of Claim objects representing the generated claims.</returns>
-    private List<Claim> GetClaims(User user, AccessToken accessToken)
+    public List<Claim> GetClaims(User user, AccessToken accessToken)
     {
         // Create a list of claims with standard and custom claim types.
         return new List<Claim>
         {
             // Claim representing the user's email address.
             new(ClaimTypes.Email, user.EmailAddress),
-
+            
             // Claim representing the user's role.
-            new(ClaimTypes.Role, user.Role.ToString()),
+            //TODO :  fix to add multiple roles
+            new(ClaimTypes.Role, user.Roles[0].Type.ToString()),
 
             // Claim representing the user's unique identifier.
             new(ClaimConstants.UserId, user.Id.ToString()),
 
-            // Claim representing the unique identifier of the associated access token.
-            new(ClaimConstants.AccessTokenId, accessToken.Id.ToString())
+            //  This claim uniquely identifies the JWT and is often used to prevent
+            new(JwtRegisteredClaimNames.Jti, accessToken.Id.ToString())
         };
     }
 }

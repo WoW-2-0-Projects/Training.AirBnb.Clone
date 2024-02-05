@@ -1,12 +1,12 @@
 <template>
-  <div class="hidden md:flex items-center justify-center theme-bg p-[12px] gap-5">
-    <button class="text-sm theme-text-primary font-medium line-clamp-1">
-      <span class="line-clamp-1 mb-1">Airbnb your home</span>
+  <div class="hidden md:flex items-center justify-center theme-bg p-[12px] gap-3">
+    <button class="text-sm font-medium theme-text-primary line-clamp-1">
+      <span class="line-clamp-1">Airbnb your home</span>
     </button>
 
     <button>
       <svg xmlns="http://www.w3.org/2000/svg"
-           class="theme-icon-primary w-4 h-4 stroke-0"
+           class="w-4 h-4 stroke-0 theme-icon-primary"
            viewBox="0 0 16 16"
            aria-hidden="true"
            role="presentation"
@@ -57,6 +57,7 @@
   </button>
 
 </template>
+
 <script setup lang="ts">
 import ProfileMenuComponent from "@/Modules/profile/components/ProfileMenuComponent.vue";
 import {ref} from 'vue';
@@ -71,4 +72,11 @@ const toggleUserProfile = () => {
     profileButtonDisable.value = false;
   }, 200);
 }
+
+const emit = defineEmits(['signInUpRequest']);
+
+const signInUpRequest = () => {
+  emit('signInUpRequest');
+}
+
 </script>

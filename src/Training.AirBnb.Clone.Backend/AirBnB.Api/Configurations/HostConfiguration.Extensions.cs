@@ -1,7 +1,10 @@
 using System.Text;
 using System.Reflection;
+using AirBnb.Api.Configurations;
 using AirBnB.Api.Data;
+using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Brokers;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Application.Common.Serializers;
 using AirBnB.Application.Common.Settings;
@@ -23,10 +26,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Brokers;
+using AirBnB.Infrastructure.Common.Notifications.Brokers;
+using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
+using AirBnB.Application.Ratings.Services;
+using AirBnB.Application.Ratings.Settings;
+using AirBnB.Domain.Settings;
+using AirBnB.Infrastructure.Common.EventBus.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
 
 namespace AirBnB.Api.Configurations;
@@ -41,6 +52,17 @@ public static partial class HostConfiguration
         Assemblies.Add(Assembly.GetExecutingAssembly());
     }
 
+    /// <summary>
+    /// Adds MediatR services to the application with custom service registrations.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddMediator(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assemblies.ToArray()); });
+
+        return builder;
+    }
     /// <summary>
     /// Adds caching services to the web application builder.
     /// </summary>
@@ -61,7 +83,7 @@ public static partial class HostConfiguration
 
         // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
-        
+
         // register authentication handlers
         var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ??
                           throw new InvalidOperationException("JwtSettings is not configured.");
@@ -88,7 +110,22 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
+    private static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
+    {
+        //register settings
+        builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
+
+        //register brokers
+        builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
+            .AddSingleton<IEvenBusBroker, RabbitMqEventBusBroker>();
+
+        //register general background service
+        builder.Services.AddHostedService<EventBusBackgroundService>();
+
+        return builder;
+    }
+
     /// <summary>
     /// Configures the Dependency Injection container to include validators from referenced assemblies.
     /// </summary>
@@ -120,10 +157,10 @@ public static partial class HostConfiguration
     {
         // register json serialization settings
         builder.Services.AddSingleton<IJsonSerializationSettingsProvider, JsonSerializationSettingsProvider>();
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Registers NotificationDbContext in DI 
     /// </summary>
@@ -133,13 +170,25 @@ public static partial class HostConfiguration
     {
         builder.Services
             .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
-            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>();
-            
+            .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>()
+            .AddScoped<IEmailHistoryRepository, EmailHistoryRepository>()
+            .AddScoped<ISmsHistoryRepository, SmsHistoryRepository>();
+
         builder.Services
             .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<ISmsTemplateService, SmsTemplateService>()
             .AddScoped<IEmailRenderingService, EmailRenderingService>()
-            .AddScoped<ISmsRenderingService, SmsRenderingService>();
+            .AddScoped<ISmsRenderingService, SmsRenderingService>()
+            .AddScoped<IEmailHistoryService, EmailHistoryService>()
+            .AddScoped<ISmsHistoryService, SmsHistoryService>();
+
+        builder.Services
+            .AddScoped<ISmsSenderBroker, TwilioSmsSenderBroker>()
+            .AddScoped<IEmailSenderBroker, SmtpEmailSenderBroker>();
+
+        builder.Services
+            .AddScoped<IEmailSenderService, EmailSenderService>()
+            .AddScoped<ISmsSenderService, SmsSenderService>();
         
         return builder;
     }
@@ -151,20 +200,35 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddIdentityInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services
-            .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>()
-            .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
-            .AddScoped<IUserSettingsService, UserSettingsService>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IRoleService, RoleService>()
-            .AddScoped<IAccountService, AccountService>();
-
+        //configuration settings
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+        builder.Services.Configure<PasswordValidationSettings>(builder.Configuration.GetSection(nameof(PasswordValidationSettings)));
         builder.Services.Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
+        //register repository
+        builder.Services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IUserRoleRepository, UserRoleRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
+        
+        //register services
+        builder.Services    
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IUserSettingsService, UserSettingsService>()
+            .AddScoped<IRoleService, RoleService>()
+            .AddScoped<IAccountService, AccountService>()
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
+            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
+            .AddScoped<IPasswordHasherService, PasswordHasherService>()
+            .AddScoped<IRoleProcessingService, RoleProcessingService>();
+        
         return builder;
     }
-    
+
     /// <summary>
     ///  Extension method to add storage file infrastructure services
     /// </summary>
@@ -219,22 +283,46 @@ public static partial class HostConfiguration
     }
 
     /// <summary>
-    /// Configures Request Context tool for the web applicaiton.
+    /// Configures Listing Ratings and Feedbacks infrastructure including repositories and services
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddRatingsInfrastructure(this WebApplicationBuilder builder)
+    {
+        // configure ratings related settings.
+        builder.Services.Configure<RatingProcessingSchedulerSettings>(
+            builder.Configuration.GetSection(nameof(RatingProcessingSchedulerSettings)));
+        
+        builder.Services.Configure<GuestFeedbacksCacheSettings>(
+            builder.Configuration.GetSection(nameof(GuestFeedbacksCacheSettings)));
+        
+        // register services
+        builder.Services.AddScoped<IGuestFeedbackRepository, GuestFeedbackRepository>();
+        builder.Services.AddScoped<IGuestFeedbackService, GuestFeedbackService>();
+        builder.Services.AddScoped<IRatingProcessingService, RatingProcessingService>();
+        
+        builder.Services.AddHostedService<RatingProcessingScheduler>();
+        
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Request Context tool for the web application.
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
     private static WebApplicationBuilder AddRequestContextTools(this WebApplicationBuilder builder)
     {
         builder.Services.AddHttpContextAccessor();
-        
+
         builder.Services.AddScoped<IRequestUserContextProvider, RequestUserContextProvider>();
 
         builder.Services.Configure<RequestUserContextSettings>(
             builder.Configuration.GetSection(nameof(RequestUserContextSettings)));
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Configures DbContext and ef-core interceptors for the web application.
     /// </summary>
@@ -247,7 +335,7 @@ public static partial class HostConfiguration
             .AddScoped<UpdatePrimaryKeyInterceptor>()
             .AddScoped<UpdateAuditableInterceptor>()
             .AddScoped<UpdateSoftDeletionInterceptor>();
-        
+
         // register db context
         builder.Services.AddDbContext<AppDbContext>((provider, options) =>
         {
@@ -257,8 +345,22 @@ public static partial class HostConfiguration
                     provider.GetRequiredService<UpdateAuditableInterceptor>(),
                     provider.GetRequiredService<UpdateSoftDeletionInterceptor>());
         });
-        
+
         return builder;
+    }
+
+    /// <summary>
+    /// Migrates existing database schema to data sources
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static async ValueTask<WebApplication> MigrateDatabaseSchemasAsync(this WebApplication app)
+    {
+        var serviceScopeFactory = app.Services.GetRequiredKeyedService<IServiceScopeFactory>(null);
+        
+        await serviceScopeFactory.MigrateAsync<AppDbContext>();
+        
+        return app;
     }
     
     /// <summary>
@@ -270,10 +372,10 @@ public static partial class HostConfiguration
     {
         var serviceScope = app.Services.CreateScope();
         await serviceScope.ServiceProvider.InitializeSeedAsync();
-        
+
         return app;
     }
-    
+
     /// <summary>
     /// Configures exposers including controllers
     /// </summary>
@@ -288,7 +390,7 @@ public static partial class HostConfiguration
 
         return builder;
     }
-    
+
     /// <summary>
     /// Configures CORS for the web application.
     /// </summary>
@@ -296,13 +398,13 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", 
+        builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
             policy => policy
                 .WithOrigins(builder.Configuration["ApiClientSettings:WebClientAddress"]!)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()));
-        
+
         return builder;
     }
 
@@ -330,7 +432,7 @@ public static partial class HostConfiguration
 
         return app;
     }
-    
+
     /// <summary>
     /// Enables CORS middleware in the web application pipeline.
     /// </summary>
@@ -339,7 +441,7 @@ public static partial class HostConfiguration
     private static WebApplication UseCors(this WebApplication app)
     {
         app.UseCors("AllowSpecificOrigin");
-        
+
         return app;
     }
 

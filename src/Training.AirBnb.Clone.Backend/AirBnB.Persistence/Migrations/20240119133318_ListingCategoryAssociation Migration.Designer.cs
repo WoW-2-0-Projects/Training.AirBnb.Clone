@@ -40,7 +40,7 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("DeletedByUserId")
+                    b.Property<Guid?>("DeletedByUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
