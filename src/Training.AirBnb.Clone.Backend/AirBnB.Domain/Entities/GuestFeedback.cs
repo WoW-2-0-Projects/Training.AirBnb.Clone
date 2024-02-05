@@ -1,5 +1,4 @@
 using AirBnB.Domain.Common.Entities;
-using Newtonsoft.Json;
 
 namespace AirBnB.Domain.Entities;
 
@@ -26,18 +25,15 @@ public class GuestFeedback : AuditableEntity
     /// <summary>
     /// Gets or sets a rating given by the guest.
     /// </summary>
-    [JsonIgnore]
     public Rating Rating { get; set; }
     
     /// <summary>
     /// Gets or sets navigation property of Listing
     /// </summary>
-    [JsonIgnore]
     public virtual Listing Listing { get; set; }
     
     /// <summary>
     /// Gets or sets navigation property of Guest
     /// </summary>
-    [JsonIgnore]
     public virtual User Guest { get; set; }
 }
