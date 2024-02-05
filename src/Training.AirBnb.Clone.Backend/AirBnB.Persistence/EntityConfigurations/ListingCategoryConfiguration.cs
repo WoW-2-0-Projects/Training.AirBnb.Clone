@@ -25,5 +25,16 @@ public class ListingCategoryConfiguration : IEntityTypeConfiguration<ListingCate
             .HasOne(category => category.ImageStorageFile)
             .WithOne()
             .HasForeignKey<ListingCategory>(category => category.StorageFileId);
+        
+        builder.HasMany(category => category.Listings)
+            .WithMany(listing => listing.ListingCategories)
+            .UsingEntity<ListingCategoryAssociation>(
+                categoryAssociation =>
+                {
+                    categoryAssociation.HasKey(relation => new { relation.ListingId, relation.ListingCategoryId });
+                    
+                    categoryAssociation.ToTable("ListingCategoryAssociations");
+                }
+            );
     }
 }

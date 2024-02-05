@@ -24,8 +24,6 @@ public class UserValidator : AbstractValidator<User>
             EntityEvent.OnCreate.ToString(),
             () =>
             {
-                RuleFor(code => code.Id).NotEqual(Guid.Empty);
-
                 RuleFor(user => user.EmailAddress)
                     .NotEmpty()
                     .MinimumLength(5)
@@ -45,6 +43,11 @@ public class UserValidator : AbstractValidator<User>
                     .MaximumLength(64)
                     .Matches(validationSettingsValue.NameRegexPattern)
                     .WithMessage("Last name is not valid");
+
+                RuleFor(user => user.UserCredentials.PasswordHash)
+                    .NotEmpty()
+                    .MinimumLength(8)
+                    .MaximumLength(64);
             }
         );
     }

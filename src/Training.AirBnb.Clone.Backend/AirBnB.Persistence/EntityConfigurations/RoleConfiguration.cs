@@ -17,5 +17,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         //Ensure that the 'Type' property has a unique index
         builder.HasIndex(role => role.Type).IsUnique();
+        
     }
 }

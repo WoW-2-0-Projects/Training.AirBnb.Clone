@@ -19,8 +19,8 @@ public class SmsMessageValidator : AbstractValidator<SmsMessage>
         RuleSet(NotificationEvent.OnSending.ToString(),
             () =>
             {
-                RuleFor(message => message.SenderEmailAddress).NotNull().NotEmpty();
-                RuleFor(message => message.ReceiverEmailAddress).NotNull().NotEmpty();
+                RuleFor(message => message.SenderPhoneNumber).NotNull().NotEmpty();
+                RuleFor(message => message.ReceiverPhoneNumber).NotNull().NotEmpty(); 
                 RuleFor(message => message.Message).NotNull().NotEmpty();
             });
     }

@@ -23,7 +23,7 @@ public interface IAccountService
     /// <param name="user">The user object to be created.</param>
     /// <param name="cancellationToken">Cancellation token for asynchronous operations.</param>
     /// <returns>True if the user is created successfully; otherwise, false.</returns>
-    ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default);
+    ValueTask<User> CreateUserAsync(User user, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Verifies a user using a verification code.

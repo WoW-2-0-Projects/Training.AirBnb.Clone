@@ -22,15 +22,10 @@ public sealed class User : AuditableEntity
     /// </summary>
     public string EmailAddress { get; set; } = default!;
     
-    ///<summary>
-    /// Gets or sets the Role Id of user
-    /// </summary>
-    public Guid RoleId { get; set; }
-
     /// <summary>
-    /// Gets or sets the User role type
+    /// Gets or sets the user role type
     /// </summary>
-    public Role Role { get; set; }
+    public IList<Role> Roles  { get; set; }
     
     /// <summary>
     /// Gets or sets user activation
@@ -43,7 +38,7 @@ public sealed class User : AuditableEntity
     public bool IsEmailAddressVerified { get; set; }
     
     /// <summary>
-    ///Gets or sets user's phone number 
+    ///Gets or sets user phone number 
     /// </summary>
     public string PhoneNumber { get; set; } = default!;
     

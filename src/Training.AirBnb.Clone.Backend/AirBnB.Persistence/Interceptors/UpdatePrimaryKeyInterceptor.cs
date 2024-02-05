@@ -20,7 +20,7 @@ public class UpdatePrimaryKeyInterceptor : SaveChangesInterceptor
         // Set Primary keys of newly added entities.
         entities.ForEach(entry =>
         {
-            if (entry.State == EntityState.Added)
+            if (entry.State == EntityState.Added && entry.Properties.Any(property => property.Metadata.Name.Equals(nameof(IEntity.Id))))
                 entry.Property(nameof(IEntity.Id)).CurrentValue = Guid.NewGuid();
         });
         

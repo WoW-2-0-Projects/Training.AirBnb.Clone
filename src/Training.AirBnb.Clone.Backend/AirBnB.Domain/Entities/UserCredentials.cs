@@ -7,6 +7,15 @@ namespace AirBnB.Domain.Entities;
 /// </summary>
 public class UserCredentials
 {
+    public UserCredentials()
+    {
+    }
+    
+    public UserCredentials(string passwordHash)
+    {
+        PasswordHash = passwordHash;
+    }
+    
     /// <summary>
     /// Gets or sets hashed password for the user.
     /// </summary>
