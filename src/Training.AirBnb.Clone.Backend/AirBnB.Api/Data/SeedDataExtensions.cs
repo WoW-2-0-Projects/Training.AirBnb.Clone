@@ -172,7 +172,7 @@ public static class SeedDataExtensions
             .RuleFor(user => user.Roles, () => new List<Role> { hostRole, guestRole })
             .RuleFor(user => user.UserCredentials, data => new UserCredentials
             {
-                PasswordHash = data.Internet.Password(8)
+                PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
         await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
