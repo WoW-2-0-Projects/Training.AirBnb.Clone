@@ -49,7 +49,7 @@
       </span>
         </button>
 
-        <profile-menu-component v-show="showUserProfile" @onClose="closeProfileMenu"
+        <profile-menu v-show="showUserProfile" @onClose="closeProfileMenu"
                                 :primary-actions="primaryActions" :secondary-actions="secondaryActions"/>
 
     </div>
@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 
-import ProfileMenuComponent from "@/modules/profile/components/ProfileMenuComponent.vue";
+import ProfileMenu from "@/modules/profile/components/ProfileMenu.vue";
 import {ref} from 'vue';
 import type {MenuItem} from "@/modules/profile/models/MenuItem";
 
