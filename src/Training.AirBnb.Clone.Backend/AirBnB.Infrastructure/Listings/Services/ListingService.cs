@@ -28,6 +28,22 @@ public class ListingService(
             .Take((int)filterPagination.PageSize);
     }
 
+    public IQueryable<Listing> GetByCategoryId(
+        FilterPagination filterPagination, 
+        Guid categoryId,
+        bool asNoTracking = false)
+    {
+        return listingRepository
+            .Get(listing => listing.ListingCategories
+                .Select(category => category.Id)
+                .Contains(categoryId), asNoTracking)
+            .Include(listing => listing.ImagesStorageFile
+                .OrderBy(image => image.OrderNumber))
+            .ThenInclude(media => media.StorageFile)
+            .Skip((int)((filterPagination.PageToken - 1) * filterPagination.PageSize))
+            .Take((int)filterPagination.PageSize);;
+    }
+
     public ValueTask<IList<Listing>> GetAsync(
         QuerySpecification<Listing> querySpecification,
         CancellationToken cancellationToken = default)
