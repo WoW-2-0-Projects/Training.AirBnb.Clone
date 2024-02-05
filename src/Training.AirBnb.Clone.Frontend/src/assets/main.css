@@ -79,6 +79,10 @@
     .content-padding {
         @apply px-6 md:px-10 xl:px-20
     }
+
+    .absolute-center {
+        @apply absolute transform -translate-x-1/2 top-1/2 left-1/2;
+      }
 }
 
 
