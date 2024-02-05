@@ -3,34 +3,13 @@
     <div tabindex="0" ref="container" @focusout="onClose"
          class="absolute top-[70px] h-auto w-[220px] z-auto rounded-xl theme-bg-primary -mr-[40px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start theme-border theme-shadow over">
 
-        <!-- TODO : Add authentication check -->
+        <div class="h-[1px] flex top-[150px] w-full theme-border"/>
 
-        <button
-            class="text-left theme-text-primary theme-hover-button font-sans font-light pb-4 pl-3 pt-3 w-full theme-hover-shadow">
-            <a href="http://localhost:5173/">Log in</a>
-        </button>
-
-        <button
-            class="theme-text-primary rounded-t-xl theme-hover-button font-sans text-left w-full p-3 theme-hover-shadow">
-            <strong> <a href="http://localhost:5173/">Sign up</a></strong>
-        </button>
+        <MenuButton v-for="(menuItem, index) in primaryActions" :key="index" :menu-item="menuItem"/>
 
         <div class="h-[1px] flex top-[150px] w-full theme-border"/>
 
-        <button
-            class="text-left theme-text-primary theme-hover-button font-sans font-light p-3 w-full theme-hover-shadow">
-            <a href="http://localhost:5173/">Gift cards</a>
-        </button>
-
-        <button
-            class="text-left theme-text-primary theme-hover-button font-sans font-light p-3 w-full theme-hover-shadow">
-            <a href="http://localhost:5173/">Airbnb your home</a>
-        </button>
-
-        <button
-            class="text-left theme-text-primary theme-hover-button font-sans font-light p-3 w-full theme-hover-shadow">
-            <a href="http://localhost:5173/">Help Center</a>
-        </button>
+        <MenuButton v-for="(menuItem, index) in secondaryActions" :key="index" :menu-item="menuItem"/>
 
         <div class="h-[1px] flex top-[150px] w-full theme-border"/>
 
@@ -39,19 +18,34 @@
             <dark-mode-toggler v-model="toggleState"/>
         </div>
     </div>
+
 </template>
+
 <script setup lang="ts">
-import {nextTick, onMounted, ref} from "vue";
+
+import {nextTick, onMounted, ref, defineProps, defineEmits} from "vue";
 import {AppThemeService} from "@/infrastructure/services/AppThemeService";
-import DarkModeToggler from "@/Modules/profile/components/DarkModeToggler.vue";
+import DarkModeToggler from "@/modules/profile/components/DarkModeToggler.vue";
+import MenuButton from "@/common/components/MenuButton.vue";
+import type {MenuItem} from "@/modules/profile/models/MenuItem";
 
 const appThemeService = new AppThemeService();
 
-const toggleState = ref(appThemeService.isDarkMode() ? true : false!);
+const props = defineProps({
+    primaryActions: {
+        type: Array as () => Array<MenuItem>,
+        required: true
+    },
+    secondaryActions: {
+        type: Array as () => Array<MenuItem>,
+        required: false
+    }
+});
 
 const emit = defineEmits(['update:value', 'onClose']);
 
-//profile menu - visible or invisible
+const toggleState = ref(appThemeService.isDarkMode() ? true : false!);
+
 const container = ref<HTMLElement>();
 
 onMounted(async () => {
@@ -61,8 +55,11 @@ onMounted(async () => {
 });
 
 const onClose = () => {
+    if (!container.value) return;
+
     const innerElementFocused = container.value!.contains(document.activeElement);
     if (!innerElementFocused)
         emit('onClose');
 }
+
 </script>
