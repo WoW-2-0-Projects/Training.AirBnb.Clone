@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a pagination filter with page size and page token for querying a collection of items.
 /// </summary>
-public class FilterPagination : IQueryConvertible
+public class FilterPagination
 {
     /// <summary>
     /// Gets or sets the number of items to include on each page.
@@ -42,11 +42,6 @@ public class FilterPagination : IQueryConvertible
 
         return hashCode.ToHashCode();
     }
-
-    public QueryPagination ToQueryPagination(bool asNoTracking) => new(PageSize, PageToken, asNoTracking);
-
-    public virtual QuerySpecification ToQuerySpecification() =>
-        throw new NotSupportedException($"Filter pagination doesn't support converting to query specification");
 
     /// <summary>
     /// Determines whether the specified object is equal to the current <see cref="FilterPagination"/> instance.
