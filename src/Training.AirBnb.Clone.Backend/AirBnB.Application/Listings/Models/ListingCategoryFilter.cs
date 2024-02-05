@@ -7,6 +7,12 @@ namespace AirBnB.Application.Listings.Models;
 /// </summary>
 public class ListingCategoryFilter : FilterPagination
 {
+    public ListingCategoryFilter()
+    {
+        PageSize = int.MaxValue;
+        PageToken = 1;
+    }
+    
     /// <summary>
     /// Overrides base GetHashCode method
     /// </summary>

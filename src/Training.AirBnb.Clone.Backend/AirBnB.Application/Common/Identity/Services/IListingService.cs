@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
@@ -16,6 +16,15 @@ public interface IListingService
     /// <param name="asNoTracking"></param>
     /// <returns></returns>
     IQueryable<Listing> Get(FilterPagination filterPagination, bool asNoTracking = false);
+
+    /// <summary>
+    /// Gets a queryable collection of listings based on the provided category ID.
+    /// </summary>
+    /// <param name="filterPagination"></param>
+    /// <param name="categoryId"></param>
+    /// <param name="asNoTracking"></param>
+    /// <returns></returns>
+    IQueryable<Listing> GetByCategoryId(FilterPagination filterPagination, Guid categoryId, bool asNoTracking = false);
 
     /// <summary>
     /// Gets a listing by its unique identifier asynchronously.
