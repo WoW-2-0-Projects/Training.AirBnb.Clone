@@ -9,7 +9,7 @@
   <listings-container/>
   
   <!--Listings-->
-  <listings-grid/>
+  <listings-grid class="mt-[180px]"/>
 
 </div>
 
