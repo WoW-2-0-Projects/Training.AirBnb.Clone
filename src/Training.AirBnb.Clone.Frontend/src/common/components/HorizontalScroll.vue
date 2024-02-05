@@ -1,15 +1,21 @@
-<template>
+<template> 
 
-    <!-- Previous button -->
-    <previous-button v-if="canScrollPrev" class="mb-3 theme-bg-primary hover-shadow-zero" @click="onScrollPrev"/>
-
-    <div ref="scrollContainer" class="flex gap-10 overflow-x-scroll md:gap-12 no-scrollbar">
-        
-        <slot v-bind="$attrs"></slot>
+<div class="relative flex items-center overflow-x-scroll no-scrollbar">
+    <div v-if="canScrollPrev" class="absolute left-0 z-10 hidden h-full mb-2 theme-bg-primary sm:inline-block">
+        <!-- Previous button -->
+        <previous-button class="mx-1 my-4 theme-bg-primary hover-shadow-zero" @click="onScrollPrev"/>
     </div>
 
-    <!-- Next button -->
-    <next-button v-if="canScrollNext" class="w-auto mb-3 theme-bg-primary hover-shadow-zero" @click="onScrollNext"/>
+    
+    <div ref="scrollContainer" class="flex gap-10 overflow-x-scroll md:gap-12 no-scrollbar">
+       <slot v-bind="$attrs"></slot>
+   </div>
+   
+   <div v-show="canScrollNext" ref="nextButton" class="absolute right-0 z-10 hidden h-full mb-2 theme-bg-primary sm:inline-block">
+        <!-- Next button -->
+        <next-button class="mx-1 my-4 theme-bg-primary hover-shadow-zero primary-transition" @click="onScrollNext"/>
+    </div>
+</div>
 
 </template>
 
@@ -46,8 +52,8 @@ watch(() => [props.scrollChangeSource], () => {
 });
 
 const computeCanScroll = () => {
-  canScrollPrev.value = documentService.canScrollLeft(scrollContainer.value!, 30);
-  canScrollNext.value = documentService.canScrollRight(scrollContainer.value!, 30);  
+  canScrollPrev.value = documentService.canScrollLeft(scrollContainer.value!, 20);
+  canScrollNext.value = documentService.canScrollRight(scrollContainer.value!, 20);
 };
 
 onMounted(() => {

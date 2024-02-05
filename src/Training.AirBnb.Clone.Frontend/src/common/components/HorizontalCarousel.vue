@@ -62,12 +62,14 @@ onUnmounted(() => {
 });
 
 /*
- * Manually triggers the recalculation of distance to scroll when window is resized
+ * Manually triggers the recalculation of distance to scroll 
+ and scrolls to the new computed position when window is resized
  */
 const onWindowResized = () => {
     if (!carouselContainer.value) return;
 
     triggerRef(carouselContainer);
+    documentService.scrollTo(carouselContainer.value, moveDistance.value! * visibleImageIndex.value);
 }
 
 /*
