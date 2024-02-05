@@ -12,10 +12,10 @@ public interface IListingService
     /// <summary>
     /// Gets a queryable collection of listings based on the specified predicate.
     /// </summary>
-    /// <param name="predicate"></param>
+    /// <param name="filterPagination"></param>
     /// <param name="asNoTracking"></param>
     /// <returns></returns>
-    IQueryable<Listing> Get(Expression<Func<Listing, bool>>? predicate = default, bool asNoTracking = false);
+    IQueryable<Listing> Get(FilterPagination filterPagination, bool asNoTracking = false);
 
     /// <summary>
     /// Gets a listing by its unique identifier asynchronously.

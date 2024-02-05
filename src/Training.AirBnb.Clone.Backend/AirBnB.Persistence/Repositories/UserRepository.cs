@@ -15,7 +15,7 @@ public class UserRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
         new CacheEntryOptions()
     ), IUserRepository
 {
-    public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate, bool asNoTracking = false)
+    public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)

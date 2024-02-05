@@ -15,12 +15,12 @@ namespace AirBnB.Api.Controllers;
 public class ListingsController(IListingService listingService, IMapper mapper) : ControllerBase
 {
     [HttpGet]
-    public async  ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination,
+    public ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination,
         CancellationToken cancellationToken)
     {
-        var result = listingService.Get();
-
-        return Ok(result);
+        var result = listingService.Get(filterPagination, true);
+        
+        return new ValueTask<IActionResult>(Ok(mapper.Map<List<ListingDto>>(result)));
     }
     
     [HttpGet("{listingId:guid}")]

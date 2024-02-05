@@ -3,13 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Persistence.Migrations
+namespace AirBnB.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDeleteAuditableEntities : Migration
+    public partial class UpdateAuditableEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<Guid>(
+                name: "DeletedByUserId",
+                table: "Listings",
+                type: "uuid",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uuid");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<Guid>(
                 name: "DeletedByUserId",
@@ -20,18 +32,6 @@ namespace AirBnB.Persistence.Persistence.Migrations
                 oldClrType: typeof(Guid),
                 oldType: "uuid",
                 oldNullable: true);
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<Guid>(
-                name: "DeletedByUserId",
-                table: "Listings",
-                type: "uuid",
-                nullable: true,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
         }
     }
 }

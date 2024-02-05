@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AirBnB.Persistence.Persistence.Migrations
+namespace AirBnB.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240131111451_UpdateDeleteAuditableEntities")]
-    partial class UpdateDeleteAuditableEntities
+    [Migration("20240201103620_NotificationHistoryMigration")]
+    partial class NotificationHistoryMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,7 @@ namespace AirBnB.Persistence.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DeletedByUserId")
-                        .IsRequired()
+                    b.Property<Guid>("DeletedByUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedTime")
@@ -117,7 +116,58 @@ namespace AirBnB.Persistence.Persistence.Migrations
 
                     b.HasIndex("ListingCategoryId");
 
-                    b.ToTable("ListingCategoryAssociations", (string)null);
+                    b.ToTable("ListingCategoryAssociations");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.NotificationHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("DeletedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSuccessful")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("ModifiedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ReceiverUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SenderUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("NotificationHistories");
+
+                    b.HasDiscriminator<int>("Type");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.NotificationTemplate", b =>
@@ -345,6 +395,40 @@ namespace AirBnB.Persistence.Persistence.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("EmailHistory", b =>
+                {
+                    b.HasBaseType("AirBnB.Domain.Entities.NotificationHistory");
+
+                    b.Property<string>("ReceiverEmailAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenderEmailAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue(0);
+                });
+
+            modelBuilder.Entity("SmsHistory", b =>
+                {
+                    b.HasBaseType("AirBnB.Domain.Entities.NotificationHistory");
+
+                    b.Property<string>("ReceiverPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenderPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
             modelBuilder.Entity("AirBnB.Domain.Entities.EmailTemplate", b =>
                 {
                     b.HasBaseType("AirBnB.Domain.Entities.NotificationTemplate");
@@ -452,13 +536,13 @@ namespace AirBnB.Persistence.Persistence.Migrations
             modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategoryAssociation", b =>
                 {
                     b.HasOne("AirBnB.Domain.Entities.ListingCategory", "ListingCategory")
-                        .WithMany()
+                        .WithMany("ListingCategoryAssociations")
                         .HasForeignKey("ListingCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AirBnB.Domain.Entities.Listing", "Listing")
-                        .WithMany()
+                        .WithMany("ListingCategoryAssociations")
                         .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -466,6 +550,17 @@ namespace AirBnB.Persistence.Persistence.Migrations
                     b.Navigation("Listing");
 
                     b.Navigation("ListingCategory");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.NotificationHistory", b =>
+                {
+                    b.HasOne("AirBnB.Domain.Entities.NotificationTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
@@ -497,6 +592,16 @@ namespace AirBnB.Persistence.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
+                {
+                    b.Navigation("ListingCategoryAssociations");
+                });
+
+            modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
+                {
+                    b.Navigation("ListingCategoryAssociations");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
