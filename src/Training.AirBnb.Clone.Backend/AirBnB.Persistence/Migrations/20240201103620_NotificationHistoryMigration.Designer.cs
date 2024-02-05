@@ -321,6 +321,27 @@ namespace AirBnB.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                    
+                    b.OwnsOne("AirBnB.Domain.Entities.UserCredentials", "UserCredentials", b1 =>
+                    {
+                        b1.Property<Guid>("UserId")
+                            .HasColumnType("uuid");
+
+                        b1.Property<string>("PasswordHash")
+                            .IsRequired()
+                            .HasMaxLength(128)
+                            .HasColumnType("character varying(128)");
+
+                        b1.HasKey("UserId");
+
+                        b1.ToTable("UserCredentials");
+
+                        b1.WithOwner()
+                            .HasForeignKey("UserId");
+                    });
+
+                    b.Navigation("UserCredentials")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>

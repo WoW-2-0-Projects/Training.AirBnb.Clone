@@ -11,51 +11,19 @@ namespace AirBnB.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "UserCredentialss");
-
-            migrationBuilder.CreateTable(
-                name: "UserCredentials",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PasswordHash = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserCredentials", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_UserCredentials_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.AddColumn<string>(
+                name: "UserCredentials_PasswordHash",
+                table: "Users",
+                type: "character varying(256)",
+                nullable: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "UserCredentials");
-
-            migrationBuilder.CreateTable(
-                name: "UserCredentialss",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PasswordHash = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserCredentialss", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_UserCredentialss_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.DropColumn(
+                name: "Credentials_PasswordHash",
+                table: "Users");
         }
     }
 }

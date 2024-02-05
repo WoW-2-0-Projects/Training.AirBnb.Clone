@@ -469,6 +469,8 @@ namespace AirBnB.Persistence.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                    
+                    b.Navigation("Role");
 
                     b.OwnsOne("AirBnB.Domain.Entities.UserCredentials", "UserCredentials", b1 =>
                         {
@@ -487,8 +489,6 @@ namespace AirBnB.Persistence.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
-
-                    b.Navigation("Role");
 
                     b.Navigation("UserCredentials")
                         .IsRequired();
