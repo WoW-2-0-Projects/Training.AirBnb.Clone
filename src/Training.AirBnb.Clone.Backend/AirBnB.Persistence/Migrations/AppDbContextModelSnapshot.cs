@@ -369,11 +369,6 @@ namespace AirBnB.Persistence.Migrations
                     b.Property<DateTimeOffset?>("ModifiedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("text");
@@ -766,8 +761,30 @@ namespace AirBnB.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                    
+                    b.Navigation("Role");
+                    
+                    b.OwnsOne("AirBnB.Domain.Entities.UserCredentials", "UserCredentials", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PasswordHash")
+                                .IsRequired()
+                                .HasMaxLength(128)
+                                .HasColumnType("character varying(128)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("UserCredentials");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("UserCredentials")
+                        .IsRequired();
                 });
-                
                 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserRole", b =>
                 {

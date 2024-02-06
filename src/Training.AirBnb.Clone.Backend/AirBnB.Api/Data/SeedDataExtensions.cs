@@ -8,6 +8,7 @@ using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace AirBnB.Api.Data;
@@ -99,7 +100,6 @@ public static class SeedDataExtensions
         var roles = dbContext.Roles.ToList();
         
         // Add system user.
-       // var systemRoleId = dbContext.Roles.First(role => role.Type == RoleType.System).Id;
         var users = new List<User>
         {
             new()
@@ -108,7 +108,7 @@ public static class SeedDataExtensions
                 FirstName = "System",
                 LastName = "System",
                 EmailAddress = "example@gmail.com",
-                PasswordHash = "$2a$11$b1aYo5P/Yqgs8voe1WHw3eJBuEGq0eVt15WQxFhNv3al5xBFh7ELu", // System_1
+                UserCredentials = new UserCredentials("$2a$11$b1aYo5P/Yqgs8voe1WHw3eJBuEGq0eVt15WQxFhNv3al5xBFh7ELu"), // System_1
                 PhoneNumber = "",
                 Roles = new List<Role>
                 {
@@ -120,7 +120,7 @@ public static class SeedDataExtensions
                 FirstName = "Admin",
                 LastName = "Admin",
                 EmailAddress = "admin@gmail.com",
-                PasswordHash = "$2a$11$uUKbkiC9nzwqpAaGN5tV9uLIa8XWynAgX4fYoue4sYj9M4NmSPFW6", //@dmin
+                UserCredentials = new UserCredentials("$2a$11$uUKbkiC9nzwqpAaGN5tV9uLIa8XWynAgX4fYoue4sYj9M4NmSPFW6"), //@dmin
                 PhoneNumber = "+99891223435",
                 Roles = new List<Role>
                 {
@@ -138,9 +138,13 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
-            .RuleFor(user => user.Roles, () => new List<Role>() { hostRole });
+            .RuleFor(user => user.Roles, () => new List<Role> { hostRole })
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.UserCredentials, data => new UserCredentials
+            {
+                PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
+            });
 
         await dbContext.AddRangeAsync(hostFaker.Generate(1000));
         
@@ -151,9 +155,12 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
             .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
-            .RuleFor(user => user.Roles, () => new List<Role>() { guestRole });
+            .RuleFor(user => user.Roles, () => new List<Role>() { guestRole })
+            .RuleFor(user => user.UserCredentials, data => new UserCredentials
+            {
+                PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
+            });
         
         await dbContext.AddRangeAsync(guestFaker.Generate(100));
         
@@ -161,8 +168,12 @@ public static class SeedDataExtensions
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
             .RuleFor(user => user.LastName, data => data.Name.LastName())
             .RuleFor(user => user.EmailAddress, data => data.Person.Email)
-            .RuleFor(user => user.PasswordHash, data => passwordHasherService.HashPassword(data.Internet.Password(8)))
-            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone);
+            .RuleFor(user => user.PhoneNumber, data => data.Person.Phone)
+            .RuleFor(user => user.Roles, () => new List<Role> { hostRole, guestRole })
+            .RuleFor(user => user.UserCredentials, data => new UserCredentials
+            {
+                PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
+            });
 
         await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
         await dbContext.SaveChangesAsync();

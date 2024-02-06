@@ -44,7 +44,7 @@ public class UserValidator : AbstractValidator<User>
                     .Matches(validationSettingsValue.NameRegexPattern)
                     .WithMessage("Last name is not valid");
 
-                RuleFor(user => user.PasswordHash)
+                RuleFor(user => user.UserCredentials.PasswordHash)
                     .NotEmpty()
                     .MinimumLength(8)
                     .MaximumLength(64);
