@@ -16,4 +16,7 @@ public class Country : AuditableEntity
     public Language? Language { get; set; }
     
     public Guid LanguageId { get; set; }
+    
+    public List<City> Cities { get; set; }
+  
 }

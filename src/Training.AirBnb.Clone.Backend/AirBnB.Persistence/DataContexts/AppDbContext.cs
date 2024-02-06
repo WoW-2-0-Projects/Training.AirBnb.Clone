@@ -52,9 +52,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ListingCategoryAssociation> ListingCategoryAssociations => Set<ListingCategoryAssociation>();
 
     #endregion
+    
+    #region Globalization
+    
     public DbSet<Country> Countries => Set<Country>();
 
     public DbSet<Language> Languages => Set<Language>();
+    
+    public DbSet<City> Cities => Set<City>();
+    
+    #endregion
+    
     #region Ratings
 
     public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
