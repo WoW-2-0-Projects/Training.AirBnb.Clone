@@ -54,6 +54,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     #endregion
     public DbSet<Country> Countries => Set<Country>();
 
+    public DbSet<Language> Languages => Set<Language>();
     #region Ratings
 
     public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
