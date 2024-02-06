@@ -21,7 +21,11 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
             .IsRequired(false)
             .HasMaxLength(256);
 
-        builder.OwnsOne(listing => listing.PricePerNight);
+        builder.OwnsOne(listing => listing.PricePerNight, moneyConfiguration =>
+        {
+            moneyConfiguration.HasOne(money => money.Currency)
+                .WithMany().HasForeignKey(money => money.CurrencyId);
+        });
 
         builder.OwnsOne(listing => listing.Rating);
 
