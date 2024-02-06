@@ -498,16 +498,6 @@ namespace AirBnB.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
-                {
-                    b.Navigation("ListingCategoryAssociations");
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
-                {
-                    b.Navigation("ListingCategoryAssociations");
-                });
-
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
                     b.Navigation("Listings");

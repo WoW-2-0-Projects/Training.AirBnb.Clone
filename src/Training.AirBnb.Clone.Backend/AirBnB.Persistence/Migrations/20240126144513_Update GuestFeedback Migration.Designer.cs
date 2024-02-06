@@ -630,16 +630,9 @@ namespace AirBnB.Persistence.Migrations
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.Listing", b =>
-                {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("ListingCategoryAssociations");
-                });
-
-            modelBuilder.Entity("AirBnB.Domain.Entities.ListingCategory", b =>
-                {
-                    b.Navigation("ListingCategoryAssociations");
-                });
+            {
+                b.Navigation("Feedbacks");
+            });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {

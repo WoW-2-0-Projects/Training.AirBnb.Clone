@@ -23,8 +23,10 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 
         builder.OwnsOne(listing => listing.PricePerNight, moneyConfiguration =>
         {
-            moneyConfiguration.HasOne(money => money.Currency)
-                .WithMany().HasForeignKey(money => money.CurrencyId);
+            moneyConfiguration
+                .HasOne(money => money.Currency)
+                .WithMany()
+                .HasForeignKey(money => money.CurrencyId);
         });
 
         builder.OwnsOne(listing => listing.Rating);
