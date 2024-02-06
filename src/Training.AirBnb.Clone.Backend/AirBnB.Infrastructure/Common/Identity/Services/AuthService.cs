@@ -42,7 +42,10 @@ public class AuthService(
             : passwordGeneratorService.GetValidatedPassword(signUpDetails.Password!, user);
 
         //Hash password
-        user.PasswordHash = passwordHasherService.HashPassword(password);
+        user.UserCredentials = new UserCredentials
+        {
+            PasswordHash = passwordHasherService.HashPassword(password)
+        };
 
         var createdUser = await accountService.CreateUserAsync(user, cancellationToken);
 
@@ -61,7 +64,7 @@ public class AuthService(
             .FirstOrDefaultAsync(user => user.EmailAddress == signInDetails.EmailAddress, cancellationToken: cancellationToken);
 
         //Verify that the user has password entered correctly
-        if (foundUser is null || !passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.PasswordHash))
+        if (foundUser is null || !passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.UserCredentials.PasswordHash))
             throw new AuthenticationException("Sign in details are invalid, contact support.");
 
         //Token generating 

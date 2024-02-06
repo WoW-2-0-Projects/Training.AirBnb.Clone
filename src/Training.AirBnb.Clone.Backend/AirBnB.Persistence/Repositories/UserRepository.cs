@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Persistence.Caching.Brokers;
@@ -23,8 +23,7 @@ public class UserRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
         => base.GetAsync(querySpecification, cancellationToken);
 
     public new ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        =>
-            base.GetAsync(querySpecification, cancellationToken);
+        => base.GetAsync(querySpecification, cancellationToken);
 
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
