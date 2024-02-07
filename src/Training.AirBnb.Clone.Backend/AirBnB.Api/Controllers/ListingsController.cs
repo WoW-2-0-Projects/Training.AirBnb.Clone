@@ -45,8 +45,7 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
        [FromServices] IListingCategoryService listingCategoryService,
        CancellationToken cancellationToken = default)
     {
-        var result = await listingCategoryService
-            .GetAsync(new ListingCategoryFilter().ToQuerySpecification(), cancellationToken);
+        var result = await listingCategoryService.Get(new ListingCategoryFilter(),false).ToListAsync(cancellationToken);
 
         return result.Any() ? Ok(mapper.Map<List<ListingCategoryDto>>(result)) : NoContent();
     }

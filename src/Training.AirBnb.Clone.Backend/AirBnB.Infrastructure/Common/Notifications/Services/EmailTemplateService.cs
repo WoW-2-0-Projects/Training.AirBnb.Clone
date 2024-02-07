@@ -1,4 +1,5 @@
-﻿using AirBnB.Application.Common.Notifications.Services;
+﻿using System.Linq.Expressions;
+using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
@@ -11,16 +12,9 @@ namespace AirBnB.Infrastructure.Common.Notifications.Services;
 
 public class EmailTemplateService(IEmailTemplateRepository emailTemplateRepository, IValidator<EmailTemplate> emailTemplateValidator):IEmailTemplateService
 {
-    public ValueTask<IList<EmailTemplate>> GetAsync(
-        QuerySpecification<EmailTemplate> querySpecification,
-        CancellationToken cancellationToken = default) =>
-        emailTemplateRepository.GetAsync(querySpecification, cancellationToken);
-
-    public ValueTask<IList<EmailTemplate>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default) =>
-        emailTemplateRepository.GetAsync(querySpecification, cancellationToken);
-    
+    public IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>>? predicate = default,
+        bool asNoTracking = false)
+        => emailTemplateRepository.Get(predicate, asNoTracking);
 
     public async ValueTask<EmailTemplate?> GetByTypeAsync(NotificationTemplateType templateType,
         bool asNoTracking = false,

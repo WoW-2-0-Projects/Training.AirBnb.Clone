@@ -1,4 +1,5 @@
-﻿using AirBnB.Domain.Common.Query;
+﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.Caching.Models;
@@ -15,10 +16,7 @@ public class StorageFileRepository(AppDbContext dbContext, ICacheBroker cacheBro
     cacheBroker, 
     new CacheEntryOptions()), IStorageFileRepository
 {
-    public new ValueTask<IList<StorageFile>> GetAsync(QuerySpecification<StorageFile> querySpecification,
-        CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
-
-    public new ValueTask<IList<StorageFile>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
+    public new IQueryable<StorageFile> Get(Expression<Func<StorageFile, bool>>? predicate = default,
+        bool asNoTracking = false)
+        => base.Get(predicate, asNoTracking);
 }

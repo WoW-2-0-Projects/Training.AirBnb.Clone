@@ -18,18 +18,6 @@ public class ListingRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
         Expression<Func<Listing, bool>>? predicate = default, 
         bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
-
-    public new ValueTask<IList<Listing>> GetAsync(
-        QuerySpecification<Listing> querySpecification,
-        CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
-    
-
-    public new ValueTask<IList<Listing>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default)
-        => base.GetAsync(querySpecification, cancellationToken);
-
     public new ValueTask<Listing?> GetByIdAsync(
         Guid listingId, bool asNoTracking = false, 
         CancellationToken cancellationToken = default)

@@ -1,6 +1,8 @@
-﻿using AirBnB.Domain.Common.Query;
+﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirBnB.Application.Common.Notifications.Services;
 
@@ -10,21 +12,14 @@ namespace AirBnB.Application.Common.Notifications.Services;
 public interface IEmailTemplateService
 {
     /// <summary>
-    /// Asynchronously retrieves a list of email templates based on the provided query specification.
+    /// Retrieves a queryable collection of EmailTemplate entities based on the specified predicate.
     /// </summary>
-    /// <param name="querySpecification">The query specification for filtering email templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of email templates.</returns>
-    ValueTask<IList<EmailTemplate>> GetAsync(QuerySpecification<EmailTemplate> querySpecification, CancellationToken cancellationToken = default);
+    /// <param name="predicate">A predicate to filter the EmailTemplate entities (optional).</param>
+    /// <param name="asNoTracking">Indicates whether to disable change tracking for the entities (default: false).</param>
+    /// <returns>A queryable collection of EmailTemplate entities.</returns>
+    IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>>? predicate = default,
+        bool asNoTracking = false);
     
-    /// <summary>
-    /// Asynchronously retrieves a list of email templates based on a generic query specification.
-    /// </summary>
-    /// <param name="querySpecification">The generic query specification for filtering email templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of email templates.</returns>
-    ValueTask<IList<EmailTemplate>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default);
-
     /// <summary>
     /// Asynchronously retrieves an email template by its notification template type.
     /// </summary>

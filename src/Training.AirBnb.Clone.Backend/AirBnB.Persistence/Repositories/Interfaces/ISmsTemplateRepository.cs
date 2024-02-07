@@ -16,23 +16,7 @@ public interface ISmsTemplateRepository
     /// <param name="asNoTracking">Flag indicating whether to use query tracking or not.</param>
     /// <returns>An <see cref="IQueryable"/> of SMS templates.</returns>
     IQueryable<SmsTemplate> Get(Expression<Func<SmsTemplate, bool>>? predicate = default, bool asNoTracking = false);
-
-    /// <summary>
-    /// Asynchronously retrieves a list of SMS templates based on the provided query specification.
-    /// </summary>
-    /// <param name="querySpecification">The query specification for filtering SMS templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of SMS templates.</returns>
-    ValueTask<IList<SmsTemplate>> GetAsync(QuerySpecification<SmsTemplate> querySpecification, CancellationToken cancellationToken = default);
     
-    /// <summary>
-    /// Asynchronously retrieves a list of SMS templates based on a generic query specification.
-    /// </summary>
-    /// <param name="querySpecification">The generic query specification for filtering SMS templates.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation, containing the list of SMS templates.</returns>
-    ValueTask<IList<SmsTemplate>> GetAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default);
-
     /// <summary>
     /// Asynchronously creates a new SMS template.
     /// </summary>

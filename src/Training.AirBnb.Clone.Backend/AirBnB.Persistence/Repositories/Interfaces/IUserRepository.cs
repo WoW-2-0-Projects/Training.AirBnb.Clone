@@ -18,26 +18,6 @@ public interface IUserRepository
     IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false);
 
     /// <summary>
-    /// /// Retrieves a collection of users based on the specified predicate. 
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="asNoTracking"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// /// Retrieves a collection of users based on the specified predicate. 
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="asNoTracking"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default);
-    
-    /// <summary>
     /// Retrieves a user by their unique identifier 
     /// </summary>
     /// <param name="userId"></param>

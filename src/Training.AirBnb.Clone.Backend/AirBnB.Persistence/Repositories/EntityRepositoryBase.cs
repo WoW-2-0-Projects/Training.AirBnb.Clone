@@ -43,67 +43,6 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
 
         return initialQuery;
     }
-
-    /// <summary>
-    ///  Asynchronously retrieves entities from the repository based on a query specification and caching options.
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="asNoTracking"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    protected async ValueTask<IList<TEntity>> GetAsync(QuerySpecification<TEntity> querySpecification,
-        CancellationToken cancellationToken = default)
-    {
-        var foundEntities = new List<TEntity>();
-
-        var cacheKey = querySpecification.CacheKey;
-
-        if (cacheEntryOptions is null || !await cacheBroker.TryGetAsync<List<TEntity>>(cacheKey, out var cachedEntity))
-        {
-            var initialQuery = DbContext.Set<TEntity>().AsQueryable();
-
-            if (querySpecification.AsNoTracking)
-                initialQuery = initialQuery.AsNoTracking();
-
-            initialQuery = initialQuery.ApplySpecification(querySpecification);
-
-            foundEntities = await initialQuery.ToListAsync(cancellationToken);
-
-            if (cacheEntryOptions is not null)
-                await cacheBroker.SetAsync(cacheKey, foundEntities, cacheEntryOptions);
-        }
-        else
-            foundEntities = cachedEntity;
-
-        return foundEntities;
-    }
-
-    protected async ValueTask<IList<TEntity>> GetAsync(QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default)
-    {
-        var foundEntities = new List<TEntity>();
-
-        var cacheKey = querySpecification.CacheKey;
-
-        if (cacheEntryOptions is null || !await cacheBroker.TryGetAsync<List<TEntity>>(cacheKey, out var cachedEntity))
-        {
-            var initialQuery = DbContext.Set<TEntity>().AsQueryable();
-
-            if (querySpecification.AsNoTracking)
-                initialQuery = initialQuery.AsNoTracking();
-
-            initialQuery = initialQuery.ApplySpecification(querySpecification);
-
-            foundEntities = await initialQuery.ToListAsync(cancellationToken);
-
-            if (cacheEntryOptions is not null)
-                await cacheBroker.SetAsync(cacheKey, foundEntities, cacheEntryOptions);
-        }
-        else
-            foundEntities = cachedEntity;
-
-        return foundEntities;
-    }
     
     /// <summary>
     /// Asynchronously retrieves an entity from the repository by its ID, optionally applying caching.

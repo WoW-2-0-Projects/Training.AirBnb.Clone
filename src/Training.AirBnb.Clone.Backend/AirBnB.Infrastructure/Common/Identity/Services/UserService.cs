@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
@@ -28,17 +28,6 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
     ) =>
         userRepository.GetByIdAsync(userId, asNoTracking, cancellationToken);
 
-    public  ValueTask<IList<User>> GetAsync(
-        QuerySpecification<User> querySpecification,
-        CancellationToken cancellationToken = default
-    ) => 
-         userRepository.GetAsync(querySpecification, cancellationToken);
-    
-    public ValueTask<IList<User>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default
-    ) => userRepository.GetAsync(querySpecification, cancellationToken);
-    
     public async ValueTask<User?> GetByEmailAddressAsync(
         string emailAddress,
         bool asNoTracking = false,
@@ -50,6 +39,7 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
             .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
         
     }
+    
     public ValueTask<IList<User>> GetByIdsAsync(
         IEnumerable<Guid> ids,
         bool asNoTracking = false,

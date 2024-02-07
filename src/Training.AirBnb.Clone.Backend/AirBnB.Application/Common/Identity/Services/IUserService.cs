@@ -27,16 +27,6 @@ public interface IUserService
     ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Retrieves a collection of users based on the specified predicate.
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="asNoTracking"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<User>> GetAsync(QuerySpecification<User> querySpecification,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Asynchronously retrieves a user entity with the specified email address from the data source.
     /// </summary>
     /// <param name="emailAddress">The email address of the user to retrieve.</param>
@@ -47,15 +37,6 @@ public interface IUserService
     /// - Null if no user with the specified email address exists.
     /// </returns>
     ValueTask<User> GetByEmailAddressAsync(string emailAddress, bool asNoTracking = false, CancellationToken cancellationToken = default);
-    
-     /// <summary>
-    /// Retrieves a collection of users based on the specified predicate.
-    /// </summary>
-    /// <param name="querySpecification"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    ValueTask<IList<User>> GetAsync(QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Retrieves a list of users based on a collection of user IDs.

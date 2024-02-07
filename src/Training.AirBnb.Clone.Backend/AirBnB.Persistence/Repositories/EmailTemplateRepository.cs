@@ -15,17 +15,6 @@ public class EmailTemplateRepository(AppDbContext dbContext, ICacheBroker cacheB
         Expression<Func<EmailTemplate, bool>>? predicate = default,
         bool asNoTracking = false) => base.Get(predicate, asNoTracking);
 
-    public new ValueTask<IList<EmailTemplate>> GetAsync(
-        QuerySpecification<EmailTemplate> querySpecification,
-        CancellationToken cancellationToken = default) =>
-        base.GetAsync(querySpecification, cancellationToken);
-
-    public new ValueTask<IList<EmailTemplate>> GetAsync(
-        QuerySpecification querySpecification,
-        CancellationToken cancellationToken = default) =>
-        base.GetAsync(querySpecification, cancellationToken);
-    
-
     public new async ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true,
         CancellationToken cancellationToken = default) =>
         await base.CreateAsync(emailTemplate, saveChanges, cancellationToken);

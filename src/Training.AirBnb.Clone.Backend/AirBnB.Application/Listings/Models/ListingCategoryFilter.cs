@@ -1,27 +1,18 @@
 ﻿using AirBnB.Domain.Common.Query;
-using AirBnB.Domain.Entities;
 
 namespace AirBnB.Application.Listings.Models;
 
 /// <summary>
 /// Represents a listing category filter
 /// </summary>
-public class ListingCategoryFilter : FilterPagination, IQueryConvertible<ListingCategory>
+public class ListingCategoryFilter : FilterPagination
 {
-    /// <summary>
-    /// Converts ListingCategoryFilter to QuerySpecification<ListingCategory>
-    /// </summary>
-    /// <param name="asNoTracking"></param>
-    /// <returns></returns>
-    public new QuerySpecification<ListingCategory> ToQuerySpecification()
+    public ListingCategoryFilter()
     {
-        var querySpecification = new QuerySpecification<ListingCategory>(int.MaxValue, 1, true);
-
-        querySpecification.IncludingOptions.Add(category => category.ImageStorageFile);
-
-        return querySpecification;
+        PageSize = int.MaxValue;
+        PageToken = 1;
     }
-
+    
     /// <summary>
     /// Overrides base GetHashCode method
     /// </summary>
