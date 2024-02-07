@@ -58,13 +58,13 @@ Description of the project
 
 TODO : Feature logos
 
-[Identity](docs/identity.md)
+[Identity](docs/identity/identity.md)
 
-[Notifications API](docs/notifications-api.md)
+[Notifications API](docs/notifications-api/notifications-api.md)
 
-[Payment API](docs/payment-api.md)
+[Payment API](docs/payment-api/payment-api.md)
 
-[Media API](docs/media-api.md)
+[Media API](docs/media-api/media-api.md)
 
 ## Changelog
 

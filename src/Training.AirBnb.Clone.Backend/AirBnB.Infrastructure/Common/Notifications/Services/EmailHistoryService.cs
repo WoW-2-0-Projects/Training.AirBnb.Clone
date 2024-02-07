@@ -3,6 +3,7 @@ using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
 using FluentValidation;
 using System.Linq.Expressions;
+using AirBnB.Domain.Entities;
 
 namespace AirBnB.Infrastructure.Common.Notifications.Services;
 

@@ -1,4 +1,5 @@
 ﻿using AirBnB.Application.Common.Notifications.Models;
+using AirBnB.Domain.Entities;
 using AutoMapper;
 
 namespace AirBnB.Api.Mappers;
