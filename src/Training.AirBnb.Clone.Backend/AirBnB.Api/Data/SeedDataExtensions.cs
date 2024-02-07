@@ -35,17 +35,17 @@ public static class SeedDataExtensions
         if (!await appDbContext.Roles.AnyAsync())
             await appDbContext.SeedRolesAsync();
 
-        // if (!await appDbContext.Users.AnyAsync())
-        //     await appDbContext.SeedUsersAsync(passwordHasherService);
-        //
-        // if (!await appDbContext.ListingCategories.AnyAsync())
-        //     await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
-        //
-        // if (!await appDbContext.Listings.AnyAsync())
-        //     await appDbContext.SeedListingsAsync(webHostEnvironment);
-        //
-        // if (!await appDbContext.GuestFeedbacks.AnyAsync())
-        //     await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
+        if (!await appDbContext.Users.AnyAsync())
+            await appDbContext.SeedUsersAsync(passwordHasherService);
+        
+        if (!await appDbContext.ListingCategories.AnyAsync())
+            await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
+        
+        if (!await appDbContext.Listings.AnyAsync())
+            await appDbContext.SeedListingsAsync(webHostEnvironment);
+        
+        if (!await appDbContext.GuestFeedbacks.AnyAsync())
+            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
         
         if (!await appDbContext.NotificationTemplates.AnyAsync())
             await appDbContext.SeedNotificationsAsync(webHostEnvironment);
@@ -184,7 +184,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostFaker.Generate(1000));
+        await dbContext.AddRangeAsync(hostFaker.Generate(5));
         
         // Add guests.
         var guestRole = roles.First(role => role.Type == RoleType.Guest);
@@ -200,7 +200,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
         
-        await dbContext.AddRangeAsync(guestFaker.Generate(100));
+        await dbContext.AddRangeAsync(guestFaker.Generate(5));
         
         var hostGuestFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -213,7 +213,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(5));
         await dbContext.SaveChangesAsync();
     }
     
@@ -329,7 +329,7 @@ public static class SeedDataExtensions
                     .Where(userId => userId != listingOwnerId));
             });
 
-        var feedbacks = feedbackFaker.Generate(2000);
+        var feedbacks = feedbackFaker.Generate(10);
         
         await dbContext.GuestFeedbacks.AddRangeAsync(feedbacks);
         dbContext.SaveChanges();

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 public class AccountService(
-    IEvenBusBroker evenBusBroker,
+    IEventBusBroker eventBusBroker,
     IUserService userService,
     IUserRepository userRepository,
     IUserSettingsService userSettingsService,
@@ -54,7 +54,7 @@ public class AccountService(
         };
 
         // send verification email
-        await evenBusBroker.PublishAsync(
+        await eventBusBroker.PublishAsync(
             welcomeNotificationEvent,
             EventBusConstants.NotificationExchangeName,
             EventBusConstants.ProcessNotificationQueueName,

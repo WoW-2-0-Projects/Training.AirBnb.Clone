@@ -5,7 +5,7 @@ namespace AirBnB.Application.Common.EventBus.Brokers;
 /// <summary>
 /// Represents a generic interface for an event bus broker, which facilitates the publishing and subscribing to events.
 /// </summary>
-public interface IEvenBusBroker
+public interface IEventBusBroker
 {
     ValueTask PublishLocalAsync<TEvent>(TEvent command) where TEvent : IEvent;
 

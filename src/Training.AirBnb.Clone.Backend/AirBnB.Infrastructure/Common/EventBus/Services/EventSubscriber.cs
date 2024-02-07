@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Serializers;
-using AirBnB.Domain.Events;
+using AirBnB.Domain.Common.Events;
 using AirBnB.Infrastructure.Common.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

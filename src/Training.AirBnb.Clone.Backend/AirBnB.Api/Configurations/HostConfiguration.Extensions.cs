@@ -32,6 +32,8 @@ using AirBnB.Application.Ratings.Services;
 using AirBnB.Application.Ratings.Settings;
 using AirBnB.Domain.Settings;
 using AirBnB.Infrastructure.Common.EventBus.Brokers;
+using AirBnB.Infrastructure.Common.Notifications.EventSubscribers;
+using AirBnB.Infrastructure.Common.Notifications.Settings;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
 using AirBnB.Infrastructure.Ratings.Services;
@@ -112,12 +114,17 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<NotificationSubscriberSettings>(builder.Configuration.GetSection(nameof(NotificationSubscriberSettings)));
+
         //register settings
         builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
 
         //register brokers
         builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
-            .AddSingleton<IEvenBusBroker, RabbitMqEventBusBroker>();
+            .AddSingleton<IEventBusBroker, RabbitMqEventBusBroker>();
+        
+        // Register event subscribers
+        builder.Services.AddSingleton<IEventSubscriber, NotificationSubscriber>();
 
         //register general background service
         builder.Services.AddHostedService<EventBusBackgroundService>();
