@@ -35,21 +35,59 @@ public static class SeedDataExtensions
         if (!await appDbContext.Roles.AnyAsync())
             await appDbContext.SeedRolesAsync();
 
-        if (!await appDbContext.Users.AnyAsync())
-            await appDbContext.SeedUsersAsync(passwordHasherService);
-
-        if (!await appDbContext.ListingCategories.AnyAsync())
-            await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
-
-        if (!await appDbContext.Listings.AnyAsync())
-            await appDbContext.SeedListingsAsync(webHostEnvironment);
-
-        if (!await appDbContext.GuestFeedbacks.AnyAsync())
-            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
+        // if (!await appDbContext.Users.AnyAsync())
+        //     await appDbContext.SeedUsersAsync(passwordHasherService);
+        //
+        // if (!await appDbContext.ListingCategories.AnyAsync())
+        //     await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
+        //
+        // if (!await appDbContext.Listings.AnyAsync())
+        //     await appDbContext.SeedListingsAsync(webHostEnvironment);
+        //
+        // if (!await appDbContext.GuestFeedbacks.AnyAsync())
+        //     await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
+        
+        if (!await appDbContext.NotificationTemplates.AnyAsync())
+            await appDbContext.SeedNotificationsAsync(webHostEnvironment);
 
         // check change tracker and if changes exist, save changes to database
         if (appDbContext.ChangeTracker.HasChanges())
             appDbContext.SaveChanges();
+    }
+    
+    /// <summary>
+    /// Seeds the database with initial roles.
+    /// </summary>
+    /// <param name="dbContext"></param>
+    private static async ValueTask SeedNotificationsAsync(this AppDbContext dbContext, IWebHostEnvironment webHostEnvironment)
+    {
+        var emailTemplateTypes = new List<NotificationTemplateType>
+        {
+            NotificationTemplateType.SystemWelcomeNotification,
+        };
+
+        var emailTemplateContents = await Task.WhenAll(emailTemplateTypes.Select(async templateType =>
+        {
+            var filePath = Path.Combine(webHostEnvironment.ContentRootPath,
+                "Data",
+                "EmailTemplates",
+                Path.ChangeExtension(templateType.ToString(), "html"));
+            return (TemplateType: templateType, TemplateContent: await File.ReadAllTextAsync(filePath));
+        }));
+
+        var emailTemplates = emailTemplateContents.Select(templateContent => templateContent.TemplateType switch
+        {
+            NotificationTemplateType.SystemWelcomeNotification => new EmailTemplate
+            {
+                TemplateType = templateContent.TemplateType,
+                Subject = "Welcome to our service!",
+                Content = templateContent.TemplateContent
+            },
+            _ => throw new NotSupportedException("Template type not supported.")
+        });
+        
+        await dbContext.NotificationTemplates.AddRangeAsync(emailTemplates);
+        await dbContext.SaveChangesAsync();
     }
 
     /// <summary>
