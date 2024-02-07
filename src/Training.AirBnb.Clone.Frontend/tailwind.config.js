@@ -13,12 +13,12 @@ export default {
     },
     extend: {
       colors: {
-        bgColorPrimary: '#f7f7f7',
+        bgColorPrimary: '#ffffff',
         bgColorSecondary: '#ffffff',
         bgColorPrimaryDark: '#21252b',
         bgColorSecondaryDark: '#2c313c',
         borderColor: '#eaeaea',
-        borderColorDark: '#dddddd',
+        borderColorDark: '#404759',
         inputBorderColor: '#b0b0b0',
 
 

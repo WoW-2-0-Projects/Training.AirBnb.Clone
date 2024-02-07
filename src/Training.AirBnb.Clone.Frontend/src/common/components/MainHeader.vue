@@ -1,7 +1,7 @@
 <template>
 
   <header
-      class="fixed top-0 z-10 flex items-center justify-between w-full h-20 border-b theme-bg-primary content-padding theme-border">
+      class="fixed top-0 z-20 flex items-center justify-between w-full h-20 border-b theme-bg-primary content-padding theme-border">
 
     <!-- Logo -->
     <main-logo/>
@@ -28,7 +28,7 @@ import MainLogo from "@/common/components/icons/MainLogo.vue";
 import HeaderMenu from "@/modules/locations/components/HeaderMenu.vue";
 import HeaderHome from "@/modules/locations/components/HeaderHome.vue";
 import { ref } from 'vue';
-import SignInUpModal from "@/Modules/locations/components/SignInUpModal.vue";
+import SignInUpModal from "@/modules/locations/components/SignInUpModal.vue";
 import { DocumentService } from "@/infrastructure/services/DocumentService";
 
 const modalActive = ref(false);

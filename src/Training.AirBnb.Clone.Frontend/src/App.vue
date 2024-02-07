@@ -1,7 +1,9 @@
 <template>
 
   <!-- <main-logo/> -->
-  <home-view/>
+    <router-view/>
+
+<!--  <home-view/>-->
 
 </template>
 

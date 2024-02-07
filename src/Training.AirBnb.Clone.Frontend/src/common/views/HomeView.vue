@@ -7,8 +7,7 @@
   
   <!-- Listings Container -->
   <listings-container/>
-  
-  <button class="mt-80" @click="appThemeService.toggleDarkMode()">Dark mode</button>
+
 </div>
 
 </template>

@@ -2,7 +2,7 @@
     
 <Teleport to="body">    
     <Transition name="slide-fade">
-        <div v-show="modalActive" class="fixed inset-0 z-10 overflow-auto no-scrollbar" @click="$emit('closeModal')">
+        <div v-show="modalActive" class="fixed inset-0 z-30 overflow-auto no-scrollbar" @click="$emit('closeModal')">
             <div class="relative h-auto mx-auto my-8 border-2 sm:w-full md:w-[570px] theme-bg-secondary theme-border rounded-xl" @click.stop>
                 <slot></slot>
             </div>
