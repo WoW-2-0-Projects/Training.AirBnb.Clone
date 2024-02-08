@@ -23,12 +23,11 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
     }
 
     [HttpGet("category/{categoryId:guid}")]
-    public ValueTask<IActionResult> GetListingByCategoryId([FromQuery] FilterPagination filterPagination,
+    public async ValueTask<IActionResult> GetListingByCategoryId([FromQuery] FilterPagination filterPagination,
         [FromRoute] Guid categoryId)
     {
-        var listings = listingService.GetByCategoryId(filterPagination, categoryId, true);
-
-        return new(Ok(mapper.Map<List<ListingDto>>(listings)));
+        var listings = await listingService.GetByCategoryId(filterPagination, categoryId, true).ToListAsync();
+        return listings.Count != 0 ? Ok(mapper.Map<List<ListingDto>>(listings)) : NoContent();
     }
     
     [HttpGet("{listingId:guid}")]
