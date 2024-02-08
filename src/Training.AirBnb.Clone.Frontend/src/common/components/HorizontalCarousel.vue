@@ -10,7 +10,7 @@
    <!-- Navigation actions -->
    <div class="flex items-center justify-between w-full px-2 absolute-center">
         <previous-button :class="{'collapse': !hovering || !canMovePrev}" @click="onMovePrev"/>
-        <next-button ref="nextButton" :class="{'collapse': !hovering || !canMoveNext}" @click="onMoveNext"/>
+        <next-button :class="{'collapse': !hovering || !canMoveNext}" @click="onMoveNext"/>
     </div>
     
 </div>
@@ -22,12 +22,12 @@
 import NextButton from './NextButton.vue';
 import PreviousButton from './PreviousButton.vue';
 import { DocumentService } from '@/infrastructure/services/DocumentService';
-import { ref, onMounted, onUnmounted, computed, triggerRef } from 'vue';
-import { Action } from '@/infrastructure/models/Action';
+import {ref, onMounted, onUnmounted, computed, triggerRef, onUpdated} from 'vue';
+import {Action, NotificationSource} from '@/infrastructure/models/Action';
 
 const props = defineProps({
-    onSourceChanged: {
-        type: Object as () => Action,
+    contentChangeSource: {
+        type: Object as () => NotificationSource,
         required: false
     },
     loopToStart: {
@@ -39,7 +39,6 @@ const props = defineProps({
 
 const documentService = new DocumentService();
 const carouselContainer = ref<HTMLDivElement>();
-const nextButton = ref(null);
 
 const visibleImageIndex = ref(0);
 const imagesCount = computed(() => carouselContainer.value?.children.length! - 1);
@@ -51,10 +50,10 @@ const hovering = ref<boolean>(false);
 
 onMounted(() => {
     window.addEventListener("resize", onWindowResized);
-    
-    props.onSourceChanged!.callBack = () => {
+
+    props.contentChangeSource?.addListener(() => {
         triggerRef(visibleImageIndex);
-    };
+    });
 });
 
 onUnmounted(() => {

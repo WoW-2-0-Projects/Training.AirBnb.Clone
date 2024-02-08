@@ -79,11 +79,29 @@ export class DocumentService {
         element.removeEventListener(eventName, (event: Event) => callback(event.target as HTMLElement));
     }
 
+    public addWindowEventListener(eventName: string, callback: (event: Event) => void): void {
+        window.addEventListener(eventName, callback);
+    }
+
+    public removeWindowEventListener(eventName: string, callback: (event: Event) => void): void {
+        window.removeEventListener(eventName, callback);
+    }
+
     public handleBodyOverflow(isModalActive: boolean): void {
         if (isModalActive) {
             document.body.classList.add("overflow-hidden");
         } else {
             document.body.classList.remove("overflow-hidden");
         }
+    }
+
+    public getHeight(element: HTMLElement): number {
+        return element.offsetHeight;
+    }
+
+    public isDocumentScrolledToBottom(minimumSpace: number = 0) {
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const threshold = document.body.scrollHeight - (minimumSpace || 0);
+        return scrollPosition >= threshold;
     }
 }
