@@ -621,8 +621,6 @@ namespace AirBnB.Persistence.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.UserSettings", b =>

@@ -307,8 +307,6 @@ namespace AirBnB.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles", (string)null);
-                    
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("AirBnB.Domain.Entities.StorageFile", b =>
@@ -762,8 +760,6 @@ namespace AirBnB.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                     
-                    b.Navigation("Role");
-                    
                     b.OwnsOne("AirBnB.Domain.Entities.UserCredentials", "UserCredentials", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -834,8 +830,6 @@ namespace AirBnB.Persistence.Migrations
 
                     b.Navigation("UserSettings")
                         .IsRequired();
-
-                    b.Navigation("Roles");
                 });
             
 #pragma warning restore 612, 618

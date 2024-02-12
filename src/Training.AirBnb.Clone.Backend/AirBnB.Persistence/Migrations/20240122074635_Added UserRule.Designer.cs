@@ -526,16 +526,9 @@ namespace AirBnB.Persistence.Migrations
                     b.Navigation("ListingCategoryAssociations");
                 });
 
-            modelBuilder.Entity("AirBnB.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("AirBnB.Domain.Entities.User", b =>
                 {
                     b.Navigation("Listings");
-
-                    b.Navigation("Roles");
 
                     b.Navigation("UserSettings")
                         .IsRequired();
