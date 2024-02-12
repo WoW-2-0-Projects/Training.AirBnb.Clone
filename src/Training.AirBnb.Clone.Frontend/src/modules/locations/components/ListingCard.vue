@@ -1,8 +1,7 @@
 <template>
 
     <!--Listing card-->
-    <div
-        class="flex flex-col items-start justify-start gap-2 rounded-lg theme-bg-primary theme-border hover-shadow-zero">
+    <div @click="onClick" class="flex flex-col items-start justify-start gap-2 rounded-lg theme-bg-primary theme-border hover-shadow-zero">
 
         <!--Listing header-->
         <div class="relative w-full overflow-hidden rounded-t-lg">
@@ -65,6 +64,7 @@ import {Listing} from '../models/Listing';
 import HorizontalCarousel from '@/common/components/HorizontalCarousel.vue';
 import {onMounted, ref} from 'vue';
 import {NotificationSource} from '@/infrastructure/models/Action';
+import router from "@/infrastructure/router";
 
 const props = defineProps({
     listing: {
@@ -80,5 +80,9 @@ const contentChangeSource = ref<NotificationSource>(new NotificationSource());
 onMounted(() => {
     emit('onMounted', contentChangeSource);
 });
+
+const onClick = () => {
+  router.push({name: 'listingDetails', params: {'listingId': props.listing?.id}})
+}
 
 </script>
