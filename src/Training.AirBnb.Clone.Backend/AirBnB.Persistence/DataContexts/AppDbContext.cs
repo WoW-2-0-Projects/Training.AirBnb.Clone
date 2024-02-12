@@ -44,6 +44,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes => Set<UserInfoVerificationCode>();
 
     #endregion
+    
     #region Media
 
     public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
@@ -51,6 +52,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ListingMediaFile> ListingMediaFiles => Set<ListingMediaFile>();
 
     #endregion
+    
     #region Listings
 
     public DbSet<Listing> Listings => Set<Listing>();
@@ -66,7 +68,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
 
     #endregion
-    
+
+    #region Globalization
+    public DbSet<Country> Countries => Set<Country>();
+
+    #endregion
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
