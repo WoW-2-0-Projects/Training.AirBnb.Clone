@@ -84,6 +84,11 @@ public static partial class HostConfiguration
         // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
 
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddAuthentication(this WebApplicationBuilder builder)
+    {
         // register authentication handlers
         var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ??
                           throw new InvalidOperationException("JwtSettings is not configured.");

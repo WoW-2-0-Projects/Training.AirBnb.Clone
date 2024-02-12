@@ -20,6 +20,7 @@ public static partial class HostConfiguration
             .AddDevTools()
             .AddStorageFileInfrastructure()
             .AddIdentityInfrastructure()
+            .AddAuthentication()
             .AddRequestContextTools()
             .AddListingsInfrastructure()
             .AddVerificationInfrastructure()
@@ -40,7 +41,7 @@ public static partial class HostConfiguration
     {
         await app.MigrateDatabaseSchemasAsync();
         await app.SeedDataAsync();
-        
+
         app
             .UseDevTools()
             .UseCors()
