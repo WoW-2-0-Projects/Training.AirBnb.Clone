@@ -1,4 +1,7 @@
-﻿namespace AirBnB.Infrastructure.Common.Settings;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+namespace AirBnB.Infrastructure.Common.Settings;
 
 /// <summary>
 /// Represents settings related to JSON Web Token (JWT) authentication and validation.
@@ -53,4 +56,32 @@ public class JwtSettings
     /// The exclamation mark indicates that the property is not expected to be null after initialization.
     /// </remarks>
     public string SecretKey { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the expiration time of refresh token in minutes
+    /// </summary>
+    public int RefreshTokenExpirationTimeInMinutes { get; set; }
+
+    /// <summary>
+    /// Gets or sets the extented expiration time of refresh token in minutes
+    /// </summary>
+    public int RefreshTokenExtendedExpirationTimeInMinutes { get; set; }
+
+    /// <summary>
+    /// Maps to token validation parameters
+    /// </summary>
+    /// <returns>A new instance of <see cref="TokenValidationParameters"/></returns>
+    public TokenValidationParameters MapToTokenValidationParameters()
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuer = ValidateIssuer,
+            ValidIssuer = ValidIssuer,
+            ValidAudience = ValidAudience,
+            ValidateAudience = ValidateAudience,
+            ValidateLifetime = ValidateLifetime,
+            ValidateIssuerSigningKey = ValidateIssuerSigningKey,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey))
+        };
+    }
 }
