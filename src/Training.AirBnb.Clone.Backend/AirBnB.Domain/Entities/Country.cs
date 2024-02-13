@@ -11,4 +11,10 @@ public class Country : AuditableEntity
     public Currency? Currency { get; set; }
     
     public Guid CurrencyId { get; set; }
+    
+    public Language? Language { get; set; }
+    
+    public Guid LanguageId { get; set; }
+    
+    public List<City> Cities { get; set; }
 }

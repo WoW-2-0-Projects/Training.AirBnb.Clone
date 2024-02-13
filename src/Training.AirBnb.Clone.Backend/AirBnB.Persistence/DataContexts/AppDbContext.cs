@@ -72,6 +72,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     #region Globalization
     public DbSet<Country> Countries => Set<Country>();
 
+    public DbSet<Language> Languages => Set<Language>();
+    
+    public DbSet<City> Cities => Set<City>();
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

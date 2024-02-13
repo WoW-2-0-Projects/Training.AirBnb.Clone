@@ -17,5 +17,9 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
             .HasOne(country => country.Currency)
             .WithMany()
             .HasForeignKey(country => country.CurrencyId);
+        
+        builder.HasOne(country => country.Language)
+            .WithMany()
+            .HasForeignKey(country => country.LanguageId);
     }
 }
