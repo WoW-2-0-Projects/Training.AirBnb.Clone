@@ -137,7 +137,7 @@ public class AuthService(
         // Remove refresh token and access token if user id is not same
         if (refreshToken.UserId != accessToken.UserId)
         {
-            await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Id, cancellationToken);
+            await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Id, cancellationToken);
             await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
             throw new AuthenticationException("Please login again.");
         }
@@ -145,13 +145,12 @@ public class AuthService(
         var foundUser =
             await userService
                 .Get(user => user.Id == accessToken.UserId, true)
-                .Include(user => user.Role)
                 .FirstOrDefaultAsync(cancellationToken: cancellationToken) ??
-            throw new EntityNotFoundException<User>(accessToken.UserId);
+            throw new InvalidOperationException();
 
         // Generate access token
-        await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Id, cancellationToken);
-        accessToken = identitySecurityTokenGenerationService.GenerateAccessToken(foundUser);
+        await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Id, cancellationToken);
+        accessToken = identitySecurityTokenGeneratorService.GenerateAccessToken(foundUser);
 
         return await identitySecurityTokenService.CreateAccessTokenAsync(accessToken, cancellationToken: cancellationToken);
     }

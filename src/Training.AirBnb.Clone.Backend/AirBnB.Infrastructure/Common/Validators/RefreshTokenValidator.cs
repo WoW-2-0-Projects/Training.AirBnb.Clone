@@ -1,10 +1,12 @@
-﻿using AirBnB.Domain.Enums;
+﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
 using AirBnB.Infrastructure.Common.Settings;
+using FluentValidation;
 using Microsoft.Extensions.Options;
 
 namespace AirBnB.Infrastructure.Common.Validators;
 
-public class RefreshTokenValidator
+public class RefreshTokenValidator : AbstractValidator<RefreshToken>
 {
     public RefreshTokenValidator(IOptions<JwtSettings> jwtSettings)
     {

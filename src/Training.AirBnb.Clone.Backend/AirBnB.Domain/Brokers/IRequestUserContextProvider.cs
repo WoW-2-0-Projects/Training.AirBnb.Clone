@@ -7,4 +7,6 @@ public interface IRequestUserContextProvider
     Guid GetUserId();
 
     RoleType GetUserRole();
+
+    string? GetAccessToken();
 }
