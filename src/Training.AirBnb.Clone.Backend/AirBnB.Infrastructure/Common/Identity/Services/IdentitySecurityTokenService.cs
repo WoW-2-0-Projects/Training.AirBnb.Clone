@@ -1,14 +1,20 @@
 ﻿using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Entities;
+using AirBnB.Persistence.Repositories;
 using AirBnB.Persistence.Repositories.Interfaces;
+using FluentValidation;
 
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 /// <summary>
 /// Service for managing access tokens using an access token repository.
 /// </summary>
-public class AccessTokenService(IAccessTokenRepository accessTokenRepository) : IAccessTokenService
+public class IdentitySecurityTokenService(
+    IAccessTokenRepository accessTokenRepository, 
+    IRefreshTokenRepository refreshTokenRepository,
+    IValidator<RefreshToken> refreshTokenValidator) : 
+    IIdentitySecurityTokenService
 {
     /// <summary>
     /// Asynchronously creates a new access token.
@@ -17,9 +23,21 @@ public class AccessTokenService(IAccessTokenRepository accessTokenRepository) : 
     /// <param name="saveChanges">Indicates whether changes should be saved to the underlying data store (default is true).</param>
     /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
     /// <returns>A ValueTask representing the asynchronous operation, returning the created AccessToken.</returns>
-    public ValueTask<AccessToken> CreateAsync(AccessToken accessToken, bool saveChanges = true, CancellationToken cancellationToken = default)
+    public ValueTask<AccessToken> CreateAccessTokenAsync(AccessToken accessToken, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         return accessTokenRepository.CreateAsync(accessToken, saveChanges, cancellationToken);
+    }
+
+    public ValueTask<RefreshToken> CreateRefreshTokenAsync(
+        RefreshToken refreshToken, 
+        bool saveChanges = true, 
+        CancellationToken cancellationToken = default)
+    {
+        var validationResult = refreshTokenValidator.Validate(refreshToken);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        return refreshTokenRepository.CreateAsync(refreshToken, saveChanges, cancellationToken);
     }
 
     /// <summary>
@@ -28,9 +46,23 @@ public class AccessTokenService(IAccessTokenRepository accessTokenRepository) : 
     /// <param name="accessTokenId">The unique identifier of the access token to retrieve.</param>
     /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
     /// <returns>A ValueTask representing the asynchronous operation, returning the retrieved AccessToken, or null if not found.</returns>
-    public ValueTask<AccessToken?> GetByIdAsync(Guid accessTokenId, CancellationToken cancellationToken = default)
+    public ValueTask<AccessToken?> GetAccessTokenByIdAsync(
+        Guid accessTokenId, 
+        CancellationToken cancellationToken = default)
     {
         return accessTokenRepository.GetByIdAsync(accessTokenId, cancellationToken);
+    }
+
+    public ValueTask<RefreshToken?> GetRefreshTokenByValueAsync(
+        string refreshTokenValue, 
+        CancellationToken cancellationToken = default) =>
+    refreshTokenRepository.GetByValueAsync(refreshTokenValue, cancellationToken);
+
+    public ValueTask RemoveRefreshTokenAsync(
+        string refreshTokenValue, 
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -39,10 +71,10 @@ public class AccessTokenService(IAccessTokenRepository accessTokenRepository) : 
     /// <param name="accessTokenId">The unique identifier of the access token to revoke.</param>
     /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
     /// <exception cref="InvalidOperationException">Thrown if the specified access token is not found.</exception>
-    public async ValueTask RevokeAsync(Guid accessTokenId, CancellationToken cancellationToken = default)
+    public async ValueTask RevokeAccessTokenAsync(Guid accessTokenId, CancellationToken cancellationToken = default)
     {
         // Retrieve the access token by its ID.
-        var accessToken = await GetByIdAsync(accessTokenId, cancellationToken);
+        var accessToken = await GetAccessTokenByIdAsync(accessTokenId, cancellationToken);
 
         // Check if the access token exists; throw an exception if not found.
         if (accessToken is null)

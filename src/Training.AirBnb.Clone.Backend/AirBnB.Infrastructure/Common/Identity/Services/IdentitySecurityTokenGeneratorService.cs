@@ -1,9 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
+using AirBnB.Domain.Extension;
 using AirBnB.Infrastructure.Common.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +15,7 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// <summary>
 /// Service responsible for generating and handling access tokens based on JWT settings.
 /// </summary>
-public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IAccessTokenGeneratorService
+public class IdentitySecurityTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IIdentitySecurityTokenGeneratorService
 {
     /// <summary>
     /// Initializes a new instance of the AccessTokenGeneratorService class.
@@ -26,7 +28,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// </summary>
     /// <param name="user">The user for whom the access token is generated.</param>
     /// <returns>An AccessToken object representing the generated access token.</returns>
-    public AccessToken GetToken(User user)
+    public AccessToken GenerateAccessToken(User user)
     {
         // Create a new AccessToken instance with a unique identifier.
         var accessToken = new AccessToken
@@ -51,7 +53,7 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
     /// <param name="accessToken">The JWT access token from which to extract the ID.</param>
     /// <returns>The unique identifier (ID) associated with the provided access token.</returns>
     /// <exception cref="ArgumentException">Thrown if the access token is invalid or the associated ID is missing.</exception>
-    public Guid GetTokenId(string accessToken)
+    public Guid GetAccessTokenId(string accessToken)
     {
         // Extract the token value from the authorization header.
         var tokenValue = accessToken.Split(' ')[1];
@@ -124,5 +126,51 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
             //  This claim uniquely identifies the JWT and is often used to prevent
             new(JwtRegisteredClaimNames.Jti, accessToken.Id.ToString())
         };
+    }
+
+    public RefreshToken GenerateRefreshToken(User user, bool extendedExpiryTime = false)
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+
+        return new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            Token = Convert.ToBase64String(randomNumber),
+            UserId = user.Id,
+            ExpiryTime = DateTime.UtcNow.AddMinutes(
+                extendedExpiryTime
+                    ? _jwtSettings.RefreshTokenExtendedExpirationTimeInMinutes
+                    : _jwtSettings.RefreshTokenExpirationTimeInMinutes
+            )
+        };
+    }
+
+    public AccessToken? GetAccessToken(string tokenValue)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var getAccessToken = () =>
+        {
+            var tokenWithoutPrefix = tokenValue.Replace("Bearer ", string.Empty);
+            var principal = tokenHandler.ValidateToken(tokenWithoutPrefix, _jwtSettings.MapToTokenValidationParameters(), out var validatedToken);
+        
+            if (validatedToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(
+                    SecurityAlgorithms.HmacSha256,
+                    StringComparison.InvariantCultureIgnoreCase
+                ))
+                throw new SecurityTokenException("Invalid token");
+
+            return new AccessToken
+            {
+                Id = Guid.Parse(principal.FindFirst(JwtRegisteredClaimNames.Jti)!.Value),
+                UserId = Guid.Parse(principal.FindFirst(ClaimConstants.UserId)!.Value),
+                Token = tokenValue,
+                ExpiryTime = jwtSecurityToken.ValidTo.ToUniversalTime()
+            };
+        };
+
+        return getAccessToken.GetValue().Data;
+
     }
 }
