@@ -15,17 +15,19 @@ public interface IAuthService
     /// <param name="signUpDetails">The registration information for the new user</param>
     /// <param name="cancellationToken">A token that can be used to cancel the registration operation</param>
     /// <returns>A ValueTask<bool> that indicates whether the registration was successful.</returns>
-    ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default);
+    ValueTask<bool> SignUpAsync(
+        SignUpDetails signUpDetails, 
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously attempts to log in a user with the provided credentials.
     /// </summary>
     /// <param name="signInDetails">The login details containing the user's username and password.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the login operation.</param>
-    /// <returns>A ValueTask<string> that contains:
-    /// - An authentication token if the login is successful.
-    /// - Null if the login fails.</returns>
-    ValueTask<AccessToken> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken = default);
+    /// <returns>ValueTask<(AccessToken accessToken, RefreshToken refreshToken)></returns>
+    ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInAsync(
+        SignInDetails signInDetails, 
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously grants a specified role to a user.
@@ -44,4 +46,14 @@ public interface IAuthService
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns></returns>
     ValueTask<bool> RevokeRoleAsync(Guid userId, string roleType, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Checks given refresh token and access token, then generates new access token for user
+    /// </summary>
+    /// <param name="refreshTokenValue">The unique token value of the refresh token to get</param>
+    /// <param name="cancellationToken">Cancellation token to stop the operation if needed</param>
+    /// <returns></returns>
+    ValueTask<AccessToken> RefreshTokenAsync(
+        string refreshTokenValue, 
+        CancellationToken cancellationToken = default);
 }

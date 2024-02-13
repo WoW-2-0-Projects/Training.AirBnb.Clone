@@ -220,8 +220,8 @@ public static partial class HostConfiguration
             .AddScoped<IRoleService, RoleService>()
             .AddScoped<IAccountService, AccountService>()
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
-            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IIdentitySecurityTokenGeneratorService, IdentitySecurityTokenGeneratorService>()
+            .AddScoped<IIdentitySecurityTokenService, IdentitySecurityTokenService>()
             .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
             .AddScoped<IPasswordHasherService, PasswordHasherService>()
             .AddScoped<IRoleProcessingService, RoleProcessingService>();
