@@ -12,36 +12,9 @@ namespace AirBnB.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Users_Roles_RoleId",
-                table: "Users");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Users_Users_UserId",
-                table: "Users");
-
-            migrationBuilder.DropTable(
-                name: "UserCredentials");
-
-            migrationBuilder.DropColumn(
-                name: "RoleId",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "Users");
-
             migrationBuilder.DropColumn(
                 name: "PricePerNight_Currency",
                 table: "Listings");
-
-            migrationBuilder.AddColumn<string>(
-                name: "UserCredentials_PasswordHash",
-                table: "Users",
-                type: "character varying(128)",
-                maxLength: 128,
-                nullable: false,
-                defaultValue: "");
 
             migrationBuilder.AddColumn<Guid>(
                 name: "PricePerNight_CurrencyId",
@@ -132,58 +105,12 @@ namespace AirBnB.Persistence.Migrations
                 name: "PricePerNight_CurrencyId",
                 table: "Listings");
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "RoleId",
-                table: "Users",
-                type: "uuid",
-                nullable: true);
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "UserId",
-                table: "Users",
-                type: "uuid",
-                nullable: true);
-
             migrationBuilder.AddColumn<int>(
                 name: "PricePerNight_Currency",
                 table: "Listings",
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
-
-            migrationBuilder.CreateTable(
-                name: "UserCredentials",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PasswordHash = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserCredentials", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_UserCredentials_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Users_Roles_RoleId",
-                table: "Users",
-                column: "RoleId",
-                principalTable: "Roles",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Users_Users_UserId",
-                table: "Users",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }
