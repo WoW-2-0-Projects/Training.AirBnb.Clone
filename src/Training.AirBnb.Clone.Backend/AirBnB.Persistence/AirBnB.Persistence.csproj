@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyCaching.Redis" Version="1.9.3-alpha20231127013454" />
+    <PackageReference Include="EasyCaching.Serialization.MessagePack" Version="1.9.3-alpha20231127013454" />
+    <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="4.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
