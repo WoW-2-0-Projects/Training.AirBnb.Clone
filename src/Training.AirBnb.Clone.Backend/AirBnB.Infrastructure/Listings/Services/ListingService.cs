@@ -24,6 +24,7 @@ public class ListingService(
             .Include(listing => listing.ImagesStorageFile
                 .OrderBy(image => image.OrderNumber))
             .ThenInclude(media => media.StorageFile)
+            .OrderBy(listing => listing.Id)
             .Skip((int)((filterPagination.PageToken - 1) * filterPagination.PageSize))
             .Take((int)filterPagination.PageSize);
     }

@@ -13,7 +13,7 @@ namespace AirBnB.Api.Controllers;
 public class AccountsController(IUserService userService, IMapper mapper) : ControllerBase
 {
     [HttpGet]
-    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
+    public IActionResult Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
         var result =  userService.Get();
         return result.Any() ? Ok(result) : NotFound();
