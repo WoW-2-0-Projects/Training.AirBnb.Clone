@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
-using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.Caching.Models;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
+using EFCoreSecondLevelCacheInterceptor;
 
 namespace AirBnB.Persistence.Repositories;
 
@@ -16,7 +16,8 @@ public class UserRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
     ), IUserRepository
 {
     public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false)
-        => base.Get(predicate, asNoTracking);
+        => base.Get(predicate, asNoTracking)
+            .Cacheable(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(5));
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
         => base.GetByIdAsync(userId, asNoTracking, cancellationToken);
