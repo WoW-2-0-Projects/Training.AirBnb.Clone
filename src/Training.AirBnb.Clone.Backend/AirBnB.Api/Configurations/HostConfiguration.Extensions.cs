@@ -25,20 +25,25 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
+using AirBnB.Application.Locations.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.Notifications.Brokers;
 using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Application.Ratings.Settings;
+using AirBnB.Domain.Entities;
 using AirBnB.Domain.Settings;
 using AirBnB.Infrastructure.Common.EventBus.Brokers;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.Locations.Services;
 using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
+using AirBnB.Application.Currencies.Services;
+using AirBnB.Infrastructure.Currencies.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -261,6 +266,28 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IListingService, ListingService>()
             .AddScoped<IListingCategoryService, ListingCategoryService>();
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Globalization Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddGlobalizationInfrastructure(this WebApplicationBuilder builder)
+    {
+        //register repositories
+        builder.Services
+            .AddScoped<ICountryRepository, CountryRepository>()
+            .AddScoped<ICityRepository, CityRepository>()
+            .AddScoped<ICurrencyRepository, CurrencyRepository>();
+        
+        //register foundation services
+        builder.Services
+            .AddScoped<ICountryService, CountryService>()
+            .AddScoped<ICityService, CityService>()
+            .AddScoped<ICurrencyService, CurrencyService>();
 
         return builder;
     }

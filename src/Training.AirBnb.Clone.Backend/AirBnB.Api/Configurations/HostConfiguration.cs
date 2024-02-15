@@ -22,6 +22,7 @@ public static partial class HostConfiguration
             .AddIdentityInfrastructure()
             .AddRequestContextTools()
             .AddListingsInfrastructure()
+            .AddGlobalizationInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
             .AddRatingsInfrastructure()

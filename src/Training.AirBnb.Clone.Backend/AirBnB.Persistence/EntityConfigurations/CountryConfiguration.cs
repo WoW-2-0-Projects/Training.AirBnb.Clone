@@ -9,7 +9,7 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
     public void Configure(EntityTypeBuilder<Country> builder)
     {
         builder.Property(country => country.Name).HasMaxLength(255).IsRequired();
-        builder.Property(country => country.PhoneNumber).HasMaxLength(15).IsRequired();
+        builder.Property(country => country.PhoneNumberCodes).HasMaxLength(15).IsRequired();
         // builder.HasMany(country => country.Cities)
         //     .WithOne(city=>city.Country)
         //     .HasForeignKey(city=>city.CountryId);

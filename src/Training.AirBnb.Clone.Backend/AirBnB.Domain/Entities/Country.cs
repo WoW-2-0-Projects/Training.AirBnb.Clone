@@ -6,7 +6,7 @@ public class Country : AuditableEntity
 {
     public string Name { get; set; } = default!;
     
-    public List<string>? PhoneNumber { get; set; } 
+    public List<string>? PhoneNumberCodes { get; set; } 
     
     public Currency? Currency { get; set; }
     

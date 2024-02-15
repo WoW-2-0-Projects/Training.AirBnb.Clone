@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using AirBnB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -75,6 +76,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Language> Languages => Set<Language>();
     
     public DbSet<City> Cities => Set<City>();
+
+    public DbSet<Currency> Currencies => Set<Currency>();
+    
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
