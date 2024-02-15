@@ -39,6 +39,9 @@ using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
+using EasyCaching.Core.Configurations;
+using EFCoreSecondLevelCacheInterceptor;
+using MessagePack.Resolvers;
 
 namespace AirBnB.Api.Configurations;
 
@@ -70,6 +73,8 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddCaching(this WebApplicationBuilder builder)
     {
+        const string redisProviderName = "AirBnb.CacheMemory";
+        
         // Configure CacheSettings from the app settings.
         builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection(nameof(CacheSettings)));
 
@@ -78,11 +83,42 @@ public static partial class HostConfiguration
             options =>
             {
                 options.Configuration = builder.Configuration.GetConnectionString("RedisConnectionString");
-                options.InstanceName = "AirBnb.CacheMemory";
+                options.InstanceName = redisProviderName;
             });
 
         // Register the RedisDistributedCacheBroker as a singleton.
         builder.Services.AddSingleton<ICacheBroker, RedisDistributedCacheBroker>();
+        
+        // Register EF Second Level Cache
+        builder.Services.AddEFSecondLevelCache(options =>
+            options.UseEasyCachingCoreProvider(redisProviderName, isHybridCache: false)
+                .UseDbCallsIfCachingProviderIsDown(TimeSpan.FromMinutes(5)));
+        
+        // Register Easy Caching
+        builder.Services.AddEasyCaching(option =>
+        {
+            option.UseRedis(config =>
+            {
+                config.DBConfig.AllowAdmin = true;
+                config.DBConfig.SyncTimeout = 10000;
+                config.DBConfig.AsyncTimeout = 10000;
+                config.DBConfig.Endpoints.Add(new ServerEndPoint(builder.Configuration.GetConnectionString("RedisConnectionHost"), 
+                    Convert.ToInt32(builder.Configuration.GetConnectionString("RedisConnectionPort"))));
+                config.EnableLogging = true;
+                config.SerializerName = "Pack";
+                config.DBConfig.ConnectionTimeout = 10000;
+            }, redisProviderName)
+            .WithMessagePack(so =>
+                {
+                    so.EnableCustomResolver = true;
+                    so.CustomResolvers = CompositeResolver.Create(
+                        NativeDateTimeResolver.Instance,
+                        ContractlessStandardResolver.Instance,
+                        StandardResolverAllowPrivate.Instance
+                    );
+                },
+                "Pack");
+        });
 
         return builder;
     }
@@ -348,7 +384,8 @@ public static partial class HostConfiguration
                 .UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString"))
                 .AddInterceptors(provider.GetRequiredService<UpdatePrimaryKeyInterceptor>(),
                     provider.GetRequiredService<UpdateAuditableInterceptor>(),
-                    provider.GetRequiredService<UpdateSoftDeletionInterceptor>());
+                    provider.GetRequiredService<UpdateSoftDeletionInterceptor>(),
+                    provider.GetRequiredService<SecondLevelCacheInterceptor>());
         });
 
         return builder;
