@@ -31,4 +31,11 @@ public interface IAccessTokenRepository
     /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
     /// <returns>A ValueTask representing the asynchronous operation, returning the updated AccessToken.</returns>
     ValueTask<AccessToken> UpdateAsync(AccessToken accessToken, CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Deletes access token by Id
+    /// </summary>
+    /// <param name="accessTokenId">Id of access token to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    ValueTask<AccessToken?> DeleteByIdAsync(Guid accessTokenId, CancellationToken cancellationToken = default);
 }

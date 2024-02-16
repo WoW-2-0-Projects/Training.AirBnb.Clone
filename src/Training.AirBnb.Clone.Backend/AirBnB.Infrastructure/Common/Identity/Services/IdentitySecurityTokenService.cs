@@ -16,13 +16,6 @@ public class IdentitySecurityTokenService(
     IValidator<RefreshToken> refreshTokenValidator) : 
     IIdentitySecurityTokenService
 {
-    /// <summary>
-    /// Asynchronously creates a new access token.
-    /// </summary>
-    /// <param name="accessToken">The access token to be created.</param>
-    /// <param name="saveChanges">Indicates whether changes should be saved to the underlying data store (default is true).</param>
-    /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
-    /// <returns>A ValueTask representing the asynchronous operation, returning the created AccessToken.</returns>
     public ValueTask<AccessToken> CreateAccessTokenAsync(AccessToken accessToken, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         return accessTokenRepository.CreateAsync(accessToken, saveChanges, cancellationToken);
@@ -40,12 +33,6 @@ public class IdentitySecurityTokenService(
         return refreshTokenRepository.CreateAsync(refreshToken, saveChanges, cancellationToken);
     }
 
-    /// <summary>
-    /// Asynchronously retrieves an access token by its unique identifier.
-    /// </summary>
-    /// <param name="accessTokenId">The unique identifier of the access token to retrieve.</param>
-    /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
-    /// <returns>A ValueTask representing the asynchronous operation, returning the retrieved AccessToken, or null if not found.</returns>
     public ValueTask<AccessToken?> GetAccessTokenByIdAsync(
         Guid accessTokenId, 
         CancellationToken cancellationToken = default)
@@ -58,19 +45,6 @@ public class IdentitySecurityTokenService(
         CancellationToken cancellationToken = default) =>
     refreshTokenRepository.GetByValueAsync(refreshTokenValue, cancellationToken);
 
-    public ValueTask RemoveRefreshTokenAsync(
-        string refreshTokenValue, 
-        CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Asynchronously revokes (invalidates) an access token by updating its IsRevoked property.
-    /// </summary>
-    /// <param name="accessTokenId">The unique identifier of the access token to revoke.</param>
-    /// <param name="cancellationToken">Cancellation token to stop the operation if needed (default is none).</param>
-    /// <exception cref="InvalidOperationException">Thrown if the specified access token is not found.</exception>
     public async ValueTask RevokeAccessTokenAsync(Guid accessTokenId, CancellationToken cancellationToken = default)
     {
         // Retrieve the access token by its ID.
@@ -83,5 +57,17 @@ public class IdentitySecurityTokenService(
         // Set the IsRevoked property to true and update the access token in the repository.
         accessToken.IsRevoked = true;
         await accessTokenRepository.UpdateAsync(accessToken, cancellationToken);
+    }
+    
+    public async ValueTask RemoveAccessTokenAsync(Guid accessTokenId, CancellationToken cancellationToken = default)
+    {
+        await accessTokenRepository.DeleteByIdAsync(accessTokenId, cancellationToken);
+    }
+
+    public ValueTask RemoveRefreshTokenAsync(
+        string refreshTokenValue, 
+        CancellationToken cancellationToken = default)
+    {
+        return refreshTokenRepository.RemoveAsync(refreshTokenValue, cancellationToken);
     }
 }

@@ -62,6 +62,13 @@ public interface IIdentitySecurityTokenService
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Removes access token by Id
+    /// </summary>
+    /// <param name="accessTokenId">Id of access token being removed</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    ValueTask RemoveAccessTokenAsync(Guid accessTokenId, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Asynchronously removes refresh token
     /// </summary>
     /// <param name="refreshTokenValue">The unique token value of the refresh token to get</param>

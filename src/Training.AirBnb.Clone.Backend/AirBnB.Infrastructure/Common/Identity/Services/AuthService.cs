@@ -1,4 +1,4 @@
-using System.Security.Authentication;
+﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -148,10 +148,19 @@ public class AuthService(
 
         var foundUser =
             await userService
-                .Get(user => user.Id == accessToken.UserId, true)
+                .Get(user => user.Id == accessToken.Value.AccessToken.UserId, true)
+                .Include(user => user.Roles)
                 .FirstOrDefaultAsync(cancellationToken: cancellationToken) ??
             throw new InvalidOperationException();
 
+        // If access token exists, not revoked and still valid return it, otherwise remove
+        if (foundAccessToken is not null && !foundAccessToken.IsRevoked)
+        {
+            if(!foundAccessToken.IsRevoked)
+                return foundAccessToken;
+            await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
+        }
+        
         // Generate access token
         var newAccessToken = identitySecurityTokenGeneratorService.GenerateAccessToken(foundUser);
 
