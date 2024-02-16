@@ -84,4 +84,12 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         CancellationToken cancellationToken = default
     ) =>
         userRepository.DeleteAsync(user, saveChanges, cancellationToken);
+
+    public async ValueTask<User> GetSystemUserAsync(bool asNoTracking, CancellationToken cancellationToken = default)
+    {
+        return await userRepository.Get(asNoTracking: asNoTracking)
+            .Include(user => user.Roles)
+            .Where(user => user.Roles.Any(role => role.Type == RoleType.System))
+            .FirstAsync(cancellationToken);
+    }
 }
