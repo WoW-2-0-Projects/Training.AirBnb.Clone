@@ -118,7 +118,7 @@ public static partial class HostConfiguration
 
         //register brokers
         builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
-            .AddSingleton<IEvenBusBroker, RabbitMqEventBusBroker>();
+            .AddSingleton<IEventBusBroker, RabbitMqEventBusBroker>();
 
         //register general background service
         builder.Services.AddHostedService<EventBusBackgroundService>();

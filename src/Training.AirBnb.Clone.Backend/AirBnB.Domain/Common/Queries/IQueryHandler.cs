@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AirBnB.Domain.Queries;
+namespace AirBnB.Domain.Common.Queries;
 
 /// <summary>
 /// Represents a handler for processing queries in a CQRS (Command Query Responsibility Segregation) architecture.
