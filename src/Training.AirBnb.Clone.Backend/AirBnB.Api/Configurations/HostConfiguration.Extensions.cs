@@ -114,6 +114,9 @@ public static partial class HostConfiguration
     {
         //register settings
         builder.Services.Configure<RabbitMqConnectionSettings>(builder.Configuration.GetSection(nameof(RabbitMqConnectionSettings)));
+        
+        builder.Services.Configure<NotificationSubscriberSettings>(
+            builder.Configuration.GetSection(nameof(NotificationSubscriberSettings)));
 
         //register brokers
         builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>()
@@ -167,6 +170,13 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddNotificationInfrastructure(this WebApplicationBuilder builder)
     {
+        // Configure notification settings.
+        builder.Services.Configure<TemplateRenderingSettings>(
+            builder.Configuration.GetSection(nameof(TemplateRenderingSettings)));
+
+        builder.Services.Configure<SmtpEmailSenderSettings>(
+            builder.Configuration.GetSection(nameof(SmtpEmailSenderSettings)));
+        
         builder.Services
             .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
             .AddScoped<ISmsTemplateRepository, SmsTemplateRepository>()
