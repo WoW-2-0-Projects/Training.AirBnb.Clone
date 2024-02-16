@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
@@ -147,30 +148,36 @@ public class IdentitySecurityTokenGeneratorService(IOptions<JwtSettings> jwtSett
         };
     }
 
-    public AccessToken? GetAccessToken(string tokenValue)
+    public (AccessToken AccessToken, bool IsExpired)? GetAccessToken(string tokenValue)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var getAccessToken = () =>
         {
             var tokenWithoutPrefix = tokenValue.Replace("Bearer ", string.Empty);
-            var principal = tokenHandler.ValidateToken(tokenWithoutPrefix, _jwtSettings.MapToTokenValidationParameters(), out var validatedToken);
+            
+            // Remove lifetime validation
+            var tokenValidationParameters = _jwtSettings.MapToTokenValidationParameters();
+            tokenValidationParameters.ValidateLifetime = false;
+            
+            var principal = tokenHandler.ValidateToken(tokenWithoutPrefix, tokenValidationParameters, out var validatedToken);
         
             if (validatedToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(
                     SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase
                 ))
                 throw new SecurityTokenException("Invalid token");
+            
+            var isExpired = jwtSecurityToken.ValidTo.ToUniversalTime() < DateTime.UtcNow;
 
-            return new AccessToken
+            return (new AccessToken
             {
                 Id = Guid.Parse(principal.FindFirst(JwtRegisteredClaimNames.Jti)!.Value),
                 UserId = Guid.Parse(principal.FindFirst(ClaimConstants.UserId)!.Value),
                 Token = tokenValue,
                 ExpiryTime = jwtSecurityToken.ValidTo.ToUniversalTime()
-            };
+            }, isExpired);
         };
 
         return getAccessToken.GetValue().Data;
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Security.Authentication;
+using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
@@ -127,18 +127,22 @@ public class AuthService(
             throw new AuthenticationException("Please login again.");
 
         var accessToken = identitySecurityTokenGeneratorService.GetAccessToken(accessTokenValue);
-        if (accessToken is null)
+        if (!accessToken.HasValue)
         {
             // Remove refresh token if access token is not valid
             await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
             throw new InvalidOperationException("Invalid identity security token value");
         }
+        
+        var foundAccessToken = await identitySecurityTokenService.GetAccessTokenByIdAsync(accessToken.Value.AccessToken.Id, cancellationToken);
 
         // Remove refresh token and access token if user id is not same
-        if (refreshToken.UserId != accessToken.UserId)
+        if (refreshToken.UserId != accessToken.Value.AccessToken.UserId)
         {
-            await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Id, cancellationToken);
             await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
+            if(foundAccessToken is not null)
+                await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
+            
             throw new AuthenticationException("Please login again.");
         }
 
@@ -149,10 +153,9 @@ public class AuthService(
             throw new InvalidOperationException();
 
         // Generate access token
-        await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Id, cancellationToken);
-        accessToken = identitySecurityTokenGeneratorService.GenerateAccessToken(foundUser);
+        var newAccessToken = identitySecurityTokenGeneratorService.GenerateAccessToken(foundUser);
 
-        return await identitySecurityTokenService.CreateAccessTokenAsync(accessToken, cancellationToken: cancellationToken);
+        return await identitySecurityTokenService.CreateAccessTokenAsync(newAccessToken, cancellationToken: cancellationToken);
     }
 
     private async Task<(AccessToken AccessToken, RefreshToken RefreshToken)> CreateTokens(User user, CancellationToken cancellationToken = default)

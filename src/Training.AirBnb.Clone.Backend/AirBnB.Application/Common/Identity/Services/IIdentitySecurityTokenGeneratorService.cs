@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AirBnB.Domain.Entities;
 
-namespace AirBnB.Application.Common.Notifications.Services;
+namespace AirBnB.Application.Common.Identity.Services;
 
 /// <summary>
 /// Interface for a service responsible for generating and managing access tokens.
@@ -29,7 +29,7 @@ public interface IIdentitySecurityTokenGeneratorService
     /// </summary>
     /// <param name="tokenValue">Valid access token value</param>
     /// <returns>Claims principal</returns>
-    AccessToken? GetAccessToken(string tokenValue);
+    (AccessToken AccessToken, bool IsExpired)? GetAccessToken(string tokenValue);
 
     /// <summary>
     /// Retrieves the unique identifier (ID) associated with the provided access token.
