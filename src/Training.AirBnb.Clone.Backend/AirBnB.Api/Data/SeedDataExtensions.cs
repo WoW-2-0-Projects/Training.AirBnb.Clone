@@ -47,6 +47,9 @@ public static class SeedDataExtensions
         if (!await appDbContext.GuestFeedbacks.AnyAsync())
             await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
 
+        if (!await appDbContext.NotificationTemplates.AnyAsync())
+            await appDbContext.SeedNotificationTemplatesAsync(webHostEnvironment);
+
         // check change tracker and if changes exist, save changes to database
         if (appDbContext.ChangeTracker.HasChanges())
             appDbContext.SaveChanges();
@@ -319,5 +322,65 @@ public static class SeedDataExtensions
                  rating.Communication + rating.Location + rating.CheckIn) / 6);
 
         return ratingsFaker.Generate();
+    }
+
+    /// <summary>
+    /// Seeds Notification Templates
+    /// </summary>
+    /// <param name="appDbContext"></param>
+    /// <param name="webHostEnvironment"></param>
+    /// <exception cref="NotSupportedException"></exception>
+    private static async ValueTask SeedNotificationTemplatesAsync(this AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+    {
+        var emailTemplateTypes = new List<NotificationTemplateType>
+        {
+            NotificationTemplateType.SystemWelcomeNotification,
+            NotificationTemplateType.EmailVerificationNotification,
+            NotificationTemplateType.ReferralNotification
+        };
+
+        var emailTemplateContents = await Task.WhenAll(
+            emailTemplateTypes.Select(
+                async templateType =>
+                {
+                    var filePath = Path.Combine(
+                        webHostEnvironment.ContentRootPath,
+                        "Data",
+                        "SeedData",
+                        "EmailTemplates",
+                        Path.ChangeExtension(templateType.ToString(), "html")
+                    );
+                    return (TemplateType: templateType, TemplateContent: await File.ReadAllTextAsync(filePath));
+                }
+            )
+        );
+
+        var emailTemplates = emailTemplateContents.Select(
+            templateContent => templateContent.TemplateType switch
+            {
+                NotificationTemplateType.SystemWelcomeNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "Welcome to our service!",
+                    Content = templateContent.TemplateContent
+                },
+                NotificationTemplateType.EmailVerificationNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "Confirm your email address",
+                    Content = templateContent.TemplateContent
+                },
+                NotificationTemplateType.ReferralNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "You have been referred!",
+                    Content = templateContent.TemplateContent
+                },
+                _ => throw new NotSupportedException("Template type not supported.")
+            }
+        );
+
+        await appDbContext.EmailTemplates.AddRangeAsync(emailTemplates);
+        appDbContext.SaveChanges();
     }
 }
