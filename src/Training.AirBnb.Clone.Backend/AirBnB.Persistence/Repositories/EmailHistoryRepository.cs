@@ -3,6 +3,7 @@ using AirBnB.Persistence.Caching.Models;
 using AirBnB.Persistence.DataContexts;
 using AirBnB.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
+using AirBnB.Domain.Entities;
 
 namespace AirBnB.Persistence.Repositories;
 

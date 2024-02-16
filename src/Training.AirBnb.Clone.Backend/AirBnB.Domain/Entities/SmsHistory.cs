@@ -1,6 +1,6 @@
-﻿using AirBnB.Domain.Entities;
+﻿using AirBnB.Domain.Enums;
 
-using AirBnB.Domain.Enums;
+namespace AirBnB.Domain.Entities;
 
 /// <summary>
 /// Represents an SMS (Short Message Service) history entry for notifications.

@@ -1,4 +1,5 @@
-﻿using AirBnB.Domain.Enums;
+﻿using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
 using FluentValidation;
 
 namespace AirBnB.Infrastructure.Common.Validators;
