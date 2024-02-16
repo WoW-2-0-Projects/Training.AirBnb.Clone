@@ -1,5 +1,8 @@
-﻿using AirBnB.Application.Common.Identity.Services;
+﻿using AirBnB.Application.Common.EventBus.Brokers;
+using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.Common.Notifications.Events;
 using AirBnB.Application.Common.Verifications.Services;
+using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -8,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 public class AccountService(
+    IEventBusBroker eventBusBroker,
     IUserService userService,
     IUserRepository userRepository,
     IUserSettingsService userSettingsService,
@@ -38,7 +42,23 @@ public class AccountService(
             cancellationToken: cancellationToken
         );
         
-        // TODO : Send welcome email
+        // Create welcome notification event.
+        var welcomeNotificationEvent = new ProcessNotificationEvent
+        {
+            ReceiverUserId = createdUser.Id,
+            TemplateType = NotificationTemplateType.SystemWelcomeNotification,
+            Variables = new Dictionary<string, string>
+            {
+                { NotificationTemplateConstants.UserNamePlaceholder, createdUser.FirstName }
+            }
+        };
+        
+        // send welcome email
+        await eventBusBroker.PublishAsync(
+            welcomeNotificationEvent, 
+            EventBusConstants.NotificationExchangeName,
+            EventBusConstants.ProcessNotificationQueueName, 
+            cancellationToken);
 
         return createdUser;
     }
