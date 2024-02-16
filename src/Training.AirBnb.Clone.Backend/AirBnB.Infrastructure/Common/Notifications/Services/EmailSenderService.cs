@@ -23,19 +23,20 @@ public class EmailSenderService(IEnumerable<IEmailSenderBroker> emailSenderBroke
     /// </returns>
     public async ValueTask<bool> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default)
     {
-            var validationResult = emailMessageValidator.Validate(emailMessage,
-                options => options.IncludeRuleSets(NotificationEvent.OnSending.ToString()));
-            if (!validationResult.IsValid)
-                throw new ValidationException(validationResult.Errors);
+        var validationResult = await emailMessageValidator.ValidateAsync(emailMessage,
+            options => options.IncludeRuleSets(NotificationEvent.OnSending.ToString()), cancellationToken);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
 
-            var accomplishedBroker = await emailSenderBroker.FirstOrDefaultAsync( async emailSenderBrokers =>
-            {
-                var sendNotifcationTask = () => emailSenderBrokers.SendAsync(emailMessage, cancellationToken);
-                var result = await sendNotifcationTask.GetValueAsync();
-                (emailMessage.IsSuccessful, emailMessage.ErrorMessage) = (result.IsSuccess, result.Exception?.Message);
+        await emailSenderBroker.FirstOrDefaultAsync( async emailSenderBrokers =>
+        {
+            var sendNotificationTask = () => emailSenderBrokers.SendAsync(emailMessage, cancellationToken);
+            var result = await sendNotificationTask.GetValueAsync();
+            (emailMessage.IsSuccessful, emailMessage.ErrorMessage) = (result.IsSuccess, result.Exception?.Message);
 
-                return result.IsSuccess;
-            }, cancellationToken);
-            return false;
+            return result.IsSuccess;
+        }, cancellationToken);
+        
+        return false;
     }
 }
