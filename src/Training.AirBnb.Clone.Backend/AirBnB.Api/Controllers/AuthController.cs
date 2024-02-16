@@ -1,4 +1,4 @@
-using System.Security.Authentication;
+﻿using System.Security.Authentication;
 using System.Security.Claims;
 using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Models;
@@ -29,6 +29,12 @@ public class AuthController(IMapper mapper, IAuthService authService, IRequestUs
         return Ok(mapper.Map<IdentityTokenDto>(result));
     }
     
+    [HttpPut("refresh-token")]
+    public async ValueTask<IActionResult> RefreshToken([FromBody] string refreshTokenValue, CancellationToken cancellationToken)
+    {
+        var result = await authService.RefreshTokenAsync(refreshTokenValue, cancellationToken);
+        return Ok(mapper.Map<AccessTokenDto>(result));
+    }
     
     [Authorize(Roles = "Admin, System")]
     [HttpPost("users/{userId:guid}/roles/{roleType}")]

@@ -1,6 +1,7 @@
 using System.Text;
 using System.Reflection;
 using AirBnB.Api.Data;
+using AirBnB.Api.Formatters;
 using AirBnB.Api.Middlewares;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
@@ -388,7 +389,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(
+            options =>
+            {
+                options.InputFormatters.Add(new TextInputFormatter());
+            }
+        );
 
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
