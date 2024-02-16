@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AirBnB.Domain.Entities;
 
-namespace AirBnB.Application.Common.Notifications.Services;
+namespace AirBnB.Application.Common.Identity.Services;
 
 /// <summary>
 /// Interface for a service responsible for generating and managing access tokens.

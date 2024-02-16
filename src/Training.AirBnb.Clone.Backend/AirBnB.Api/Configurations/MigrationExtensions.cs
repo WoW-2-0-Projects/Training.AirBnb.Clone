@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AirBnb.Api.Configurations;
+namespace AirBnB.Api.Configurations;
 
 public static class MigrationExtensions
 {
