@@ -8,10 +8,17 @@ using Microsoft.Extensions.Options;
 
 namespace AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 
-public class RequestUserContextProvider(IHttpContextAccessor httpContextAccessor, IOptions<RequestUserContextSettings> userContextProvider)
+public class RequestUserContextProvider(
+    IHttpContextAccessor httpContextAccessor, 
+    IOptions<RequestUserContextSettings> userContextProvider)
     : IRequestUserContextProvider
 {
     private readonly RequestUserContextSettings _requestUserContextSettings = userContextProvider.Value;
+
+    public string? GetAccessToken()
+    {
+        return httpContextAccessor.HttpContext?.Request.Headers.Authorization;
+    }
 
     public Guid GetUserId()
     {

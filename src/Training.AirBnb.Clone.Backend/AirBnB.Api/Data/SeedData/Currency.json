@@ -1,0 +1,974 @@
+[
+  {
+    "Id": "13f1e440-8781-4463-a20d-5c1eb8185326",
+    "Name": "Mauritanian ouguiya",
+    "Symbol": "UM",
+    "Code": "currencies.MRU"
+  },
+  {
+    "Id": "cc00afca-0650-4fe1-a0fb-6ae6c97fd321",
+    "Name": "Aruban florin",
+    "Symbol": "ƒ",
+    "Code": "currencies.AWG"
+  },
+  {
+    "Id": "887d5f90-f380-46b4-8bf1-ce389b79c39c",
+    "Name": "Argentine peso",
+    "Symbol": "$",
+    "Code": "currencies.ARS"
+  },
+  {
+    "Id": "9e42f92c-522a-44bb-8038-08c71d287a5b",
+    "Name": "Swedish krona",
+    "Symbol": "kr",
+    "Code": "currencies.SEK"
+  },
+  {
+    "Id": "4b75fc35-3b89-479b-babe-e4b3e27f24aa",
+    "Name": "Maldivian rufiyaa",
+    "Symbol": ".ރ",
+    "Code": "currencies.MVR"
+  },
+  {
+    "Id": "db74cd39-c9f1-4241-bc02-b1d421b2ec43",
+    "Name": "Mexican peso",
+    "Symbol": "$",
+    "Code": "currencies.MXN"
+  },
+  {
+    "Id": "66fd6ded-427e-4a53-b0a4-e753a97d5813",
+    "Name": "New Zealand dollar",
+    "Symbol": "$",
+    "Code": "currencies.NZD"
+  },
+  {
+    "Id": "90A9B652-99A3-4A5F-8215-C92B7F00542F",
+    "Name": "CFP franc",
+    "Symbol": "₣",
+    "Code": "currencies.XPF"
+  },
+  {
+    "Id": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "Name": "United States dollar",
+    "Symbol": "$",
+    "Code": "currencies.USD"
+  },
+  {
+    "Id": "b4659204-3d92-4f9a-9d52-effd3af7a38c",
+    "Name": "CFP franc",
+    "Symbol": "₣",
+    "Code": "currencies.XPF"
+  },
+  {
+    "Id": "2220d57d-94ec-4518-8abc-da820350b524",
+    "Name": "Euro",
+    "Symbol": "€",
+    "Code": "currencies.EUR"
+  },
+  {
+    "Id": "37a376a6-4cc8-4a45-ac71-a1d363705bec",
+    "Name": "Pakistani rupee",
+    "Symbol": "₨",
+    "Code": "currencies.PKR"
+  },
+  {
+    "Id": "4955bd6d-28df-41f6-9ee8-31d2dad1107a",
+    "Name": "Zambian kwacha",
+    "Symbol": "ZK",
+    "Code": "currencies.ZMW"
+  },
+  {
+    "Id": "126b6527-e619-4814-8384-231383554680",
+    "Name": "Seychellois rupee",
+    "Symbol": "₨",
+    "Code": "currencies.SCR"
+  },
+  {
+    "Id": "34e46804-a665-4f38-ab13-bad0c9896cff",
+    "Name": "Malaysian ringgit",
+    "Symbol": "RM",
+    "Code": "currencies.MYR"
+  },
+  {
+    "Id": "8499a1fa-69a4-47e5-8682-f58b6023d11c",
+    "Name": "Norwegian krone",
+    "Symbol": "kr",
+    "Code": "currencies.NOK"
+  },
+  {
+    "Id": "7020438a-0552-49f4-85f7-4e876b54f61d",
+    "Name": "Uzbekistani soʻm",
+    "Symbol": "so'm",
+    "Code": "currencies.UZS"
+  },
+  {
+    "Id": "1e8956f0-d1bc-430d-87a3-d9b0fbe82337",
+    "Name": "Vanuatu vatu",
+    "Symbol": "Vt",
+    "Code": "currencies.VUV"
+  },
+  {
+    "Id": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "Name": "Australian dollar",
+    "Symbol": "$",
+    "Code": "currencies.AUD"
+  },
+  {
+    "Id": "b379ea28-fd37-435f-a54c-0c18e562be51",
+    "Name": "Singapore dollar",
+    "Symbol": "$",
+    "Code": "currencies.SGD"
+  },
+  {
+    "Id": "26283437-7ee1-4a06-82ab-f1b861b6913f",
+    "Name": "Surinamese dollar",
+    "Symbol": "$",
+    "Code": "currencies.SRD"
+  },
+  {
+    "Id": "75a3f81d-f912-41ff-b1f1-0cc2de4421b8",
+    "Name": "Algerian dinar",
+    "Symbol": "دج",
+    "Code": "currencies.DZD"
+  },
+  {
+    "Id": "ae11a4cb-469f-47b6-a139-ccfe7eaf8d4f",
+    "Name": "Costa Rican colón",
+    "Symbol": "₡",
+    "Code": "currencies.CRC"
+  },
+  {
+    "Id": "6e1fd6a8-938e-4138-96ef-7cef6c3da0f9",
+    "Name": "Libyan dinar",
+    "Symbol": "ل.د",
+    "Code": "currencies.LYD"
+  },
+  {
+    "Id": "49d78922-5d68-44c6-bd05-fa75467fea71",
+    "Name": "Qatari riyal",
+    "Symbol": "ر.ق",
+    "Code": "currencies.QAR"
+  },
+  {
+    "Id": "44d1a72c-b488-4b64-8f99-f19f1c83d9f3",
+    "Name": "krone",
+    "Symbol": "kr.",
+    "Code": "currencies.DKK"
+  },
+  {
+    "Id": "70975964-ca47-4dd3-86ab-5a38b0558676",
+    "Name": "Mauritian rupee",
+    "Symbol": "₨",
+    "Code": "currencies.MUR"
+  },
+  {
+    "Id": "75198344-e8b3-4e1e-b56d-cccd4ec4cd9f",
+    "Name": "Kazakhstani tenge",
+    "Symbol": "₸",
+    "Code": "currencies.KZT"
+  },
+  {
+    "Id": "927b0642-f900-4491-9570-072f441b05b6",
+    "Name": "Albanian lek",
+    "Symbol": "L",
+    "Code": "currencies.ALL"
+  },
+  {
+    "Id": "c92efa0d-6020-4f53-8e73-062bee0b5e99",
+    "Name": "Bahraini dinar",
+    "Symbol": ".د.ب",
+    "Code": "currencies.BHD"
+  },
+  {
+    "Id": "1da626d3-18fd-4fbd-90d9-0e38979db3e7",
+    "Name": "Papua New Guinean kina",
+    "Symbol": "K",
+    "Code": "currencies.PGK"
+  },
+  {
+    "Id": "c9ef4205-b9f1-4c3d-9c94-a04ea884d989",
+    "Name": "Burundian franc",
+    "Symbol": "Fr",
+    "Code": "currencies.BIF"
+  },
+  {
+    "Id": "7f1383ea-5083-4b38-b682-cfd5a38a1e52",
+    "Name": "Indian rupee",
+    "Symbol": "₹",
+    "Code": "currencies.INR"
+  },
+  {
+    "Id": "1520c551-edc7-4330-86c4-3d691502bcef",
+    "Name": "Uruguayan peso",
+    "Symbol": "$",
+    "Code": "currencies.UYU"
+  },
+  {
+    "Id": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "Name": "Eastern Caribbean dollar",
+    "Symbol": "$",
+    "Code": "currencies.XCD"
+  },
+  {
+    "Id": "7d1af552-097b-48d0-afe1-7ac0396fbf4c",
+    "Name": "Barbadian dollar",
+    "Symbol": "$",
+    "Code": "currencies.BBD"
+  },
+  {
+    "Id": "7703e758-4b74-476c-a370-292078defa38",
+    "Name": "Macanese pataca",
+    "Symbol": "P",
+    "Code": "currencies.MOP"
+  },
+  {
+    "Id": "43fa6837-2809-460b-846a-86001466e37a",
+    "Name": "British pound",
+    "Symbol": "£",
+    "Code": "currencies.GBP"
+  },
+  {
+    "Id": "a70e8ebf-03f0-4e4e-aad1-cc4f14893667",
+    "Name": "Syrian pound",
+    "Symbol": "£",
+    "Code": "currencies.SYP"
+  },
+  {
+    "Id": "8803d10f-21bf-4082-ae91-35807bbc4725",
+    "Name": "Netherlands Antillean guilder",
+    "Symbol": "ƒ",
+    "Code": "currencies.ANG"
+  },
+  {
+    "Id": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "Name": "West African CFA franc",
+    "Symbol": "Fr",
+    "Code": "currencies.XOF"
+  },
+  {
+    "Id": "6113d801-674e-4b6e-97fa-a948c50e267c",
+    "Name": "Kyrgyzstani som",
+    "Symbol": "с",
+    "Code": "currencies.KGS"
+  },
+  {
+    "Id": "5242f13a-dc2a-4a9b-a1a7-dfff6d6a5b8a",
+    "Name": "Trinidad and Tobago dollar",
+    "Symbol": "$",
+    "Code": "currencies.TTD"
+  },
+  {
+    "Id": "353469fd-dd16-496d-9eaf-a6900a05cfd3",
+    "Name": "Egyptian pound",
+    "Symbol": "E£",
+    "Code": "currencies.EGP"
+  },
+  {
+    "Id": "f5668f49-0b21-4ee7-bf14-30314bb8c7ad",
+    "Name": "Malagasy ariary",
+    "Symbol": "Ar",
+    "Code": "currencies.MGA"
+  },
+  {
+    "Id": "833a7823-fd36-4e9f-8657-d17f30a3c05b",
+    "Name": "Danish krone",
+    "Symbol": "kr",
+    "Code": "currencies.DKK"
+  },
+  {
+    "Id": "f71add90-5c6e-4227-86bb-6b77b4b449b7",
+    "Name": "Haitian gourde",
+    "Symbol": "G",
+    "Code": "currencies.HTG"
+  },
+  {
+    "Id": "c9c99806-40bd-47c1-9b9a-732682272a9f",
+    "Name": "Cook Islands dollar",
+    "Symbol": "$",
+    "Code": "currencies.CKD"
+  },
+  {
+    "Id": "9b589dd7-8eab-4a91-84eb-d41810d3fbf9",
+    "Name": "Cuban convertible peso",
+    "Symbol": "$",
+    "Code": "currencies.CUC"
+  },
+  {
+    "Id": "64565f65-5a65-4dee-9676-cf2d076c18c2",
+    "Name": "New Taiwan dollar",
+    "Symbol": "$",
+    "Code": "currencies.TWD"
+  },
+  {
+    "Id": "87cf6c22-7473-4406-8749-4f7df8ab7915",
+    "Name": "Swazi lilangeni",
+    "Symbol": "L",
+    "Code": "currencies.SZL"
+  },
+  {
+    "Id": "f3eece98-03c0-4b37-82b1-3bc6f5118c66",
+    "Name": "Ukrainian hryvnia",
+    "Symbol": "₴",
+    "Code": "currencies.UAH"
+  },
+  {
+    "Id": "874ecad7-a1df-4319-9e58-cc08e75eec39",
+    "Name": "Bermudian dollar",
+    "Symbol": "$",
+    "Code": "currencies.BMD"
+  },
+  {
+    "Id": "e5d3682e-15c5-4aca-96c5-600b020b10a2",
+    "Name": "South Korean won",
+    "Symbol": "₩",
+    "Code": "currencies.KRW"
+  },
+  {
+    "Id": "74cd0c71-85fd-4967-9383-569441e0c0ad",
+    "Name": "Peruvian sol",
+    "Symbol": "S/ ",
+    "Code": "currencies.PEN"
+  },
+  {
+    "Id": "b8ef6c55-39bd-492c-8ce8-775fd8599c4f",
+    "Name": "Iraqi dinar",
+    "Symbol": "ع.د",
+    "Code": "currencies.IQD"
+  },
+  {
+    "Id": "c2f81ba1-f828-468a-825a-dd3ec1a71121",
+    "Name": "Moldovan leu",
+    "Symbol": "L",
+    "Code": "currencies.MDL"
+  },
+  {
+    "Id": "93f9f06e-1529-4821-888d-bcc41f323558",
+    "Name": "Venezuelan bolívar soberano",
+    "Symbol": "Bs.S.",
+    "Code": "currencies.VES"
+  },
+  {
+    "Id": "dc174ae1-6dde-435f-a304-c4941d2c2945",
+    "Name": "Guyanese dollar",
+    "Symbol": "$",
+    "Code": "currencies.GYD"
+  },
+  {
+    "Id": "5a718aec-c151-4505-967d-c820f8c33feb",
+    "Name": "Cayman Islands dollar",
+    "Symbol": "$",
+    "Code": "currencies.KYD"
+  },
+  {
+    "Id": "9bf4c736-5abf-4869-b44a-bc233a0357f0",
+    "Name": "Cambodian riel",
+    "Symbol": "៛",
+    "Code": "currencies.KHR"
+  },
+  {
+    "Id": "68aef313-ae2f-4b6f-b8fa-eeb4292b5a4d",
+    "Name": "Sri Lankan rupee",
+    "Symbol": "Rs  රු",
+    "Code": "currencies.LKR"
+  },
+  {
+    "Id": "df02cd1b-cc95-4eb3-921a-26d1e1a3a7eb",
+    "Name": "Israeli new shekel",
+    "Symbol": "₪",
+    "Code": "currencies.ILS"
+  },
+  {
+    "Id": "145d7eb8-f266-470e-8457-d22d013064d8",
+    "Name": "Eritrean nakfa",
+    "Symbol": "Nfk",
+    "Code": "currencies.ERN"
+  },
+  {
+    "Id": "609b601f-8c47-4730-b5a0-c407d1e2f1f6",
+    "Name": "Somali shilling",
+    "Symbol": "Sh",
+    "Code": "currencies.SOS"
+  },
+  {
+    "Id": "dfc31571-197b-4e40-8726-19ca7d1819ad",
+    "Name": "Comorian franc",
+    "Symbol": "Fr",
+    "Code": "currencies.KMF"
+  },
+  {
+    "Id": "8bfd494f-0cdc-4877-b08e-45ee63e1d616",
+    "Name": "Nicaraguan córdoba",
+    "Symbol": "C$",
+    "Code": "currencies.NIO"
+  },
+  {
+    "Id": "c8b8ba81-a766-4795-a096-6aa2340c1e68",
+    "Name": "Russian ruble",
+    "Symbol": "₽",
+    "Code": "currencies.RUB"
+  },
+  {
+    "Id": "cbbf8e7d-7706-4ba8-a8cb-11ee82e94b43",
+    "Name": "Ugandan shilling",
+    "Symbol": "Sh",
+    "Code": "currencies.UGX"
+  },
+  {
+    "Id": "91f43928-8554-4136-b016-e07b1eaad720",
+    "Name": "Swiss franc",
+    "Symbol": "Fr.",
+    "Code": "currencies.CHF"
+  },
+  {
+    "Id": "35ABF431-DF07-4918-85E1-0CA070DEDD56",
+    "Name": "Bosnia and Herzegovina convertible mark",
+    "Symbol": "KM",
+    "Code": "currencies.BAM"
+  },
+  {
+    "Id": "baf505b5-7b5e-406f-a457-80ffe1729f70",
+    "Name": "Tajikistani somoni",
+    "Symbol": "ЅМ",
+    "Code": "currencies.TJS"
+  },
+  {
+    "Id": "04e7701e-f96a-4263-935c-8df374aeb876",
+    "Name": "South Sudanese pound",
+    "Symbol": "£",
+    "Code": "currencies.SSP"
+  },
+  {
+    "Id": "5708C399-9A81-4763-9770-EDADBAFDD327",
+    "Name": "Sudanese pound",
+    "Symbol": "ج.س",
+    "Code": "currencies.SDG"
+  },
+  {
+    "Id": "acc4847f-bc97-4c0b-bf64-4604aa6ca20b",
+    "Name": "Czech koruna",
+    "Symbol": "Kč",
+    "Code": "currencies.CZK"
+  },
+  {
+    "Id": "981a3e29-fb92-4b5a-9aa0-d78fde374a0b",
+    "Name": "Botswana pula",
+    "Symbol": "P",
+    "Code": "currencies.BWP"
+  },
+  {
+    "Id": "7027cfe4-dae5-4b66-a1fb-007bf6bb5c7d",
+    "Name": "Tunisian dinar",
+    "Symbol": "د.ت",
+    "Code": "currencies.TND"
+  },
+  {
+    "Id": "bade6442-eff9-4c26-9d3d-fd02f36866ff",
+    "Name": "Algerian dinar",
+    "Symbol": "د.ج",
+    "Code": "currencies.DZD"
+  },
+  {
+    "Id": "628c33a8-0ad6-45bc-bbc3-695056417fb9",
+    "Name": "Jamaican dollar",
+    "Symbol": "$",
+    "Code": "currencies.JMD"
+  },
+  {
+    "Id": "7ea46ce0-2898-457e-9d27-ea938b74bb03",
+    "Name": "Mozambican metical",
+    "Symbol": "MT",
+    "Code": "currencies.MZN"
+  },
+  {
+    "Id": "b39ed949-5c7c-4350-b11a-de54d036ea40",
+    "Name": "Honduran lempira",
+    "Symbol": "L",
+    "Code": "currencies.HNL"
+  },
+  {
+    "Id": "d1653c41-a3b7-4ec8-b415-e2a8dc63820e",
+    "Name": "South African rand",
+    "Symbol": "R",
+    "Code": "currencies.ZAR"
+  },
+  {
+    "Id": "111e3d1b-bd12-4997-96ba-b294b6b6a8a7",
+    "Name": "Azerbaijani manat",
+    "Symbol": "₼",
+    "Code": "currencies.AZN"
+  },
+  {
+    "Id": "055447f4-ba08-4bbf-9ee9-ede83c453772",
+    "Name": "denar",
+    "Symbol": "den",
+    "Code": "currencies.MKD"
+  },
+  {
+    "Id": "73a4376e-3c5c-452c-8e61-c10a6d2f32a1",
+    "Name": "dalasi",
+    "Symbol": "D",
+    "Code": "currencies.GMD"
+  },
+  {
+    "Id": "74ffcbbe-8cb2-4cfe-9ffa-d079e93eef6f",
+    "Name": "Liberian dollar",
+    "Symbol": "$",
+    "Code": "currencies.LRD"
+  },
+  {
+    "Id": "46dc0abe-9830-4198-9e08-983c70757890",
+    "Name": "Cape Verdean escudo",
+    "Symbol": "Esc",
+    "Code": "currencies.CVE"
+  },
+  {
+    "Id": "b1e06526-829c-4cb6-996c-0bf90b7438c7",
+    "Name": "Bahamian dollar",
+    "Symbol": "$",
+    "Code": "currencies.BSD"
+  },
+  {
+    "Id": "412ac9e9-e454-43fb-aef4-373f3fc06a3d",
+    "Name": "lari",
+    "Symbol": "₾",
+    "Code": "currencies.GEL"
+  },
+  {
+    "Id": "3ace0d5c-00b7-4333-8cf7-81993ae26b28",
+    "Name": "Tanzanian shilling",
+    "Symbol": "Sh",
+    "Code": "currencies.TZS"
+  },
+  {
+    "Id": "01745f7b-cf84-4095-8983-8e93a33f637c",
+    "Name": "Chinese yuan",
+    "Symbol": "¥",
+    "Code": "currencies.CNY"
+  },
+  {
+    "Id": "b3c3da42-2111-40ea-8c68-ed913b8f5ca0",
+    "Name": "Guatemalan quetzal",
+    "Symbol": "Q",
+    "Code": "currencies.GTQ"
+  },
+  {
+    "Id": "18a05036-d351-41e4-9f80-4734d22b5c60",
+    "Name": "São Tomé and Príncipe dobra",
+    "Symbol": "Db",
+    "Code": "currencies.STN"
+  },
+  {
+    "Id": "f6c6e77c-1ec9-48fa-b3f4-bda9c7fd6763",
+    "Name": "Sierra Leonean leone",
+    "Symbol": "Le",
+    "Code": "currencies.SLL"
+  },
+  {
+    "Id": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "Name": "Central African CFA franc",
+    "Symbol": "Fr",
+    "Code": "currencies.XAF"
+  },
+  {
+    "Id": "130341a9-edb2-44cc-9885-82207909f4ae",
+    "Name": "Thai baht",
+    "Symbol": "฿",
+    "Code": "currencies.THB"
+  },
+  {
+    "Id": "5d210733-a232-4325-87dd-d5f84144554c",
+    "Name": "Indonesian rupiah",
+    "Symbol": "Rp",
+    "Code": "currencies.IDR"
+  },
+  {
+    "Id": "3c723dce-eaad-4fb0-9235-3fe78337bf83",
+    "Name": "Gibraltar pound",
+    "Symbol": "£",
+    "Code": "currencies.GIP"
+  },
+  {
+    "Id": "06e705cd-6448-4ac3-a38e-6b4d0157f84f",
+    "Name": "Turkmenistan manat",
+    "Symbol": "m",
+    "Code": "currencies.TMT"
+  },
+  {
+    "Id": "4c074cb8-2e37-484d-9645-df7b7ff20c9f",
+    "Name": "Moroccan dirham",
+    "Symbol": "د.م.",
+    "Code": "currencies.MAD"
+  },
+  {
+    "Id": "2403fbb1-90a2-43d4-be92-4fbb52d4dce4",
+    "Name": "Dominican peso",
+    "Symbol": "$",
+    "Code": "currencies.DOP"
+  },
+  {
+    "Id": "b589208e-c145-46ae-8233-4ce72398ff9a",
+    "Name": "Ghanaian cedi",
+    "Symbol": "₵",
+    "Code": "currencies.GHS"
+  },
+  {
+    "Id": "c30fd4ec-e897-49fa-b1b3-e6d4ec169604",
+    "Name": "Turkish lira",
+    "Symbol": "₺",
+    "Code": "currencies.TRY"
+  },
+  {
+    "Id": "c0e8824b-658d-47cc-8fae-1a24c69b30a7",
+    "Name": "Iranian rial",
+    "Symbol": "﷼",
+    "Code": "currencies.IRR"
+  },
+  {
+    "Id": "ce1ea0c6-c16f-4afe-a382-7dd00e1c466c",
+    "Name": "Egyptian pound",
+    "Symbol": "£",
+    "Code": "currencies.EGP"
+  },
+  {
+    "Id": "0a44e2b1-5d1a-4c1e-81b5-6c1b9c7c5ba2",
+    "Name": "Kenyan shilling",
+    "Symbol": "Sh",
+    "Code": "currencies.KES"
+  },
+  {
+    "Id": "e35e60b1-eeaa-44e1-8e39-70f34f2c5795",
+    "Name": "Bulgarian lev",
+    "Symbol": "лв",
+    "Code": "currencies.BGN"
+  },
+  {
+    "Id": "79e0fc92-ea15-4b9b-99cf-29fba5f0e523",
+    "Name": "Zimbabwean dollar",
+    "Symbol": "$",
+    "Code": "currencies.ZWL"
+  },
+  {
+    "Id": "616565c5-13d7-49ee-8d44-81962c4406bc",
+    "Name": "Angolan kwanza",
+    "Symbol": "Kz",
+    "Code": "currencies.AOA"
+  },
+  {
+    "Id": "f03e7ed5-3afe-4c49-8e89-75cb40d71af9",
+    "Name": "Nigerian naira",
+    "Symbol": "₦",
+    "Code": "currencies.NGN"
+  },
+  {
+    "Id": "91aea072-9a28-43de-962a-d3e0c1305b4c",
+    "Name": "Polish złoty",
+    "Symbol": "zł",
+    "Code": "currencies.PLN"
+  },
+  {
+    "Id": "e930b13f-c270-4870-aaff-65d8240db315",
+    "Name": "Pound sterling",
+    "Symbol": "£",
+    "Code": "currencies.GBP"
+  },
+  {
+    "Id": "d3df9be3-f968-433e-99b7-ab5934c79519",
+    "Name": "Lebanese pound",
+    "Symbol": "ل.ل",
+    "Code": "currencies.LBP"
+  },
+  {
+    "Id": "f4bab540-268e-4ca7-aa2f-c1581a5d96af",
+    "Name": "Samoan tālā",
+    "Symbol": "T",
+    "Code": "currencies.WST"
+  },
+  {
+    "Id": "510b6f73-090e-4492-8501-cc11ea87388f",
+    "Name": "Philippine peso",
+    "Symbol": "₱",
+    "Code": "currencies.PHP"
+  },
+  {
+    "Id": "d444673d-0821-4e1c-9060-cf49f11fab8a",
+    "Name": "Kuwaiti dinar",
+    "Symbol": "د.ك",
+    "Code": "currencies.KWD"
+  },
+  {
+    "Id": "4a88e6f7-388f-45c1-a20b-58556e554ed0",
+    "Name": "Tongan paʻanga",
+    "Symbol": "T$",
+    "Code": "currencies.TOP"
+  },
+  {
+    "Id": "d95d31a2-4f48-4bd3-94c3-0e59d7487e91",
+    "Name": "Omani rial",
+    "Symbol": "ر.ع.",
+    "Code": "currencies.OMR"
+  },
+  {
+    "Id": "769eb2b7-a3e2-49d7-adbb-7e60e4ed4d25",
+    "Name": "Afghan afghani",
+    "Symbol": "؋",
+    "Code": "currencies.AFN"
+  },
+  {
+    "Id": "d218803c-a4a6-4839-8072-998581039f8a",
+    "Name": "Serbian dinar",
+    "Symbol": "дин.",
+    "Code": "currencies.RSD"
+  },
+  {
+    "Id": "5991757a-75ad-4f4b-976f-46512dabba7b",
+    "Name": "Armenian dram",
+    "Symbol": "֏",
+    "Code": "currencies.AMD"
+  },
+  {
+    "Id": "6d72deff-e99f-43cb-94bb-6ba4c3b05be7",
+    "Name": "Bangladeshi taka",
+    "Symbol": "৳",
+    "Code": "currencies.BDT"
+  },
+  {
+    "Id": "4bbc23ea-7163-4303-b696-b957dfbb4f0a",
+    "Name": "Lao kip",
+    "Symbol": "₭",
+    "Code": "currencies.LAK"
+  },
+  {
+    "Id": "c89f3b8b-464f-4ee6-b0ab-4c6bcbbc2e82",
+    "Name": "Chilean peso",
+    "Symbol": "$",
+    "Code": "currencies.CLP"
+  },
+  {
+    "Id": "f2739815-01fa-429a-9f7e-69260e48c87e",
+    "Name": "Panamanian balboa",
+    "Symbol": "B/.",
+    "Code": "currencies.PAB"
+  },
+  {
+    "Id": "09c1e78e-191c-4fea-b8da-be8755d1b983",
+    "Name": "Nepalese rupee",
+    "Symbol": "₨",
+    "Code": "currencies.NPR"
+  },
+  {
+    "Id": "d4e84177-fb0a-4ad3-8aa6-fb682384651e",
+    "Name": "Burmese kyat",
+    "Symbol": "Ks",
+    "Code": "currencies.MMK"
+  },
+  {
+    "Id": "1e46e656-ab45-494e-b34c-8f3f7266acbd",
+    "Name": "Falkland Islands pound",
+    "Symbol": "£",
+    "Code": "currencies.FKP"
+  },
+  {
+    "Id": "614c7130-d49d-4015-9093-faa4e9da1d62",
+    "Name": "Hungarian forint",
+    "Symbol": "Ft",
+    "Code": "currencies.HUF"
+  },
+  {
+    "Id": "fadc886e-4a99-485b-a229-400091721016",
+    "Name": "Guinean franc",
+    "Symbol": "Fr",
+    "Code": "currencies.GNF"
+  },
+  {
+    "Id": "e9bbfe8f-0b87-4f79-9673-d0bbd6844e86",
+    "Name": "United Arab Emirates dirham",
+    "Symbol": "د.إ",
+    "Code": "currencies.AED"
+  },
+  {
+    "Id": "668ff440-432e-481c-bea8-d868c164c7dc",
+    "Name": "Swiss franc",
+    "Symbol": "Fr",
+    "Code": "currencies.CHF"
+  },
+  {
+    "Id": "90fa7283-1785-4989-99a6-4cc1df8608f8",
+    "Name": "Malawian kwacha",
+    "Symbol": "MK",
+    "Code": "currencies.MWK"
+  },
+  {
+    "Id": "c3fde39f-49c8-4fb3-aeeb-9790c01a75f8",
+    "Name": "Bhutanese ngultrum",
+    "Symbol": "Nu.",
+    "Code": "currencies.BTN"
+  },
+  {
+    "Id": "3edff555-b17e-40db-9cc4-88e203887d1c",
+    "Name": "Jordanian dinar",
+    "Symbol": "د.ا",
+    "Code": "currencies.JOD"
+  },
+  {
+    "Id": "11240ad9-539d-446e-b8bd-3c45fdbb830d",
+    "Name": "Congolese franc",
+    "Symbol": "FC",
+    "Code": "currencies.CDF"
+  },
+  {
+    "Id": "f665e37f-3f38-4c74-a636-6dd1a6c18411",
+    "Name": "Vietnamese đồng",
+    "Symbol": "₫",
+    "Code": "currencies.VND"
+  },
+  {
+    "Id": "db80a7d0-5302-49bc-8ff2-01202fdad6a5",
+    "Name": "Brazilian real",
+    "Symbol": "R$",
+    "Code": "currencies.BRL"
+  },
+  {
+    "Id": "d5f27039-abc6-411a-b9d7-1642911299e0",
+    "Name": "Belize dollar",
+    "Symbol": "$",
+    "Code": "currencies.BZD"
+  },
+  {
+    "Id": "6c255f3b-9323-42bc-b52d-1dcb06517db4",
+    "Name": "Paraguayan guaraní",
+    "Symbol": "₲",
+    "Code": "currencies.PYG"
+  },
+  {
+    "Id": "9a6a28fd-3b1e-42c2-a53b-74344b9d14d9",
+    "Name": "Brunei dollar",
+    "Symbol": "$",
+    "Code": "currencies.BND"
+  },
+  {
+    "Id": "610f8a37-1bee-40e4-867c-437cdb4b9804",
+    "Name": "Bolivian boliviano",
+    "Symbol": "Bs.",
+    "Code": "currencies.BOB"
+  },
+  {
+    "Id": "bdd9271f-2cf7-4948-9635-344d12a1bc21",
+    "Name": "Djiboutian franc",
+    "Symbol": "Fr",
+    "Code": "currencies.DJF"
+  },
+  {
+    "Id": "a1c804be-3cfa-4bc1-b614-002a3948d01c",
+    "Name": "Canadian dollar",
+    "Symbol": "$",
+    "Code": "currencies.CAD"
+  },
+  {
+    "Id": "3823cf52-9e42-4a4f-a50a-1bfe17d2e551",
+    "Name": "Japanese yen",
+    "Symbol": "¥",
+    "Code": "currencies.JPY"
+  },
+  {
+    "Id": "276ee547-5219-4f17-8898-7fa9500e9d7a",
+    "Name": "Rwandan franc",
+    "Symbol": "Fr",
+    "Code": "currencies.RWF"
+  },
+  {
+    "Id": "140523fd-504e-4379-8434-f2b9c028f6e2",
+    "Name": "Icelandic króna",
+    "Symbol": "kr",
+    "Code": "currencies.ISK"
+  },
+  {
+    "Id": "5f148150-f153-4f48-a7f0-1b997333b8ea",
+    "Name": "Belarusian ruble",
+    "Symbol": "Br",
+    "Code": "currencies.BYN"
+  },
+  {
+    "Id": "85faf17f-2447-496f-ae85-b2caff79c6e9",
+    "Name": "Hong Kong dollar",
+    "Symbol": "$",
+    "Code": "currencies.HKD"
+  },
+  {
+    "Id": "a5bd16e2-46db-49e5-acc8-63f5a50766af",
+    "Name": "Lesotho loti",
+    "Symbol": "L",
+    "Code": "currencies.LSL"
+  },
+  {
+    "Id": "20eb93a7-b5e9-425b-9431-0ab73549f7f9",
+    "Name": "Fijian dollar",
+    "Symbol": "$",
+    "Code": "currencies.FJD"
+  },
+  {
+    "Id": "8fe66338-6de4-4c11-8f39-d1fe0cba960c",
+    "Name": "Colombian peso",
+    "Symbol": "$",
+    "Code": "currencies.COP"
+  },
+  {
+    "Id": "efd55bb1-2b1e-439f-80b6-650291dfbe0c",
+    "Name": "Saudi riyal",
+    "Symbol": "ر.س",
+    "Code": "currencies.SAR"
+  },
+  {
+    "Id": "5177087e-a8bb-4f52-947e-3c5cc1250863",
+    "Name": "Saint Helena pound",
+    "Symbol": "£",
+    "Code": "currencies.SHP"
+  },
+  {
+    "Id": "84bc05c3-2811-49f8-8f12-391ad211d801",
+    "Name": "Ethiopian birr",
+    "Symbol": "Br",
+    "Code": "currencies.ETB"
+  },
+  {
+    "Id": "8c4d7d55-3f2a-466a-8f7e-a0b901b42604",
+    "Name": "North Korean won",
+    "Symbol": "₩",
+    "Code": "currencies.KPW"
+  },
+  {
+    "Id": "19831214-8486-47e5-afa7-562e00b3cbbe",
+    "Name": "Namibian dollar",
+    "Symbol": "$",
+    "Code": "currencies.NAD"
+  },
+  {
+    "Id": "b831ecd2-cc22-4349-ba2e-ac5b80703e35",
+    "Name": "Mongolian tögrög",
+    "Symbol": "₮",
+    "Code": "currencies.MNT"
+  },
+  {
+    "Id": "8028f344-6ef1-4b3a-8a54-525a41c3434f",
+    "Name": "Solomon Islands dollar",
+    "Symbol": "$",
+    "Code": "currencies.SBD"
+  },
+  {
+    "Id": "1e7e9ef3-e4f6-40bb-b257-7590aeebd132",
+    "Name": "Yemeni rial",
+    "Symbol": "﷼",
+    "Code": "currencies.YER"
+  },
+  {
+    "Id": "6700468c-b443-48d1-9c7b-491c6097e2be",
+    "Name": "Romanian leu",
+    "Symbol": "lei",
+    "Code": "currencies.RON"
+  },
+  {
+    "Id": "3208208f-6cd1-47cd-932f-67619320579f",
+    "Name": "krone",
+    "Symbol": "kr",
+    "Code": "currencies.NOK"
+  }
+]

@@ -22,6 +22,7 @@ public static partial class HostConfiguration
             .AddIdentityInfrastructure()
             .AddRequestContextTools()
             .AddListingsInfrastructure()
+            .AddGlobalizationInfrastructure()
             .AddVerificationInfrastructure()
             .AddNotificationInfrastructure()
             .AddRatingsInfrastructure()
@@ -44,6 +45,7 @@ public static partial class HostConfiguration
         app
             .UseDevTools()
             .UseCors()
+            .UseIdentityInfrastructure()
             .UseExposers()
             .UseStaticFiles();
         

@@ -1,6 +1,8 @@
 using System.Text;
 using System.Reflection;
 using AirBnB.Api.Data;
+using AirBnB.Api.Formatters;
+using AirBnB.Api.Middlewares;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Brokers;
@@ -24,22 +26,27 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AirBnB.Application.Listings.Services;
+using AirBnB.Application.Locations.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Infrastructure.Common.Notifications.Brokers;
 using AirBnB.Infrastructure.Common.EventBus.Services;
 using AirBnB.Infrastructure.Common.RequestContexts.Brokers;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Application.Ratings.Settings;
+using AirBnB.Domain.Entities;
 using AirBnB.Domain.Settings;
 using AirBnB.Infrastructure.Common.EventBus.Brokers;
 using AirBnB.Infrastructure.Common.Notifications.EventSubscribers;
 using AirBnB.Infrastructure.Common.Notifications.Settings;
 using AirBnB.Infrastructure.Common.Serializers;
 using AirBnB.Infrastructure.Listings.Services;
+using AirBnB.Infrastructure.Locations.Services;
 using AirBnB.Infrastructure.Ratings.Services;
 using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
+using AirBnB.Application.Currencies.Services;
+using AirBnB.Infrastructure.Currencies.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -108,6 +115,9 @@ public static partial class HostConfiguration
                     };
                 }
             );
+        
+        // Register middlewares
+        builder.Services.AddSingleton<AccessTokenValidationMiddleware>();
 
         return builder;
     }
@@ -225,7 +235,8 @@ public static partial class HostConfiguration
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IUserRoleRepository, UserRoleRepository>()
-            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
+            .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         
         //register services
         builder.Services    
@@ -234,8 +245,8 @@ public static partial class HostConfiguration
             .AddScoped<IRoleService, RoleService>()
             .AddScoped<IAccountService, AccountService>()
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
-            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IIdentitySecurityTokenGeneratorService, IdentitySecurityTokenGeneratorService>()
+            .AddScoped<IIdentitySecurityTokenService, IdentitySecurityTokenService>()
             .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
             .AddScoped<IPasswordHasherService, PasswordHasherService>()
             .AddScoped<IRoleProcessingService, RoleProcessingService>();
@@ -275,6 +286,28 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IListingService, ListingService>()
             .AddScoped<IListingCategoryService, ListingCategoryService>();
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures Globalization Infrastructure, including services, repositories, dbContexts.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder AddGlobalizationInfrastructure(this WebApplicationBuilder builder)
+    {
+        //register repositories
+        builder.Services
+            .AddScoped<ICountryRepository, CountryRepository>()
+            .AddScoped<ICityRepository, CityRepository>()
+            .AddScoped<ICurrencyRepository, CurrencyRepository>();
+        
+        //register foundation services
+        builder.Services
+            .AddScoped<ICountryService, CountryService>()
+            .AddScoped<ICityService, CityService>()
+            .AddScoped<ICurrencyService, CurrencyService>();
 
         return builder;
     }
@@ -398,7 +431,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(
+            options =>
+            {
+                options.InputFormatters.Add(new TextInputFormatter());
+            }
+        );
 
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
@@ -434,6 +472,32 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    
+    /// <summary>
+    /// Enables CORS middleware in the web application pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static WebApplication UseCors(this WebApplication app)
+    {
+        app.UseCors("AllowSpecificOrigin");
+
+        return app;
+    }
+    
+    /// <summary>
+    /// Adds identity infrastructure middlewares
+    /// </summary>
+    /// <param name="app">Application host</param>
+    /// <returns>Application host</returns>
+    private static WebApplication UseIdentityInfrastructure(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<AccessTokenValidationMiddleware>();
+
+        return app;
+    }
 
     /// <summary>
     /// Add Controller middleWhere
@@ -443,18 +507,6 @@ public static partial class HostConfiguration
     private static WebApplication UseExposers(this WebApplication app)
     {
         app.MapControllers();
-
-        return app;
-    }
-
-    /// <summary>
-    /// Enables CORS middleware in the web application pipeline.
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    private static WebApplication UseCors(this WebApplication app)
-    {
-        app.UseCors("AllowSpecificOrigin");
 
         return app;
     }

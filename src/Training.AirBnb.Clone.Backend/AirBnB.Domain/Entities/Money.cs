@@ -8,6 +8,11 @@ namespace AirBnB.Domain.Entities;
 public class Money
 {
     /// <summary>
+    /// Gets or sets the currency id.
+    /// </summary>
+    public Guid CurrencyId { get; set; }
+    
+    /// <summary>
     /// Gets or sets the numerical amount of money.
     /// </summary>
     public decimal Amount { get; set; }
