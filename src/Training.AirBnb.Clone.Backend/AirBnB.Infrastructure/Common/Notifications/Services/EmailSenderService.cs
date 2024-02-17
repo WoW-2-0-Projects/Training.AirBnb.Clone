@@ -2,7 +2,7 @@
 using AirBnB.Application.Common.Notifications.Models;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Enums;
-using AirBnB.Domain.Extensions;
+using AirBnB.Domain.Extension;
 using AirBnB.Persistence.Extensions;
 using FluentValidation;
 

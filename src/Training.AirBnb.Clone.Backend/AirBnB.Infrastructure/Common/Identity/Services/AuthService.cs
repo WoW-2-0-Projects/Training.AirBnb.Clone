@@ -5,7 +5,7 @@ using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
-using AirBnB.Domain.Extensions;
+using AirBnB.Domain.Extension;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
