@@ -37,6 +37,14 @@ We encourage you to explore the documentation, delve into the code, and contribu
 
 ## Description
 
+## Structure of this repository
+
+`/src` - source codes
+- `Training.AirBnb.Clone.Backend` - backend application source code
+- `Training.AirBnb.Clone.Frontend` - frontend application source code
+
+`/docs` - project documentations
+
 ## Running
 
 ### Requirements
@@ -50,21 +58,21 @@ We encourage you to explore the documentation, delve into the code, and contribu
 - Open the project in an IDE
 - Run Server App and then run Client App
 
-#### 
-
-Description of the project
-
-## Features
+## Infrastructure
 
 TODO : Feature logos
 
-[Identity](docs/identity.md)
+[Identity](docs/identity/identity.md)
 
 [Notifications API](docs/notifications-api.md)
 
 [Payment API](docs/payment-api.md)
 
 [Media API](docs/media-api.md)
+
+## Business Logic
+
+[Listing registration](docs/listing-registration/listing-registration.md)
 
 ## Changelog
 
