@@ -42,7 +42,7 @@ public static class SeedDataExtensions
             await appDbContext.SeedCurrenciesAsync(webHostEnvironment);
 
         if (!await appDbContext.Countries.AnyAsync())
-            await appDbContext.SeedGlobalizationAsync(webHostEnvironment);
+            await appDbContext.SeedCountriesAsync(webHostEnvironment);
 
         if (!await appDbContext.Cities.AnyAsync())
             await appDbContext.SeedCitiesAsync(webHostEnvironment);
@@ -225,7 +225,7 @@ public static class SeedDataExtensions
         appDbContext.SaveChanges();
     }
     
-    private static async ValueTask SeedGlobalizationAsync(this AppDbContext appDbContext,
+    private static async ValueTask SeedCountriesAsync(this AppDbContext appDbContext,
         IHostEnvironment webHostEnvironment)
     {
         var globalizationFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Globalization.json");
