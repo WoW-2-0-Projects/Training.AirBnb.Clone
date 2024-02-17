@@ -17,12 +17,6 @@ namespace AirBnB.Persistence.Repositories;
 public class CountryRepository(AppDbContext appDbContext, ICacheBroker cacheBroker) 
     : EntityRepositoryBase<Country, AppDbContext>(appDbContext, cacheBroker, new CacheEntryOptions()), ICountryRepository
 {
-    /// <summary>
-    /// Retrieves countries based on an optional predicate expression and optional tracking settings.
-    /// </summary>
-    /// <param name="predicate">Optional predicate expression to filter countries.</param>
-    /// <param name="asNoTracking">Flag indicating whether to disable change tracking (default: false).</param>
-    /// <returns>An IQueryable collection of countries.</returns>
     public new IQueryable<Country> Get(Expression<Func<Country, bool>>? predicate = default, bool asNoTracking = false)
         => base.Get(predicate, asNoTracking);
 }
