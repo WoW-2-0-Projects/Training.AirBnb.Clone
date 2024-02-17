@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Entities;
 
 namespace AirBnB.Application.Common.Notifications.Services;
 

@@ -45,6 +45,7 @@ public static partial class HostConfiguration
         app
             .UseDevTools()
             .UseCors()
+            .UseIdentityInfrastructure()
             .UseExposers()
             .UseStaticFiles();
         

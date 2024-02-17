@@ -1,5 +1,6 @@
-﻿using AirBnB.Domain.Entities;
-using AirBnB.Domain.Enums;
+﻿using AirBnB.Domain.Enums;
+
+namespace AirBnB.Domain.Entities;
 
 /// <summary>
 /// Represents an email history entry for notifications. 

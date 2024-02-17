@@ -1,7 +1,8 @@
 using System.Text;
 using System.Reflection;
-using AirBnb.Api.Configurations;
 using AirBnB.Api.Data;
+using AirBnB.Api.Formatters;
+using AirBnB.Api.Middlewares;
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Brokers;
@@ -112,6 +113,9 @@ public static partial class HostConfiguration
                     };
                 }
             );
+        
+        // Register middlewares
+        builder.Services.AddSingleton<AccessTokenValidationMiddleware>();
 
         return builder;
     }
@@ -216,7 +220,8 @@ public static partial class HostConfiguration
             .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IUserRoleRepository, UserRoleRepository>()
-            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
+            .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         
         //register services
         builder.Services    
@@ -225,8 +230,8 @@ public static partial class HostConfiguration
             .AddScoped<IRoleService, RoleService>()
             .AddScoped<IAccountService, AccountService>()
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
-            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IIdentitySecurityTokenGeneratorService, IdentitySecurityTokenGeneratorService>()
+            .AddScoped<IIdentitySecurityTokenService, IdentitySecurityTokenService>()
             .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
             .AddScoped<IPasswordHasherService, PasswordHasherService>()
             .AddScoped<IRoleProcessingService, RoleProcessingService>();
@@ -411,7 +416,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(
+            options =>
+            {
+                options.InputFormatters.Add(new TextInputFormatter());
+            }
+        );
 
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(nameof(ApiSettings)));
 
@@ -447,6 +457,32 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    
+    /// <summary>
+    /// Enables CORS middleware in the web application pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    private static WebApplication UseCors(this WebApplication app)
+    {
+        app.UseCors("AllowSpecificOrigin");
+
+        return app;
+    }
+    
+    /// <summary>
+    /// Adds identity infrastructure middlewares
+    /// </summary>
+    /// <param name="app">Application host</param>
+    /// <returns>Application host</returns>
+    private static WebApplication UseIdentityInfrastructure(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<AccessTokenValidationMiddleware>();
+
+        return app;
+    }
 
     /// <summary>
     /// Add Controller middleWhere
@@ -456,18 +492,6 @@ public static partial class HostConfiguration
     private static WebApplication UseExposers(this WebApplication app)
     {
         app.MapControllers();
-
-        return app;
-    }
-
-    /// <summary>
-    /// Enables CORS middleware in the web application pipeline.
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    private static WebApplication UseCors(this WebApplication app)
-    {
-        app.UseCors("AllowSpecificOrigin");
 
         return app;
     }

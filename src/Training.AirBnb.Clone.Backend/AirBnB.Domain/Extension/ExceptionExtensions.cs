@@ -1,6 +1,6 @@
 ﻿using AirBnB.Domain.Common.Exceptions;
 
-namespace AirBnB.Domain.Extensions;
+namespace AirBnB.Domain.Extension;
 
 /// <summary>
 /// Extension methods for handling exceptions in asynchronous operations and converting them into FuncResult.
@@ -25,7 +25,7 @@ public static class ExceptionExtensions
         {
             result = new FuncResult<T>(e);
         }
-        
+
         return result;
     }
 
@@ -47,10 +47,15 @@ public static class ExceptionExtensions
         {
             result = new FuncResult<T>(e);
         }
-        
+
         return result;
     }
-    
+
+    /// <summary>
+    /// Asynchronously invokes a Func<ValueTask> and returns the result wrapped in a FuncResult<bool>.
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
     public static async ValueTask<FuncResult<bool>> GetValueAsync(this Func<ValueTask> func)
     {
         FuncResult<bool> result;
@@ -64,7 +69,29 @@ public static class ExceptionExtensions
         {
             result = new FuncResult<bool>(e);
         }
-        
+
+        return result;
+    }
+
+    /// <summary>
+    /// Asynchronously invokes a Func<T> and returns FuncResult<T>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    public static FuncResult<T> GetValue<T>(this Func<T> func)
+    {
+        FuncResult<T> result;
+
+        try
+        {
+            result = new FuncResult<T>(func());
+        }
+        catch (Exception e)
+        {
+            result = new FuncResult<T>(e);
+        }
+
         return result;
     }
 }

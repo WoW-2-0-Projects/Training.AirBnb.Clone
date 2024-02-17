@@ -14,4 +14,9 @@ public class SignInDetails
     /// Gets or sets password of the Login details
     /// </summary>
     public string Password { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to remember users
+    /// </summary>
+    public bool RememberMe { get; set; }
 }

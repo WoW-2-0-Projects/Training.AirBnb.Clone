@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AirBnB.Domain.Entities;
 
 namespace AirBnB.Persistence.Repositories.Interfaces;
 
