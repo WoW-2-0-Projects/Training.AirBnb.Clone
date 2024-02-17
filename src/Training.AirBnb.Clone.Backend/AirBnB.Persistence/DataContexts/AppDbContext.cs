@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using AirBnB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +45,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes => Set<UserInfoVerificationCode>();
 
     #endregion
+    
     #region Media
 
     public DbSet<StorageFile> StorageFiles => Set<StorageFile>();
@@ -51,6 +53,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ListingMediaFile> ListingMediaFiles => Set<ListingMediaFile>();
 
     #endregion
+    
     #region Listings
 
     public DbSet<Listing> Listings => Set<Listing>();
@@ -66,7 +69,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<GuestFeedback> GuestFeedbacks => Set<GuestFeedback>();
 
     #endregion
+
+    #region Globalization
+    public DbSet<Country> Countries => Set<Country>();
+
+    public DbSet<Language> Languages => Set<Language>();
     
+    public DbSet<City> Cities => Set<City>();
+
+    public DbSet<Currency> Currencies => Set<Currency>();
+    
+    #endregion
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

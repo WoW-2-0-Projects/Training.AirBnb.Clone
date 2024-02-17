@@ -8,8 +8,8 @@ using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace AirBnB.Api.Data;
 
@@ -37,6 +37,15 @@ public static class SeedDataExtensions
 
         if (!await appDbContext.Users.AnyAsync())
             await appDbContext.SeedUsersAsync(passwordHasherService);
+
+        if (!await appDbContext.Currencies.AnyAsync())
+            await appDbContext.SeedCurrenciesAsync(webHostEnvironment);
+
+        if (!await appDbContext.Countries.AnyAsync())
+            await appDbContext.SeedCountriesAsync(webHostEnvironment);
+
+        if (!await appDbContext.Cities.AnyAsync())
+            await appDbContext.SeedCitiesAsync(webHostEnvironment);
 
         if (!await appDbContext.ListingCategories.AnyAsync())
             await appDbContext.SeedListingCategoriesAsync(webHostEnvironment);
@@ -162,7 +171,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
         
-        await dbContext.AddRangeAsync(guestFaker.Generate(100));
+        await dbContext.AddRangeAsync(guestFaker.Generate(1000));
         
         var hostGuestFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -175,7 +184,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostGuestFaker.Generate(100));
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(1000));
         await dbContext.SaveChangesAsync();
     }
     
@@ -203,6 +212,36 @@ public static class SeedDataExtensions
         );
 
         await appDbContext.ListingCategories.AddRangeAsync(listingCategories);
+        appDbContext.SaveChanges();
+    }
+
+    private static async ValueTask SeedCurrenciesAsync(this AppDbContext appDbContext,
+        IHostEnvironment webHostEnvironment)
+    {
+        var currenciesFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Currency.json");
+        var currencies = JsonConvert.DeserializeObject<List<Currency>>(await File.ReadAllTextAsync(currenciesFileName))!;
+
+        await appDbContext.Currencies.AddRangeAsync(currencies);
+        appDbContext.SaveChanges();
+    }
+    
+    private static async ValueTask SeedCountriesAsync(this AppDbContext appDbContext,
+        IHostEnvironment webHostEnvironment)
+    {
+        var globalizationFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Globalization.json");
+        var globalization = JsonConvert.DeserializeObject<List<Country>>(await File.ReadAllTextAsync(globalizationFileName))!;
+        
+        await appDbContext.Countries.AddRangeAsync(globalization);
+        appDbContext.SaveChanges();
+    }
+
+    private static async ValueTask SeedCitiesAsync(this AppDbContext appDbContext,
+        IHostEnvironment webHostEnvironment)
+    {
+        var citiesFileName = Path.Combine(webHostEnvironment.ContentRootPath, "Data", "SeedData", "Cities.json");
+        var cities = JsonConvert.DeserializeObject<List<City>>(await File.ReadAllTextAsync(citiesFileName))!;
+        
+        await appDbContext.Cities.AddRangeAsync(cities);
         appDbContext.SaveChanges();
     }
 
