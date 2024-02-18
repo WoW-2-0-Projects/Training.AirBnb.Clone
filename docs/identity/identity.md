@@ -16,7 +16,11 @@
 
 #### Granting / revoking role
 
- 
+<img style="width: 100%" src="assets/2.png" alt="granting/revoking role process diagram"/>
+
+- check role existence
+- validate action permission
+- add or delete the role
 
 ### Sign in / Sign out
 
