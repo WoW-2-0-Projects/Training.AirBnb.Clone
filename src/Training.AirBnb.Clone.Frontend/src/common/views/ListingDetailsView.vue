@@ -4,21 +4,16 @@
 
     <!-- Header-->
     <main-header/>
+
+    <div class="mt-20 content-padding">
+      <!--Listing header card-->
+      <ListingHeaderCard/>
+
+      <!--Header Image Gallery-->
+      <HeaderImageGallery class="mt-5"/>
+    </div>
+
   </div>
-
-  <div class="w-full h-full flex flex-col theme-bg-primary">
-
-    <!--Listing header card-->
-    <ListingHeaderCard/>
-  </div>
-
-  <div class="w-full h-full flex flex-col theme-bg-primary">
-
-    <!--Header Image Gallery-->
-    <HeaderImageGallery/>
-  </div>
-
-
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,6 @@
 <template>
 
+  <!-- TODO : Fix content padding problem -->
   <header
       class="fixed top-0 z-20 flex items-center justify-between w-full h-20 border-b theme-bg-primary content-padding theme-border">
 

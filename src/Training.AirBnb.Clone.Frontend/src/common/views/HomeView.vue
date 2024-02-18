@@ -6,7 +6,7 @@
   <main-header/>
   
   <!-- Listings Container -->
-  <listings-container/>
+  <listings-container class="mt-44"/>
 
 </div>
 
