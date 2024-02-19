@@ -2,7 +2,6 @@
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Serializers;
 using AirBnB.Domain.Common.Events;
-using AirBnB.Domain.Events;
 using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

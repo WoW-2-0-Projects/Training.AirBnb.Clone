@@ -1,5 +1,4 @@
 ﻿using AirBnB.Domain.Common.Events;
-using AirBnB.Domain.Events;
 
 namespace AirBnB.Application.Common.EventBus.Brokers;
 
