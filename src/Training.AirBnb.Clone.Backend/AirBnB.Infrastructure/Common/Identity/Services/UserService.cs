@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
@@ -15,11 +16,8 @@ namespace AirBnB.Infrastructure.Common.Identity.Services;
 /// </summary>
 public class UserService(IUserRepository userRepository, UserValidator userValidator) : IUserService
 {
-    public IQueryable<User> Get(
-        Expression<Func<User, bool>>? predicate = default,
-        bool asNoTracking = false
-    ) =>
-        userRepository.Get(predicate, asNoTracking);
+    public IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, QueryOptions queryOptions = new()) 
+        => userRepository.Get(predicate, queryOptions);
 
     public ValueTask<User?> GetByIdAsync(
         Guid userId,
@@ -34,10 +32,9 @@ public class UserService(IUserRepository userRepository, UserValidator userValid
         CancellationToken cancellationToken = default)
     {
         return await userRepository
-            .Get(asNoTracking: asNoTracking)
+            .Get(queryOptions: new QueryOptions {AsNoTracking = asNoTracking})
             .Include(user => user.Roles)
             .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
-        
     }
     
     public ValueTask<IList<User>> GetByIdsAsync(

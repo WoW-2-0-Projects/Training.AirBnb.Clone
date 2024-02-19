@@ -3,6 +3,7 @@ using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Brokers;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Domain.Extension;
@@ -148,7 +149,7 @@ public class AuthService(
 
         var foundUser =
             await userService
-                .Get(user => user.Id == accessToken.Value.AccessToken.UserId, true)
+                .Get(user => user.Id == accessToken.Value.AccessToken.UserId, new QueryOptions{AsNoTracking = true})
                 .Include(user => user.Roles)
                 .FirstOrDefaultAsync(cancellationToken: cancellationToken) ??
             throw new InvalidOperationException();

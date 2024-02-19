@@ -1,5 +1,6 @@
 ﻿using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Verifications.Services;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -20,7 +21,7 @@ public class AccountService(
         CancellationToken cancellationToken = default
     )
     {
-        return await userRepository.Get(asNoTracking: asNoTracking)
+        return await userRepository.Get(queryOptions: new QueryOptions{AsNoTracking = asNoTracking})
             .FirstOrDefaultAsync(user => user.EmailAddress == emailAddress, cancellationToken: cancellationToken);
     }
 

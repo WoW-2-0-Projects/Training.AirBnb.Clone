@@ -1,8 +1,10 @@
 ﻿using AirBnB.Api.Models.DTOs;
+using AirBnB.Application.Common.Identity.Queries;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +12,10 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountsController(IUserService userService, IMapper mapper) : ControllerBase
+public class AccountsController(IMediator mediator, IUserService userService, IMapper mapper) : ControllerBase
 {
+    #region Users
+    
     [HttpGet]
     public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
@@ -26,6 +30,32 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
     {
         var user = await userService.GetByIdAsync(userId, true, cancellationToken);
         return user is not null ? Ok(mapper.Map<UserDto>(user)) : NotFound();
+    }
+
+    [HttpGet("by-email/{emailAddress}")]
+    public async ValueTask<IActionResult> CheckUserByEmail([FromRoute] string emailAddress, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(
+            new CheckUserByEmailAddressQuery
+            {
+                EmailAddress = emailAddress
+            },
+            cancellationToken
+        );
+        return Ok(result);
+    }
+    
+    [HttpGet("by-phone/{phoneNumber}")]
+    public async ValueTask<IActionResult> CheckByPhoneNumber([FromRoute] string phoneNumber, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(
+            new CheckUserByPhoneNumberQuery()
+            {
+                PhoneNumber = phoneNumber
+            },
+            cancellationToken
+        );
+        return Ok(result);
     }
     
     [HttpPost]
@@ -58,4 +88,6 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
         var user = await userService.DeleteByIdAsync(userId, cancellationToken: cancellationToken);
         return user is not null ? Ok(mapper.Map<UserDto>(user)) : NotFound();
     }
+    
+    #endregion
 }
