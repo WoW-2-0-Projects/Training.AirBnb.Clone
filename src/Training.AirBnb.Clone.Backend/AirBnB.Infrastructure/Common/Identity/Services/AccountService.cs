@@ -1,8 +1,7 @@
 ﻿using AirBnB.Application.Common.EventBus.Brokers;
+using AirBnB.Application.Common.Identity.Events;
 using AirBnB.Application.Common.Identity.Services;
-using AirBnB.Application.Common.Notifications.Events;
 using AirBnB.Application.Common.Verifications.Services;
-using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -41,24 +40,10 @@ public class AccountService(
             },
             cancellationToken: cancellationToken
         );
-        
-        // Create welcome notification event.
-        var welcomeNotificationEvent = new ProcessNotificationEvent
-        {
-            ReceiverUserId = createdUser.Id,
-            TemplateType = NotificationTemplateType.SystemWelcomeNotification,
-            Variables = new Dictionary<string, string>
-            {
-                { NotificationTemplateConstants.UserNamePlaceholder, createdUser.FirstName }
-            }
-        };
-        
-        // send welcome email
-        await eventBusBroker.PublishAsync(
-            welcomeNotificationEvent, 
-            EventBusConstants.NotificationExchangeName,
-            EventBusConstants.ProcessNotificationQueueName, 
-            cancellationToken);
+
+        // Create user created event and publish it locally
+        var userCreatedEvent = new UserCreatedEvent(createdUser);
+        await eventBusBroker.PublishLocalAsync(userCreatedEvent);
 
         return createdUser;
     }
@@ -69,8 +54,7 @@ public class AccountService(
 
         if (!userVerifyCode.IsValid) return false;
 
-        var user = await userService.GetByIdAsync(userVerifyCode.Code.UserId, cancellationToken: cancellationToken) ??
-                   throw new InvalidOperationException();
+        var user = await userService.GetByIdAsync(userVerifyCode.Code.UserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException();
 
         switch (userVerifyCode.Code.CodeType)
         {
