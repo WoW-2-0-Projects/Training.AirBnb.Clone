@@ -1,3 +1,4 @@
+using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Constants;
@@ -6,6 +7,7 @@ using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
+using AutoMapper;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -28,6 +30,7 @@ public static class SeedDataExtensions
         var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
         var cacheBroker = serviceProvider.GetRequiredService<ICacheBroker>();
+        var mapper = serviceProvider.GetRequiredService<IMapper>();
         var ratingProcessingService = serviceProvider.GetRequiredService<IRatingProcessingService>();
 
         var passwordHasherService = serviceProvider.GetRequiredService<IPasswordHasherService>();
@@ -54,7 +57,7 @@ public static class SeedDataExtensions
             await appDbContext.SeedListingsAsync(webHostEnvironment);
 
         if (!await appDbContext.GuestFeedbacks.AnyAsync())
-            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
+            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService, mapper);
 
         if (!await appDbContext.NotificationTemplates.AnyAsync())
             await appDbContext.SeedNotificationTemplatesAsync(webHostEnvironment);
@@ -158,7 +161,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostFaker.Generate(1000));
+        await dbContext.AddRangeAsync(hostFaker.Generate(10));
         
         // Add guests.
         var guestRole = roles.First(role => role.Type == RoleType.Guest);
@@ -174,7 +177,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
         
-        await dbContext.AddRangeAsync(guestFaker.Generate(1000));
+        await dbContext.AddRangeAsync(guestFaker.Generate(50));
         
         var hostGuestFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -187,7 +190,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostGuestFaker.Generate(1000));
+        await dbContext.AddRangeAsync(hostGuestFaker.Generate(10));
         await dbContext.SaveChangesAsync();
     }
     
@@ -315,7 +318,7 @@ public static class SeedDataExtensions
     /// Seeds Guest Feedbacks data into the AppDbContext using Bogus library.
     /// </summary>
     /// <param name="dbContext"></param>
-    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker, IRatingProcessingService ratingProcessingService)
+    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker, IRatingProcessingService ratingProcessingService, IMapper mapper)
     {
         var listings = await dbContext.Listings.ToListAsync();
         var users = await dbContext.Users.Select(user => user.Id).ToListAsync();
@@ -333,12 +336,12 @@ public static class SeedDataExtensions
                     .Where(userId => userId != listingOwnerId));
             });
 
-        var feedbacks = feedbackFaker.Generate(2000);
+        var feedbacks = feedbackFaker.Generate(50);
         
         await dbContext.GuestFeedbacks.AddRangeAsync(feedbacks);
         dbContext.SaveChanges();
 
-        await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, feedbacks);
+        await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, mapper.Map<List<GuestFeedbackCacheDto>>(feedbacks));
         await ratingProcessingService.ProcessListingsRatings();
     }
 
