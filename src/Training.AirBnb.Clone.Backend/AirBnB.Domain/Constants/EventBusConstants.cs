@@ -5,6 +5,8 @@
 /// </summary>
 public static class EventBusConstants
 {
+    #region Notifications
+
     /// <summary>
     /// The exchange name for routing notifications within the event bus.
     /// </summary>
@@ -24,4 +26,6 @@ public static class EventBusConstants
     /// The queue name for sending notifications within the event bus.
     /// </summary>
     public const string SendNotificationQueueName = "SendNotification";
+
+    #endregion
 }
