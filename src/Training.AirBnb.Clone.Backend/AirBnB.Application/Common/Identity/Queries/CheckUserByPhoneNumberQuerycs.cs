@@ -3,9 +3,9 @@ using AirBnB.Domain.Common.Queries;
 namespace AirBnB.Application.Common.Identity.Queries;
 
 /// <summary>
-/// Represents check user by email address query
+/// Represents user checking query that returns user's firstname if exists
 /// </summary>
-public record CheckUserByPhoneNumberQuery : IQuery<bool>
+public record CheckUserByPhoneNumberQuery : IQuery<string?>
 {
     /// <summary>
     /// Gets user email address

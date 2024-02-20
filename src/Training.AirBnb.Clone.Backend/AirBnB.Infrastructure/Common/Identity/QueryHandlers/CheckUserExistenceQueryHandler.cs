@@ -9,33 +9,37 @@ namespace AirBnB.Infrastructure.Common.Identity.QueryHandlers;
 /// Provides a handler for the check user by email address query
 /// </summary>
 public class CheckUserExistenceQueryHandler(IUserService userService)
-    : IQueryHandler<CheckUserByEmailAddressQuery, bool>, IQueryHandler<CheckUserByPhoneNumberQuery, bool>
+    : IQueryHandler<CheckUserByEmailAddressQuery, string?>, IQueryHandler<CheckUserByPhoneNumberQuery, string?>
 {
-    public Task<bool> Handle(CheckUserByEmailAddressQuery request, CancellationToken cancellationToken)
+    public Task<string?> Handle(CheckUserByEmailAddressQuery request, CancellationToken cancellationToken)
     {
-        var userExists = userService.Get(
+        var userFirstname =  userService
+            .Get(
                 user => user.EmailAddress == request.EmailAddress,
                 new QueryOptions
                 {
                     AsNoTracking = true
                 }
             )
-            .AnyAsync(cancellationToken: cancellationToken);
+            .Select(user => user.FirstName)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
-        return userExists;
+        return userFirstname;
     }
 
-    public Task<bool> Handle(CheckUserByPhoneNumberQuery request, CancellationToken cancellationToken)
+    public Task<string?> Handle(CheckUserByPhoneNumberQuery request, CancellationToken cancellationToken)
     {
-        var userExists = userService.Get(
+        var userFirstname =  userService
+            .Get(
                 user => user.PhoneNumber == request.PhoneNumber,
                 new QueryOptions
                 {
                     AsNoTracking = true
                 }
             )
-            .AnyAsync(cancellationToken: cancellationToken);
-
-        return userExists;
+            .Select(user => user.FirstName)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        
+        return userFirstname;
     }
 }

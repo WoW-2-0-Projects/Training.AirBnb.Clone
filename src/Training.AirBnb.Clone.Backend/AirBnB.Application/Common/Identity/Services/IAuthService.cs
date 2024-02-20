@@ -1,6 +1,5 @@
 ﻿using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Domain.Entities;
-using AirBnB.Domain.Enums;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
@@ -20,15 +19,25 @@ public interface IAuthService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Asynchronously attempts to log in a user with the provided credentials.
+    /// Signs in user by email
     /// </summary>
-    /// <param name="signInDetails">The login details containing the user's username and password.</param>
-    /// <param name="cancellationToken">A token that can be used to cancel the login operation.</param>
-    /// <returns>ValueTask<(AccessToken accessToken, RefreshToken refreshToken)></returns>
-    ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInAsync(
-        SignInDetails signInDetails, 
+    /// <param name="signInDetails">Sign in credentials</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Identity security tokens</returns>
+    ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInByEmailAsync(
+        SignInByEmailDetails signInDetails, 
         CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Signs in user by phone
+    /// </summary>
+    /// <param name="signInDetails">Sign in credentials</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Identity security tokens</returns>
+    ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInByPhoneAsync(
+        SignInByPhoneDetails signInDetails, 
+        CancellationToken cancellationToken = default);
+    
     /// <summary>
     /// Asynchronously grants a specified role to a user.
     /// </summary>
