@@ -37,6 +37,14 @@ public interface IAuthService
     ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInByPhoneAsync(
         SignInByPhoneDetails signInDetails, 
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Signs out the current user.
+    /// </summary>
+    /// <param name="accessTokenValue">User's access token</param>
+    /// <param name="refreshTokenValue">User's refresh token</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    ValueTask SignOutAsync(string accessTokenValue, string refreshTokenValue, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Asynchronously grants a specified role to a user.

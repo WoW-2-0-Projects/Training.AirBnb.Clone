@@ -10,7 +10,7 @@ export const useAccountStore = defineStore('account', {
             this.account = newAccount;
         },
         remove() {
-            this.isLoggedIn = false;
+            this.account = new Account();
         }
     },
     getters: {

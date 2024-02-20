@@ -37,4 +37,17 @@ export class AuthenticationService {
 
         return true;
     }
+
+    public async signOutAsync() {
+        const refreshToken = this.localStorageService.get('refreshToken');
+
+        const signOutResponse = await this.airBnbApiClient.auth.signOutAsync(refreshToken);
+
+        if(signOutResponse.isSuccess)
+        {
+            this.localStorageService.remove('accessToken');
+            this.localStorageService.remove('refreshToken');
+            this.accountStore.remove();
+        }
+    }
 }

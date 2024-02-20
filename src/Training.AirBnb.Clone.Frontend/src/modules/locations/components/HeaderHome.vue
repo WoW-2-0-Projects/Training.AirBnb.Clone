@@ -66,12 +66,13 @@
 <script setup lang="ts">
 
 import ProfileMenu from "@/modules/profile/components/ProfileMenu.vue";
-import {ref, watch} from 'vue';
+import {onBeforeMount, ref, watch} from 'vue';
 import type {MenuAction} from "@/modules/profile/models/MenuAction";
 import SwitchHostButton from "@/modules/profile/components/SwitchHostButton.vue";
 import {useAccountStore} from "@/infrastructure/stores/AccountStore";
 import {storeToRefs} from "pinia";
 import type {MenuActions} from "@/modules/profile/models/MenuActions";
+import {AuthenticationService} from "@/modules/profile/services/AuthenticationService";
 
 const accountStore = useAccountStore();
 
@@ -79,6 +80,8 @@ const {account} = storeToRefs(accountStore);
 
 const showUserProfile = ref<boolean>(false);
 const profileButtonDisable = ref<boolean>(false);
+
+const authService = new AuthenticationService();
 
 const emit = defineEmits(['signInUpRequest']);
 
@@ -145,7 +148,10 @@ const userActions: MenuActions = {
             },
             {
                 title: 'Log out',
-                routeName: 'Help'
+                callback: async () => {
+                    closeProfileMenu();
+                    await authService.signOutAsync();
+                }
             }
         ]
     ]
@@ -190,12 +196,19 @@ const guestActions: MenuActions = {
 const currentMenuActions = ref<MenuActions>(guestActions);
 
 watch(account, async () => {
+    setMenuActions();
+}, {deep: true});
+
+onBeforeMount(() => {
+    setMenuActions();
+});
+
+const setMenuActions = () => {
     if (account.value.isLoggedIn())
         currentMenuActions.value = userActions;
     else
         currentMenuActions.value = guestActions;
-
-}, {deep: true});
+}
 
 //
 // const guestActions = {

@@ -31,6 +31,13 @@ public class AuthController(IMapper mapper, IMediator mediator, IAuthService aut
         var result = await mediator.Send(signInCommand, cancellationToken);
         return Ok(mapper.Map<IdentityTokenDto>(result));
     }
+
+    [HttpPost("sign-out")]
+    public async ValueTask<IActionResult> SignOutAsync([FromBody]string refreshToken, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new SignOutCommand(){RefreshToken = refreshToken}, cancellationToken);
+        return result ? Ok() : BadRequest();
+    }
     
     [HttpPut("refresh-token")]
     public async ValueTask<IActionResult> RefreshToken([FromBody] string refreshTokenValue, CancellationToken cancellationToken)

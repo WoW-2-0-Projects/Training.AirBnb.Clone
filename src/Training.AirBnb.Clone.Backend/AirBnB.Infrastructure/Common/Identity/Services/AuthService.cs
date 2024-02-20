@@ -1,7 +1,6 @@
 ﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
-using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
@@ -63,8 +62,7 @@ public class AuthService(
     )
     {
         // Query user by email address
-        var foundUser = await userService
-            .Get(
+        var foundUser = await userService.Get(
                 user => user.EmailAddress == signInDetails.EmailAddress,
                 queryOptions: new QueryOptions
                 {
@@ -89,8 +87,8 @@ public class AuthService(
     )
     {
         // Query user by email address
-        var foundUser = await userService
-            .Get(user => user.PhoneNumber == signInDetails.PhoneNumber,
+        var foundUser = await userService.Get(
+                user => user.PhoneNumber == signInDetails.PhoneNumber,
                 new QueryOptions
                 {
                     AsNoTracking = true
@@ -106,6 +104,18 @@ public class AuthService(
             throw new AuthenticationException("Email address is not verified.");
 
         return await CreateTokens(foundUser, cancellationToken);
+    }
+
+    public async ValueTask SignOutAsync(string accessTokenValue, string refreshTokenValue, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(accessTokenValue) || string.IsNullOrWhiteSpace(refreshTokenValue))
+            throw new ArgumentException("Invalid identity security token value", nameof(accessTokenValue));
+
+        await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
+
+        var accessToken = identitySecurityTokenGeneratorService.GetAccessToken(accessTokenValue);
+        if (accessToken.HasValue) 
+            await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
     }
 
     public async ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, CancellationToken cancellationToken = default)

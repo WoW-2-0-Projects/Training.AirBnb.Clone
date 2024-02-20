@@ -15,6 +15,11 @@ export class AuthEndpointsClient {
         return await this.client.postAsync<IdentityToken>(endpointUrl, signInDetails);
     }
 
+    public async signOutAsync(refreshToken: string) {
+        const endpointUrl =  'api/auth/sign-out';
+        return await this.client.postAsync(endpointUrl, refreshToken, { headers: { 'Content-Type': 'text/plain' }});
+    }
+
     public async getCurrentUser() {
         const endpointUrl =  'api/auth/me';
         return await this.client.getAsync<User>(endpointUrl);

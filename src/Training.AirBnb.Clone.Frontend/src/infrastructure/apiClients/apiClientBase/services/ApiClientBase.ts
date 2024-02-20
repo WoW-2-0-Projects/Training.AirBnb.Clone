@@ -2,15 +2,18 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import { ApiResponse } from "../models/ApiResponse";
 import axios from "axios";
 import type { ProblemDetails } from "../models/ProblemDetails";
+import { LocalStorageService } from "@/infrastructure/services/storage/LocalStorageService";
 
 export default class ApiClientBase {
     public readonly client: AxiosInstance;
+    private readonly localStorageService: LocalStorageService;
     public mapResponse!: <T>(response: ApiResponse<T>) => ApiResponse<T>
 
     constructor(config: AxiosRequestConfig) {
         this.client = axios.create(config);
+        this.localStorageService = new LocalStorageService();
 
-        // register interceptors
+        // Add success and error response interceptors
         this.client.interceptors.response.use(<TResponse>(response: AxiosResponse<TResponse>) => {
                 let data = new ApiResponse(response.data as TResponse, null, response.status);
 
@@ -29,6 +32,16 @@ export default class ApiClientBase {
                 };
             }
         );
+
+        // Access token interceptor
+        this.client.interceptors.request.use(async (config) => {
+            const accessToken = this.localStorageService.get<string>("accessToken");
+            if (accessToken) {
+                config.headers.Authorization = `Bearer ${accessToken}`;
+            }
+
+            return config;
+        });
     }
 
     public async getAsync<T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {

@@ -12,12 +12,12 @@
 <script setup lang="ts">
 
 import {defineProps, onUnmounted} from "vue";
-import type {MenuItem} from "@/modules/profile/models/MenuItem";
+import type {MenuAction} from "@/modules/profile/models/MenuAction";
 import router from "@/infrastructure/router";
 
 const props = defineProps({
     menuItem: {
-        type: Object as () => MenuItem,
+        type: Object as () => MenuAction,
         required: true
     }
 });
