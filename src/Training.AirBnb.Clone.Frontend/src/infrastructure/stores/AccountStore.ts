@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import {Account} from "@/modules/profile/models/Account";
 
 export const useAccountStore = defineStore('account', {
-    state: (): Account => {
-        return { };
-    },
+    state: () => ({
+        account: new Account()
+    }),
     actions: {
         set(newAccount: Account) {
             this.account = newAccount;
