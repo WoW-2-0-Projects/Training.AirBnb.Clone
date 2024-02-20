@@ -42,7 +42,8 @@ public class AccountsController(IMediator mediator, IUserService userService, IM
             },
             cancellationToken
         );
-        return Ok(result);
+
+        return result is not null ? Ok(result) : NotFound();
     }
     
     [HttpGet("by-phone/{phoneNumber}")]
@@ -55,7 +56,8 @@ public class AccountsController(IMediator mediator, IUserService userService, IM
             },
             cancellationToken
         );
-        return Ok(result);
+
+        return result is not null ? Ok(result) : NotFound();
     }
     
     [HttpPost]

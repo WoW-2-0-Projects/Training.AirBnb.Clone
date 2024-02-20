@@ -1,4 +1,4 @@
-using System.Security.Authentication;
+﻿using System.Security.Authentication;
 using System.Security.Claims;
 using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Commands;
@@ -53,5 +53,13 @@ public class AuthController(IMapper mapper, IMediator mediator, IAuthService aut
     {
         var result = await authService.RevokeRoleAsync(userId, roleType, cancellationToken);
         return result ? Ok(result) : NoContent();
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCurrentUserQuery(), cancellationToken);
+        return Ok(mapper.Map<UserDto>(result));
     }
 } 
