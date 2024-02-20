@@ -69,4 +69,12 @@ public class AuthController(IMapper mapper, IMediator mediator, IAuthService aut
         var result = await mediator.Send(new GetCurrentUserQuery(), cancellationToken);
         return Ok(mapper.Map<UserDto>(result));
     }
+
+    [Authorize]
+    [HttpGet("me/roles")]
+    public async Task<IActionResult> GetCurrentUserRoles(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCurrentUserRolesQuery(), cancellationToken);
+        return Ok(result.Select(role => role.Type.ToString()));
+    }
 } 

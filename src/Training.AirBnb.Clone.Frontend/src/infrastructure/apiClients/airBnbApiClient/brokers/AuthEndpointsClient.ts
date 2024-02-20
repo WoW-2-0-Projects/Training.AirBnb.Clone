@@ -24,4 +24,9 @@ export class AuthEndpointsClient {
         const endpointUrl =  'api/auth/me';
         return await this.client.getAsync<User>(endpointUrl);
     }
+
+    public async getCurrentUserRoles() {
+        const endpointUrl = 'api/auth/me/roles';
+        return await this.client.getAsync<string[]>(endpointUrl);
+    }
 }

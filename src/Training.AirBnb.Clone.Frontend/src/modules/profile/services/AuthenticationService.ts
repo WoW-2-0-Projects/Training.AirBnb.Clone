@@ -5,6 +5,7 @@ import {LocalStorageService} from "@/infrastructure/services/storage/LocalStorag
 import type {SignInDetails} from "@/modules/profile/models/SignInDetails";
 import {useAccountStore} from "@/infrastructure/stores/AccountStore";
 import {Account} from "@/modules/profile/models/Account";
+import {RoleType} from "@/modules/profile/models/RoleType";
 
 export class AuthenticationService {
     private airBnbApiClient: AirBnbApiClient;
@@ -14,6 +15,14 @@ export class AuthenticationService {
     constructor() {
         this.airBnbApiClient = new AirBnbApiClient();
         this.localStorageService = new LocalStorageService();
+    }
+
+    public hasAccessToken() {
+        return this.localStorageService.get('accessToken') !== null;
+    }
+
+    public isLoggedIn() {
+        return this.accountStore.account.isLoggedIn();
     }
 
     public async signInAsync(signInDetails: SignInDetails) {
@@ -26,14 +35,7 @@ export class AuthenticationService {
         this.localStorageService.set('accessToken', signInResponse.response?.accessToken);
         this.localStorageService.set('refreshToken', signInResponse.response?.refreshToken);
 
-        // Set user account
-        const currentUser = await this.airBnbApiClient.auth.getCurrentUser();
-        if(currentUser.isSuccess)
-        {
-            const account = new Account();
-            account.user  = currentUser.response!;
-            this.accountStore.set(account);
-        }
+        await this.setCurrentUser();
 
         return true;
     }
@@ -48,6 +50,28 @@ export class AuthenticationService {
             this.localStorageService.remove('accessToken');
             this.localStorageService.remove('refreshToken');
             this.accountStore.remove();
+        }
+    }
+
+    public async setCurrentUser() {
+        if(this.isLoggedIn() && !this.hasAccessToken()) return;
+
+        // Set user account
+        const currentUser = await this.airBnbApiClient.auth.getCurrentUser();
+        if(currentUser.isSuccess)
+        {
+            const account = new Account();
+            account.user  = currentUser.response!;
+            this.accountStore.set(account);
+        }
+
+        // Check if user has host role
+        const userRoles = await this.airBnbApiClient.auth.getCurrentUserRoles();
+        if(userRoles.isSuccess)
+        {
+            const account = this.accountStore.account;
+            account.hasHostRole = userRoles.response?.includes(RoleType.Host);
+            this.accountStore.set(account);
         }
     }
 }
