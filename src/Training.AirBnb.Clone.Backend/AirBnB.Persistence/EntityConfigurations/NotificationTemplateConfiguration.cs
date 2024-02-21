@@ -9,7 +9,7 @@ public class NotificationTemplateConfiguration : IEntityTypeConfiguration<Notifi
 {
     public void Configure(EntityTypeBuilder<NotificationTemplate> builder)
     {
-        builder.Property(template => template.Content).HasMaxLength(129_536);
+        builder.Property(template => template.Content).HasMaxLength(1_036_288);
 
         builder.HasIndex(template => new
         {

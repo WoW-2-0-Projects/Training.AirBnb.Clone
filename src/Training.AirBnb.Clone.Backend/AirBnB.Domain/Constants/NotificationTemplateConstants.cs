@@ -18,5 +18,5 @@ public static class NotificationTemplateConstants
     /// <summary>
     /// Placeholder for the verification link in email address verification notification templates.
     /// </summary>
-    public const string EmailAddressVerificationLinkPlaceholder = "EmailAddressVerificationLink";
+    public const string EmailAddressVerificationCodePlaceholder = "EmailAddressVerificationCode";
 }

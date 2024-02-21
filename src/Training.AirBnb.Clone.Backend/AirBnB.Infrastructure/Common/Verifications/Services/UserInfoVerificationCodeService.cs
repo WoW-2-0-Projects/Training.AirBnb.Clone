@@ -14,18 +14,31 @@ namespace AirBnB.Infrastructure.Common.Verifications.Services;
 public class UserInfoVerificationCodeService(
     IOptions<VerificationCodeSettings> verificationSettings,
     IValidator<UserInfoVerificationCode> userInfoVerificationCodeValidator,
-    IUserInfoVerificationCodeRepository userInfoVerificationCodeRepository) : IUserInfoVerificationCodeService
+    IUserInfoVerificationCodeRepository userInfoVerificationCodeRepository
+) : IUserInfoVerificationCodeService
 {
     private readonly VerificationCodeSettings _verificationCodeSettings = verificationSettings.Value;
 
     public IList<string> Generate()
     {
-        var codes = new List<string>();
+        using var rng = RandomNumberGenerator.Create();
 
-        for (var index = 0; index < 10; index++)
-            codes.Add(string.Join("",RandomNumberGenerator.GetBytes(_verificationCodeSettings.VerificationCodeLength).Select(@char => @char % 10)));
-
-        return codes;
+        return Enumerable.Range(0, 10)
+            .Select(
+                _ =>
+                {
+                    var randomNumber = new byte[1];
+                    return Enumerable.Range(0, 6)
+                        .Select(_ =>
+                            {
+                                rng.GetBytes(randomNumber);
+                                return (randomNumber[0] % 10).ToString();
+                            }
+                        )
+                        .Aggregate((code, digit) => code + digit);
+                }
+            )
+            .ToList();
     }
 
     public async ValueTask<(UserInfoVerificationCode Code, bool IsValid)> GetByCodeAsync(string code, CancellationToken cancellationToken = default)
@@ -39,41 +52,45 @@ public class UserInfoVerificationCodeService(
 
     public async ValueTask<VerificationType?> GetVerificationTypeAsync(string code, CancellationToken cancellationToken = default)
     {
-        var verificationCode = await userInfoVerificationCodeRepository
-            .Get(verificationCode => verificationCode.Code == code, true)
+        var verificationCode = await userInfoVerificationCodeRepository.Get(verificationCode => verificationCode.Code == code, true)
             .Select(
                 verificationCode => new
-            {
-                verificationCode.Id,
-                verificationCode.Type
-            })
+                {
+                    verificationCode.Id,
+                    verificationCode.Type
+                }
+            )
             .FirstOrDefaultAsync(cancellationToken);
 
         return verificationCode?.Type;
     }
-    
-    public async ValueTask<UserInfoVerificationCode> CreateAsync(VerificationCodeType codeType, Guid userId, CancellationToken cancellationToken = default)
+
+    public async ValueTask<UserInfoVerificationCode> CreateAsync(
+        VerificationCodeType codeType,
+        Guid userId,
+        CancellationToken cancellationToken = default
+    )
     {
         var verificationCodeValue = default(string);
-        
+
         //TODO: code generate process with polly
-        var retryPolicy = Policy
-            .HandleResult<string>(code => string.IsNullOrEmpty(code))
-            .RetryAsync(5, (result, retryCount) =>
+        var retryPolicy = Policy.HandleResult<string>(string.IsNullOrWhiteSpace).RetryAsync(5);
+
+        await retryPolicy.ExecuteAsync(
+            async () =>
             {
-                Console.WriteLine($"Retry {retryCount}: verification code is empty");
-            });
+                var verificationCodes = Generate();
+                var existingCodes = await userInfoVerificationCodeRepository.Get(code => verificationCodes.Contains(code.Code))
+                    .ToListAsync(cancellationToken);
 
-        await retryPolicy.ExecuteAsync(async () =>
-        {
-            var verificationCodes = Generate();
-            var existingCodes = await userInfoVerificationCodeRepository
-                .Get(code => verificationCodes.Contains(code.Code)).ToListAsync(cancellationToken);
+                verificationCodeValue = verificationCodes.Except(existingCodes.Select(code => code.Code)).FirstOrDefault();
 
-            verificationCodeValue = verificationCodes.Except(existingCodes.Select(code => code.Code)).FirstOrDefault();
+                return verificationCodeValue!;
+            }
+        );
 
-            return verificationCodeValue!;
-        });
+        if (string.IsNullOrWhiteSpace(verificationCodeValue))
+            throw new InvalidOperationException("Verification code generation failed");
 
         var verificationCode = new UserInfoVerificationCode
         {
