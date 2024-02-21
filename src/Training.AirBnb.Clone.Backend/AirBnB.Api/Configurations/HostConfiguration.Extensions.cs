@@ -256,7 +256,8 @@ public static partial class HostConfiguration
         // register repositories
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
-            .AddScoped<IListingMediaFileRepository, ListingMediaFileRepository>();
+            .AddScoped<IListingMediaFileRepository, ListingMediaFileRepository>()
+            .AddScoped<IUserProfileMediaFileRepository, UserProfileMediaFileRepository>();
         
         // register services
         builder.Services
