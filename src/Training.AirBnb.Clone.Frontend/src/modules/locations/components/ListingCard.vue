@@ -1,12 +1,13 @@
 <template>
 
     <!--Listing card-->
-    <div @click="onClick" class="flex flex-col items-start justify-start gap-2 rounded-lg theme-bg-primary theme-border hover-shadow-zero">
+    <div @click="onClick($event)" ref="listingCardContainer" class="flex flex-col items-start justify-start gap-2 rounded-lg theme-bg-primary theme-border hover-shadow-zero">
 
         <!--Listing header-->
         <div class="relative w-full overflow-hidden rounded-t-lg">
 
             <horizontal-carousel
+                ref="imagesCarousel"
                 :contentChangeSource="contentChangeSource"
                 :loop-to-start="true">
                 <img v-for="(image, index) in listing.imagesUrls" :key="index"
@@ -64,7 +65,15 @@ import {Listing} from '../models/Listing';
 import HorizontalCarousel from '@/common/components/HorizontalCarousel.vue';
 import {onMounted, ref} from 'vue';
 import {NotificationSource} from '@/infrastructure/models/Action';
-import router from "@/infrastructure/router";
+import {useRouter} from 'vue-router'
+import {WindowService} from "@/infrastructure/services/WindowService";
+import {UrlNavigationOptions} from "@/infrastructure/services/UrlNavigationOptions";
+
+const router = useRouter();
+const listingCardContainer = ref<HTMLDivElement>();
+const imagesCarousel = ref<HTMLDivElement>();
+
+const windowService = new WindowService();
 
 const props = defineProps({
     listing: {
@@ -81,8 +90,18 @@ onMounted(() => {
     emit('onMounted', contentChangeSource);
 });
 
-const onClick = () => {
-  router.push({name: 'listingDetails', params: {'listingId': props.listing?.id}})
+
+const onClick = (event:any) => {
+  //router.push({name: 'listingDetails', params: {'listingId': props.listing?.id}})
+
+  const carousel = imagesCarousel.value as HTMLDivElement;
+
+  console.log(event.target);
+  console.log('carousel', carousel);
+ // console.log(carousel.contains(event.target));
+
+  const routeData = router.resolve({name: 'listingDetails', params:{'listingId': props.listing?.id}});
+  windowService.navigateToUrl(routeData.href, UrlNavigationOptions.Blank);
 }
 
 </script>

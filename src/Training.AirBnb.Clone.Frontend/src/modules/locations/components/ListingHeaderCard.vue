@@ -1,15 +1,11 @@
 <template>
-    <div class="w-full">
-
-      <div class="flex w-full gap-4 theme-bg-primary grid-cols-1">
+      <div class="flex w-full gap-4 theme-bg-primary">
 
         <div class="mt-5 w-full flex flex-grow justify-between">
 
-          <div class="line-clamp-1">
-            <span class="theme-text-primary text-2xl text-black line-clamp-1">115m2 pool, daily housekeeping, wonderful outdoors</span>
-          </div>
+            <p class="text-2xl theme-text-primary" >{{listing.name}} </p>
 
-          <div class="hidden md:flex gap-3 items-center justify-center ">
+          <div class="flex">
 
               <div class="rounded hover:bg-gray-200">
 
@@ -19,10 +15,9 @@
                     </span>
                       <p class="ml-1">Shere</p>
                 </button>
-
               </div>
 
-                <div class="rounded focus:ring-violet-700 hover:bg-gray-200">
+                <div class="rounded hover:bg-gray-200">
 
                   <button class="flex flex-grow text-sm font-medium theme-text-primary p-2 underline underline-offset-1">
                       <span class="">
@@ -37,10 +32,17 @@
 
       </div>
 
-    </div>
-
 </template>
 
 <script setup lang="ts">
 
+import {defineProps} from "vue";
+import {Listing} from "@/modules/locations/models/Listing";
+
+const props = defineProps({
+    listing: {
+        type: Object as () => Listing,
+        required: true
+    }
+});
 </script>
