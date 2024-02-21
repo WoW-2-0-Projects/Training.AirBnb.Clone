@@ -1,8 +1,14 @@
 ﻿using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Application.StorageFiles.Models;
+using AirBnB.Application.StorageFiles.Services;
+using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
+using AirBnB.Domain.Enums;
+using AirBnB.Persistence.Repositories.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +16,7 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountsController(IUserService userService, IMapper mapper) : ControllerBase
+public class AccountsController(IUserService userService, IMapper mapper, IRequestUserContextProvider requestUserContextProvider, IUserProfileMediaFileService userProfileMediaFileService) : ControllerBase
 {
     [HttpGet]
     public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
@@ -37,6 +43,20 @@ public class AccountsController(IUserService userService, IMapper mapper) : Cont
         var result = await userService.CreateAsync(user, cancellationToken: cancellationToken);
 
         return Ok(mapper.Map<UserDto>(result));
+    }
+
+    [HttpPost("profilePictures")]
+    public async ValueTask<IActionResult> UploadProfilePicture([FromForm] IFormFile profilePicture,
+        CancellationToken cancellationToken = default)
+    {
+        var uploadFileInfo = mapper.Map<UploadFileInfoDto>(profilePicture);
+        uploadFileInfo.StorageFileType = StorageFileType.UserProfileImage;
+        uploadFileInfo.OwnerId = requestUserContextProvider.GetUserId();
+
+        var result =
+            await userProfileMediaFileService.CreateAsync(uploadFileInfo, cancellationToken: cancellationToken);
+        
+        return Ok(mapper.Map<UserProfilePictureDto>(result));
     }
 
     [HttpPut]
