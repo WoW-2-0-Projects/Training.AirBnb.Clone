@@ -52,6 +52,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<ListingMediaFile> ListingMediaFiles => Set<ListingMediaFile>();
 
+    public DbSet<UserProfileMediaFile> UserProfileMediaFiles => Set<UserProfileMediaFile>();
+
     #endregion
     
     #region Listings
