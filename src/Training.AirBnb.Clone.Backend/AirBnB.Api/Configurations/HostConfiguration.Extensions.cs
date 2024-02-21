@@ -250,10 +250,16 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        // configure settings
         builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
 
+        // register repositories
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
+            .AddScoped<IListingMediaFileRepository, ListingMediaFileRepository>();
+        
+        // register services
+        builder.Services
             .AddScoped<IStorageFileService, StorageFileService>()
             .AddScoped<IFileService, FileService>()
             .AddScoped<IFileProcessingService, FileProcessingService>();

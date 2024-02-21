@@ -16,5 +16,7 @@ public class ListingMediaFileConfiguration : IEntityTypeConfiguration<ListingMed
         builder.HasOne<Listing>(media => media.Listing)
             .WithMany(listing => listing.ImagesStorageFile)
             .HasForeignKey(media => media.ListingId);
+
+        builder.HasQueryFilter(media => !media.IsDeleted);
     }
 }
