@@ -24,7 +24,7 @@ const props = defineProps({
 
 const onclick = () => {
     if (props.menuItem.callback)
-        props.menuItem.callback();
+        props.menuItem?.callback();
     else if (props.menuItem.routeName)
         router.push({name: props.menuItem.routeName});
 }

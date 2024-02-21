@@ -101,6 +101,7 @@ const closeProfileMenu = () => {
 // TODO : Add authentication check
 const primaryActions: Array<MenuItem> = [
     {
+        id: '1',
         title: 'Log In',
         callback: () => {
             closeProfileMenu();
@@ -109,26 +110,34 @@ const primaryActions: Array<MenuItem> = [
         special: true
     },
     {
+        id: '2',
         title: 'Sign up',
         callback: () => {
             closeProfileMenu();
             emit('signInUpRequest')
         },
+        special: false
     }
 ]
 
 const secondaryActions: Array<MenuItem> = [
     {
+        id: '1',
         title: 'Gift cards',
-        routeName: 'GiftCards'
+        routeName: 'GiftCards',
+        special: false
     },
     {
+        id: '2',
         title: 'Airbnb your home',
-        routeName: 'HostHomes'
+        routeName: 'HostHomes',
+        special: false
     },
     {
+        id: '3',
         title: 'Help Center',
-        routeName: 'Help'
+        routeName: 'Help',
+        special: false
     }
 ]
 

@@ -22,12 +22,12 @@
 import NextButton from './NextButton.vue';
 import PreviousButton from './PreviousButton.vue';
 import { DocumentService } from '@/infrastructure/services/DocumentService';
-import {ref, onMounted, onUnmounted, computed, triggerRef, onUpdated} from 'vue';
+import {ref, onMounted, onUnmounted, computed, triggerRef, onUpdated, type PropType} from 'vue';
 import {Action, NotificationSource} from '@/infrastructure/models/Action';
 
 const props = defineProps({
     contentChangeSource: {
-        type: Object as () => NotificationSource,
+        type: NotificationSource,
         required: false
     },
     loopToStart: {

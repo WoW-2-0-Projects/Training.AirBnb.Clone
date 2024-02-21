@@ -1,12 +1,10 @@
 import ApiClientBase from "../../apiClientBase/services/ApiClientBase";
 import { ListingCategoryEndpointsClient } from "./ListingCategoryEndpointsClient";
 import { ListingEndpointsClient } from "./ListingEndpointsClient";
-import {ConfigurationService} from "@/infrastructure/services/ConfigurationService";
 
 export class AirBnbApiClient {
     private readonly client: ApiClientBase;
     public readonly baseUrl: string;
-    public readonly configurationService: ConfigurationService;
 
     constructor() {
         // this.configurationService = new ConfigurationService();

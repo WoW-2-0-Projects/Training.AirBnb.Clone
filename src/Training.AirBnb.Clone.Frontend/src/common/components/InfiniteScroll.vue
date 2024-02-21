@@ -31,7 +31,7 @@ const isLoading = ref<boolean>(false);
 
 const props = defineProps({
     contentChangeSource: {
-        type: Object as () => NotificationSource,
+        type: NotificationSource,
         required: false
     },
     scrollThresholdDistance: {
@@ -49,14 +49,14 @@ onMounted(() => {
         calculateScrollThreshold();
     });
 
-    documentService.addEventListener(window, "scroll", onScroll);
+    window.addEventListener("scroll", onScroll);
     documentService.addWindowEventListener("resize", onWindowResized);
 });
 
 onUnmounted(() => {
     if (!scrollContainer.value) return;
 
-    documentService.removeEventListener(window, "scroll", onScroll);
+    window.removeEventListener("scroll", onScroll);
     documentService.removeWindowEventListener("resize", onWindowResized);
 });
 
@@ -76,8 +76,11 @@ const onScroll = () => {
 };
 
 const calculateScrollThreshold = () => {
+    if(!scrollContainer.value) return;
+
     if (minimumScrollThresholdDistance.value == 0 && scrollContainer.value?.children.length > 0) {
-        minimumScrollThresholdDistance.value = 1.5 * documentService.getHeight(scrollContainer.value.children[0]);
+        minimumScrollThresholdDistance.value = 1.5 * documentService.getHeight(scrollContainer.value.children[0] as
+            HTMLElement);
     }
 }
 
