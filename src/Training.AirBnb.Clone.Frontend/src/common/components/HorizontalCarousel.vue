@@ -6,7 +6,7 @@
     <div ref="carouselContainer" class="flex overflow-x-scroll no-scrollbar">
         <slot v-bind="$attrs"></slot>
     </div>
-
+    
    <!-- Navigation actions -->
    <div class="flex items-center justify-between w-full px-2 absolute-center">
         <previous-button :class="{'collapse': !hovering || !canMovePrev}" @click="onMovePrev"/>

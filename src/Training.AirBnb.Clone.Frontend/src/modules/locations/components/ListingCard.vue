@@ -92,8 +92,8 @@ onMounted(() => {
 
 
 const onClick = (event:any) => {
-  //router.push({name: 'listingDetails', params: {'listingId': props.listing?.id}})
 
+    // TODO : fix problem of next/previous buttons in horizontal carousel
   const carousel = imagesCarousel.value as HTMLDivElement;
 
   console.log(event.target);
