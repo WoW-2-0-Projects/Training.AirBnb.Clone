@@ -255,7 +255,8 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
             .AddScoped<IStorageFileService, StorageFileService>()
-            .AddScoped<IFileService, FileService>();
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IFileProcessingService, FileProcessingService>();
 
         // register brokers
         builder.Services
