@@ -44,7 +44,11 @@ using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
 using AirBnB.Application.Currencies.Services;
+using AirBnB.Application.StorageFiles.Brokers;
+using AirBnB.Application.StorageFiles.Services;
 using AirBnB.Infrastructure.Currencies.Services;
+using AirBnB.Infrastructure.StorageFiles.Brokers;
+using AirBnB.Infrastructure.StorageFiles.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -251,6 +255,11 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
             .AddScoped<IStorageFileService, StorageFileService>();
+
+        // register brokers
+        builder.Services
+            .AddScoped<IFileBroker, FileBroker>()
+            .AddScoped<IDirectoryBroker, DirectoryBroker>();
 
         return builder;
     }
