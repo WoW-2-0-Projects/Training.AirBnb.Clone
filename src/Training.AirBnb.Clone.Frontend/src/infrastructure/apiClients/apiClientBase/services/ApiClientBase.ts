@@ -35,6 +35,9 @@ export default class ApiClientBase {
         return (await this.client.get<ApiResponse<T>>(url, config)).data;
     }
 
+    public async getByIdAsync<T>(listingId: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>>{
+        return (await this.client.get<ApiResponse<T>>(listingId, config)).data
+    }
     public async postAsync<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
         return (await this.client.post<ApiResponse<T>>(url, data, config)).data;
     }
