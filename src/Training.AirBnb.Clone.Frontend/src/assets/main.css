@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+    .theme-bg-primary {
+        @apply bg-bgColorPrimary dark:bg-bgColorPrimaryDark;
+    }
+
+    .theme-bg-accent {
+        @apply bg-textSecondaryDark dark:bg-borderColorDark;
+    }
+
+    .theme-bg-toggle {
+        @apply bg-gray-400 group-hover:bg-textSecondaryDark dark:group-hover:bg-bgColorPrimary dark:bg-bgColorPrimary
+    }
+
+
+    .theme-text-primary {
+        @apply text-textPrimary dark:text-textPrimaryDark;
+    }
+
+    .theme-button {
+        @apply text-textPrimary hover:bg-bgColorPrimary dark:text-textPrimaryDark dark:hover:text-textPrimary;
+    }
+
+    .theme-bg-secondary {
+        @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
+    }
+
+    .theme-border {
+        @apply border border-borderColor dark:border-borderColorDark;
+    }
+
+    .theme-shadow {
+        @apply shadow-shadowColor;
+    }
+
+    .theme-text-secondary {
+        @apply text-textSecondary dark:text-textSecondaryDark;
+    }
+
+    .theme-icon-primary {
+        @apply text-textPrimary dark:text-textPrimaryDark;
+        @apply stroke-textPrimary dark:stroke-textPrimaryDark;
+        @apply fill-textPrimary dark:fill-textPrimaryDark;
+    }
+
+    .theme-icon-secondary {
+        @apply text-textSecondary dark:text-textSecondaryDark;
+        @apply stroke-textSecondary dark:stroke-textSecondaryDark;
+        @apply fill-textSecondary dark:fill-textSecondaryDark;
+    }
+
+    .theme-hover-button{
+        @apply hover:bg-gray-100 dark:hover:bg-bgColorSecondaryDark
+    }
+    .hover-shadow {
+        @apply shadow-md hover:shadow-lg ;
+    }
+
+    .hover-shadow-zero {
+        @apply shadow-none hover:shadow-md ;
+    }
+
+    .primary-transition {
+        @apply transition duration-200;
+    }
+
+    .select-opacity {
+        @apply hover:opacity-80 focus:opacity-100 active:opacity-100 group-hover:opacity-80 group-focus:opacity-100 group-active:opacity-100;
+    }
+
+    .selected-opacity {
+        @apply opacity-100;
+    }
+
+    .content-padding {
+        @apply px-6 md:px-10 xl:px-20
+    }
+
+    .absolute-center {
+        @apply absolute transform -translate-x-1/2 top-1/2 left-1/2;
+      }
+}
+
+
+@layer utilities {
+
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}

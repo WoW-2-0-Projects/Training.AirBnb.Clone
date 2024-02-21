@@ -1,0 +1,4528 @@
+[
+  {
+    "id": "3fbabebc-d8d8-4679-8f6c-f019422d1ec7",
+    "name": "Islamic Republic of Mauritania",
+    "location": {
+      "latitude": 20.0,
+      "longitude": -12.0
+    },
+    "phoneNumberCodes": [
+      "+222"
+    ],
+    "currencyId": "13f1e440-8781-4463-a20d-5c1eb8185326",
+    "language": {
+      "name": "موريتانيا",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c1f31bf4-6698-40c6-a59a-5fdc74e8eb8b",
+    "name": "Aruba",
+    "location": {
+      "latitude": 12.5,
+      "longitude": -69.96666666
+    },
+    "phoneNumberCodes": [
+      "+297"
+    ],
+    "currencyId": "cc00afca-0650-4fe1-a0fb-6ae6c97fd321",
+    "language": {
+      "name": "Aruba",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a5ae73bd-1067-47a1-abd3-7514bfb31c43",
+    "name": "Argentine Republic",
+    "location": {
+      "latitude": -34.0,
+      "longitude": -64.0
+    },
+    "phoneNumberCodes": [
+      "+54"
+    ],
+    "currencyId": "887d5f90-f380-46b4-8bf1-ce389b79c39c",
+    "language": {
+      "name": "Argentina",
+      "code": "es",
+      "locale": "es-AR"
+    }
+  },
+  {
+    "id": "752cf754-ebea-405d-83c0-a2fdde84d54f",
+    "name": "Kingdom of Sweden",
+    "location": {
+      "latitude": 62.0,
+      "longitude": 15.0
+    },
+    "phoneNumberCodes": [
+      "+46"
+    ],
+    "currencyId": "9e42f92c-522a-44bb-8038-08c71d287a5b",
+    "language": {
+      "name": "Sverige",
+      "code": "sv",
+      "locale": "sv-SE"
+    }
+  },
+  {
+    "id": "0fc68def-838a-46bd-b484-8fb96ebe0301",
+    "name": "Republic of the Maldives",
+    "location": {
+      "latitude": 3.25,
+      "longitude": 73.0
+    },
+    "phoneNumberCodes": [
+      "+960"
+    ],
+    "currencyId": "4b75fc35-3b89-479b-babe-e4b3e27f24aa",
+    "language": {
+      "name": "ދިވެހިރާއްޖޭގެ",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c2c09e24-e2bf-43d3-a14b-c62c17cd9368",
+    "name": "United Mexican States",
+    "location": {
+      "latitude": 23.0,
+      "longitude": -102.0
+    },
+    "phoneNumberCodes": [
+      "+52"
+    ],
+    "currencyId": "db74cd39-c9f1-4241-bc02-b1d421b2ec43",
+    "language": {
+      "name": "México",
+      "code": "es",
+      "locale": "es-MX"
+    }
+  },
+  {
+    "id": "bead2506-028a-4444-b8c6-4e26159dd19c",
+    "name": "New Zealand",
+    "location": {
+      "latitude": -41.0,
+      "longitude": 174.0
+    },
+    "phoneNumberCodes": [
+      "+64"
+    ],
+    "currencyId": "66fd6ded-427e-4a53-b0a4-e753a97d5813",
+    "language": {
+      "name": "New Zealand",
+      "code": "en",
+      "locale": "en-NZ"
+    }
+  },
+  {
+    "id": "91cfab12-5082-4d56-ba6b-a526386e8529",
+    "name": "Republic of Ecuador",
+    "location": {
+      "latitude": -2.0,
+      "longitude": -77.5
+    },
+    "phoneNumberCodes": [
+      "+593"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Ecuador",
+      "code": "es",
+      "locale": "es-EC"
+    }
+  },
+  {
+    "id": "e1a4bc68-7292-4145-a699-a600f23f556c",
+    "name": "Territory of the Wallis and Futuna Islands",
+    "location": {
+      "latitude": -13.3,
+      "longitude": -176.2
+    },
+    "phoneNumberCodes": [
+      "+681"
+    ],
+    "currencyId": "90A9B652-99A3-4A5F-8215-C92B7F00542F",
+    "language": {
+      "name": "Wallis et Futuna",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c0a5cf32-6e93-458d-895d-0d8203616861",
+    "name": "Åland Islands",
+    "location": {
+      "latitude": 60.116667,
+      "longitude": 19.9
+    },
+    "phoneNumberCodes": [
+      "+35818"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Åland",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "22E52069-0D71-4EF8-AE38-6B9A101B6381",
+    "name": "Montenegro",
+    "location": {
+      "latitude": 42.5,
+      "longitude": 19.3
+    },
+    "phoneNumberCodes": [
+      "+382"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Црна Гора",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "53fc2122-3267-41d4-900e-43d1375df69b",
+    "name": "Islamic Republic of Pakistan",
+    "location": {
+      "latitude": 30.0,
+      "longitude": 70.0
+    },
+    "phoneNumberCodes": [
+      "+92"
+    ],
+    "currencyId": "37a376a6-4cc8-4a45-ac71-a1d363705bec",
+    "language": {
+      "name": "Pakistan",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "31c80f5c-15c6-4046-971e-de8449b57e3b",
+    "name": "Pitcairn Group of Islands",
+    "location": {
+      "latitude": -25.06666666,
+      "longitude": -130.1
+    },
+    "phoneNumberCodes": [
+      "+64"
+    ],
+    "currencyId": "66fd6ded-427e-4a53-b0a4-e753a97d5813",
+    "language": {
+      "name": "Pitcairn Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "6d5a59f1-1bd7-4393-8066-2402a9167c49",
+    "name": "Republic of Zambia",
+    "location": {
+      "latitude": -15.0,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+260"
+    ],
+    "currencyId": "4955bd6d-28df-41f6-9ee8-31d2dad1107a",
+    "language": {
+      "name": "Zambia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "15d23a21-86cf-495d-910a-39d47f52734e",
+    "name": "Republic of Seychelles",
+    "location": {
+      "latitude": -4.58333333,
+      "longitude": 55.66666666
+    },
+    "phoneNumberCodes": [
+      "+248"
+    ],
+    "currencyId": "126b6527-e619-4814-8384-231383554680",
+    "language": {
+      "name": "Sesel",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "19893ea7-1401-43d0-a147-6704d19eed92",
+    "name": "Malaysia",
+    "location": {
+      "latitude": 2.5,
+      "longitude": 112.5
+    },
+    "phoneNumberCodes": [
+      "+60"
+    ],
+    "currencyId": "34e46804-a665-4f38-ab13-bad0c9896cff",
+    "language": {
+      "name": "Malaysia",
+      "code": "ms",
+      "locale": "ms-MY"
+    }
+  },
+  {
+    "id": "c2a3ba99-e27f-415a-ba0e-a233133d3770",
+    "name": "Kingdom of Norway",
+    "location": {
+      "latitude": 62.0,
+      "longitude": 10.0
+    },
+    "phoneNumberCodes": [
+      "+47"
+    ],
+    "currencyId": "8499a1fa-69a4-47e5-8682-f58b6023d11c",
+    "language": {
+      "name": "Noreg",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "41e46fa1-c199-4a47-8a36-1144032638fe",
+    "name": "Republic of Uzbekistan",
+    "location": {
+      "latitude": 41.0,
+      "longitude": 64.0
+    },
+    "phoneNumberCodes": [
+      "+998"
+    ],
+    "currencyId": "7020438a-0552-49f4-85f7-4e876b54f61d",
+    "language": {
+      "name": "Узбекистан",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "946976ed-53c5-4a6c-a323-c28790824a9f",
+    "name": "Republic of Vanuatu",
+    "location": {
+      "latitude": -16.0,
+      "longitude": 167.0
+    },
+    "phoneNumberCodes": [
+      "+678"
+    ],
+    "currencyId": "1e8956f0-d1bc-430d-87a3-d9b0fbe82337",
+    "language": {
+      "name": "Vanuatu",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a8e5df1c-e475-469b-b342-4f74ed0184df",
+    "name": "Territory of the French Southern and Antarctic Lands",
+    "location": {
+      "latitude": -49.25,
+      "longitude": 69.167
+    },
+    "phoneNumberCodes": [
+      "+262"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Terres australes et antarctiques françaises",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "7e43d9bd-2ccd-4e31-9018-7d8c6758c8ab",
+    "name": "Territory of Christmas Island",
+    "location": {
+      "latitude": -10.5,
+      "longitude": 105.66666666
+    },
+    "phoneNumberCodes": [
+      "+61"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Christmas Island",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "59b3ce98-305c-481f-bd91-ab1561b3d2c0",
+    "name": "Republic of Singapore",
+    "location": {
+      "latitude": 1.36666666,
+      "longitude": 103.8
+    },
+    "phoneNumberCodes": [
+      "+65"
+    ],
+    "currencyId": "b379ea28-fd37-435f-a54c-0c18e562be51",
+    "language": {
+      "name": "新加坡",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "7248462d-5216-4dff-b2d9-04504919f1e4",
+    "name": "Republic of Suriname",
+    "location": {
+      "latitude": 4.0,
+      "longitude": -56.0
+    },
+    "phoneNumberCodes": [
+      "+597"
+    ],
+    "currencyId": "26283437-7ee1-4a06-82ab-f1b861b6913f",
+    "language": {
+      "name": "Suriname",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "311c1f24-cc68-4875-8be6-4d368265507d",
+    "name": "Sahrawi Arab Democratic Republic",
+    "location": {
+      "latitude": 24.5,
+      "longitude": -13.0
+    },
+    "phoneNumberCodes": [
+      "+2125288",
+      "+2125289"
+    ],
+    "currencyId": "75a3f81d-f912-41ff-b1f1-0cc2de4421b8",
+    "language": {
+      "name": "Western Sahara",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "31C6E534-FE1A-4B12-9121-42879F2CA25E",
+    "name": "Saint Martin",
+    "location": {
+      "latitude": 18.0708,
+      "longitude": 63.0501
+    },
+    "phoneNumberCodes": [
+      "+590"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Saint-Martin",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "021521aa-3bf0-4cc7-86ef-b22be0a0df2b",
+    "name": "Republic of Costa Rica",
+    "location": {
+      "latitude": 10.0,
+      "longitude": -84.0
+    },
+    "phoneNumberCodes": [
+      "+506"
+    ],
+    "currencyId": "ae11a4cb-469f-47b6-a139-ccfe7eaf8d4f",
+    "language": {
+      "name": "Costa Rica",
+      "code": "es",
+      "locale": "es-CR"
+    }
+  },
+  {
+    "id": "db204368-a201-4e23-b686-b4ac85417a2a",
+    "name": "Republic of Ireland",
+    "location": {
+      "latitude": 53.0,
+      "longitude": -8.0
+    },
+    "phoneNumberCodes": [
+      "+353"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Ireland",
+      "code": "en",
+      "locale": "en-IE"
+    }
+  },
+  {
+    "id": "d86c3288-a48e-4e14-ab46-c1b07bf78e9b",
+    "name": "Commonwealth of Australia",
+    "location": {
+      "latitude": -27.0,
+      "longitude": 133.0
+    },
+    "phoneNumberCodes": [
+      "+61"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Australia",
+      "code": "en",
+      "locale": "en-AU"
+    }
+  },
+  {
+    "id": "903c85ee-8b18-4855-b71f-d0af6c3a3eee",
+    "name": "State of Libya",
+    "location": {
+      "latitude": 25.0,
+      "longitude": 17.0
+    },
+    "phoneNumberCodes": [
+      "+218"
+    ],
+    "currencyId": "6e1fd6a8-938e-4138-96ef-7cef6c3da0f9",
+    "language": {
+      "name": "‏ليبيا",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4601fcc5-b50c-42d7-87de-657d5a84216b",
+    "name": "State of Qatar",
+    "location": {
+      "latitude": 25.5,
+      "longitude": 51.25
+    },
+    "phoneNumberCodes": [
+      "+974"
+    ],
+    "currencyId": "49d78922-5d68-44c6-bd05-fa75467fea71",
+    "language": {
+      "name": "قطر",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c7e9f90b-7141-4681-add3-4ec517e7284b",
+    "name": "Greenland",
+    "location": {
+      "latitude": 72.0,
+      "longitude": -40.0
+    },
+    "phoneNumberCodes": [
+      "+299"
+    ],
+    "currencyId": "44d1a72c-b488-4b64-8f99-f19f1c83d9f3",
+    "language": {
+      "name": "Kalaallit Nunaat",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "f8574149-6db5-4034-9078-dd8b964d33e8",
+    "name": "Republic of Mauritius",
+    "location": {
+      "latitude": -20.28333333,
+      "longitude": 57.55
+    },
+    "phoneNumberCodes": [
+      "+230"
+    ],
+    "currencyId": "70975964-ca47-4dd3-86ab-5a38b0558676",
+    "language": {
+      "name": "Mauritius",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "49aac31a-d1f3-44b0-94e8-45b53bbe6ffc",
+    "name": "Republic of Kazakhstan",
+    "location": {
+      "latitude": 48.0196,
+      "longitude": 66.9237
+    },
+    "phoneNumberCodes": [
+      "+76",
+      "+77"
+    ],
+    "currencyId": "75198344-e8b3-4e1e-b56d-cccd4ec4cd9f",
+    "language": {
+      "name": "Қазақстан",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bc5290ec-75bc-428e-8ebe-7b48e1ae0c58",
+    "name": "British Indian Ocean Territory",
+    "location": {
+      "latitude": -6.0,
+      "longitude": 71.5
+    },
+    "phoneNumberCodes": [
+      "+246"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "British Indian Ocean Territory",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c25eb15d-02c1-4716-9423-44f535076622",
+    "name": "Republic of Albania",
+    "location": {
+      "latitude": 41.0,
+      "longitude": 20.0
+    },
+    "phoneNumberCodes": [
+      "+355"
+    ],
+    "currencyId": "927b0642-f900-4491-9570-072f441b05b6",
+    "language": {
+      "name": "Shqipëria",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ce833b5e-9d44-40c9-b23a-1e9ab7fbb81b",
+    "name": "Kingdom of Bahrain",
+    "location": {
+      "latitude": 26.0,
+      "longitude": 50.55
+    },
+    "phoneNumberCodes": [
+      "+973"
+    ],
+    "currencyId": "c92efa0d-6020-4f53-8e73-062bee0b5e99",
+    "language": {
+      "name": "‏البحرين",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0c314b47-b7ee-4b10-907e-e3630700c4ec",
+    "name": "Independent State of Papua New Guinea",
+    "location": {
+      "latitude": -6.0,
+      "longitude": 147.0
+    },
+    "phoneNumberCodes": [
+      "+675"
+    ],
+    "currencyId": "1da626d3-18fd-4fbd-90d9-0e38979db3e7",
+    "language": {
+      "name": "Papua New Guinea",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "939cf0e0-bff9-4496-82e1-466638b5db20",
+    "name": "Republic of Burundi",
+    "location": {
+      "latitude": -3.5,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+257"
+    ],
+    "currencyId": "c9ef4205-b9f1-4c3d-9c94-a04ea884d989",
+    "language": {
+      "name": "Burundi",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4ea2197e-177c-48cf-8917-057b951106db",
+    "name": "Republic of India",
+    "location": {
+      "latitude": 20.0,
+      "longitude": 77.0
+    },
+    "phoneNumberCodes": [
+      "+91"
+    ],
+    "currencyId": "7f1383ea-5083-4b38-b682-cfd5a38a1e52",
+    "language": {
+      "name": "India",
+      "code": "en",
+      "locale": "en-IN"
+    }
+  },
+  {
+    "id": "6bd4a9c8-4d07-41e1-9531-a2c34e9ccdf3",
+    "name": "Oriental Republic of Uruguay",
+    "location": {
+      "latitude": -33.0,
+      "longitude": -56.0
+    },
+    "phoneNumberCodes": [
+      "+598"
+    ],
+    "currencyId": "1520c551-edc7-4330-86c4-3d691502bcef",
+    "language": {
+      "name": "Uruguay",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "fc8bad2a-a329-4c33-861d-ed386590574d",
+    "name": "Saint Lucia",
+    "location": {
+      "latitude": 13.88333333,
+      "longitude": -60.96666666
+    },
+    "phoneNumberCodes": [
+      "+1758"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Saint Lucia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "59769d13-7557-4163-ac58-ff614b4eb694",
+    "name": "Barbados",
+    "location": {
+      "latitude": 13.16666666,
+      "longitude": -59.53333333
+    },
+    "phoneNumberCodes": [
+      "+1246"
+    ],
+    "currencyId": "7d1af552-097b-48d0-afe1-7ac0396fbf4c",
+    "language": {
+      "name": "Barbados",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "6d53c064-a8e2-4f3a-8b30-53280f8a71f3",
+    "name": "New Caledonia",
+    "location": {
+      "latitude": -21.5,
+      "longitude": 165.5
+    },
+    "phoneNumberCodes": [
+      "+687"
+    ],
+    "currencyId": "90A9B652-99A3-4A5F-8215-C92B7F00542F",
+    "language": {
+      "name": "Nouvelle-Calédonie",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "50af7a38-909a-47e1-8e87-0d2707406fa2",
+    "name": "Republic of Latvia",
+    "location": {
+      "latitude": 57.0,
+      "longitude": 25.0
+    },
+    "phoneNumberCodes": [
+      "+371"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Latvija",
+      "code": "lv",
+      "locale": "lv-LV"
+    }
+  },
+  {
+    "id": "e728ff46-ce1c-46f2-8d82-e9160cc76b61",
+    "name": "Republic of Estonia",
+    "location": {
+      "latitude": 59.0,
+      "longitude": 26.0
+    },
+    "phoneNumberCodes": [
+      "+372"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Eesti",
+      "code": "et",
+      "locale": "et-EE"
+    }
+  },
+  {
+    "id": "379a7bcd-385f-4609-9ced-50429664f789",
+    "name": "Niue",
+    "location": {
+      "latitude": -19.03333333,
+      "longitude": -169.86666666
+    },
+    "phoneNumberCodes": [
+      "+683"
+    ],
+    "currencyId": "66fd6ded-427e-4a53-b0a4-e753a97d5813",
+    "language": {
+      "name": "Niue",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "E3ADAC7E-1816-4D1C-B8AD-02966816A0BF",
+    "name": "Collectivity of Saint Barthélemy",
+    "location": {
+      "latitude": 18.5,
+      "longitude": -63.41666666
+    },
+    "phoneNumberCodes": [
+      "+590"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Saint-Barthélemy",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e29a65ca-2a06-4f74-94b3-2e6c12044230",
+    "name": "Commonwealth of Puerto Rico",
+    "location": {
+      "latitude": 18.25,
+      "longitude": -66.5
+    },
+    "phoneNumberCodes": [
+      "+1787",
+      "+1939"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Puerto Rico",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "1df12fc8-19bc-4039-b49c-4afc3dd73b46",
+    "name": "Grenada",
+    "location": {
+      "latitude": 12.11666666,
+      "longitude": -61.66666666
+    },
+    "phoneNumberCodes": [
+      "+1473"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Grenada",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "6a74f879-6c1c-4599-9ff7-26ebdc7e51ea",
+    "name": "Macao Special Administrative Region of the People's Republic of China",
+    "location": {
+      "latitude": 22.16666666,
+      "longitude": 113.55
+    },
+    "phoneNumberCodes": [
+      "+853"
+    ],
+    "currencyId": "7703e758-4b74-476c-a370-292078defa38",
+    "language": {
+      "name": "Macau",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ea7dfcbf-06b9-4170-870d-d448729e0a35",
+    "name": "Republic of Cyprus",
+    "location": {
+      "latitude": 35.0,
+      "longitude": 33.0
+    },
+    "phoneNumberCodes": [
+      "+357"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Κύπρος",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2174ba43-47e4-4d1a-bbef-0975ce5def84",
+    "name": "Isle of Man",
+    "location": {
+      "latitude": 54.25,
+      "longitude": -4.5
+    },
+    "phoneNumberCodes": [
+      "+44"
+    ],
+    "currencyId": "43fa6837-2809-460b-846a-86001466e37a",
+    "language": {
+      "name": "Isle of Man",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "17356c01-aace-4153-802a-bc962b7b1f17",
+    "name": "Hellenic Republic",
+    "location": {
+      "latitude": 39.0,
+      "longitude": 22.0
+    },
+    "phoneNumberCodes": [
+      "+30"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Ελλάδα",
+      "code": "el",
+      "locale": "el-GR"
+    }
+  },
+  {
+    "id": "636e53b0-268b-4c59-b77f-2ef69b2a08ac",
+    "name": "Syrian Arab Republic",
+    "location": {
+      "latitude": 35.0,
+      "longitude": 38.0
+    },
+    "phoneNumberCodes": [
+      "+963"
+    ],
+    "currencyId": "a70e8ebf-03f0-4e4e-aad1-cc4f14893667",
+    "language": {
+      "name": "سوريا",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "737186f2-c2eb-4ddb-9a8c-202e63be761d",
+    "name": "Republic of Lithuania",
+    "location": {
+      "latitude": 56.0,
+      "longitude": 24.0
+    },
+    "phoneNumberCodes": [
+      "+370"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Lietuva",
+      "code": "lt",
+      "locale": "lt-LT"
+    }
+  },
+  {
+    "id": "6ACC961A-A496-4D89-91C0-14D1120F373B",
+    "name": "Country of Curaçao",
+    "location": {
+      "latitude": 12.116667,
+      "longitude": -68.933333
+    },
+    "phoneNumberCodes": [
+      "+599"
+    ],
+    "currencyId": "8803d10f-21bf-4082-ae91-35807bbc4725",
+    "language": {
+      "name": "Curaçao",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5a42fe09-22d6-4af1-b811-0bfd861aa4e7",
+    "name": "Commonwealth of Dominica",
+    "location": {
+      "latitude": 15.41666666,
+      "longitude": -61.33333333
+    },
+    "phoneNumberCodes": [
+      "+1767"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Dominica",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0a17bfb1-d4af-4521-80ff-274e73fa5806",
+    "name": "Republic of Niger",
+    "location": {
+      "latitude": 16.0,
+      "longitude": 8.0
+    },
+    "phoneNumberCodes": [
+      "+227"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Niger",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "3ca187de-6bd7-45ce-ac2d-00283195005a",
+    "name": "Kyrgyz Republic",
+    "location": {
+      "latitude": 41.0,
+      "longitude": 75.0
+    },
+    "phoneNumberCodes": [
+      "+996"
+    ],
+    "currencyId": "6113d801-674e-4b6e-97fa-a948c50e267c",
+    "language": {
+      "name": "Кыргызстан",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "17b5e28b-c1b7-414e-bf65-06311ae1daa3",
+    "name": "Republic of Trinidad and Tobago",
+    "location": {
+      "latitude": 10.6918,
+      "longitude": 61.2225
+    },
+    "phoneNumberCodes": [
+      "+1868"
+    ],
+    "currencyId": "5242f13a-dc2a-4a9b-a1a7-dfff6d6a5b8a",
+    "language": {
+      "name": "Trinidad and Tobago",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "aa94f948-01a9-45da-a1ad-94676edbbb3b",
+    "name": "Togolese Republic",
+    "location": {
+      "latitude": 8.0,
+      "longitude": 1.16666666
+    },
+    "phoneNumberCodes": [
+      "+228"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Togo",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "216a1d0a-b2b8-4191-b0f3-0b6497c15033",
+    "name": "State of Palestine",
+    "location": {
+      "latitude": 31.9,
+      "longitude": 35.2
+    },
+    "phoneNumberCodes": [
+      "+970"
+    ],
+    "currencyId": "353469fd-dd16-496d-9eaf-a6900a05cfd3",
+    "language": {
+      "name": "فلسطين",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "53369ea7-6483-45cf-bfa4-8a838c3d4811",
+    "name": "Republic of Madagascar",
+    "location": {
+      "latitude": -20.0,
+      "longitude": 47.0
+    },
+    "phoneNumberCodes": [
+      "+261"
+    ],
+    "currencyId": "f5668f49-0b21-4ee7-bf14-30314bb8c7ad",
+    "language": {
+      "name": "Madagascar",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "be41df21-106b-4564-a10e-07fa1f4123f1",
+    "name": "Republic of Croatia",
+    "location": {
+      "latitude": 45.16666666,
+      "longitude": 15.5
+    },
+    "phoneNumberCodes": [
+      "+385"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Hrvatska",
+      "code": "hr",
+      "locale": "hr-HR"
+    }
+  },
+  {
+    "id": "60d3937a-e3bd-4d5d-a868-a2389b68ee9a",
+    "name": "Faroe Islands",
+    "location": {
+      "latitude": 62.0,
+      "longitude": -7.0
+    },
+    "phoneNumberCodes": [
+      "+298"
+    ],
+    "currencyId": "833a7823-fd36-4e9f-8657-d17f30a3c05b",
+    "language": {
+      "name": "Færøerne",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "efa62fe9-735d-4efe-b2eb-8914afd37bcc",
+    "name": "Republic of Haiti",
+    "location": {
+      "latitude": 19.0,
+      "longitude": -72.41666666
+    },
+    "phoneNumberCodes": [
+      "+509"
+    ],
+    "currencyId": "f71add90-5c6e-4227-86bb-6b77b4b449b7",
+    "language": {
+      "name": "Haïti",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "1a347bcf-43b2-4a8e-b16a-9a81345a19c9",
+    "name": "Montserrat",
+    "location": {
+      "latitude": 16.75,
+      "longitude": -62.2
+    },
+    "phoneNumberCodes": [
+      "+1664"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Montserrat",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5a72c39d-aab5-46fe-8a0d-6b2df13e753a",
+    "name": "Cook Islands",
+    "location": {
+      "latitude": -21.23333333,
+      "longitude": -159.76666666
+    },
+    "phoneNumberCodes": [
+      "+682"
+    ],
+    "currencyId": "c9c99806-40bd-47c1-9b9a-732682272a9f",
+    "language": {
+      "name": "Cook Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "54115ba3-d724-4ce6-aa1e-59ac9bbea900",
+    "name": "Democratic Republic of Timor-Leste",
+    "location": {
+      "latitude": -8.83333333,
+      "longitude": 125.91666666
+    },
+    "phoneNumberCodes": [
+      "+670"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Timor-Leste",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "21696250-153e-454a-b133-27c7663bb776",
+    "name": "Martinique",
+    "location": {
+      "latitude": 14.666667,
+      "longitude": -61.0
+    },
+    "phoneNumberCodes": [
+      "+596"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Martinique",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4f8f74a6-d1ae-45d9-bc01-f204871d8716",
+    "name": "Republic of Cuba",
+    "location": {
+      "latitude": 21.5,
+      "longitude": -80.0
+    },
+    "phoneNumberCodes": [
+      "+53"
+    ],
+    "currencyId": "9b589dd7-8eab-4a91-84eb-d41810d3fbf9",
+    "language": {
+      "name": "Cuba",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9eec6741-dfec-4982-8fcb-1e5ca2ad2ef4",
+    "name": "Republic of China (Taiwan)",
+    "location": {
+      "latitude": 23.5,
+      "longitude": 121.0
+    },
+    "phoneNumberCodes": [
+      "+886"
+    ],
+    "currencyId": "64565f65-5a65-4dee-9676-cf2d076c18c2",
+    "language": {
+      "name": "台灣",
+      "code": "zh",
+      "locale": "zh-TW"
+    }
+  },
+  {
+    "id": "9809792f-d1fc-48b7-b527-038b75bb64bb",
+    "name": "Kingdom of Eswatini",
+    "location": {
+      "latitude": -26.5,
+      "longitude": 31.5
+    },
+    "phoneNumberCodes": [
+      "+268"
+    ],
+    "currencyId": "87cf6c22-7473-4406-8749-4f7df8ab7915",
+    "language": {
+      "name": "Eswatini",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0ddb67f8-b8d5-40ee-b07b-5f42ac230e84",
+    "name": "Ukraine",
+    "location": {
+      "latitude": 49.0,
+      "longitude": 32.0
+    },
+    "phoneNumberCodes": [
+      "+380"
+    ],
+    "currencyId": "f3eece98-03c0-4b37-82b1-3bc6f5118c66",
+    "language": {
+      "name": "Україна",
+      "code": "uk",
+      "locale": "uk-UA"
+    }
+  },
+  {
+    "id": "b59ea904-25e1-471c-9614-f0321fdfae4d",
+    "name": "Bermuda",
+    "location": {
+      "latitude": 32.33333333,
+      "longitude": -64.75
+    },
+    "phoneNumberCodes": [
+      "+1441"
+    ],
+    "currencyId": "874ecad7-a1df-4319-9e58-cc08e75eec39",
+    "language": {
+      "name": "Bermuda",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "98b2c4d4-bac5-4da5-a566-4c5211f5ea3c",
+    "name": "Republic of Korea",
+    "location": {
+      "latitude": 37.0,
+      "longitude": 127.5
+    },
+    "phoneNumberCodes": [
+      "+82"
+    ],
+    "currencyId": "e5d3682e-15c5-4aca-96c5-600b020b10a2",
+    "language": {
+      "name": "한국",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "cd44c33f-45b7-4950-9e4e-c6655640a951",
+    "name": "Republic of Peru",
+    "location": {
+      "latitude": -10.0,
+      "longitude": -76.0
+    },
+    "phoneNumberCodes": [
+      "+51"
+    ],
+    "currencyId": "74cd0c71-85fd-4967-9383-569441e0c0ad",
+    "language": {
+      "name": "Piruw",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9938c653-0bdc-4e42-8330-b313027f226c",
+    "name": "Republic of Iraq",
+    "location": {
+      "latitude": 33.0,
+      "longitude": 44.0
+    },
+    "phoneNumberCodes": [
+      "+964"
+    ],
+    "currencyId": "b8ef6c55-39bd-492c-8ce8-775fd8599c4f",
+    "language": {
+      "name": "العراق",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c16648c0-9836-4fcf-afde-791d41d8da2c",
+    "name": "Republic of Moldova",
+    "location": {
+      "latitude": 47.0,
+      "longitude": 29.0
+    },
+    "phoneNumberCodes": [
+      "+373"
+    ],
+    "currencyId": "c2f81ba1-f828-468a-825a-dd3ec1a71121",
+    "language": {
+      "name": "Moldova",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "88d4b45c-11bb-42f3-af45-3e4c17a77f49",
+    "name": "Republic of San Marino",
+    "location": {
+      "latitude": 43.76666666,
+      "longitude": 12.41666666
+    },
+    "phoneNumberCodes": [
+      "+378"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "San Marino",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "805a6746-8968-460d-9803-1b9aef26f9f4",
+    "name": "Bolivarian Republic of Venezuela",
+    "location": {
+      "latitude": 8.0,
+      "longitude": -66.0
+    },
+    "phoneNumberCodes": [
+      "+58"
+    ],
+    "currencyId": "93f9f06e-1529-4821-888d-bcc41f323558",
+    "language": {
+      "name": "Venezuela",
+      "code": "es",
+      "locale": "es-VE"
+    }
+  },
+  {
+    "id": "9b9fd64d-213b-4392-bfaf-7bb0aaa275b6",
+    "name": "Co-operative Republic of Guyana",
+    "location": {
+      "latitude": 5.0,
+      "longitude": -59.0
+    },
+    "phoneNumberCodes": [
+      "+592"
+    ],
+    "currencyId": "dc174ae1-6dde-435f-a304-c4941d2c2945",
+    "language": {
+      "name": "Guyana",
+      "code": "en",
+      "locale": "en-GY"
+    }
+  },
+  {
+    "id": "9d65369b-ef8f-420a-a1c1-28dc1e6c291f",
+    "name": "Cayman Islands",
+    "location": {
+      "latitude": 19.3133,
+      "longitude": 81.2546
+    },
+    "phoneNumberCodes": [
+      "+1345"
+    ],
+    "currencyId": "5a718aec-c151-4505-967d-c820f8c33feb",
+    "language": {
+      "name": "Cayman Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5db64fbb-67c0-49c9-a860-92ae236ae67f",
+    "name": "Kingdom of Cambodia",
+    "location": {
+      "latitude": 13.0,
+      "longitude": 105.0
+    },
+    "phoneNumberCodes": [
+      "+855"
+    ],
+    "currencyId": "9bf4c736-5abf-4869-b44a-bc233a0357f0",
+    "language": {
+      "name": "Kâmpŭchéa",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "3973f402-50ca-420c-8c12-bd9226315a35",
+    "name": "Territory of the Cocos (Keeling) Islands",
+    "location": {
+      "latitude": 12.1642,
+      "longitude": 96.871
+    },
+    "phoneNumberCodes": [
+      "+61"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Cocos (Keeling) Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a85644f1-76af-4b98-8033-b451dc0f990e",
+    "name": "Republic of Malta",
+    "location": {
+      "latitude": 35.9375,
+      "longitude": 14.3754
+    },
+    "phoneNumberCodes": [
+      "+356"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Malta",
+      "code": "mt",
+      "locale": "mt-MT"
+    }
+  },
+  {
+    "id": "bbfc2c9d-0408-405d-b65b-4d9683073e90",
+    "name": "Democratic Socialist Republic of Sri Lanka",
+    "location": {
+      "latitude": 7.0,
+      "longitude": 81.0
+    },
+    "phoneNumberCodes": [
+      "+94"
+    ],
+    "currencyId": "68aef313-ae2f-4b6f-b8fa-eeb4292b5a4d",
+    "language": {
+      "name": "ශ්‍රී ලංකාව",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d913befa-8566-4777-9fe6-1a19ceb0d783",
+    "name": "State of Israel",
+    "location": {
+      "latitude": 31.47,
+      "longitude": 35.13
+    },
+    "phoneNumberCodes": [
+      "+972"
+    ],
+    "currencyId": "df02cd1b-cc95-4eb3-921a-26d1e1a3a7eb",
+    "language": {
+      "name": "إسرائيل",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ef7dfcd9-b4ef-4b3e-a80e-8a56034cbed3",
+    "name": "Virgin Islands of the United States",
+    "location": {
+      "latitude": 18.35,
+      "longitude": -64.933333
+    },
+    "phoneNumberCodes": [
+      "+1340"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "United States Virgin Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0448680b-9c6e-421a-b6c3-646613fdf27d",
+    "name": "State of Eritrea",
+    "location": {
+      "latitude": 15.0,
+      "longitude": 39.0
+    },
+    "phoneNumberCodes": [
+      "+291"
+    ],
+    "currencyId": "145d7eb8-f266-470e-8457-d22d013064d8",
+    "language": {
+      "name": "إرتريا‎",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "480d28e9-4c47-4a4a-bce6-9f94ed3d42f2",
+    "name": "Republic of Mali",
+    "location": {
+      "latitude": 17.0,
+      "longitude": -4.0
+    },
+    "phoneNumberCodes": [
+      "+223"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Mali",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "621eb62b-9795-49a0-9b5e-b82ae42dcc78",
+    "name": "Federal Republic of Somalia",
+    "location": {
+      "latitude": 10.0,
+      "longitude": 49.0
+    },
+    "phoneNumberCodes": [
+      "+252"
+    ],
+    "currencyId": "609b601f-8c47-4730-b5a0-c407d1e2f1f6",
+    "language": {
+      "name": "الصومال‎‎",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ef151096-a07a-4ff8-accd-284e3aa922aa",
+    "name": "Territory of Norfolk Island",
+    "location": {
+      "latitude": -29.03333333,
+      "longitude": 167.95
+    },
+    "phoneNumberCodes": [
+      "+672"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Norfolk Island",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9523245f-0289-4143-95bd-ca3029b2ad86",
+    "name": "Union of the Comoros",
+    "location": {
+      "latitude": -12.16666666,
+      "longitude": 44.25
+    },
+    "phoneNumberCodes": [
+      "+269"
+    ],
+    "currencyId": "dfc31571-197b-4e40-8726-19ca7d1819ad",
+    "language": {
+      "name": "القمر‎",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "06a53ce3-65e0-42d3-b4c6-ce342cabc7fb",
+    "name": "Republic of Nicaragua",
+    "location": {
+      "latitude": 13.0,
+      "longitude": -85.0
+    },
+    "phoneNumberCodes": [
+      "+505"
+    ],
+    "currencyId": "8bfd494f-0cdc-4877-b08e-45ee63e1d616",
+    "language": {
+      "name": "Nicaragua",
+      "code": "es",
+      "locale": "es-NI"
+    }
+  },
+  {
+    "id": "ec5e4c06-8233-429d-9cd7-56416b8143c7",
+    "name": "Russian Federation",
+    "location": {
+      "latitude": 60.0,
+      "longitude": 100.0
+    },
+    "phoneNumberCodes": [
+      "+73",
+      "+74",
+      "+75",
+      "+78",
+      "+79"
+    ],
+    "currencyId": "c8b8ba81-a766-4795-a096-6aa2340c1e68",
+    "language": {
+      "name": "Россия",
+      "code": "ru",
+      "locale": "ru-RU"
+    }
+  },
+  {
+    "id": "6e9eaada-e35e-44fa-9afd-1513186ec467",
+    "name": "Republic of Uganda",
+    "location": {
+      "latitude": 1.0,
+      "longitude": 32.0
+    },
+    "phoneNumberCodes": [
+      "+256"
+    ],
+    "currencyId": "cbbf8e7d-7706-4ba8-a8cb-11ee82e94b43",
+    "language": {
+      "name": "Uganda",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "f5d3b47c-fe7e-4481-9648-73d4c5092b49",
+    "name": "Republic of Nauru",
+    "location": {
+      "latitude": -0.53333333,
+      "longitude": 166.91666666
+    },
+    "phoneNumberCodes": [
+      "+674"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Nauru",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "1f30e684-18e9-4d8d-bfee-dfedf3a09046",
+    "name": "Swiss Confederation",
+    "location": {
+      "latitude": 47.0,
+      "longitude": 8.0
+    },
+    "phoneNumberCodes": [
+      "+41"
+    ],
+    "currencyId": "91f43928-8554-4136-b016-e07b1eaad720",
+    "language": {
+      "name": "Suisse",
+      "code": "fr",
+      "locale": "fr-CH"
+    }
+  },
+  {
+    "id": "0be702d4-cb9d-423c-9aa5-93763993ed8e",
+    "name": "Portuguese Republic",
+    "location": {
+      "latitude": 39.5,
+      "longitude": -8.0
+    },
+    "phoneNumberCodes": [
+      "+351"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Portugal",
+      "code": "pt",
+      "locale": "pt-PT"
+    }
+  },
+  {
+    "id": "f5f9f8a9-0cac-4f2c-ae16-b0f3ba00b8d4",
+    "name": "Republic of Tajikistan",
+    "location": {
+      "latitude": 39.0,
+      "longitude": 71.0
+    },
+    "phoneNumberCodes": [
+      "+992"
+    ],
+    "currencyId": "baf505b5-7b5e-406f-a457-80ffe1729f70",
+    "language": {
+      "name": "Таджикистан",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "77F635B2-DD01-47BC-8D36-1BC81B79FA18",
+    "name": "Republic of South Sudan",
+    "location": {
+      "latitude": 7.0,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+211"
+    ],
+    "currencyId": "04e7701e-f96a-4263-935c-8df374aeb876",
+    "language": {
+      "name": "South Sudan",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "af39a5f9-03cf-4625-a76b-42830612deaa",
+    "name": "Republic of the Sudan",
+    "location": {
+      "latitude": 15.6,
+      "longitude": 32.53
+    },
+    "phoneNumberCodes": [
+      "+249"
+    ],
+    "currencyId": "5708C399-9A81-4763-9770-EDADBAFDD327",
+    "language": {
+      "name": "Sudan",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "410dce17-ee49-4fc5-8115-24d5a41a2f9f",
+    "name": "Federated States of Micronesia",
+    "location": {
+      "latitude": 6.91666666,
+      "longitude": 158.25
+    },
+    "phoneNumberCodes": [
+      "+691"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Micronesia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ad01115b-519d-4e06-a21d-c10dcee159fc",
+    "name": "American Samoa",
+    "location": {
+      "latitude": -14.33333333,
+      "longitude": -170.0
+    },
+    "phoneNumberCodes": [
+      "+1684"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "American Samoa",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5cb93d6e-e93a-4d99-9146-89fa231be18f",
+    "name": "Czech Republic",
+    "location": {
+      "latitude": 49.75,
+      "longitude": 15.5
+    },
+    "phoneNumberCodes": [
+      "+420"
+    ],
+    "currencyId": "acc4847f-bc97-4c0b-bf64-4604aa6ca20b",
+    "language": {
+      "name": "Česko",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bfe0bc70-f8f0-4c6e-b6ac-9264b2981233",
+    "name": "Republic of Botswana",
+    "location": {
+      "latitude": -22.0,
+      "longitude": 24.0
+    },
+    "phoneNumberCodes": [
+      "+267"
+    ],
+    "currencyId": "981a3e29-fb92-4b5a-9aa0-d78fde374a0b",
+    "language": {
+      "name": "Botswana",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a5adb324-c837-43b6-8cd0-81aa7445f42d",
+    "name": "Tunisian Republic",
+    "location": {
+      "latitude": 34.0,
+      "longitude": 9.0
+    },
+    "phoneNumberCodes": [
+      "+216"
+    ],
+    "currencyId": "7027cfe4-dae5-4b66-a1fb-007bf6bb5c7d",
+    "language": {
+      "name": "تونس",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "595b2251-eeac-4328-9bee-0dcd3655b224",
+    "name": "Anguilla",
+    "location": {
+      "latitude": 18.25,
+      "longitude": -63.16666666
+    },
+    "phoneNumberCodes": [
+      "+1264"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Anguilla",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "849e6b54-8e18-4ae1-965b-fdbb243ca673",
+    "name": "Republic of Guinea-Bissau",
+    "location": {
+      "latitude": 12.0,
+      "longitude": -15.0
+    },
+    "phoneNumberCodes": [
+      "+245"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Guiné-Bissau",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "7036672a-ce4e-4cf2-84a6-fa03d5a6c951",
+    "name": "Slovak Republic",
+    "location": {
+      "latitude": 48.66666666,
+      "longitude": 19.5
+    },
+    "phoneNumberCodes": [
+      "+421"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Slovensko",
+      "code": "sk",
+      "locale": "sk-SK"
+    }
+  },
+  {
+    "id": "f211374d-a966-4e23-a7ba-972e14f3d1ce",
+    "name": "Republic of the Marshall Islands",
+    "location": {
+      "latitude": 9.0,
+      "longitude": 168.0
+    },
+    "phoneNumberCodes": [
+      "+692"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Marshall Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bcc3f106-b0dd-48fc-a5b7-b8e5535845e7",
+    "name": "People's Democratic Republic of Algeria",
+    "location": {
+      "latitude": 28.0,
+      "longitude": 3.0
+    },
+    "phoneNumberCodes": [
+      "+213"
+    ],
+    "currencyId": "75a3f81d-f912-41ff-b1f1-0cc2de4421b8",
+    "language": {
+      "name": "الجزائر",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8f247af7-5513-44b8-8000-ecf4a300a663",
+    "name": "Jamaica",
+    "location": {
+      "latitude": 18.25,
+      "longitude": -77.5
+    },
+    "phoneNumberCodes": [
+      "+1876"
+    ],
+    "currencyId": "628c33a8-0ad6-45bc-bbc3-695056417fb9",
+    "language": {
+      "name": "Jamaica",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d846a7c5-f2be-4fba-8407-306f2c2aa3d0",
+    "name": "Republic of Mozambique",
+    "location": {
+      "latitude": -18.25,
+      "longitude": 35.0
+    },
+    "phoneNumberCodes": [
+      "+258"
+    ],
+    "currencyId": "7ea46ce0-2898-457e-9d27-ea938b74bb03",
+    "language": {
+      "name": "Moçambique",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "06945de6-d544-4bc1-b406-7959616487c0",
+    "name": "Kingdom of Spain",
+    "location": {
+      "latitude": 40.0,
+      "longitude": -4.0
+    },
+    "phoneNumberCodes": [
+      "+34"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "España",
+      "code": "es",
+      "locale": "es-ES"
+    }
+  },
+  {
+    "id": "74f623d2-d2f6-42a9-b145-247d30dcf4bd",
+    "name": "Republic of Honduras",
+    "location": {
+      "latitude": 15.0,
+      "longitude": -86.5
+    },
+    "phoneNumberCodes": [
+      "+504"
+    ],
+    "currencyId": "b39ed949-5c7c-4350-b11a-de54d036ea40",
+    "language": {
+      "name": "Honduras",
+      "code": "es",
+      "locale": "es-HN"
+    }
+  },
+  {
+    "id": "2d889d9f-81b1-4b25-b092-8c0f7a4bfb55",
+    "name": "Kingdom of the Netherlands",
+    "location": {
+      "latitude": 52.5,
+      "longitude": 5.75
+    },
+    "phoneNumberCodes": [
+      "+31"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Nederland",
+      "code": "nl",
+      "locale": "nl-NL"
+    }
+  },
+  {
+    "id": "112a6b7e-fe7c-4681-9d3e-0ccb4aeb671a",
+    "name": "Republic of South Africa",
+    "location": {
+      "latitude": -29.0,
+      "longitude": 24.0
+    },
+    "phoneNumberCodes": [
+      "+27"
+    ],
+    "currencyId": "d1653c41-a3b7-4ec8-b415-e2a8dc63820e",
+    "language": {
+      "name": "South Africa",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "435c0397-c5d6-4385-9310-a961f0fe869a",
+    "name": "Republic of Azerbaijan",
+    "location": {
+      "latitude": 40.5,
+      "longitude": 47.5
+    },
+    "phoneNumberCodes": [
+      "+994"
+    ],
+    "currencyId": "111e3d1b-bd12-4997-96ba-b294b6b6a8a7",
+    "language": {
+      "name": "Azərbaycan",
+      "code": "az",
+      "locale": "az-AZ"
+    }
+  },
+  {
+    "id": "bbdc43ec-d09f-45be-9f19-3387c52e4613",
+    "name": "Republic of North Macedonia",
+    "location": {
+      "latitude": 41.83333333,
+      "longitude": 22.0
+    },
+    "phoneNumberCodes": [
+      "+389"
+    ],
+    "currencyId": "055447f4-ba08-4bbf-9ee9-ede83c453772",
+    "language": {
+      "name": "Македонија",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "114385db-3e82-4a6b-a760-1dcfd125d785",
+    "name": "Republic of the Gambia",
+    "location": {
+      "latitude": 13.46666666,
+      "longitude": -16.56666666
+    },
+    "phoneNumberCodes": [
+      "+220"
+    ],
+    "currencyId": "73a4376e-3c5c-452c-8e61-c10a6d2f32a1",
+    "language": {
+      "name": "Gambia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ce290db0-7afe-4c05-83fd-edb1aa2a2826",
+    "name": "Republic of Liberia",
+    "location": {
+      "latitude": 6.5,
+      "longitude": -9.5
+    },
+    "phoneNumberCodes": [
+      "+231"
+    ],
+    "currencyId": "74ffcbbe-8cb2-4cfe-9ffa-d079e93eef6f",
+    "language": {
+      "name": "Liberia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "be1d373d-de3f-4d65-9a6c-a3e9c28ae985",
+    "name": "Grand Duchy of Luxembourg",
+    "location": {
+      "latitude": 49.75,
+      "longitude": 6.16666666
+    },
+    "phoneNumberCodes": [
+      "+352"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Luxemburg",
+      "code": "de",
+      "locale": "de-LU"
+    }
+  },
+  {
+    "id": "9E5ED8F9-7D81-497B-8F4E-2254D9B7C219",
+    "name": "Republic of Cabo Verde",
+    "location": {
+      "latitude": 16.5388,
+      "longitude": 23.0418
+    },
+    "phoneNumberCodes": [
+      "+238"
+    ],
+    "currencyId": "46dc0abe-9830-4198-9e08-983c70757890",
+    "language": {
+      "name": "Cabo Verde",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2dd21198-b03c-45ee-bc86-4c32d3f71ada",
+    "name": "Commonwealth of the Bahamas",
+    "location": {
+      "latitude": 25.0343,
+      "longitude": 77.3963
+    },
+    "phoneNumberCodes": [
+      "+1242"
+    ],
+    "currencyId": "b1e06526-829c-4cb6-996c-0bf90b7438c7",
+    "language": {
+      "name": "Bahamas",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ddf806a9-074c-4f25-bae0-dfc64af16287",
+    "name": "Georgia",
+    "location": {
+      "latitude": 42.0,
+      "longitude": 43.5
+    },
+    "phoneNumberCodes": [
+      "+995"
+    ],
+    "currencyId": "412ac9e9-e454-43fb-aef4-373f3fc06a3d",
+    "language": {
+      "name": "საქართველო",
+      "code": "ka",
+      "locale": "ka-GE"
+    }
+  },
+  {
+    "id": "d3d5e139-1a4c-40ec-a581-96e7b30f15b8",
+    "name": "Independent and Sovereign Republic of Kiribati",
+    "location": {
+      "latitude": 1.41666666,
+      "longitude": 173.0
+    },
+    "phoneNumberCodes": [
+      "+686"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Kiribati",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "600491a6-73c7-420c-a27d-5677d312cc07",
+    "name": "United Republic of Tanzania",
+    "location": {
+      "latitude": -6.0,
+      "longitude": 35.0
+    },
+    "phoneNumberCodes": [
+      "+255"
+    ],
+    "currencyId": "3ace0d5c-00b7-4333-8cf7-81993ae26b28",
+    "language": {
+      "name": "Tanzania",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "daa76c15-c1e3-4d1c-b73c-682d183c3c8a",
+    "name": "People's Republic of China",
+    "location": {
+      "latitude": 35.0,
+      "longitude": 105.0
+    },
+    "phoneNumberCodes": [
+      "+86"
+    ],
+    "currencyId": "01745f7b-cf84-4095-8983-8e93a33f637c",
+    "language": {
+      "name": "中国",
+      "code": "zh",
+      "locale": "zh-CN"
+    }
+  },
+  {
+    "id": "d9162221-bf22-467f-bf43-3d65a5c40fff",
+    "name": "Republic of Guatemala",
+    "location": {
+      "latitude": 15.5,
+      "longitude": -90.25
+    },
+    "phoneNumberCodes": [
+      "+502"
+    ],
+    "currencyId": "b3c3da42-2111-40ea-8c68-ed913b8f5ca0",
+    "language": {
+      "name": "Guatemala",
+      "code": "es",
+      "locale": "es-GT"
+    }
+  },
+  {
+    "id": "2c6c9c6e-7bed-4eb7-b741-04579e0a5bfd",
+    "name": "Democratic Republic of São Tomé and Príncipe",
+    "location": {
+      "latitude": 1.0,
+      "longitude": 7.0
+    },
+    "phoneNumberCodes": [
+      "+239"
+    ],
+    "currencyId": "18a05036-d351-41e4-9f80-4734d22b5c60",
+    "language": {
+      "name": "São Tomé e Príncipe",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8b4617db-0189-4055-9ead-254e350ada29",
+    "name": "Federal Republic of Germany",
+    "location": {
+      "latitude": 51.0,
+      "longitude": 9.0
+    },
+    "phoneNumberCodes": [
+      "+49"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Deutschland",
+      "code": "de",
+      "locale": "de-DE"
+    }
+  },
+  {
+    "id": "f0d106e2-ec29-4ecf-8dd1-8e520842bd5e",
+    "name": "Republic of Sierra Leone",
+    "location": {
+      "latitude": 8.5,
+      "longitude": -11.5
+    },
+    "phoneNumberCodes": [
+      "+232"
+    ],
+    "currencyId": "f6c6e77c-1ec9-48fa-b3f4-bda9c7fd6763",
+    "language": {
+      "name": "Sierra Leone",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "be2c1e21-bc1e-448f-aa85-d8b0e3df93e2",
+    "name": "Republic of Chad",
+    "location": {
+      "latitude": 15.0,
+      "longitude": 19.0
+    },
+    "phoneNumberCodes": [
+      "+235"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "تشاد‎",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "686d77f1-0a78-4123-a8b1-d64c2adc8836",
+    "name": "United Kingdom of Great Britain and Northern Ireland",
+    "location": {
+      "latitude": 54.0,
+      "longitude": -2.0
+    },
+    "phoneNumberCodes": [
+      "+44"
+    ],
+    "currencyId": "43fa6837-2809-460b-846a-86001466e37a",
+    "language": {
+      "name": "United Kingdom",
+      "code": "en",
+      "locale": "en-GB"
+    }
+  },
+  {
+    "id": "81d76ae3-7731-4c10-989d-2d2287760dab",
+    "name": "Republic of Slovenia",
+    "location": {
+      "latitude": 46.11666666,
+      "longitude": 14.81666666
+    },
+    "phoneNumberCodes": [
+      "+386"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Slovenija",
+      "code": "sl",
+      "locale": "sl-SI"
+    }
+  },
+  {
+    "id": "827db578-5db7-477b-9129-1857c06aa89d",
+    "name": "Kingdom of Thailand",
+    "location": {
+      "latitude": 15.0,
+      "longitude": 100.0
+    },
+    "phoneNumberCodes": [
+      "+66"
+    ],
+    "currencyId": "130341a9-edb2-44cc-9885-82207909f4ae",
+    "language": {
+      "name": "ประเทศไทย",
+      "code": "th",
+      "locale": "th-TH"
+    }
+  },
+  {
+    "id": "5234f0e7-cf43-4bda-bc54-bebb40b09481",
+    "name": "Republic of Indonesia",
+    "location": {
+      "latitude": -5.0,
+      "longitude": 120.0
+    },
+    "phoneNumberCodes": [
+      "+62"
+    ],
+    "currencyId": "5d210733-a232-4325-87dd-d5f84144554c",
+    "language": {
+      "name": "Indonesia",
+      "code": "id",
+      "locale": "id-ID"
+    }
+  },
+  {
+    "id": "9d2d3e65-a759-46f9-a2b0-5837e30b0012",
+    "name": "Commonwealth of the Northern Mariana Islands",
+    "location": {
+      "latitude": 15.2,
+      "longitude": 145.75
+    },
+    "phoneNumberCodes": [
+      "+1670"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Northern Mariana Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8eb62b58-4734-47eb-84a5-955c2abac812",
+    "name": "Guam",
+    "location": {
+      "latitude": 13.46666666,
+      "longitude": 144.78333333
+    },
+    "phoneNumberCodes": [
+      "+1671"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Guåhån",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "39907744-db1a-426f-9f0e-8b0bfb32adf6",
+    "name": "Republic of Finland",
+    "location": {
+      "latitude": 64.0,
+      "longitude": 26.0
+    },
+    "phoneNumberCodes": [
+      "+358"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Suomi",
+      "code": "fi",
+      "locale": "fi-FI"
+    }
+  },
+  {
+    "id": "76a7b160-9eef-42ee-ae09-6633bc4b447a",
+    "name": "Department of Mayotte",
+    "location": {
+      "latitude": -12.83333333,
+      "longitude": 45.16666666
+    },
+    "phoneNumberCodes": [
+      "+262"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Mayotte",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e4bbe636-6d44-4b76-a688-fda9500550fd",
+    "name": "Gibraltar",
+    "location": {
+      "latitude": 36.13333333,
+      "longitude": -5.35
+    },
+    "phoneNumberCodes": [
+      "+350"
+    ],
+    "currencyId": "3c723dce-eaad-4fb0-9235-3fe78337bf83",
+    "language": {
+      "name": "Gibraltar",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "62a0d852-88e8-4e03-aa24-80ce610b0315",
+    "name": "Turkmenistan",
+    "location": {
+      "latitude": 40.0,
+      "longitude": 60.0
+    },
+    "phoneNumberCodes": [
+      "+993"
+    ],
+    "currencyId": "06e705cd-6448-4ac3-a38e-6b4d0157f84f",
+    "language": {
+      "name": "Туркмения",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "78C97E9B-049A-444D-8833-68FBF06A331F",
+    "name": "Republic of Kosovo",
+    "location": {
+      "latitude": 42.666667,
+      "longitude": 21.166667
+    },
+    "phoneNumberCodes": [
+      "+383"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Kosova",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a6524a13-b606-4b91-ab13-18567509ba40",
+    "name": "Republic of Côte d'Ivoire",
+    "location": {
+      "latitude": 8.0,
+      "longitude": -5.0
+    },
+    "phoneNumberCodes": [
+      "+225"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Côte d'Ivoire",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2b6ae0fb-0ed7-47da-9486-36ec66a1adb1",
+    "name": "Kingdom of Morocco",
+    "location": {
+      "latitude": 32.0,
+      "longitude": -5.0
+    },
+    "phoneNumberCodes": [
+      "+212"
+    ],
+    "currencyId": "4c074cb8-2e37-484d-9645-df7b7ff20c9f",
+    "language": {
+      "name": "المغرب",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d4696bb3-4155-425e-8692-e049efd3a05f",
+    "name": "Dominican Republic",
+    "location": {
+      "latitude": 19.0,
+      "longitude": -70.66666666
+    },
+    "phoneNumberCodes": [
+      "+1809",
+      "+1829",
+      "+1849"
+    ],
+    "currencyId": "2403fbb1-90a2-43d4-be92-4fbb52d4dce4",
+    "language": {
+      "name": "República Dominicana",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "aae77db7-2e3b-4e56-a530-8df048fa608e",
+    "name": "Republic of Ghana",
+    "location": {
+      "latitude": 8.0,
+      "longitude": -2.0
+    },
+    "phoneNumberCodes": [
+      "+233"
+    ],
+    "currencyId": "b589208e-c145-46ae-8233-4ce72398ff9a",
+    "language": {
+      "name": "Ghana",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b7d105ce-1ec3-47ef-8ab2-c32884ae7b2b",
+    "name": "Vatican City State",
+    "location": {
+      "latitude": 41.9,
+      "longitude": 12.45
+    },
+    "phoneNumberCodes": [
+      "+3906698",
+      "+379"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Vaticano",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2578fb5f-5aa5-4ba6-9db0-a69bae1bd1b9",
+    "name": "Bailiwick of Jersey",
+    "location": {
+      "latitude": 49.25,
+      "longitude": -2.16666666
+    },
+    "phoneNumberCodes": [
+      "+44"
+    ],
+    "currencyId": "43fa6837-2809-460b-846a-86001466e37a",
+    "language": {
+      "name": "Jersey",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9a0b424d-0a89-4ba3-a49a-a1e5cf1736b5",
+    "name": "Republic of Turkey",
+    "location": {
+      "latitude": 39.0,
+      "longitude": 35.0
+    },
+    "phoneNumberCodes": [
+      "+90"
+    ],
+    "currencyId": "c30fd4ec-e897-49fa-b1b3-e6d4ec169604",
+    "language": {
+      "name": "Türkiye",
+      "code": "tr",
+      "locale": "tr-TR"
+    }
+  },
+  {
+    "id": "4ecad9b2-f09e-46e9-846c-b4b08f3d7e97",
+    "name": "Tuvalu",
+    "location": {
+      "latitude": -8.0,
+      "longitude": 178.0
+    },
+    "phoneNumberCodes": [
+      "+688"
+    ],
+    "currencyId": "647b0cfb-4936-4e75-8bdd-3101ceca2a2b",
+    "language": {
+      "name": "Tuvalu",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "3d58e865-ec5b-44ad-8b9c-2d71ae15a0cd",
+    "name": "Islamic Republic of Iran",
+    "location": {
+      "latitude": 32.0,
+      "longitude": 53.0
+    },
+    "phoneNumberCodes": [
+      "+98"
+    ],
+    "currencyId": "c0e8824b-658d-47cc-8fae-1a24c69b30a7",
+    "language": {
+      "name": "ایران",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "49a0366d-d972-49e9-9307-c9ff87431f84",
+    "name": "Arab Republic of Egypt",
+    "location": {
+      "latitude": 27.0,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+20"
+    ],
+    "currencyId": "ce1ea0c6-c16f-4afe-a382-7dd00e1c466c",
+    "language": {
+      "name": "مصر",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e98a52ee-ac73-4263-b411-62d7ccbdd67b",
+    "name": "Kingdom of Denmark",
+    "location": {
+      "latitude": 56.0,
+      "longitude": 10.0
+    },
+    "phoneNumberCodes": [
+      "+45"
+    ],
+    "currencyId": "833a7823-fd36-4e9f-8657-d17f30a3c05b",
+    "language": {
+      "name": "Danmark",
+      "code": "da",
+      "locale": "da-DK"
+    }
+  },
+  {
+    "id": "9c6063fb-b790-4251-bc4b-dea64f640945",
+    "name": "Republic of Kenya",
+    "location": {
+      "latitude": 1.0,
+      "longitude": 38.0
+    },
+    "phoneNumberCodes": [
+      "+254"
+    ],
+    "currencyId": "0a44e2b1-5d1a-4c1e-81b5-6c1b9c7c5ba2",
+    "language": {
+      "name": "Kenya",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0212053c-30d4-4daf-99f2-eb117f4555d2",
+    "name": "Republic of Bulgaria",
+    "location": {
+      "latitude": 43.0,
+      "longitude": 25.0
+    },
+    "phoneNumberCodes": [
+      "+359"
+    ],
+    "currencyId": "e35e60b1-eeaa-44e1-8e39-70f34f2c5795",
+    "language": {
+      "name": "България",
+      "code": "bg",
+      "locale": "bg-BG"
+    }
+  },
+  {
+    "id": "7586fb62-7a04-45e5-a947-a407bde005e9",
+    "name": "Republic of Zimbabwe",
+    "location": {
+      "latitude": -20.0,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+263"
+    ],
+    "currencyId": "79e0fc92-ea15-4b9b-99cf-29fba5f0e523",
+    "language": {
+      "name": "Zimbabwe",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "44e0dbf7-f6bc-43ae-a499-431e1608965f",
+    "name": "Republic of Angola",
+    "location": {
+      "latitude": -12.5,
+      "longitude": 18.5
+    },
+    "phoneNumberCodes": [
+      "+244"
+    ],
+    "currencyId": "616565c5-13d7-49ee-8d44-81962c4406bc",
+    "language": {
+      "name": "Angola",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "321081e8-88d3-4197-85be-45242f9cd5ee",
+    "name": "Federal Republic of Nigeria",
+    "location": {
+      "latitude": 10.0,
+      "longitude": 8.0
+    },
+    "phoneNumberCodes": [
+      "+234"
+    ],
+    "currencyId": "f03e7ed5-3afe-4c49-8e89-75cb40d71af9",
+    "language": {
+      "name": "Nigeria",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "67e89cea-cf4e-48bb-91ea-69317d9954fd",
+    "name": "Republic of Poland",
+    "location": {
+      "latitude": 52.0,
+      "longitude": 20.0
+    },
+    "phoneNumberCodes": [
+      "+48"
+    ],
+    "currencyId": "91aea072-9a28-43de-962a-d3e0c1305b4c",
+    "language": {
+      "name": "Polska",
+      "code": "pl",
+      "locale": "pl-PL"
+    }
+  },
+  {
+    "id": "82d6a1ac-2dd7-49ce-aa3c-505fd08de761",
+    "name": "Republic of Senegal",
+    "location": {
+      "latitude": 14.0,
+      "longitude": -14.0
+    },
+    "phoneNumberCodes": [
+      "+221"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Sénégal",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "08ccbb61-87e8-4111-8afa-08d4edb85376",
+    "name": "Saint Helena, Ascension and Tristan da Cunha",
+    "location": {
+      "latitude": -15.95,
+      "longitude": -5.72
+    },
+    "phoneNumberCodes": [
+      "+290",
+      "+247"
+    ],
+    "currencyId": "e930b13f-c270-4870-aaff-65d8240db315",
+    "language": {
+      "name": "Saint Helena, Ascension and Tristan da Cunha",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8c4ae538-6a92-4e9f-aeda-cd20a6050342",
+    "name": "Lebanese Republic",
+    "location": {
+      "latitude": 33.83333333,
+      "longitude": 35.83333333
+    },
+    "phoneNumberCodes": [
+      "+961"
+    ],
+    "currencyId": "d3df9be3-f968-433e-99b7-ab5934c79519",
+    "language": {
+      "name": "لبنان",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "216cf396-6c5d-4a21-8f59-26ad61e6fa73",
+    "name": "Independent State of Samoa",
+    "location": {
+      "latitude": -13.58333333,
+      "longitude": -172.33333333
+    },
+    "phoneNumberCodes": [
+      "+685"
+    ],
+    "currencyId": "f4bab540-268e-4ca7-aa2f-c1581a5d96af",
+    "language": {
+      "name": "Samoa",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c7431635-b5be-485e-9cf3-353aa16c9f57",
+    "name": "Republic of the Philippines",
+    "location": {
+      "latitude": 13.0,
+      "longitude": 122.0
+    },
+    "phoneNumberCodes": [
+      "+63"
+    ],
+    "currencyId": "510b6f73-090e-4492-8501-cc11ea87388f",
+    "language": {
+      "name": "Philippines",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bc9dddee-2c1e-4f45-aa0f-75a1838301b1",
+    "name": "Bailiwick of Guernsey",
+    "location": {
+      "latitude": 49.46666666,
+      "longitude": -2.58333333
+    },
+    "phoneNumberCodes": [
+      "+44"
+    ],
+    "currencyId": "43fa6837-2809-460b-846a-86001466e37a",
+    "language": {
+      "name": "Guernsey",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "669fac06-907f-4f13-8a1f-eae4f88a7a25",
+    "name": "Republic of El Salvador",
+    "location": {
+      "latitude": 13.83333333,
+      "longitude": -88.91666666
+    },
+    "phoneNumberCodes": [
+      "+503"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "El Salvador",
+      "code": "es",
+      "locale": "es-SV"
+    }
+  },
+  {
+    "id": "c52a4020-22b0-4e29-a69b-5d35e6691701",
+    "name": "State of Kuwait",
+    "location": {
+      "latitude": 29.5,
+      "longitude": 45.75
+    },
+    "phoneNumberCodes": [
+      "+965"
+    ],
+    "currencyId": "d444673d-0821-4e1c-9060-cf49f11fab8a",
+    "language": {
+      "name": "الكويت",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "98eaf057-2bf0-47d4-abf8-68ceb4026547",
+    "name": "Kingdom of Tonga",
+    "location": {
+      "latitude": -20.0,
+      "longitude": -175.0
+    },
+    "phoneNumberCodes": [
+      "+676"
+    ],
+    "currencyId": "4a88e6f7-388f-45c1-a20b-58556e554ed0",
+    "language": {
+      "name": "Tonga",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5dc7fc71-75af-44e9-9460-2ab395794a71",
+    "name": "Sultanate of Oman",
+    "location": {
+      "latitude": 21.0,
+      "longitude": 57.0
+    },
+    "phoneNumberCodes": [
+      "+968"
+    ],
+    "currencyId": "d95d31a2-4f48-4bd3-94c3-0e59d7487e91",
+    "language": {
+      "name": "عمان",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "51daece2-74dc-4355-b6de-d82222b7e1d7",
+    "name": "Islamic Republic of Afghanistan",
+    "location": {
+      "latitude": 33.0,
+      "longitude": 65.0
+    },
+    "phoneNumberCodes": [
+      "+93"
+    ],
+    "currencyId": "769eb2b7-a3e2-49d7-adbb-7e60e4ed4d25",
+    "language": {
+      "name": "افغانستان",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "785b7ec2-4633-4c24-a768-bcead96f814d",
+    "name": "Federation of Saint Christopher and Nevis",
+    "location": {
+      "latitude": 17.33333333,
+      "longitude": -62.75
+    },
+    "phoneNumberCodes": [
+      "+1869"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Saint Kitts and Nevis",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c7e52811-8c4d-41df-a385-9a3db8272c1c",
+    "name": "Central African Republic",
+    "location": {
+      "latitude": 7.0,
+      "longitude": 21.0
+    },
+    "phoneNumberCodes": [
+      "+236"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "République centrafricaine",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8D0AA677-1710-4641-A8BD-C7BDA910C424",
+    "name": "Republic of Serbia",
+    "location": {
+      "latitude": 44.0,
+      "longitude": 21.0
+    },
+    "phoneNumberCodes": [
+      "+381"
+    ],
+    "currencyId": "d218803c-a4a6-4839-8072-998581039f8a",
+    "language": {
+      "name": "Србија",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4ac2c838-288c-4a08-bb8a-cef8f240c7e0",
+    "name": "Republic of Armenia",
+    "location": {
+      "latitude": 40.0,
+      "longitude": 45.0
+    },
+    "phoneNumberCodes": [
+      "+374"
+    ],
+    "currencyId": "5991757a-75ad-4f4b-976f-46512dabba7b",
+    "language": {
+      "name": "Հայաստան",
+      "code": "hy",
+      "locale": "hy-AM"
+    }
+  },
+  {
+    "id": "3fb6941b-3179-4979-ae36-90fffd28db89",
+    "name": "People's Republic of Bangladesh",
+    "location": {
+      "latitude": 24.0,
+      "longitude": 90.0
+    },
+    "phoneNumberCodes": [
+      "+880"
+    ],
+    "currencyId": "6d72deff-e99f-43cb-94bb-6ba4c3b05be7",
+    "language": {
+      "name": "বাংলাদেশ",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "83a04044-6abd-472c-8b57-7d9b0fa194b9",
+    "name": "Lao People's Democratic Republic",
+    "location": {
+      "latitude": 18.0,
+      "longitude": 105.0
+    },
+    "phoneNumberCodes": [
+      "+856"
+    ],
+    "currencyId": "4bbc23ea-7163-4303-b696-b957dfbb4f0a",
+    "language": {
+      "name": "ສປປລາວ",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b3e0ad3b-73f7-4b11-b7af-74d63e3f0076",
+    "name": "Republic of Chile",
+    "location": {
+      "latitude": -30.0,
+      "longitude": -71.0
+    },
+    "phoneNumberCodes": [
+      "+56"
+    ],
+    "currencyId": "c89f3b8b-464f-4ee6-b0ab-4c6bcbbc2e82",
+    "language": {
+      "name": "Chile",
+      "code": "es",
+      "locale": "es-CL"
+    }
+  },
+  {
+    "id": "b02c93ce-9bc3-4a25-973b-c59b5513a5a8",
+    "name": "French Polynesia",
+    "location": {
+      "latitude": 17.6797,
+      "longitude": 149.4068
+    },
+    "phoneNumberCodes": [
+      "+689"
+    ],
+    "currencyId": "90A9B652-99A3-4A5F-8215-C92B7F00542F",
+    "language": {
+      "name": "Polynésie française",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e4ac3e83-b010-4616-bd07-b660ec9c0391",
+    "name": "Republic of Panama",
+    "location": {
+      "latitude": 9.0,
+      "longitude": -80.0
+    },
+    "phoneNumberCodes": [
+      "+507"
+    ],
+    "currencyId": "f2739815-01fa-429a-9f7e-69260e48c87e",
+    "language": {
+      "name": "Panamá",
+      "code": "es",
+      "locale": "es-PA"
+    }
+  },
+  {
+    "id": "24f6aa25-532a-4ae2-aa21-c76855b487b4",
+    "name": "United States of America",
+    "location": {
+      "latitude": 38.0,
+      "longitude": -97.0
+    },
+    "phoneNumberCodes": [
+      "+1201",
+      "+1202",
+      "+1203",
+      "+1205",
+      "+1206",
+      "+1207",
+      "+1208",
+      "+1209",
+      "+1210",
+      "+1212",
+      "+1213",
+      "+1214",
+      "+1215",
+      "+1216",
+      "+1217",
+      "+1218",
+      "+1219",
+      "+1220",
+      "+1224",
+      "+1225",
+      "+1227",
+      "+1228",
+      "+1229",
+      "+1231",
+      "+1234",
+      "+1239",
+      "+1240",
+      "+1248",
+      "+1251",
+      "+1252",
+      "+1253",
+      "+1254",
+      "+1256",
+      "+1260",
+      "+1262",
+      "+1267",
+      "+1269",
+      "+1270",
+      "+1272",
+      "+1274",
+      "+1276",
+      "+1281",
+      "+1283",
+      "+1301",
+      "+1302",
+      "+1303",
+      "+1304",
+      "+1305",
+      "+1307",
+      "+1308",
+      "+1309",
+      "+1310",
+      "+1312",
+      "+1313",
+      "+1314",
+      "+1315",
+      "+1316",
+      "+1317",
+      "+1318",
+      "+1319",
+      "+1320",
+      "+1321",
+      "+1323",
+      "+1325",
+      "+1327",
+      "+1330",
+      "+1331",
+      "+1334",
+      "+1336",
+      "+1337",
+      "+1339",
+      "+1346",
+      "+1347",
+      "+1351",
+      "+1352",
+      "+1360",
+      "+1361",
+      "+1364",
+      "+1380",
+      "+1385",
+      "+1386",
+      "+1401",
+      "+1402",
+      "+1404",
+      "+1405",
+      "+1406",
+      "+1407",
+      "+1408",
+      "+1409",
+      "+1410",
+      "+1412",
+      "+1413",
+      "+1414",
+      "+1415",
+      "+1417",
+      "+1419",
+      "+1423",
+      "+1424",
+      "+1425",
+      "+1430",
+      "+1432",
+      "+1434",
+      "+1435",
+      "+1440",
+      "+1442",
+      "+1443",
+      "+1447",
+      "+1458",
+      "+1463",
+      "+1464",
+      "+1469",
+      "+1470",
+      "+1475",
+      "+1478",
+      "+1479",
+      "+1480",
+      "+1484",
+      "+1501",
+      "+1502",
+      "+1503",
+      "+1504",
+      "+1505",
+      "+1507",
+      "+1508",
+      "+1509",
+      "+1510",
+      "+1512",
+      "+1513",
+      "+1515",
+      "+1516",
+      "+1517",
+      "+1518",
+      "+1520",
+      "+1530",
+      "+1531",
+      "+1534",
+      "+1539",
+      "+1540",
+      "+1541",
+      "+1551",
+      "+1559",
+      "+1561",
+      "+1562",
+      "+1563",
+      "+1564",
+      "+1567",
+      "+1570",
+      "+1571",
+      "+1573",
+      "+1574",
+      "+1575",
+      "+1580",
+      "+1585",
+      "+1586",
+      "+1601",
+      "+1602",
+      "+1603",
+      "+1605",
+      "+1606",
+      "+1607",
+      "+1608",
+      "+1609",
+      "+1610",
+      "+1612",
+      "+1614",
+      "+1615",
+      "+1616",
+      "+1617",
+      "+1618",
+      "+1619",
+      "+1620",
+      "+1623",
+      "+1626",
+      "+1628",
+      "+1629",
+      "+1630",
+      "+1631",
+      "+1636",
+      "+1641",
+      "+1646",
+      "+1650",
+      "+1651",
+      "+1657",
+      "+1660",
+      "+1661",
+      "+1662",
+      "+1667",
+      "+1669",
+      "+1678",
+      "+1681",
+      "+1682",
+      "+1701",
+      "+1702",
+      "+1703",
+      "+1704",
+      "+1706",
+      "+1707",
+      "+1708",
+      "+1712",
+      "+1713",
+      "+1714",
+      "+1715",
+      "+1716",
+      "+1717",
+      "+1718",
+      "+1719",
+      "+1720",
+      "+1724",
+      "+1725",
+      "+1727",
+      "+1730",
+      "+1731",
+      "+1732",
+      "+1734",
+      "+1737",
+      "+1740",
+      "+1743",
+      "+1747",
+      "+1754",
+      "+1757",
+      "+1760",
+      "+1762",
+      "+1763",
+      "+1765",
+      "+1769",
+      "+1770",
+      "+1772",
+      "+1773",
+      "+1774",
+      "+1775",
+      "+1779",
+      "+1781",
+      "+1785",
+      "+1786",
+      "+1801",
+      "+1802",
+      "+1803",
+      "+1804",
+      "+1805",
+      "+1806",
+      "+1808",
+      "+1810",
+      "+1812",
+      "+1813",
+      "+1814",
+      "+1815",
+      "+1816",
+      "+1817",
+      "+1818",
+      "+1828",
+      "+1830",
+      "+1831",
+      "+1832",
+      "+1843",
+      "+1845",
+      "+1847",
+      "+1848",
+      "+1850",
+      "+1854",
+      "+1856",
+      "+1857",
+      "+1858",
+      "+1859",
+      "+1860",
+      "+1862",
+      "+1863",
+      "+1864",
+      "+1865",
+      "+1870",
+      "+1872",
+      "+1878",
+      "+1901",
+      "+1903",
+      "+1904",
+      "+1906",
+      "+1907",
+      "+1908",
+      "+1909",
+      "+1910",
+      "+1912",
+      "+1913",
+      "+1914",
+      "+1915",
+      "+1916",
+      "+1917",
+      "+1918",
+      "+1919",
+      "+1920",
+      "+1925",
+      "+1928",
+      "+1929",
+      "+1930",
+      "+1931",
+      "+1934",
+      "+1936",
+      "+1937",
+      "+1938",
+      "+1940",
+      "+1941",
+      "+1947",
+      "+1949",
+      "+1951",
+      "+1952",
+      "+1954",
+      "+1956",
+      "+1959",
+      "+1970",
+      "+1971",
+      "+1972",
+      "+1973",
+      "+1975",
+      "+1978",
+      "+1979",
+      "+1980",
+      "+1984",
+      "+1985",
+      "+1989"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "United States",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "0174a2de-4287-4ba2-8f80-669fc2b043cb",
+    "name": "Federal Democratic Republic of Nepal",
+    "location": {
+      "latitude": 28.0,
+      "longitude": 84.0
+    },
+    "phoneNumberCodes": [
+      "+977"
+    ],
+    "currencyId": "09c1e78e-191c-4fea-b8da-be8755d1b983",
+    "language": {
+      "name": "नेपाल",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "96cc0be2-b284-402e-9b93-6d66790b600a",
+    "name": "Republic of the Union of Myanmar",
+    "location": {
+      "latitude": 22.0,
+      "longitude": 98.0
+    },
+    "phoneNumberCodes": [
+      "+95"
+    ],
+    "currencyId": "d4e84177-fb0a-4ad3-8aa6-fb682384651e",
+    "language": {
+      "name": "မြန်မာ",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4de58b9f-83eb-4327-beaf-10a7b31001dd",
+    "name": "Falkland Islands",
+    "location": {
+      "latitude": -51.75,
+      "longitude": -59.0
+    },
+    "phoneNumberCodes": [
+      "+500"
+    ],
+    "currencyId": "1e46e656-ab45-494e-b34c-8f3f7266acbd",
+    "language": {
+      "name": "Falkland Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "fbdb87a6-e0ef-4b7a-bcb0-dbad5a5f7dda",
+    "name": "Hungary",
+    "location": {
+      "latitude": 47.0,
+      "longitude": 20.0
+    },
+    "phoneNumberCodes": [
+      "+36"
+    ],
+    "currencyId": "614c7130-d49d-4015-9093-faa4e9da1d62",
+    "language": {
+      "name": "Magyarország",
+      "code": "hu",
+      "locale": "hu-HU"
+    }
+  },
+  {
+    "id": "f1dc2317-90e8-4c3a-8dc2-c932ceddfefa",
+    "name": "Republic of Palau",
+    "location": {
+      "latitude": 7.5,
+      "longitude": 134.5
+    },
+    "phoneNumberCodes": [
+      "+680"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Palau",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "7bd076c5-b531-49c4-bd44-83894d295266",
+    "name": "Republic of Equatorial Guinea",
+    "location": {
+      "latitude": 2.0,
+      "longitude": 10.0
+    },
+    "phoneNumberCodes": [
+      "+240"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "Guinée équatoriale",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ddf45208-4428-40fc-a88a-60e75b96402c",
+    "name": "Republic of Guinea",
+    "location": {
+      "latitude": 11.0,
+      "longitude": -10.0
+    },
+    "phoneNumberCodes": [
+      "+224"
+    ],
+    "currencyId": "fadc886e-4a99-485b-a229-400091721016",
+    "language": {
+      "name": "Guinée",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "8a16b614-8918-48cf-af14-1ead0f3bdabb",
+    "name": "United Arab Emirates",
+    "location": {
+      "latitude": 24.0,
+      "longitude": 54.0
+    },
+    "phoneNumberCodes": [
+      "+971"
+    ],
+    "currencyId": "e9bbfe8f-0b87-4f79-9673-d0bbd6844e86",
+    "language": {
+      "name": "دولة الإمارات العربية المتحدة",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "578bb740-9892-49af-a417-b5b78f4f0ef8",
+    "name": "Turks and Caicos Islands",
+    "location": {
+      "latitude": 21.75,
+      "longitude": -71.58333333
+    },
+    "phoneNumberCodes": [
+      "+1649"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Turks and Caicos Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "aadc7745-1fc5-437b-b1b1-74fdc3a5483c",
+    "name": "Virgin Islands",
+    "location": {
+      "latitude": 18.431383,
+      "longitude": -64.62305
+    },
+    "phoneNumberCodes": [
+      "+1284"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "British Virgin Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bb70cef4-48ad-4208-b691-38a3c6530c64",
+    "name": "Principality of Liechtenstein",
+    "location": {
+      "latitude": 47.26666666,
+      "longitude": 9.53333333
+    },
+    "phoneNumberCodes": [
+      "+423"
+    ],
+    "currencyId": "91f43928-8554-4136-b016-e07b1eaad720",
+    "language": {
+      "name": "Liechtenstein",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d8535f22-0d63-432a-8839-fbba96e00d4b",
+    "name": "Bosnia and Herzegovina",
+    "location": {
+      "latitude": 44.0,
+      "longitude": 18.0
+    },
+    "phoneNumberCodes": [
+      "+387"
+    ],
+    "currencyId": "35ABF431-DF07-4918-85E1-0CA070DEDD56",
+    "language": {
+      "name": "Bosnian",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ade7b155-5829-40f6-867d-19ddcdc2da6b",
+    "name": "Republic of Malawi",
+    "location": {
+      "latitude": -13.5,
+      "longitude": 34.0
+    },
+    "phoneNumberCodes": [
+      "+265"
+    ],
+    "currencyId": "90fa7283-1785-4989-99a6-4cc1df8608f8",
+    "language": {
+      "name": "Malawi",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b272da7a-c40e-4557-bcfe-30cc516a5f7e",
+    "name": "Kingdom of Bhutan",
+    "location": {
+      "latitude": 27.5,
+      "longitude": 90.5
+    },
+    "phoneNumberCodes": [
+      "+975"
+    ],
+    "currencyId": "c3fde39f-49c8-4fb3-aeeb-9790c01a75f8",
+    "language": {
+      "name": "འབྲུག་ཡུལ་",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "01f00d4b-8223-4806-8418-7545b90b1250",
+    "name": "Republic of Cameroon",
+    "location": {
+      "latitude": 6.0,
+      "longitude": 12.0
+    },
+    "phoneNumberCodes": [
+      "+237"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "Cameroon",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "23c375ff-eac1-46db-8493-22d4d13ea52c",
+    "name": "Principality of Andorra",
+    "location": {
+      "latitude": 42.5,
+      "longitude": 1.5
+    },
+    "phoneNumberCodes": [
+      "+376"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Andorra",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2443d69c-a8dc-4eaa-b4bb-db39897d0c42",
+    "name": "Guadeloupe",
+    "location": {
+      "latitude": 16.25,
+      "longitude": -61.583333
+    },
+    "phoneNumberCodes": [
+      "+590"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Guadeloupe",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a3e0ae0a-7d54-4310-a1dc-b99f30d7a0fb",
+    "name": "Republic of the Congo",
+    "location": {
+      "latitude": -1.0,
+      "longitude": 15.0
+    },
+    "phoneNumberCodes": [
+      "+242"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "République du Congo",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "1a11a4a0-2ffe-49fc-bf91-2b537147ff3c",
+    "name": "Réunion Island",
+    "location": {
+      "latitude": -21.15,
+      "longitude": 55.5
+    },
+    "phoneNumberCodes": [
+      "+262"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "La Réunion",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d898b36d-4190-4e60-9373-83edf69e3155",
+    "name": "Burkina Faso",
+    "location": {
+      "latitude": 13.0,
+      "longitude": -2.0
+    },
+    "phoneNumberCodes": [
+      "+226"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Burkina Faso",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "bb400bd5-9302-47d2-be9d-7acc9b6057ed",
+    "name": "Hashemite Kingdom of Jordan",
+    "location": {
+      "latitude": 31.0,
+      "longitude": 36.0
+    },
+    "phoneNumberCodes": [
+      "+962"
+    ],
+    "currencyId": "3edff555-b17e-40db-9cc4-88e203887d1c",
+    "language": {
+      "name": "الأردن",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "7476dc67-e69a-45de-8e6d-3c1681169a10",
+    "name": "Democratic Republic of the Congo",
+    "location": {
+      "latitude": 0.0,
+      "longitude": 25.0
+    },
+    "phoneNumberCodes": [
+      "+243"
+    ],
+    "currencyId": "11240ad9-539d-446e-b8bd-3c45fdbb830d",
+    "language": {
+      "name": "RD Congo",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "c6d437c5-e571-4279-890e-2e606d7552a3",
+    "name": "Tokelau",
+    "location": {
+      "latitude": -9.0,
+      "longitude": -172.0
+    },
+    "phoneNumberCodes": [
+      "+690"
+    ],
+    "currencyId": "66fd6ded-427e-4a53-b0a4-e753a97d5813",
+    "language": {
+      "name": "Tokelau",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "19c88d46-4c8f-480c-9a22-646b508e5403",
+    "name": "Socialist Republic of Vietnam",
+    "location": {
+      "latitude": 16.16666666,
+      "longitude": 107.83333333
+    },
+    "phoneNumberCodes": [
+      "+84"
+    ],
+    "currencyId": "f665e37f-3f38-4c74-a636-6dd1a6c18411",
+    "language": {
+      "name": "Việt Nam",
+      "code": "vi",
+      "locale": "vi-VN"
+    }
+  },
+  {
+    "id": "1646FBE7-71FF-4F70-8E00-6A26BBF44C0B",
+    "name": "Sint Maarten",
+    "location": {
+      "latitude": 18.033333,
+      "longitude": -63.05
+    },
+    "phoneNumberCodes": [
+      "+1721"
+    ],
+    "currencyId": "8803d10f-21bf-4082-ae91-35807bbc4725",
+    "language": {
+      "name": "Sint Maarten",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e18398b4-049b-4d92-a0cb-69c38692931b",
+    "name": "Kingdom of Belgium",
+    "location": {
+      "latitude": 50.83333333,
+      "longitude": 4.0
+    },
+    "phoneNumberCodes": [
+      "+32"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Belgien",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2ff5c709-f92b-476d-842f-395a478f2486",
+    "name": "United States Minor Outlying Islands",
+    "location": {
+      "latitude": 19.3,
+      "longitude": 166.633333
+    },
+    "phoneNumberCodes": [
+      "+268"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "United States Minor Outlying Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "df1cdc0e-d2e5-4633-b1b6-1f7b98999561",
+    "name": "Federative Republic of Brazil",
+    "location": {
+      "latitude": -10.0,
+      "longitude": -55.0
+    },
+    "phoneNumberCodes": [
+      "+55"
+    ],
+    "currencyId": "db80a7d0-5302-49bc-8ff2-01202fdad6a5",
+    "language": {
+      "name": "Brasil",
+      "code": "pt",
+      "locale": "pt-BR"
+    }
+  },
+  {
+    "id": "46da8ace-97f8-4a8b-8c2f-a9a54d9e2255",
+    "name": "Belize",
+    "location": {
+      "latitude": 17.25,
+      "longitude": -88.75
+    },
+    "phoneNumberCodes": [
+      "+501"
+    ],
+    "currencyId": "d5f27039-abc6-411a-b9d7-1642911299e0",
+    "language": {
+      "name": "Belize",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "3ac2eab6-21f4-428c-866f-ccd935234c79",
+    "name": "Antigua and Barbuda",
+    "location": {
+      "latitude": 17.05,
+      "longitude": -61.8
+    },
+    "phoneNumberCodes": [
+      "+1268"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Antigua and Barbuda",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "fa764da6-0174-453c-8dc1-491cdf2d3697",
+    "name": "Republic of Paraguay",
+    "location": {
+      "latitude": -23.0,
+      "longitude": -58.0
+    },
+    "phoneNumberCodes": [
+      "+595"
+    ],
+    "currencyId": "6c255f3b-9323-42bc-b52d-1dcb06517db4",
+    "language": {
+      "name": "Paraguái",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2f6d249d-b564-41d1-8930-6e3317e75c7b",
+    "name": "Republic of Benin",
+    "location": {
+      "latitude": 9.5,
+      "longitude": 2.25
+    },
+    "phoneNumberCodes": [
+      "+229"
+    ],
+    "currencyId": "5b114150-6ce7-4493-8df4-7dfb521d8de9",
+    "language": {
+      "name": "Bénin",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "dca08b74-c2dd-4687-93f2-b200904c6814",
+    "name": "Nation of Brunei, Abode of Peace",
+    "location": {
+      "latitude": 4.5,
+      "longitude": 114.66666666
+    },
+    "phoneNumberCodes": [
+      "+673"
+    ],
+    "currencyId": "9a6a28fd-3b1e-42c2-a53b-74344b9d14d9",
+    "language": {
+      "name": "Negara Brunei Darussalam",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "dcf56741-924e-4a93-8a87-df10d11ee0fd",
+    "name": "Plurinational State of Bolivia",
+    "location": {
+      "latitude": -17.0,
+      "longitude": -65.0
+    },
+    "phoneNumberCodes": [
+      "+591"
+    ],
+    "currencyId": "610f8a37-1bee-40e4-867c-437cdb4b9804",
+    "language": {
+      "name": "Wuliwya",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "6951ca85-1bfb-4c7c-afb3-95fcca52fa41",
+    "name": "Republic of Djibouti",
+    "location": {
+      "latitude": 11.5,
+      "longitude": 43.0
+    },
+    "phoneNumberCodes": [
+      "+253"
+    ],
+    "currencyId": "bdd9271f-2cf7-4948-9635-344d12a1bc21",
+    "language": {
+      "name": "جيبوتي‎",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ddad7945-38d1-45a5-b071-7f06966e3f4d",
+    "name": "Guiana",
+    "location": {
+      "latitude": 4.0,
+      "longitude": -53.0
+    },
+    "phoneNumberCodes": [
+      "+594"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Guyane française",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "5ec075d7-98bb-4979-9706-c57bc5fed8d4",
+    "name": "Canada",
+    "location": {
+      "latitude": 60.0,
+      "longitude": -95.0
+    },
+    "phoneNumberCodes": [
+      "+1"
+    ],
+    "currencyId": "a1c804be-3cfa-4bc1-b614-002a3948d01c",
+    "language": {
+      "name": "Canada",
+      "code": "en",
+      "locale": "en-CA"
+    }
+  },
+  {
+    "id": "5760004c-4ed9-43d3-b192-4cef2dcf6798",
+    "name": "Saint Pierre and Miquelon",
+    "location": {
+      "latitude": 46.83333333,
+      "longitude": -56.33333333
+    },
+    "phoneNumberCodes": [
+      "+508"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Saint-Pierre-et-Miquelon",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9c409881-60aa-4a15-8485-fcd421785ce6",
+    "name": "Japan",
+    "location": {
+      "latitude": 36.0,
+      "longitude": 138.0
+    },
+    "phoneNumberCodes": [
+      "+81"
+    ],
+    "currencyId": "3823cf52-9e42-4a4f-a50a-1bfe17d2e551",
+    "language": {
+      "name": "日本",
+      "code": "ja",
+      "locale": "ja-JP"
+    }
+  },
+  {
+    "id": "73bb11bd-419c-41a5-a34f-55450981e574",
+    "name": "Republic of Rwanda",
+    "location": {
+      "latitude": -2.0,
+      "longitude": 30.0
+    },
+    "phoneNumberCodes": [
+      "+250"
+    ],
+    "currencyId": "276ee547-5219-4f17-8898-7fa9500e9d7a",
+    "language": {
+      "name": "Rwanda",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "a1994ad8-0401-4a56-a5d7-7203d08b5b4e",
+    "name": "Saint Vincent and the Grenadines",
+    "location": {
+      "latitude": 13.25,
+      "longitude": -61.2
+    },
+    "phoneNumberCodes": [
+      "+1784"
+    ],
+    "currencyId": "fc5be61a-9248-47e1-aeb2-65ff7c328417",
+    "language": {
+      "name": "Saint Vincent and the Grenadines",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "1c0a3ddd-f562-4e9a-91ff-f0033d4970cb",
+    "name": "Iceland",
+    "location": {
+      "latitude": 65.0,
+      "longitude": -18.0
+    },
+    "phoneNumberCodes": [
+      "+354"
+    ],
+    "currencyId": "140523fd-504e-4379-8434-f2b9c028f6e2",
+    "language": {
+      "name": "Ísland",
+      "code": "is",
+      "locale": "is-IS"
+    }
+  },
+  {
+    "id": "843badb7-3e6c-4b5d-92f8-f717c022ed74",
+    "name": "Republic of Belarus",
+    "location": {
+      "latitude": 53.0,
+      "longitude": 28.0
+    },
+    "phoneNumberCodes": [
+      "+375"
+    ],
+    "currencyId": "5f148150-f153-4f48-a7f0-1b997333b8ea",
+    "language": {
+      "name": "Белару́сь",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2d6197bb-3ebe-41c1-9519-346e48f47903",
+    "name": "Hong Kong Special Administrative Region of the People's Republic of China",
+    "location": {
+      "latitude": 22.267,
+      "longitude": 114.188
+    },
+    "phoneNumberCodes": [
+      "+852"
+    ],
+    "currencyId": "85faf17f-2447-496f-ae85-b2caff79c6e9",
+    "language": {
+      "name": "Hong Kong",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "ec931e4c-3b5a-4af2-907f-4155e5d77b06",
+    "name": "Kingdom of Lesotho",
+    "location": {
+      "latitude": -29.5,
+      "longitude": 28.5
+    },
+    "phoneNumberCodes": [
+      "+266"
+    ],
+    "currencyId": "a5bd16e2-46db-49e5-acc8-63f5a50766af",
+    "language": {
+      "name": "Lesotho",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b7c0840f-cd73-44f3-960d-8f23de068aa8",
+    "name": "Republic of Fiji",
+    "location": {
+      "latitude": 17.7134,
+      "longitude": 178.065
+    },
+    "phoneNumberCodes": [
+      "+679"
+    ],
+    "currencyId": "20eb93a7-b5e9-425b-9431-0ab73549f7f9",
+    "language": {
+      "name": "Fiji",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "e0d0aad7-75c0-4e8d-8a9d-f3b6a93e2ae6",
+    "name": "Republic of Austria",
+    "location": {
+      "latitude": 47.33333333,
+      "longitude": 13.33333333
+    },
+    "phoneNumberCodes": [
+      "+43"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Österreich",
+      "code": "de",
+      "locale": "de-AT"
+    }
+  },
+  {
+    "id": "fab88a1b-44b7-43a9-acc7-ce9ab41a0bb7",
+    "name": "Republic of Colombia",
+    "location": {
+      "latitude": 4.0,
+      "longitude": -72.0
+    },
+    "phoneNumberCodes": [
+      "+57"
+    ],
+    "currencyId": "8fe66338-6de4-4c11-8f39-d1fe0cba960c",
+    "language": {
+      "name": "Colombia",
+      "code": "es",
+      "locale": "es-CO"
+    }
+  },
+  {
+    "id": "b989bb0c-681c-4a0d-8eaf-8df65ed25c6d",
+    "name": "Gabonese Republic",
+    "location": {
+      "latitude": -1.0,
+      "longitude": 11.75
+    },
+    "phoneNumberCodes": [
+      "+241"
+    ],
+    "currencyId": "dc3ad0d5-737d-4019-84dc-58d5ed4fac49",
+    "language": {
+      "name": "Gabon",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "88954fe1-fa5d-44a4-a8bc-8d289d820e2d",
+    "name": "Kingdom of Saudi Arabia",
+    "location": {
+      "latitude": 25.0,
+      "longitude": 45.0
+    },
+    "phoneNumberCodes": [
+      "+966"
+    ],
+    "currencyId": "efd55bb1-2b1e-439f-80b6-650291dfbe0c",
+    "language": {
+      "name": "العربية السعودية",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b1598f36-0b7a-49a7-9ddc-f66311988786",
+    "name": "South Georgia and the South Sandwich Islands",
+    "location": {
+      "latitude": -54.5,
+      "longitude": -37.0
+    },
+    "phoneNumberCodes": [
+      "+500"
+    ],
+    "currencyId": "5177087e-a8bb-4f52-947e-3c5cc1250863",
+    "language": {
+      "name": "South Georgia",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "f10b9f47-7252-42ef-83c1-83a00038bda9",
+    "name": "Federal Democratic Republic of Ethiopia",
+    "location": {
+      "latitude": 8.0,
+      "longitude": 38.0
+    },
+    "phoneNumberCodes": [
+      "+251"
+    ],
+    "currencyId": "84bc05c3-2811-49f8-8f12-391ad211d801",
+    "language": {
+      "name": "ኢትዮጵያ",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d0d7563d-9b68-450d-87db-9cbb3d77a79f",
+    "name": "Bonaire, Sint Eustatius and Saba",
+    "location": {
+      "latitude": 12.18,
+      "longitude": -68.25
+    },
+    "phoneNumberCodes": [
+      "+599"
+    ],
+    "currencyId": "795a6ffc-3ad8-4c88-aaa4-bad000bd871e",
+    "language": {
+      "name": "Caribisch Nederland",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "9afd5305-0b2b-4bc4-83a8-3b67884c45b1",
+    "name": "Principality of Monaco",
+    "location": {
+      "latitude": 43.73333333,
+      "longitude": 7.4
+    },
+    "phoneNumberCodes": [
+      "+377"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Monaco",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "cf3f4a18-6d01-4fff-9a04-da64e11dd08e",
+    "name": "Democratic People's Republic of Korea",
+    "location": {
+      "latitude": 40.0,
+      "longitude": 127.0
+    },
+    "phoneNumberCodes": [
+      "+850"
+    ],
+    "currencyId": "8c4d7d55-3f2a-466a-8f7e-a0b901b42604",
+    "language": {
+      "name": "조선",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "4e5506af-9e9d-4ee2-9c91-05cfbdd50f9a",
+    "name": "Italian Republic",
+    "location": {
+      "latitude": 42.83333333,
+      "longitude": 12.83333333
+    },
+    "phoneNumberCodes": [
+      "+39"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "Italia",
+      "code": "it",
+      "locale": "it-IT"
+    }
+  },
+  {
+    "id": "34087d7c-81f8-4f34-a3c5-80be341c019f",
+    "name": "Republic of Namibia",
+    "location": {
+      "latitude": -22.0,
+      "longitude": 17.0
+    },
+    "phoneNumberCodes": [
+      "+264"
+    ],
+    "currencyId": "19831214-8486-47e5-afa7-562e00b3cbbe",
+    "language": {
+      "name": "Namibië",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "b6835e92-df45-4006-91d3-c029800fbd8e",
+    "name": "Mongolia",
+    "location": {
+      "latitude": 46.0,
+      "longitude": 105.0
+    },
+    "phoneNumberCodes": [
+      "+976"
+    ],
+    "currencyId": "b831ecd2-cc22-4349-ba2e-ac5b80703e35",
+    "language": {
+      "name": "Монгол улс",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "900e6520-a15d-4778-9acd-d55093d57f13",
+    "name": "Solomon Islands",
+    "location": {
+      "latitude": -8.0,
+      "longitude": 159.0
+    },
+    "phoneNumberCodes": [
+      "+677"
+    ],
+    "currencyId": "8028f344-6ef1-4b3a-8a54-525a41c3434f",
+    "language": {
+      "name": "Solomon Islands",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "2953523c-f0df-4048-8909-37f020b70df2",
+    "name": "Republic of Yemen",
+    "location": {
+      "latitude": 15.0,
+      "longitude": 48.0
+    },
+    "phoneNumberCodes": [
+      "+967"
+    ],
+    "currencyId": "1e7e9ef3-e4f6-40bb-b257-7590aeebd132",
+    "language": {
+      "name": "اليَمَن",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "d6809392-49c0-4c8e-8f3d-0d6cbd554f81",
+    "name": "Romania",
+    "location": {
+      "latitude": 46.0,
+      "longitude": 25.0
+    },
+    "phoneNumberCodes": [
+      "+40"
+    ],
+    "currencyId": "6700468c-b443-48d1-9c7b-491c6097e2be",
+    "language": {
+      "name": "România",
+      "code": "ro",
+      "locale": "ro-RO"
+    }
+  },
+  {
+    "id": "ff54e356-fb3b-4a72-8e21-9ed2f83fd482",
+    "name": "Svalbard og Jan Mayen",
+    "location": {
+      "latitude": 78.0,
+      "longitude": 20.0
+    },
+    "phoneNumberCodes": [
+      "+4779"
+    ],
+    "currencyId": "3208208f-6cd1-47cd-932f-67619320579f",
+    "language": {
+      "name": "Svalbard og Jan Mayen",
+      "code": "en",
+      "locale": "en-US"
+    }
+  },
+  {
+    "id": "67923f4c-5959-44c1-bb83-a48202f29fda",
+    "name": "French Republic",
+    "location": {
+      "latitude": 46.0,
+      "longitude": 2.0
+    },
+    "phoneNumberCodes": [
+      "+33"
+    ],
+    "currencyId": "2220d57d-94ec-4518-8abc-da820350b524",
+    "language": {
+      "name": "France",
+      "code": "fr",
+      "locale": "fr-FR"
+    }
+  }
+]
