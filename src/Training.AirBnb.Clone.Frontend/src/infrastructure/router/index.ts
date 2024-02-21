@@ -22,6 +22,11 @@ const router = createRouter({
           path: '/host/homes',
           name: 'HostHomes',
           component: () => import('../../common/views/HostHomes.vue')
+      },
+      {
+          path:'/listings/:listingId',
+          name:'listingDetails',
+          component: () => import('../../common/views/ListingDetailsView.vue')
       }
   ]
 })

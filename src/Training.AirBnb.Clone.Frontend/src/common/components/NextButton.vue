@@ -1,6 +1,6 @@
 <template>
     
-    <button class="rounded-full theme-border theme-bg-primary primary-transition">
+    <button name="PreviousButton" class="rounded-full theme-border theme-bg-primary primary-transition">
         <span class="flex items-center justify-center h-7 w-7">
             <svg class="h-3 w-3 theme-icon-primary stroke-[5px]"
                  xmlns="http://www.w3.org/2000/svg"

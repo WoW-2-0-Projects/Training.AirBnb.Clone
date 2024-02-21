@@ -82,7 +82,7 @@ const loadListingsAsync = async () => {
     const response = await airBnbApiClient.listings.getAsync(selectedCategoryId.value, listingsPagination.value);
 
     if (response.response) {
-        listings.value.push(...response.response);
+        listings.value.push(...response.response)
     } else if (response.status == 404 || response.status == 204) {
         noListingsForCategory.value = true;
     }
