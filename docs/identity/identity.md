@@ -69,6 +69,8 @@ Backend :
 
 #### Refresh access token
 
+#### User verification
+
 #### Account lock and unlock
 
 #### Password reset, Password change, Password expiration and Password rotate
