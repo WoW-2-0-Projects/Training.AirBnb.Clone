@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AirBnB.Domain.Commands;
+namespace AirBnB.Domain.Common.Commands;
 
 
 /// <summary>

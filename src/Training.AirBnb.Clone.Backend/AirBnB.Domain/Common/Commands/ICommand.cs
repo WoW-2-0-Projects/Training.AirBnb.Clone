@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AirBnB.Domain.Commands;
+namespace AirBnB.Domain.Common.Commands;
 
 /// <summary>
 /// Represents a command in a CQRS (Command Query Responsibility Segregation) architecture.
@@ -14,5 +14,4 @@ public interface ICommand<out TResult> : ICommand, IRequest<TResult>
 /// </summary>
 public interface ICommand
 {
-    
 }

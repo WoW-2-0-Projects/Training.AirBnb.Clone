@@ -14,6 +14,10 @@ public class EmailHistoryMapper : Profile
     /// </summary>
     public EmailHistoryMapper()
     {
-        CreateMap<EmailMessage, EmailHistory>().ReverseMap();
+        CreateMap<EmailMessage, EmailHistory>()
+            .ForMember(dest => dest.TemplateId, opt => opt
+                .MapFrom(src => src.Template.Id))
+            .ForMember(dest => dest.Content, opt => opt
+                .MapFrom(src => src.Body));
     }
 }

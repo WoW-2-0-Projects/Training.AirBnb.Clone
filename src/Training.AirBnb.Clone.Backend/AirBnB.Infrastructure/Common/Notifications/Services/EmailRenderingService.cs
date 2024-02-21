@@ -17,7 +17,7 @@ public class EmailRenderingService(
     private readonly TemplateRenderingSettings _templateRenderingSettings = templateRenderingSettingsOptions.Value;
 
     public ValueTask<string> RenderAsync(
-    EmailMessage emailMessage, 
+        EmailMessage emailMessage, 
         CancellationToken cancellationToken = default)
     {
         var validationResult = emailMessageValidator.Validate(emailMessage,
@@ -35,7 +35,7 @@ public class EmailRenderingService(
 
         var matches = placeholderRegex.Matches(emailMessage.Template.Content);
 
-        if (matches.Any() && !emailMessage.Variables.Any())
+        if (matches.Count != 0 && emailMessage.Variables.Count == 0)
             throw new InvalidOperationException("Variables are required for this template.");
 
         var templatePlaceholders = matches.Select(match =>
@@ -51,8 +51,7 @@ public class EmailRenderingService(
                 Value = value,
                 IsValid = valid
             };
-        })
-            .ToList();
+        }).ToList();
 
         ValidatePlaceholders(templatePlaceholders);
 
@@ -66,13 +65,13 @@ public class EmailRenderingService(
         return ValueTask.FromResult(message);
     }
 
-    private void ValidatePlaceholders(IEnumerable<TemplatePlaceholder> templatePlaceholders)
+    private static void ValidatePlaceholders(IEnumerable<TemplatePlaceholder> templatePlaceholders)
     {
         var missingPlaceholders = templatePlaceholders.Where(placeholder => !placeholder.IsValid)
             .Select(placeholder => placeholder.PlaceholderValue)
             .ToList();
 
-        if (!missingPlaceholders.Any()) return;
+        if (missingPlaceholders.Count == 0) return;
 
         var errorMessage = new StringBuilder();
         missingPlaceholders.ForEach(placeholderValue => errorMessage.Append(placeholderValue).Append(','));
