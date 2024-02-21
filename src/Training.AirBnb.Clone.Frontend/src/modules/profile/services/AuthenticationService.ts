@@ -54,7 +54,7 @@ export class AuthenticationService {
     }
 
     public async setCurrentUser() {
-        if(this.isLoggedIn() && !this.hasAccessToken()) return;
+        if(this.isLoggedIn() || !this.hasAccessToken()) return;
 
         // Set user account
         const currentUser = await this.airBnbApiClient.auth.getCurrentUser();
