@@ -9,7 +9,6 @@ using AirBnB.Persistence.DataContexts;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using NUnit.Framework;
 
 namespace AirBnB.Api.Data;
 
@@ -155,7 +154,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostFaker.Generate(1000));
+        await dbContext.Users.AddRangeAsync(hostFaker.Generate(10));
         
         // Add guests.
         var guestRole = roles.First(role => role.Type == RoleType.Guest);
@@ -171,7 +170,7 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
         
-        await dbContext.AddRangeAsync(guestFaker.Generate(1000));
+        await dbContext.Users.AddRangeAsync(guestFaker.Generate(10));
         
         var hostGuestFaker = new Faker<User>()
             .RuleFor(user => user.FirstName, data => data.Name.FirstName())
@@ -184,8 +183,8 @@ public static class SeedDataExtensions
                 PasswordHash = passwordHasherService.HashPassword(data.Internet.Password(8))
             });
 
-        await dbContext.AddRangeAsync(hostGuestFaker.Generate(1000));
-        await dbContext.SaveChangesAsync();
+        await dbContext.Users.AddRangeAsync(hostGuestFaker.Generate(10));
+        dbContext.SaveChanges();
     }
     
     /// <summary>
