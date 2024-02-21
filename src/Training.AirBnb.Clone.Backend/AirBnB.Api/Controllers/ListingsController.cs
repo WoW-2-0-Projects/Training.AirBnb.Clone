@@ -4,6 +4,7 @@ using AirBnB.Application.Listings.Models;
 using AirBnB.Application.Listings.Services;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
+using AirBnB.Persistence.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ListingsController(IListingService listingService, IMapper mapper) : ControllerBase
+public class ListingsController(IListingService listingService, IListingRepository listingRepository, IMapper mapper) : ControllerBase
 {
     [HttpGet]
     public ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination)
@@ -31,10 +32,15 @@ public class ListingsController(IListingService listingService, IMapper mapper) 
     }
     
     [HttpGet("{listingId:guid}")]
-    public async ValueTask<IActionResult> GetListingById([FromRoute]Guid listingId, bool asNoTracking = false,
+    public async ValueTask<IActionResult> GetListingById([FromRoute]Guid listingId,
         CancellationToken cancellationToken = default)
     {
-        var result = await listingService.GetByIdAsync(listingId, true, cancellationToken);
+        var result = await listingRepository
+            .Get(asNoTracking: true)
+            .Include(listing => listing.ImagesStorageFile)
+            .ThenInclude(media => media.StorageFile)
+            .FirstOrDefaultAsync(listing => listing.Id == listingId);
+            
 
         return result is not null ? Ok(mapper.Map<ListingDto>(result)) : NotFound();
     }
