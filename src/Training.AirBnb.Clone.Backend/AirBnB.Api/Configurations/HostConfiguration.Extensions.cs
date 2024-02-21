@@ -252,6 +252,11 @@ public static partial class HostConfiguration
     {
         // configure settings
         builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
+        
+        // register brokers
+        builder.Services
+            .AddScoped<IFileBroker, FileBroker>()
+            .AddScoped<IDirectoryBroker, DirectoryBroker>();
 
         // register repositories
         builder.Services
@@ -264,12 +269,8 @@ public static partial class HostConfiguration
             .AddScoped<IStorageFileService, StorageFileService>()
             .AddScoped<IFileService, FileService>()
             .AddScoped<IFileProcessingService, FileProcessingService>()
-            .AddScoped<IListingMediaFileService, ListingMediaFileService>();
-
-        // register brokers
-        builder.Services
-            .AddScoped<IFileBroker, FileBroker>()
-            .AddScoped<IDirectoryBroker, DirectoryBroker>();
+            .AddScoped<IListingMediaFileService, ListingMediaFileService>()
+            .AddScoped<IUserProfileMediaFileService, UserProfileMediaFileService>();
 
         return builder;
     }
