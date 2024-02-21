@@ -77,7 +77,7 @@
     }
 
     .content-padding {
-        @apply px-6 md:px-20 xl:px-20
+        @apply px-6 md:px-14 lg:px-20 xl:px-40
     }
 
     .absolute-center {

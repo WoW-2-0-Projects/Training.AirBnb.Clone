@@ -1,17 +1,17 @@
 <template>
 
-    <div class="aspect-auto flex w-full gap-1.5 rounded-xl overflow-hidden">
+    <div class=" aspect-auto flex w-full gap-1.5 lg:gap-2 rounded-lg lg:rounded-xl overflow-hidden">
 
        <div class="w-1/2">
 
-           <img class="w-full h-[300px] object-cover "
-                :src="listing.imagesUrls[0]">
+           <img class="h-full object-cover "
+                :src="listing.imagesUrls[0]" alt="Listing main image">
        </div>
 
-        <div class="aspect-auto w-1/2 h-[300px] relative grid gap-1.5 grid-cols-2">
+        <div class="w-1/2 relative grid gap-1.5 lg:gap-2 grid-cols-2">
 
-            <img class="w-full  h-full object-fill-cover"
-                 v-for="(image, index) in listing.imagesUrls.slice(1)" :key="index" :src="image">
+            <img class="w-full aspect-square object-cover"
+                 v-for="(image, index) in listing.imagesUrls.slice(1)" :key="index" :src="image" alt="Listing image">
 
            <button class="flex absolute bottom-6 right-6 gap-2 bg-bgColorPrimary text-black p-1   rounded hover:bg-gray-300">
                     <span class="mt-1">
