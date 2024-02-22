@@ -45,6 +45,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
 using AirBnB.Application.Currencies.Services;
 using AirBnB.Infrastructure.Currencies.Services;
+using Serilog;
 
 namespace AirBnB.Api.Configurations;
 
@@ -56,6 +57,20 @@ public static partial class HostConfiguration
     {
         Assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load).ToList();
         Assemblies.Add(Assembly.GetExecutingAssembly());
+    }
+    
+    /// <summary>
+    /// Registers Logging Providers to Service Collection
+    /// </summary>
+    /// <param name="builder">Web App Builder</param
+    /// <returns>Web App Builder for method chaining</returns>
+    public static WebApplicationBuilder AddCustomLogging(this WebApplicationBuilder builder)
+    {
+        builder.Logging.ClearProviders();
+        var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+        builder.Host.UseSerilog(logger);
+
+        return builder;
     }
 
     /// <summary>
