@@ -1,0 +1,44 @@
+name: AirBnB.Clone Server app CI/CD pipeline
+
+on:
+  push:
+    branches:
+      - release/**
+  pull_request: 
+    branches: 
+      - release/**
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: airbnb-server
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
+  DOTNET_VERSION: '8.0.x'
+  APPLICATION_SOLUTION_FILE: ./src/Training.AirBnb.Clone.Backend
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core application
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore ${{ env.APPLICATION_SOLUTION_FILE }}
+
+      - name: Build
+        run: dotnet build ${{ env.APPLICATION_SOLUTION_FILE }} --configuration Release --no-restore
+        
+      - name: Publish
+        run: dotnet publish ${{ env.APPLICATION_SOLUTION_FILE }} --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
