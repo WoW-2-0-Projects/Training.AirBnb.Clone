@@ -1,4 +1,5 @@
 using AirBnB.Domain.Common.Entities;
+using AirBnB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -20,6 +21,9 @@ public class UpdatePrimaryKeyInterceptor : SaveChangesInterceptor
         // Set Primary keys of newly added entities.
         entities.ForEach(entry =>
         {
+            if (entry.Entity is StorageFile)
+                return;
+            
             if (entry.State == EntityState.Added && entry.Properties.Any(property => property.Metadata.Name.Equals(nameof(IEntity.Id))))
                 entry.Property(nameof(IEntity.Id)).CurrentValue = Guid.NewGuid();
         });

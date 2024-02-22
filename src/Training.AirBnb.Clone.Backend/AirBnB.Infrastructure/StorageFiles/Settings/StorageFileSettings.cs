@@ -1,6 +1,4 @@
-﻿using AirBnB.Domain.Enums;
-
-namespace AirBnB.Infrastructure.StorageFiles.Settings;
+﻿namespace AirBnB.Infrastructure.StorageFiles.Settings;
 
 /// <summary>
 /// Represents the settings for storage files.

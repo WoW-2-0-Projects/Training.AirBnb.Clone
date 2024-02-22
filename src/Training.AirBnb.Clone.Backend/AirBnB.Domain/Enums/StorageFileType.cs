@@ -18,5 +18,10 @@ public enum StorageFileType
     /// <summary>
     /// Represents Listing Image
     /// </summary>
-    ListingImage = 2
+    ListingImage = 2,
+    
+    /// <summary>
+    /// Represents User Profile Image
+    /// </summary>
+    UserProfileImage = 3
 }

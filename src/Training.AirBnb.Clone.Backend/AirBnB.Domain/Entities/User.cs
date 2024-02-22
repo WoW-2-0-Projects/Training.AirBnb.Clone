@@ -52,5 +52,13 @@ public sealed class User : AuditableEntity
     /// </summary>
     public List<Listing> Listings { get; set; }
     
+    /// <summary>
+    /// Gets or sets the user credentials
+    /// </summary>
     public UserCredentials UserCredentials { get; set; }
+
+    /// <summary>
+    /// Gets or sets the user profile picture
+    /// </summary>
+    public UserProfileMediaFile ProfilePicture { get; set; }
 }

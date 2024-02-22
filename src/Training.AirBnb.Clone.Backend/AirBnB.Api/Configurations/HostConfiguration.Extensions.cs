@@ -46,7 +46,11 @@ using AirBnB.Infrastructure.StorageFiles.Settings;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AirBnB.Persistence.Interceptors;
 using AirBnB.Application.Currencies.Services;
+using AirBnB.Application.StorageFiles.Brokers;
+using AirBnB.Application.StorageFiles.Services;
 using AirBnB.Infrastructure.Currencies.Services;
+using AirBnB.Infrastructure.StorageFiles.Brokers;
+using AirBnB.Infrastructure.StorageFiles.Services;
 
 namespace AirBnB.Api.Configurations;
 
@@ -261,11 +265,27 @@ public static partial class HostConfiguration
     /// <returns></returns>
     private static WebApplicationBuilder AddStorageFileInfrastructure(this WebApplicationBuilder builder)
     {
+        // configure settings
         builder.Services.Configure<StorageFileSettings>(builder.Configuration.GetSection(nameof(StorageFileSettings)));
+        
+        // register brokers
+        builder.Services
+            .AddScoped<IFileBroker, FileBroker>()
+            .AddScoped<IDirectoryBroker, DirectoryBroker>();
 
+        // register repositories
         builder.Services
             .AddScoped<IStorageFileRepository, StorageFileRepository>()
-            .AddScoped<IStorageFileService, StorageFileService>();
+            .AddScoped<IListingMediaFileRepository, ListingMediaFileRepository>()
+            .AddScoped<IUserProfileMediaFileRepository, UserProfileMediaFileRepository>();
+        
+        // register services
+        builder.Services
+            .AddScoped<IStorageFileService, StorageFileService>()
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IFileProcessingService, FileProcessingService>()
+            .AddScoped<IListingMediaFileService, ListingMediaFileService>()
+            .AddScoped<IUserProfileMediaFileService, UserProfileMediaFileService>();
 
         return builder;
     }
