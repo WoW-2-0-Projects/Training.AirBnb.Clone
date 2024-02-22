@@ -8,7 +8,7 @@
         <div class="relative w-full overflow-hidden rounded-t-lg">
 
             <horizontal-carousel
-                :contentChangeSource="contentChangeSource"
+                v-on:content-change="contentChangeSource.updateListeners"
                 :loop-to-start="true">
                 <img v-for="(image, index) in listing.imagesUrls" :key="index"
                      class="object-cover aspect-square"
