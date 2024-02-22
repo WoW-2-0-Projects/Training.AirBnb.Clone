@@ -10,8 +10,8 @@
 
         <!-- Listing grid infinite scroll -->
         <infinite-scroll @onScroll="onScroll"
-                         :contentChangeSource="listingChangeSource"
-                         class="grid w-full px-20 gap-x-5 gap-y-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 theme-bg-primary">
+                         @scroll="listingChangeSource.updateListeners()"
+                         class="grid w-full grid-cols-1 px-20 mt-44 gap-x-5 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 theme-bg-primary">
 
             <!-- Listing card -->
             <listing-card v-for="(listing, index) in listings" :key="listing.id" :listing="listing"
