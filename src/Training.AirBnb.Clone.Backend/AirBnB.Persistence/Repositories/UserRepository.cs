@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 using AirBnB.Persistence.Caching.Brokers;
@@ -15,12 +16,11 @@ public class UserRepository(AppDbContext dbContext, ICacheBroker cacheBroker)
         new CacheEntryOptions()
     ), IUserRepository
 {
-    public new IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false)
-        => base.Get(predicate, asNoTracking);
+    public IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, QueryOptions queryOptions = new())
+        => base.Get(predicate, queryOptions);
 
     public new ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
         => base.GetByIdAsync(userId, asNoTracking, cancellationToken);
-
 
     public new ValueTask<IList<User>> GetByIdsAsync(IEnumerable<Guid> ids, bool asNoTracking = false, CancellationToken cancellationToken = default)
         => base.GetByIdsAsync(ids, asNoTracking, cancellationToken);

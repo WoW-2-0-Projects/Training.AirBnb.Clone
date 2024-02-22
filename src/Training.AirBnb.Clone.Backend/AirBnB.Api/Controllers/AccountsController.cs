@@ -1,4 +1,5 @@
 ﻿using AirBnB.Api.Models.DTOs;
+using AirBnB.Application.Common.Identity.Queries;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.StorageFiles.Models;
 using AirBnB.Application.StorageFiles.Services;
@@ -9,6 +10,7 @@ using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,8 +18,10 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountsController(IUserService userService, IMapper mapper, IRequestUserContextProvider requestUserContextProvider, IUserProfileMediaFileService userProfileMediaFileService) : ControllerBase
+public class AccountsController(IMediator mediator, IUserService userService, IMapper mapper, IRequestUserContextProvider requestUserContextProvider, IUserProfileMediaFileService userProfileMediaFileService) : ControllerBase
 {
+    #region Users
+    
     [HttpGet]
     public async ValueTask<IActionResult> Get([FromQuery] FilterPagination filterPagination, CancellationToken cancellationToken)
     {
@@ -32,6 +36,34 @@ public class AccountsController(IUserService userService, IMapper mapper, IReque
     {
         var user = await userService.GetByIdAsync(userId, true, cancellationToken);
         return user is not null ? Ok(mapper.Map<UserDto>(user)) : NotFound();
+    }
+
+    [HttpGet("by-email/{emailAddress}")]
+    public async ValueTask<IActionResult> CheckUserByEmail([FromRoute] string emailAddress, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(
+            new CheckUserByEmailAddressQuery
+            {
+                EmailAddress = emailAddress
+            },
+            cancellationToken
+        );
+
+        return result is not null ? Ok(result) : NotFound();
+    }
+    
+    [HttpGet("by-phone/{phoneNumber}")]
+    public async ValueTask<IActionResult> CheckByPhoneNumber([FromRoute] string phoneNumber, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(
+            new CheckUserByPhoneNumberQuery()
+            {
+                PhoneNumber = phoneNumber
+            },
+            cancellationToken
+        );
+
+        return result is not null ? Ok(result) : NotFound();
     }
     
     [HttpPost]
@@ -78,4 +110,6 @@ public class AccountsController(IUserService userService, IMapper mapper, IReque
         var user = await userService.DeleteByIdAsync(userId, cancellationToken: cancellationToken);
         return user is not null ? Ok(mapper.Map<UserDto>(user)) : NotFound();
     }
+    
+    #endregion
 }

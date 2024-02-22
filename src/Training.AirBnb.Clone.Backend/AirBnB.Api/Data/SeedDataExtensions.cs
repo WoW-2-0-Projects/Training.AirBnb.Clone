@@ -1,3 +1,4 @@
+using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Domain.Brokers;
 using AirBnB.Domain.Constants;
@@ -6,6 +7,7 @@ using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.DataContexts;
+using AutoMapper;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -27,6 +29,7 @@ public static class SeedDataExtensions
         var appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
         var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
         var cacheBroker = serviceProvider.GetRequiredService<ICacheBroker>();
+        var mapper = serviceProvider.GetRequiredService<IMapper>();
         var ratingProcessingService = serviceProvider.GetRequiredService<IRatingProcessingService>();
 
         var passwordHasherService = serviceProvider.GetRequiredService<IPasswordHasherService>();
@@ -53,7 +56,10 @@ public static class SeedDataExtensions
             await appDbContext.SeedListingsAsync(webHostEnvironment);
 
         if (!await appDbContext.GuestFeedbacks.AnyAsync())
-            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService);
+            await appDbContext.SeedGuestFeedbacksAsync(cacheBroker, ratingProcessingService, mapper);
+
+        if (!await appDbContext.NotificationTemplates.AnyAsync())
+            await appDbContext.SeedNotificationTemplatesAsync(webHostEnvironment);
 
         // check change tracker and if changes exist, save changes to database
         if (appDbContext.ChangeTracker.HasChanges())
@@ -311,7 +317,7 @@ public static class SeedDataExtensions
     /// Seeds Guest Feedbacks data into the AppDbContext using Bogus library.
     /// </summary>
     /// <param name="dbContext"></param>
-    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker, IRatingProcessingService ratingProcessingService)
+    private static async ValueTask SeedGuestFeedbacksAsync(this AppDbContext dbContext, ICacheBroker cacheBroker, IRatingProcessingService ratingProcessingService, IMapper mapper)
     {
         var listings = await dbContext.Listings.ToListAsync();
         var users = await dbContext.Users.Select(user => user.Id).ToListAsync();
@@ -329,12 +335,12 @@ public static class SeedDataExtensions
                     .Where(userId => userId != listingOwnerId));
             });
 
-        var feedbacks = feedbackFaker.Generate(2000);
+        var feedbacks = feedbackFaker.Generate(50);
         
         await dbContext.GuestFeedbacks.AddRangeAsync(feedbacks);
         dbContext.SaveChanges();
 
-        await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, feedbacks);
+        await cacheBroker.SetAsync(CacheKeyConstants.AddedGuestFeedbacks, mapper.Map<List<GuestFeedbackCacheDto>>(feedbacks));
         await ratingProcessingService.ProcessListingsRatings();
     }
 
@@ -357,5 +363,65 @@ public static class SeedDataExtensions
                  rating.Communication + rating.Location + rating.CheckIn) / 6);
 
         return ratingsFaker.Generate();
+    }
+
+    /// <summary>
+    /// Seeds Notification Templates
+    /// </summary>
+    /// <param name="appDbContext"></param>
+    /// <param name="webHostEnvironment"></param>
+    /// <exception cref="NotSupportedException"></exception>
+    private static async ValueTask SeedNotificationTemplatesAsync(this AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+    {
+        var emailTemplateTypes = new List<NotificationTemplateType>
+        {
+            NotificationTemplateType.SystemWelcomeNotification,
+            NotificationTemplateType.EmailVerificationNotification,
+            NotificationTemplateType.ReferralNotification
+        };
+
+        var emailTemplateContents = await Task.WhenAll(
+            emailTemplateTypes.Select(
+                async templateType =>
+                {
+                    var filePath = Path.Combine(
+                        webHostEnvironment.ContentRootPath,
+                        "Data",
+                        "SeedData",
+                        "EmailTemplates",
+                        Path.ChangeExtension(templateType.ToString(), "html")
+                    );
+                    return (TemplateType: templateType, TemplateContent: await File.ReadAllTextAsync(filePath));
+                }
+            )
+        );
+
+        var emailTemplates = emailTemplateContents.Select(
+            templateContent => templateContent.TemplateType switch
+            {
+                NotificationTemplateType.SystemWelcomeNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "Welcome to our service!",
+                    Content = templateContent.TemplateContent
+                },
+                NotificationTemplateType.EmailVerificationNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "Confirm your email address",
+                    Content = templateContent.TemplateContent
+                },
+                NotificationTemplateType.ReferralNotification => new EmailTemplate
+                {
+                    TemplateType = templateContent.TemplateType,
+                    Subject = "You have been referred!",
+                    Content = templateContent.TemplateContent
+                },
+                _ => throw new NotSupportedException("Template type not supported.")
+            }
+        );
+
+        await appDbContext.EmailTemplates.AddRangeAsync(emailTemplates);
+        appDbContext.SaveChanges();
     }
 }

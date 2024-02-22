@@ -2,7 +2,6 @@
 using AirBnB.Application.Common.EventBus.Brokers;
 using AirBnB.Application.Common.Serializers;
 using AirBnB.Domain.Common.Events;
-using AirBnB.Domain.Events;
 using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -13,8 +12,8 @@ namespace AirBnB.Infrastructure.Common.EventBus.Brokers;
 public class RabbitMqEventBusBroker(
     IRabbitMqConnectionProvider rabbitMqConnectionProvider,
     IJsonSerializationSettingsProvider jsonSerializationSettingsProvider,
-    IMediator mediator
-    ) : IEvenBusBroker
+    IPublisher mediator
+    ) : IEventBusBroker
 {
     public ValueTask PublishLocalAsync<TEvent>(TEvent command) where TEvent : IEvent
     {

@@ -4,98 +4,134 @@
 
 @layer components {
 
-    .theme-bg-primary {
-        @apply bg-bgColorPrimary dark:bg-bgColorPrimaryDark;
-    }
+  .theme-bg-primary {
+    @apply bg-bgColorPrimary dark:bg-bgColorPrimaryDark;
+  }
 
-    .theme-bg-accent {
-        @apply bg-textSecondaryDark dark:bg-borderColorDark;
-    }
+  .theme-bg-accent {
+    @apply bg-textSecondaryDark dark:bg-borderColorDark;
+  }
 
-    .theme-bg-toggle {
-        @apply bg-gray-400 group-hover:bg-textSecondaryDark dark:group-hover:bg-bgColorPrimary dark:bg-bgColorPrimary
-    }
+  .theme-bg-toggle {
+    @apply bg-gray-400 group-hover:bg-textSecondaryDark dark:group-hover:bg-bgColorPrimary dark:bg-bgColorPrimary
+  }
 
 
-    .theme-text-primary {
-        @apply text-textPrimary dark:text-textPrimaryDark;
-    }
+  .theme-text-primary {
+    @apply text-textPrimary dark:text-textPrimaryDark;
+  }
 
-    .theme-button {
-        @apply text-textPrimary hover:bg-bgColorPrimary dark:text-textPrimaryDark dark:hover:text-textPrimary;
-    }
+  .theme-button {
+    @apply text-textPrimary hover:bg-bgColorPrimary dark:text-textPrimaryDark dark:hover:text-textPrimary;
+  }
 
-    .theme-bg-secondary {
-        @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
-    }
+  .theme-bg-secondary {
+    @apply bg-bgColorSecondary dark:bg-bgColorSecondaryDark;
+  }
 
-    .theme-border {
-        @apply border border-borderColor dark:border-borderColorDark;
-    }
+  .theme-border {
+    @apply border border-borderColor dark:border-borderColorDark;
+  }
 
-    .theme-shadow {
-        @apply shadow-shadowColor;
-    }
+  .theme-shadow {
+    @apply shadow-shadowColor;
+  }
 
-    .theme-text-secondary {
-        @apply text-textSecondary dark:text-textSecondaryDark;
-    }
+  .theme-text-secondary {
+    @apply text-textSecondary dark:text-textSecondaryDark;
+  }
 
-    .theme-icon-primary {
-        @apply text-textPrimary dark:text-textPrimaryDark;
-        @apply stroke-textPrimary dark:stroke-textPrimaryDark;
-        @apply fill-textPrimary dark:fill-textPrimaryDark;
-    }
+  .theme-icon-primary {
+    @apply text-textPrimary dark:text-textPrimaryDark;
+    @apply stroke-textPrimary dark:stroke-textPrimaryDark;
+    @apply fill-textPrimary dark:fill-textPrimaryDark;
+  }
 
-    .theme-icon-secondary {
-        @apply text-textSecondary dark:text-textSecondaryDark;
-        @apply stroke-textSecondary dark:stroke-textSecondaryDark;
-        @apply fill-textSecondary dark:fill-textSecondaryDark;
-    }
+  .theme-icon-secondary {
+    @apply text-textSecondary dark:text-textSecondaryDark;
+    @apply stroke-textSecondary dark:stroke-textSecondaryDark;
+    @apply fill-textSecondary dark:fill-textSecondaryDark;
+  }
 
-    .theme-hover-button{
-        @apply hover:bg-gray-100 dark:hover:bg-bgColorSecondaryDark
-    }
-    .hover-shadow {
-        @apply shadow-md hover:shadow-lg ;
-    }
+  .theme-hover-button {
+    @apply hover:bg-gray-100 dark:hover:bg-bgColorSecondaryDark
+  }
 
-    .hover-shadow-zero {
-        @apply shadow-none hover:shadow-md ;
-    }
+  .hover-shadow {
+    @apply shadow-md hover:shadow-lg ;
+  }
 
-    .primary-transition {
-        @apply transition duration-200;
-    }
+  .hover-shadow-zero {
+    @apply shadow-none hover:shadow-md ;
+  }
 
-    .select-opacity {
-        @apply hover:opacity-80 focus:opacity-100 active:opacity-100 group-hover:opacity-80 group-focus:opacity-100 group-active:opacity-100;
-    }
+  .primary-transition {
+    @apply transition duration-200;
+  }
 
-    .selected-opacity {
-        @apply opacity-100;
-    }
+  .select-opacity {
+    @apply hover:opacity-80 focus:opacity-100 active:opacity-100 group-hover:opacity-80 group-focus:opacity-100 group-active:opacity-100;
+  }
 
-    .content-padding {
-        @apply px-6 md:px-10 xl:px-20
-    }
+  .selected-opacity {
+    @apply opacity-100;
+  }
 
-    .absolute-center {
-        @apply absolute transform -translate-x-1/2 top-1/2 left-1/2;
-      }
+  .content-padding {
+    @apply px-6 md:px-10 xl:px-20
+  }
+
+  .absolute-center {
+    @apply absolute transform -translate-x-1/2 top-1/2 left-1/2;
+  }
+
+
+  /* region forms */
+  .theme-input {
+    @apply text-textPrimary dark:text-textPrimaryDark;
+  }
+
+  .theme-input-hover {
+    @apply hover:text-opacity-80
+    bg-gray-500 bg-opacity-0 hover:bg-opacity-20
+  }
+
+  .theme-input-placeholder {
+    @apply placeholder-transparent
+    focus:placeholder-textSecondary dark:focus:placeholder-textSecondaryDark
+  }
+
+  .theme-input-label {
+    @apply text-textSecondary dark:text-textSecondaryDark;
+  }
+
+  .theme-input-transition {
+    @apply transition duration-300;
+  }
+
+  .theme-input-border {
+    @apply border border-borderColor dark:border-borderColorDark
+    focus:border-textSecondary dark:focus:border-white;
+  }
+
+  .theme-input-border-focus {
+    @apply border-textSecondary dark:border-white
+  }
+
+  /* endregion forms */
 }
 
 
 @layer utilities {
 
-    /* Hide scrollbar for Chrome, Safari, and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
+  /* Hide scrollbar for Chrome, Safari, and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Hide scrollbar for IE, Edge, and Firefox */
-    .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

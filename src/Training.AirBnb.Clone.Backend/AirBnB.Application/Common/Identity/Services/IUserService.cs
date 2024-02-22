@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirBnB.Application.Common.Identity.Services;
 
@@ -13,9 +15,9 @@ public interface IUserService
     /// Retrieves a collection of users based on the specified predicate.
     /// </summary>
     /// <param name="predicate"></param>
-    /// <param name="asNoTracking"></param>
+    /// <param name="queryOptions">Additional query options</param>
     /// <returns>Returning the User object</returns>
-    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false);
+    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, QueryOptions queryOptions = new());
 
     /// <summary>
     /// Retrieves a user by their unique identifier.
@@ -82,4 +84,12 @@ public interface IUserService
     /// <param name="cancellationToken"></param>
     /// <returns>Returning the deleted User object.</returns>
     ValueTask<User?> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets the System user.
+    /// </summary>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<User> GetSystemUserAsync(bool asNoTracking, CancellationToken cancellationToken = default);
 }

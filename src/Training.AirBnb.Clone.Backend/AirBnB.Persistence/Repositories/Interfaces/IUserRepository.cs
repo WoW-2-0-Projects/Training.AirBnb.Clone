@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Domain.Entities;
 
@@ -13,9 +14,9 @@ public interface IUserRepository
     /// Retrieves a collection of users based on the specified predicate. 
     /// </summary>
     /// <param name="predicate"></param>
-    /// <param name="asNoTracking"></param>
+    /// <param name="queryOptions">Additional query parameters</param>
     /// <returns>An IQueryable collection of User objects.</returns>
-    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false);
+    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, QueryOptions queryOptions = new());
 
     /// <summary>
     /// Retrieves a user by their unique identifier 

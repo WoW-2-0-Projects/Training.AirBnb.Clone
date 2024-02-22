@@ -13,5 +13,7 @@ public class GuestFeedbackMapper : Profile
                 .MapFrom(src => src.Guest.FirstName));
 
         CreateMap<GuestFeedbackDto, GuestFeedback>();
+
+        CreateMap<GuestFeedback, GuestFeedbackCacheDto>();
     }
 }

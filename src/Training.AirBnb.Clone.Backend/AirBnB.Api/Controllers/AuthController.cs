@@ -1,8 +1,11 @@
-﻿using AirBnB.Api.Models.DTOs;
+using AirBnB.Api.Models.DTOs;
+using AirBnB.Application.Common.Identity.Commands;
 using AirBnB.Application.Common.Identity.Models;
+using AirBnB.Application.Common.Identity.Queries;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Brokers;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +13,7 @@ namespace AirBnB.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IMapper mapper, IAuthService authService, IRequestUserContextProvider requestUserContextProvider) : ControllerBase
+public class AuthController(IMapper mapper, IMediator mediator, IAuthService authService, IRequestUserContextProvider requestUserContextProvider) : ControllerBase
 {
     [HttpPost("sign-up")]
     public async Task<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails, CancellationToken cancellationToken)
@@ -20,10 +23,17 @@ public class AuthController(IMapper mapper, IAuthService authService, IRequestUs
     }
 
     [HttpPost("sign-in")]
-    public async Task<IActionResult> SignIn([FromBody] SignInDetails signInDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> SignIn([FromBody] SignInCommand signInCommand, CancellationToken cancellationToken)
     {
-        var result = await authService.SignInAsync(signInDetails, cancellationToken);
+        var result = await mediator.Send(signInCommand, cancellationToken);
         return Ok(mapper.Map<IdentityTokenDto>(result));
+    }
+
+    [HttpPost("sign-out")]
+    public async ValueTask<IActionResult> SignOutAsync([FromBody]string refreshToken, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new SignOutCommand(){RefreshToken = refreshToken}, cancellationToken);
+        return result ? Ok() : BadRequest();
     }
     
     [HttpPut("refresh-token")]
@@ -47,5 +57,21 @@ public class AuthController(IMapper mapper, IAuthService authService, IRequestUs
     {
         var result = await authService.RevokeRoleAsync(userId, roleType, cancellationToken);
         return result ? Ok(result) : NoContent();
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCurrentUserQuery(), cancellationToken);
+        return Ok(mapper.Map<UserDto>(result));
+    }
+
+    [Authorize]
+    [HttpGet("me/roles")]
+    public async Task<IActionResult> GetCurrentUserRoles(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCurrentUserRolesQuery(), cancellationToken);
+        return Ok(result.Select(role => role.Type.ToString()));
     }
 } 

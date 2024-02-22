@@ -355,8 +355,8 @@ namespace AirBnB.Persistence.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(129536)
-                        .HasColumnType("character varying(129536)");
+                        .HasMaxLength(1036288)
+                        .HasColumnType("character varying(1036288)");
 
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("timestamp with time zone");
