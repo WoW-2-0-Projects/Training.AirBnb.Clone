@@ -10,5 +10,8 @@ public struct QueryOptions
     /// </summary>
     public bool AsNoTracking { get; set; }
 
+    /// <summary>
+    /// Creates default query options instance
+    /// </summary>
     public static QueryOptions Default => new();
 }
