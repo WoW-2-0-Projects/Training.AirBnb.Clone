@@ -1,3 +1,4 @@
+using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Ratings.Services;
 using AirBnB.Domain.Constants;
 using AirBnB.Domain.Entities;
@@ -32,15 +33,15 @@ public class RatingProcessingService(ICacheBroker cacheBroker, AppDbContext appD
             await updateMethod(feedback);
     }
     
-    private async ValueTask<List<GuestFeedback>?> GetCachedFeedbacks(string key)
+    private async ValueTask<List<GuestFeedbackCacheDto>?> GetCachedFeedbacks(string key)
     {
-        var feedbacks = await cacheBroker.GetAsync<List<GuestFeedback>>(key);
-        await cacheBroker.SetAsync<List<GuestFeedback>>(key, []);
+        var feedbacks = await cacheBroker.GetAsync<List<GuestFeedbackCacheDto>>(key);
+        await cacheBroker.SetAsync<List<GuestFeedbackCacheDto>>(key, []);
 
         return feedbacks;
     }
 
-    private IList<(Guid ListingId, int FeedbacksCount, Rating RatingSum)> GroupRatingsByListingId(IList<GuestFeedback> guestFeedbacks)
+    private IList<(Guid ListingId, int FeedbacksCount, Rating RatingSum)> GroupRatingsByListingId(IList<GuestFeedbackCacheDto> guestFeedbacks)
     {
          return guestFeedbacks.GroupBy(feedback => feedback.ListingId)
             .Select(group => (

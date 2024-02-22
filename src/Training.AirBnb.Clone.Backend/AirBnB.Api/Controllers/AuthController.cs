@@ -1,12 +1,9 @@
-﻿using System.Security.Authentication;
-using System.Security.Claims;
 using AirBnB.Api.Models.DTOs;
 using AirBnB.Application.Common.Identity.Commands;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Queries;
 using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Domain.Brokers;
-using AirBnB.Domain.Enums;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

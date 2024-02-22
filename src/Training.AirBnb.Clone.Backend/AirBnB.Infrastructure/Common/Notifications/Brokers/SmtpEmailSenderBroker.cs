@@ -22,7 +22,7 @@ public class SmtpEmailSenderBroker(IOptions<SmtpEmailSenderSettings> smtpEmailSe
     /// <returns>A ValueTask&lt;bool&gt; representing the asynchronous operation's success status.</returns>
     public ValueTask<bool> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default)
     {
-        emailMessage.SenderEmailAddress ??= _smtpEmailSenderSettings.CredentialAddress;
+        emailMessage.SenderEmailAddress = _smtpEmailSenderSettings.CredentialAddress;
 
         var mail = new MailMessage(emailMessage.SenderEmailAddress, emailMessage.ReceiverEmailAddress);
         mail.Subject = emailMessage.Subject;

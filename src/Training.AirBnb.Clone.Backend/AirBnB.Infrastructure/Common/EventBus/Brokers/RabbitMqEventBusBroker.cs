@@ -12,8 +12,8 @@ namespace AirBnB.Infrastructure.Common.EventBus.Brokers;
 public class RabbitMqEventBusBroker(
     IRabbitMqConnectionProvider rabbitMqConnectionProvider,
     IJsonSerializationSettingsProvider jsonSerializationSettingsProvider,
-    IMediator mediator
-    ) : IEvenBusBroker
+    IPublisher mediator
+    ) : IEventBusBroker
 {
     public ValueTask PublishLocalAsync<TEvent>(TEvent command) where TEvent : IEvent
     {

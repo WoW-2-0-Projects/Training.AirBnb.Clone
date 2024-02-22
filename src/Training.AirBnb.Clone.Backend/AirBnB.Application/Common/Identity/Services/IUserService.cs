@@ -84,4 +84,12 @@ public interface IUserService
     /// <param name="cancellationToken"></param>
     /// <returns>Returning the deleted User object.</returns>
     ValueTask<User?> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets the System user.
+    /// </summary>
+    /// <param name="asNoTracking"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<User> GetSystemUserAsync(bool asNoTracking, CancellationToken cancellationToken = default);
 }

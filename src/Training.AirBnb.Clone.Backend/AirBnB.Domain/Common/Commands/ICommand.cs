@@ -14,5 +14,4 @@ public interface ICommand<out TResult> : ICommand, IRequest<TResult>
 /// </summary>
 public interface ICommand
 {
-    
 }

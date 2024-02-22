@@ -1,4 +1,6 @@
-﻿using AirBnB.Application.Common.Identity.Services;
+﻿using AirBnB.Application.Common.EventBus.Brokers;
+using AirBnB.Application.Common.Identity.Events;
+using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Verifications.Services;
 using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AirBnB.Infrastructure.Common.Identity.Services;
 
 public class AccountService(
+    IEventBusBroker eventBusBroker,
     IUserService userService,
     IUserRepository userRepository,
     IUserSettingsService userSettingsService,
@@ -38,8 +41,10 @@ public class AccountService(
             },
             cancellationToken: cancellationToken
         );
-        
-        // TODO : Send welcome email
+
+        // Create user created event and publish it locally
+        var userCreatedEvent = new UserCreatedEvent(createdUser);
+        await eventBusBroker.PublishLocalAsync(userCreatedEvent);
 
         return createdUser;
     }
@@ -50,8 +55,7 @@ public class AccountService(
 
         if (!userVerifyCode.IsValid) return false;
 
-        var user = await userService.GetByIdAsync(userVerifyCode.Code.UserId, cancellationToken: cancellationToken) ??
-                   throw new InvalidOperationException();
+        var user = await userService.GetByIdAsync(userVerifyCode.Code.UserId, cancellationToken: cancellationToken) ?? throw new InvalidOperationException();
 
         switch (userVerifyCode.Code.CodeType)
         {
