@@ -3,11 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - release/**
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - release/**
     paths:
     - 'src/Training.AirBnb.Clone.Frontend/**'
 
