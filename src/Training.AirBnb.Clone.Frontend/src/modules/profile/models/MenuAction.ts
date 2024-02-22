@@ -1,7 +1,7 @@
 /*
  * Represents a menu item
  */
-export class MenuItem {
+export class MenuAction {
     public id: string;
     public title: string;
     public routeName?: string;

@@ -1,8 +1,7 @@
 <template>
     <div class="hidden md:flex items-center justify-center theme-bg p-[12px] gap-3">
-        <button class="text-sm font-medium theme-text-primary line-clamp-1">
-            <span class="line-clamp-1">Airbnb your home</span>
-        </button>
+
+        <switch-host-button/>
 
         <button>
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +48,7 @@
       </span>
         </button>
 
-        <profile-menu v-show="showUserProfile" @onClose="closeProfileMenu"
-                                :primary-actions="primaryActions" :secondary-actions="secondaryActions"/>
+        <profile-menu v-show="showUserProfile" @onClose="closeProfileMenu" :menuActions="currentMenuActions"/>
 
     </div>
 
@@ -68,23 +66,34 @@
 <script setup lang="ts">
 
 import ProfileMenu from "@/modules/profile/components/ProfileMenu.vue";
-import {ref} from 'vue';
-import type {MenuItem} from "@/modules/profile/models/MenuItem";
+import {onBeforeMount, ref, watch} from 'vue';
+import type {MenuAction} from "@/modules/profile/models/MenuAction";
+import SwitchHostButton from "@/modules/profile/components/SwitchHostButton.vue";
+import {useAccountStore} from "@/infrastructure/stores/AccountStore";
+import {storeToRefs} from "pinia";
+import type {MenuActions} from "@/modules/profile/models/MenuActions";
+import {AuthenticationService} from "@/modules/profile/services/AuthenticationService";
+
+const accountStore = useAccountStore();
+
+const {account} = storeToRefs(accountStore);
 
 const showUserProfile = ref<boolean>(false);
 const profileButtonDisable = ref<boolean>(false);
 
+const authService = new AuthenticationService();
+
 const emit = defineEmits(['signInUpRequest']);
 
 const toggleUserProfile = () => {
-    if(showUserProfile.value)
+    if (showUserProfile.value)
         closeProfileMenu();
     else
         openProfileMenu();
 }
 
 const openProfileMenu = () => {
-    if(!profileButtonDisable.value)
+    if (!profileButtonDisable.value)
         showUserProfile.value = true;
 }
 
@@ -99,38 +108,141 @@ const closeProfileMenu = () => {
 }
 
 // TODO : Add authentication check
-const primaryActions: Array<MenuItem> = [
-    {
-        title: 'Log In',
-        callback: () => {
-            closeProfileMenu();
-            emit('signInUpRequest')
-        },
-        special: true
-    },
-    {
-        title: 'Sign up',
-        callback: () => {
-            closeProfileMenu();
-            emit('signInUpRequest')
-        },
-    }
-]
+const userActions: MenuActions = {
+    actions: [
+        [
+            {
+                title: 'Messages',
+                routeName: 'GiftCards',
+                special: true
+            },
+            {
+                title: 'Trips',
+                routeName: 'GiftCards',
+                special: true
+            },
+            {
+                title: 'Wishlists',
+                routeName: 'GiftCards',
+                special: true
+            },
+        ],
+        [
+            {
+                title: 'Manage listings',
+                routeName: 'GiftCards'
+            },
+            {
+                title: 'Account',
+                routeName: 'GiftCards'
+            }
+        ],
+        [
+            {
+                title: 'Gift cards',
+                routeName: 'GiftCards'
+            },
+            {
+                title: 'Help Center',
+                routeName: 'Help'
+            },
+            {
+                title: 'Log out',
+                callback: async () => {
+                    closeProfileMenu();
+                    await authService.signOutAsync();
+                }
+            }
+        ]
+    ]
+};
 
-const secondaryActions: Array<MenuItem> = [
-    {
-        title: 'Gift cards',
-        routeName: 'GiftCards'
-    },
-    {
-        title: 'Airbnb your home',
-        routeName: 'HostHomes'
-    },
-    {
-        title: 'Help Center',
-        routeName: 'Help'
-    }
-]
+const guestActions: MenuActions = {
+    actions: [
+        [
+            {
+                title: 'Log In',
+                callback: () => {
+                    closeProfileMenu();
+                    emit('signInUpRequest')
+                },
+                special: true
+            },
+            {
+                title: 'Sign up',
+                callback: () => {
+                    closeProfileMenu();
+                    emit('signInUpRequest')
+                },
+            }
+        ],
+        [
+            {
+                title: 'Gift cards',
+                routeName: 'GiftCards'
+            },
+            {
+                title: 'Airbnb your home',
+                routeName: 'HostHomes'
+            },
+            {
+                title: 'Help Center',
+                routeName: 'Help'
+            }
+        ]
+    ]
+};
 
+const currentMenuActions = ref<MenuActions>(guestActions);
+
+watch(account, async () => {
+    setMenuActions();
+}, {deep: true});
+
+onBeforeMount(() => {
+    setMenuActions();
+});
+
+const setMenuActions = () => {
+    if (account.value.isLoggedIn())
+        currentMenuActions.value = userActions;
+    else
+        currentMenuActions.value = guestActions;
+}
+
+//
+// const guestActions = {
+//     primaryActions: Array<MenuAction> = [
+//         {
+//             title: 'Log In',
+//             callback: () => {
+//                 closeProfileMenu();
+//                 emit('signInUpRequest')
+//             },
+//             special: true
+//         },
+//         {
+//             title: 'Sign up',
+//             callback: () => {
+//                 closeProfileMenu();
+//                 emit('signInUpRequest')
+//             },
+//         }
+//     ],
+//     secondaryActions: Array<MenuAction> = [
+//         {
+//             title: 'Gift cards',
+//             routeName: 'GiftCards'
+//         },
+//         {
+//             title: 'Airbnb your home',
+//             routeName: 'HostHomes'
+//         },
+//         {
+//             title: 'Help Center',
+//             routeName: 'Help'
+//         }
+//     ]
+// }
 
 </script>

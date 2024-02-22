@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Services;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Persistence.Repositories.Interfaces;
@@ -19,7 +20,7 @@ public class RoleProcessingService(
     public async ValueTask GrandRoleAsync(Guid userId, RoleType roleType, RoleType actionUserRole, CancellationToken cancellationToken = default)
     {
         // Query user
-        var user = await userService.Get(asNoTracking: true)
+        var user = await userService.Get(queryOptions: new QueryOptions{AsNoTracking = true})
                        .Include(user => user.Roles)
                        .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
                    throw new InvalidOperationException("User not found");
@@ -48,7 +49,7 @@ public class RoleProcessingService(
 
     public async ValueTask GrandRoleBySystemAsync(Guid userId, RoleType roleType, CancellationToken cancellationToken = default)
     {
-        var user = await userService.Get(asNoTracking: true)
+        var user = await userService.Get(queryOptions: new QueryOptions{AsNoTracking = true})
                        .Include(user => user.Roles)
                        .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
                    throw new InvalidOperationException("User not found");
@@ -73,7 +74,7 @@ public class RoleProcessingService(
 
     public async ValueTask RevokeRoleAsync(Guid userId, RoleType roleType, RoleType actionUserRole, CancellationToken cancellationToken = default)
     {
-        var user = await userService.Get(asNoTracking: true)
+        var user = await userService.Get(queryOptions: new QueryOptions{AsNoTracking = true})
                        .Include(user => user.Roles)
                        .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken: cancellationToken) ??
                    throw new InvalidOperationException("User not found");

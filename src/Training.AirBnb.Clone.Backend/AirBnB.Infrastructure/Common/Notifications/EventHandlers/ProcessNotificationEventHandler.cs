@@ -3,6 +3,7 @@ using AirBnB.Application.Common.Identity.Services;
 using AirBnB.Application.Common.Notifications.Events;
 using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Common.Events;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Constants;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,8 @@ public class ProcessNotificationEventHandler(
             ? await userService.GetByIdAsync(notification.SenderUserId, cancellationToken: cancellationToken)
             : await userService.GetSystemUserAsync(true, cancellationToken);
         
-        var receiverUser = await userService.Get(user => user.Id == notification.ReceiverUserId, asNoTracking: true)
+        var receiverUser = await userService
+            .Get(user => user.Id == notification.ReceiverUserId, queryOptions: new QueryOptions{AsNoTracking = true})
             .Include(user => user.UserSettings)
             .FirstAsync(cancellationToken);
 

@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using AirBnB.Domain.Common.Caching;
 using AirBnB.Domain.Common.Entities;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Common.Query;
 using AirBnB.Persistence.Caching.Brokers;
 using AirBnB.Persistence.Caching.Models;
@@ -39,6 +40,25 @@ public abstract class EntityRepositoryBase<TEntity, TContext>(
             initialQuery = initialQuery.Where(predicate);
 
         if (asNoTracking)
+            initialQuery = initialQuery.AsNoTracking();
+
+        return initialQuery;
+    }
+
+    /// <summary>
+    /// Retrieves entities from the repository based on optional filtering conditions and tracking preferences.
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <param name="queryOptions">Additional query options</param>
+    /// <returns></returns>
+    protected IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = default, QueryOptions queryOptions = new())
+    {
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
+
+        if (predicate is not null)
+            initialQuery = initialQuery.Where(predicate);
+
+        if (queryOptions.AsNoTracking)
             initialQuery = initialQuery.AsNoTracking();
 
         return initialQuery;

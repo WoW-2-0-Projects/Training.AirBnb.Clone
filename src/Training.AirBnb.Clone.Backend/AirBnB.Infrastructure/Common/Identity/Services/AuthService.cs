@@ -1,8 +1,8 @@
 ﻿using System.Security.Authentication;
 using AirBnB.Application.Common.Identity.Models;
 using AirBnB.Application.Common.Identity.Services;
-using AirBnB.Application.Common.Notifications.Services;
 using AirBnB.Domain.Brokers;
+using AirBnB.Domain.Common.Queries;
 using AirBnB.Domain.Entities;
 using AirBnB.Domain.Enums;
 using AirBnB.Domain.Extension;
@@ -56,9 +56,21 @@ public class AuthService(
         return createdUser is not null;
     }
 
-    public async ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInAsync(SignInDetails signInDetails, CancellationToken cancellationToken)
+    public async ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInByEmailAsync(
+        SignInByEmailDetails signInDetails,
+        CancellationToken cancellationToken = default
+    )
     {
-        var foundUser = await userService.GetByEmailAddressAsync(signInDetails.EmailAddress, cancellationToken: cancellationToken);
+        // Query user by email address
+        var foundUser = await userService.Get(
+                user => user.EmailAddress == signInDetails.EmailAddress,
+                queryOptions: new QueryOptions
+                {
+                    AsNoTracking = true
+                }
+            )
+            .Include(user => user.Roles)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (foundUser is null || !passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.UserCredentials.PasswordHash))
             throw new AuthenticationException("Sign in details are invalid, contact support.");
@@ -67,6 +79,43 @@ public class AuthService(
             throw new AuthenticationException("Email address is not verified.");
 
         return await CreateTokens(foundUser, cancellationToken);
+    }
+
+    public async ValueTask<(AccessToken accessToken, RefreshToken refreshToken)> SignInByPhoneAsync(
+        SignInByPhoneDetails signInDetails,
+        CancellationToken cancellationToken = default
+    )
+    {
+        // Query user by email address
+        var foundUser = await userService.Get(
+                user => user.PhoneNumber == signInDetails.PhoneNumber,
+                new QueryOptions
+                {
+                    AsNoTracking = true
+                }
+            )
+            .Include(user => user.Roles)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        if (foundUser is null || !passwordHasherService.ValidatePassword(signInDetails.Password, foundUser.UserCredentials.PasswordHash))
+            throw new AuthenticationException("Sign in details are invalid, contact support.");
+
+        if (!foundUser.IsEmailAddressVerified)
+            throw new AuthenticationException("Email address is not verified.");
+
+        return await CreateTokens(foundUser, cancellationToken);
+    }
+
+    public async ValueTask SignOutAsync(string accessTokenValue, string refreshTokenValue, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(accessTokenValue) || string.IsNullOrWhiteSpace(refreshTokenValue))
+            throw new ArgumentException("Invalid identity security token value", nameof(accessTokenValue));
+
+        await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
+
+        var accessToken = identitySecurityTokenGeneratorService.GetAccessToken(accessTokenValue);
+        if (accessToken.HasValue) 
+            await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
     }
 
     public async ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, CancellationToken cancellationToken = default)
@@ -133,34 +182,37 @@ public class AuthService(
             await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
             throw new InvalidOperationException("Invalid identity security token value");
         }
-        
+
         var foundAccessToken = await identitySecurityTokenService.GetAccessTokenByIdAsync(accessToken.Value.AccessToken.Id, cancellationToken);
 
         // Remove refresh token and access token if user id is not same
         if (refreshToken.UserId != accessToken.Value.AccessToken.UserId)
         {
             await identitySecurityTokenService.RemoveRefreshTokenAsync(refreshTokenValue, cancellationToken);
-            if(foundAccessToken is not null)
+            if (foundAccessToken is not null)
                 await identitySecurityTokenService.RevokeAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
-            
+
             throw new AuthenticationException("Please login again.");
         }
 
-        var foundUser =
-            await userService
-                .Get(user => user.Id == accessToken.Value.AccessToken.UserId, true)
-                .Include(user => user.Roles)
-                .FirstOrDefaultAsync(cancellationToken: cancellationToken) ??
-            throw new InvalidOperationException();
+        var foundUser = await userService.Get(
+                user => user.Id == accessToken.Value.AccessToken.UserId,
+                new QueryOptions
+                {
+                    AsNoTracking = true
+                }
+            )
+            .Include(user => user.Roles)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken) ?? throw new InvalidOperationException();
 
         // If access token exists, not revoked and still valid return it, otherwise remove
         if (foundAccessToken is not null && !foundAccessToken.IsRevoked)
         {
-            if(!foundAccessToken.IsRevoked)
+            if (!foundAccessToken.IsRevoked)
                 return foundAccessToken;
             await identitySecurityTokenService.RemoveAccessTokenAsync(accessToken.Value.AccessToken.Id, cancellationToken);
         }
-        
+
         // Generate access token
         var newAccessToken = identitySecurityTokenGeneratorService.GenerateAccessToken(foundUser);
 

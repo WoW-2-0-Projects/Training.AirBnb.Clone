@@ -5,15 +5,11 @@
         <div tabindex="0" ref="container" @focusout="onClose"
              class="absolute top-[70px] h-auto w-[220px] z-auto rounded-xl theme-bg-primary -mr-[40px] theme-shadow drop-shadow-lg flex flex-col justify-between items-start theme-border theme-shadow over">
 
-            <div class="h-[1px] flex top-[150px] w-full theme-border"/>
-
-            <MenuButton v-for="(menuItem, index) in primaryActions" :key="index" :menu-item="menuItem"/>
-
-            <div class="h-[1px] flex top-[150px] w-full theme-border"/>
-
-            <MenuButton v-for="(menuItem, index) in secondaryActions" :key="index" :menu-item="menuItem"/>
-
-            <div class="h-[1px] flex top-[150px] w-full theme-border"/>
+            <!-- Menu actions -->
+            <div class="w-full" v-for="(actions, index) in menuActions.actions" :key="index">
+                <MenuButton v-for="(menuItem, index) in actions" :key="index" :menu-item="menuItem"/>
+                <div class="h-[1px] flex top-[150px] w-full theme-border"/>
+            </div>
 
             <div class="h-[50px] w-full flex items-center max-w-full max-h-full rounded-b-xl theme-hover-button">
                 <span class="mr-[75px] text-left theme-text-primary font-sans font-light pl-3">Dark mode</span>
@@ -30,19 +26,15 @@ import {nextTick, onMounted, ref, defineProps, defineEmits} from "vue";
 import {AppThemeService} from "@/infrastructure/services/AppThemeService";
 import DarkModeToggler from "@/modules/profile/components/DarkModeToggler.vue";
 import MenuButton from "@/common/components/MenuButton.vue";
-import type {MenuItem} from "@/modules/profile/models/MenuItem";
+import type {MenuActions} from "@/modules/profile/models/MenuActions";
 
 const appThemeService = new AppThemeService();
 
 const props = defineProps({
-    primaryActions: {
-        type: Array as () => Array<MenuItem>,
+    menuActions: {
+        type: Object as () => MenuActions,
         required: true
     },
-    secondaryActions: {
-        type: Array as () => Array<MenuItem>,
-        required: false
-    }
 });
 
 const emit = defineEmits(['update:value', 'onClose']);
