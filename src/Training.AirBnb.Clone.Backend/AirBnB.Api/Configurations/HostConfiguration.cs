@@ -38,10 +38,10 @@ public static partial class HostConfiguration
     /// </summary>
     /// <param name="app">Application host</param>
     /// <returns>Application host</returns>
-    public static async ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
+    public static ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
     {
-        await app.MigrateDatabaseSchemasAsync();
-        await app.SeedDataAsync();
+        // await app.MigrateDatabaseSchemasAsync();
+        // await app.SeedDataAsync();
         
         app
             .UseDevTools()
@@ -50,6 +50,6 @@ public static partial class HostConfiguration
             .UseExposers()
             .UseStaticFiles();
         
-        return app;
+        return new(app);
     }
 }
